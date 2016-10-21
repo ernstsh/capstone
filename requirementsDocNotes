@@ -1,0 +1,22 @@
+Functionality
+  Generate Survey
+    Create questions
+      Matrix, multiple choice and text entry
+      Can be done from a template
+    Organize questions
+      Display logic, hide and show question based on answer to previous
+    Survey should be saved/stored and editable
+  Distribute Survey
+    Allow outside users to take the survey
+    Printable
+    Compressed into public web link for distribution
+  Collecting Data
+    Recieve responses
+    Store in correct hierachy in the database
+  Query Data
+    User Interface that allows for performing SQL queries
+      Can provide metrics for Count, Average, Sum
+      Breakout data by demographic information
+      Need to be able to query multiple tables
+  Generate Report
+    Produce a printable report of select summary data or queries
