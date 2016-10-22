@@ -1,0 +1,78 @@
+\documentclass[letterpaper,10pt,titlepag,e draftclsnofoot,onecolumn]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{alltt}
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+\usepackage{pstricks, pst-node}
+
+\usepackage{geometry}
+\geometry{textheight=8.5in, textwidth=6in, margin=.75in}
+
+\usepackage{hyperref}
+
+\begin{document}
+
+\title{Requirements Document}
+\author{Kyle Nichols, Shannon Ernst, Javier Franco}
+\date{October 28, 2016}
+\maketitle
+
+\section{Functional Requirements}
+
+\subsection{Survey Generation}
+\begin{itemize}
+\item The software should be able to generate survey questions of a variety of styles.
+	\begin{itemize}
+	\item The software should generate questions with a matrix style of options.
+	\item The software should generate questions with a multiple choice style of options.
+	\item The software should generate questions with a text entry box.
+	\end{itemize}
+\item The sotware should also be able to organize questions.
+	\begin{itemize}
+	\item Questions should have display logic that can generate new questions based on the answer to previous question(s).
+	\item Questions should also have display logic that can hide questions based on the answer to previous question(s).
+	\end{itemize}
+\item The survey should be saved and stored in a database location.
+\item The survey should be editable at any point after it has been generated on the database.
+\end{itemize}
+
+\subsection{Survey Distribution}
+\begin{itemize}
+\item Outside user should be able to take a survey.
+\item Surveys should be printable.
+\item A survey web page should be able to be accessed using a compressed web link.
+\end{itemize}
+
+\subsection{Data Collection}
+\begin{itemize}
+\item The database should be able to receive and store survey responses.
+\item Responses and data should be stored in the correct database hierarchy.
+\end{itemize}
+
+\subsection{Data Query}
+\begin{itemize}
+\item There should be a user interface (UI) that allows for performing SQL queries on the database.
+	\begin{itemize}
+	\item The queries should provide metrics for calculating the count, average, or sum of survey responses.
+	\item Queries should be able to break out and display data particular to a demographic.
+	\item Queries should be able to select from multiple tables.
+	\end{itemize}
+\end{itemize}
+
+\subsection{Report Generation}
+\begin{itemize}
+\item The software should be able to provide a printable report containing summary data.
+\item The software should also be able to provide a printable report based on query output.
+\end{itemize}
+
+\end{document}
