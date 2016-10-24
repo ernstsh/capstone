@@ -88,18 +88,25 @@ interface.
 \end{itemize}
 
 \subsection{Performance Requirements}
-\subsection{Design Constraints}
-\subsection{Software System Attributes}
-\subsection{Other Requirements}
-\section{Non-Functional Requirements}
 \begin{itemize}
-\item The results of an SQL query should be displayed within 5 seconds. 
-\item An SQL query should have a 100\% accuracy of the results that are returned back to the user. 
-\item If a user's response triggers a hidden question it should be displayed on the screen within 1 second.
-\item The interfaces for creating a query and a survey should be easy to use by anybody and it should not take them more than an 30 minutes to figure out how to use both of these interfaces. 
-\item Submitted survey responses should not take longer than 2 minutes to be stored in the database. 
-\item The database should be able to store 25 years worth of information. 
+\item The web page should be up at least 99\% of the time.
+\item 95\% of the database queries should take less than 2 seconds to generate a report.
+\item The sytems should alllow for up to 30 users taking surveys simultaneously and storing 100\% of the responses correctly.
 \end{itemize}
+
+\subsection{Design Constraints}
+\begin{itemize}
+\item The database will be constrained by the storage limits of the database system utilized.
+\end{itemize}
+
+\subsection{Software System Attributes}
+\begin{itemize}
+\item The system be available to access 95\% of the time through the web page.
+\item For security purposes, students' personal information should be encrypted.
+\item The software should require ease of maintenance for a non-technical background so the clients have the ability to resolve any problems after we finish the project.
+\end{itemize}
+
+\subsection{Other Requirements}
 
 \section{Glossary}
 \begin{itemize}
