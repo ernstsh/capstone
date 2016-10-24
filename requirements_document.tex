@@ -1,4 +1,4 @@
-\documentclass[letterpaper,10pt,titlepag,e draftclsnofoot,onecolumn]{IEEEtran}
+\documentclass[letterpaper,10pt,titlepage, draftclsnofoot,onecolumn]{IEEEtran}
 
 \usepackage{graphicx}
 \usepackage{amssymb}
@@ -27,9 +27,21 @@
 \date{October 28, 2016}
 \maketitle
 
-\section{Functional Requirements}
+\section{Specific Requirements}
+\subsection{External Interface Requirements}
+\subsubsection{User Interface}
+The user interface will be a website. There are two views: administration and survey taker. 
+The Administration view is for those creating surveys and analyzing data. They will input a 
+username and password to gain access. They will then be navigating the site via mouse clicks 
+and keyboard interaction. There will not be support for a touch screen interface. The survey
+taker view is only for surveys. The survey will be distributed through a website link which 
+will allow temporary access to that particular survey for the survey taker to take. The 
+interaction will be via mouse clicks and keyboard. There will not be support for a touch screen
+interface.
 
-\subsection{Survey Generation}
+\subsection{Functional Requirements}
+
+\subsubsection{Survey Generation}
 \begin{itemize}
 \item The software should be able to generate survey questions of a variety of styles.
 	\begin{itemize}
@@ -46,20 +58,20 @@
 \item The survey should be editable at any point after it has been generated on the database.
 \end{itemize}
 
-\subsection{Survey Distribution}
+\subsubsection{Survey Distribution}
 \begin{itemize}
 \item Outside user should be able to take a survey.
 \item Surveys should be printable.
 \item A survey web page should be able to be accessed using a compressed web link.
 \end{itemize}
 
-\subsection{Data Collection}
+\subsubsection{Data Collection}
 \begin{itemize}
 \item The database should be able to receive and store survey responses.
 \item Responses and data should be stored in the correct database hierarchy.
 \end{itemize}
 
-\subsection{Data Query}
+\subsubsection{Data Query}
 \begin{itemize}
 \item There should be a user interface (UI) that allows for performing SQL queries on the database.
 	\begin{itemize}
@@ -69,12 +81,16 @@
 	\end{itemize}
 \end{itemize}
 
-\subsection{Report Generation}
+\subsubsection{Report Generation}
 \begin{itemize}
 \item The software should be able to provide a printable report containing summary data.
 \item The software should also be able to provide a printable report based on query output.
 \end{itemize}
 
+\subsection{Performance Requirements}
+\subsection{Design Constraints}
+\subsection{Software System Attributes}
+\subsection{Other Requirements}
 \section{Non-Functional Requirements}
 \begin{itemize}
 \item The results of an SQL query should be displayed within 5 seconds. 
