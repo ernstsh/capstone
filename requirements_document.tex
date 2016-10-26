@@ -19,14 +19,34 @@
 \geometry{textheight=8.5in, textwidth=6in, margin=.75in}
 
 \usepackage{hyperref}
-
+%credit to http://tex.stackexchange.com/questions/48152/dynamic-signature-date-line
+\newcommand*{\SignatureAndDate}[1]{%
+    \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
+    \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}%
+}%
 \begin{document}
 
 \title{Requirements Document}
 \author{Kyle Nichols, Shannon Ernst, Javier Franco}
 \date{October 28, 2016}
 \maketitle
-
+\section{Introduction}
+\subsection{Purpose}
+\subsection{Scope}
+\subsection{Definitions}
+\begin{itemize}
+\item User - A person that will be interacting and using the product.
+\item Query - Extracts information from the database based on the criteria that the user entered.
+\item Database - A collection of information that is organized, so that it can be easy to modify and find information. 
+\end{itemize}
+\subsection{References}
+\subsection{Overview}
+\section{Overall Description}
+\subsection{Product Perspective}
+\subsection{Product Functions}
+\subsection{User Characteristics}
+\subsection{Constraints}
+\subsection{Assumptions and Dependencies}
 \section{Specific Requirements}
 \subsection{External Interface Requirements}
 \subsubsection{User Interface}
@@ -42,77 +62,52 @@ interface.
 \subsection{Functional Requirements}
 
 \subsubsection{Survey Generation}
-\begin{itemize}
-\item The software should be able to generate survey questions of a variety of styles.
-	\begin{itemize}
-	\item The software should generate questions with a matrix style of options.
-	\item The software should generate questions with a multiple choice style of options.
-	\item The software should generate questions with a text entry box.
-	\end{itemize}
-\item The sotware should also be able to organize questions.
-	\begin{itemize}
-	\item Questions should have display logic that can generate new questions based on the answer to previous question(s).
-	\item Questions should also have display logic that can hide questions based on the answer to previous question(s).
-	\end{itemize}
-\item The survey should be saved and stored in a database location.
-\item The survey should be editable at any point after it has been generated on the database.
-\end{itemize}
+%\subsubsection{Overall}
+Surveys should be able to be made from scratch and saved. Previously created surveys should be editable 
+meaning questions should be able to be added/deleted, moved in ordering and the text of the question 
+and answer options should be able to change. These surveys should also be able to be saved as well. 
+Surveys may be deleted once created. A survey should be printable at anytime as well as publishable to a
+web link which can be distributed. All surveys and questions will be saved to a database.
+%\subsubsection{Structure and Formatting}
+The user should be able to add questions to and delete questions from a survey. The questions should be able to
+be reordered. The user should be able to add display logic to any question in the survey. Display logic means the
+question will appear based on the answer of previous questions.
+%\subsusection{Question}
+There are three types of questions: matrix, multiple choice and text entry. Each question is comprised of the 
+question text and the answer options text. The question text has the option of having a changeable subject
+field where the everything about the question stay exactly the same except for the subject. Questions should
+be savable and editable. \\
 
-\subsubsection{Survey Distribution}
-\begin{itemize}
-\item Outside user should be able to take a survey.
-\item Surveys should be printable.
-\item A survey web page should be able to be accessed using a compressed web link.
-\end{itemize}
+\subsubsection{Data Collection, Analysis and Report Generation}
+A survey taker should be able to take a survey and the results stored to a database. The data should be queriable
+via a user interface. Valid queries and subqueries include viewing data by: camp/club/program, student, demographic 
+information, and questions. The results of these queries should be savable to a report which will allow titling and captioning 
+of the data. The queries may result in raw data or summary data (averages, sums, counts, etc.) per the users specification 
+in the user interface. These reports should be savable, editable and printable at all times. 
 
-\subsubsection{Data Collection}
-\begin{itemize}
-\item The database should be able to receive and store survey responses.
-\item Responses and data should be stored in the correct database hierarchy.
-\end{itemize}
-
-\subsubsection{Data Query}
-\begin{itemize}
-\item There should be a user interface (UI) that allows for performing SQL queries on the database.
-	\begin{itemize}
-	\item The queries should provide metrics for calculating the count, average, or sum of survey responses.
-	\item Queries should be able to break out and display data particular to a demographic.
-	\item Queries should be able to select from multiple tables.
-	\end{itemize}
-\end{itemize}
-
-\subsubsection{Report Generation}
-\begin{itemize}
-\item The software should be able to provide a printable report containing summary data.
-\item The software should also be able to provide a printable report based on query output.
-\end{itemize}
 
 \subsection{Performance Requirements}
-\begin{itemize}
-\item The web page should be up at least 99\% of the time.
-\item 95\% of the database queries should take less than 2 seconds to generate a report.
-\item The sytems should alllow for up to 30 users taking surveys simultaneously and storing 100\% of the responses correctly.
-\end{itemize}
+The web page should be up at least 99\% of the time. 95\% of the database queries should take less than 2 seconds 
+to generate a report. The sytems should store 100\% of the responses correctly.
 
 \subsection{Design Constraints}
-\begin{itemize}
-\item The database will be constrained by the storage limits of the database system utilized.
-\end{itemize}
+The database will be constrained by the storage limits of the database system utilized.
 
 \subsection{Software System Attributes}
-\begin{itemize}
-\item The system be available to access 95\% of the time through the web page.
-\item For security purposes, students' personal information should be encrypted.
-\item The software should require ease of maintenance for a non-technical background so the clients have the ability to resolve any problems after we finish the project.
-\end{itemize}
+ The system should be available to access 95\% of the time through the web page. For security purposes, 
+students' personal information should be encrypted on the database side. The software should require ease of maintenance for a non-technical background so the clients have the ability to resolve any problems after the completion of the project.
 
 \subsection{Other Requirements}
+\newpage
+\section{Signatures}
+By signing below, I agree to the ideas and concepts presented in this document and the list of deliverables. \\
+\SignatureAndDate{Client Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 1 Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 2 Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 3 Signature}
 
-\section{Glossary}
-\begin{itemize}
-\item User - A person that will be interacting and using the product.
-\item Query - Extracts information from the database based on the criteria that the user entered.
-\item Database - A collection of information that is organized, so that it can be easy to modify and find information. 
-\end{itemize}
 
 \end{document}
