@@ -24,39 +24,13 @@ The STEM Academy in Corvallis, Oregon seeks to provide education in science, tec
 \section{Potential Solution}
 A website which will allow the STEM Academy to create and distribute surveys as well as view the data is the best solution. The website should allow them to create questions that can be included across multiple surveys. The questions should be able to be templated so that only one part of the question need change according to the topic of the survey. Surveys should be able to be distributed via a web link or printed. After a survey is taken, the data should be stored in a database according to the type of program. This data should be queriable based on custom queries. The user should be able to make a query based on the question and collected demographics as well as filter by programs and camps/clubs. This service should be user friendly; the user should not need to know any SQL or other querying language in order to get data from the database. After a query, the data should be able to be saved and added to a printable report so that it can actually be used in grant proposals and marketing material. This website will be an all in one package for collecting and reporting on data in a timely fashion which is what the STEM Academy truly needs. By the Engineering Expo, we will be able to present this website and show the full path of data collection, from creating the survey to querying to report generation.
 \section{Markers of Success}
-The following is a list of concepts which must be met in order for the project to be considered a success. Details on the implementation of these concepts will come in later documents. \\
-\begin{itemize}
-\item Survey Generation
-\begin{itemize}
-\item Template questions: the ability to generate a general question with certain substitutable sections which can be altered with available topics
-\item Save questions: questions should be stored and reused in multiple surveys
-\item Distribution: should be printable and distributable via web link
-\item Control Flow Logic: only display certain questions if certain answers have been obtained from previous questions
-\item Question Types: need to support matrix, multiple choice and text entry 
-\end{itemize}
-\item Survey Storage
-\begin{itemize}
-\item Stored in a database according to program, camp/club and student
-\end{itemize}
-\item Data Analysis
-\begin{itemize}
-\item Custom Queries: the user should be able to view results based on program, camp/club or student; should be able to filter based on demographics
-\item Report Generation: results should be saved and printable in a summary format for the queries
-\end{itemize}
-\item Overall
-\begin{itemize}
-\item Must be user friendly
-\item Must be one website
-\item Have to be able to add programs, camps/clubs and students
-\end{itemize}
-\item Stretch Goals
-\begin{itemize}
-\item Translation of surveys
-\item Scanning of printed surveys for quicker processing
-\item Graphic visualization of data
-\item Natural Language Processing for test entry
-\end{itemize}
-\end{itemize}
+The following is a list of concepts which must be met in order for the project to be considered a success. Details on the implementation of these concepts will come in later documents. 
+\subsection{Survey Generation}
+The STEM Academy needs to be able to generate their surveys digitally in order to distribute them digitally. The survey generation tool will be available to the user. They will be able to start a survey from scratch or edit preexisting surveys. Starting a survey from scratch they will be able to add questions, change the order of questions and adjust the display logic of a question (whether a question appears to a certain user based on their previous answers). The question types will be multiple choice, matrix or text entry question. Each question will be comprised of the question text and either a text entry box or a list of potential answers. The user will be able to add indicators within the question text to allow for changing the subject of that particular question. For example, many of the surveys are identical except for the camp name. With the indicators in the question text, the user can change the subject of the question or the survey in one location and it will render through all questions with that indicator. This functionality will be referred to as a template question. This will allow for fewer unique surveys to be created, rather on rendering the value will change. Questions should also be savable for reuse in other surveys which are unique. Surveys should be savable. Upon completing a survey, the user should be able to distribute the survey via web link or print the survey. The surveys and questions should be stored in a database. 
+\subsection{Data Analysis}
+When the survey is distributed via web link, the survey taker should be able to input their answers and submit the survey. All answers should be saved based on the survey (which should represent the camp/club/program) and broken down by student and question answered. This data should then be queriable. The user will have an area in the website where they will be able to select a camp/club or list of camp/clubs to view their data. They will also be able to refine the query to look at individual students, breakout by demographic data or answers to questions. All of the query results should give the option of saving them to a report. This report should be able to take a title and allow captioning of the data that has been saved to it. This report should be printable and savable. 
+\subsection {Overall and Stretch Goals}
+The website should be user friendly to the STEM Academy. It should be easy for the user to organize, access and structure their data. Stretch goals for the project include translating the text of surveys to languages other than English, being able to collected data from printed surveys via scanning, graphic visualization of the data and natural language processing for text entry answers.
 \section{Signatures}
 By signing below, I agree to the ideas and concepts presented in this document and the list of deliverables. \\
 \SignatureAndDate{Client Signature}
