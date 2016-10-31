@@ -40,11 +40,16 @@ reference by both the developers and the clients.
 The product outlined in this requirements document will be [OUR NAME HERE]. The product will need to be able to store survey
 questions and responses from students to those questions. It will need to take those responses and generate data reports
 based on queries to the database, such as summary or demographic data. This product is intended to ease the distribution of
-surveys and collection of data for STEM Acadamey so they can more easily provide this information to sponsors and on
+surveys and collection of data for STEM Academy so they can more easily provide this information to sponsors and on
 applications for funding. % I'm pretty sure there's a better way of explaining this. -Kyle. 
 
-
- The software products that will be produced include a survey generator, a database that stores surveys based on the student’s camp/club/program, and a report generator that uses custom queries to generate results.  The goal of the software is to help STEM Academy to obtain more funding for their camps/clubs/programs. The benefits that the software will have on STEM Academy is that they will be able to produce reports quickly which will save them a significant amount of time by not having to tabulate results by hand and it will prevent survey results from being untabulated.  In addition, they will no longer have to verify their survey results since the software will generate results that are 100\% accurate. Another benefit that the software will have on STEM Academy is that student survey information will be stored in a secure database instead of a file system and it will also save them space by not having to purchase more file cabinets as their program expands overtime.  % I looked at the scope subsection and wrote about things it requires and you can delete this if you think it is not necessary to include - Javier 
+The software products that will be produced include a survey generator, a database that stores surveys questions and responses from students to those questions, and a report generator that generates results based on queries to the database.  
+The results of the report generator will be presented as raw data or a summary of the data (average, count, sums) and it will not produce any kinds of graphs which include pie charts, bar graphs, and line graphs.  
+The goal of the software is to help STEM Academy to obtain more funding for their camps/clubs/programs by helping ease the distribution of surveys and collection of data, so that they can present this information to their sponsors and on their applications for obtaining more funding. 
+The benefits that the software will have on STEM Academy is that they will be able to produce reports quickly which will save them a significant amount of time by not having to tabulate results by hand and it will prevent survey results from being untabulated.
+ In addition, they will no longer have to verify their survey results since the software will generate results that are 100\% accurate.
+ Another benefit that the software will have on STEM Academy is that student survey responses and survey questions will be stored in a secure database instead of a file system and their personal information will be encrypted to maintain it confidential from outside users. 
+% Would this work for the scope - Javier 
 
 \subsection{Definitions}
 \begin{itemize}
@@ -73,6 +78,12 @@ vary between surveys (such as the material taught) while the general structure s
 \subsection{Overview}
 The software requirements specification is organized as follows with a description of the overall product, the specific requirements of the
 product, and functional requirements of the product. The product description will include % finish after rest of the document done -Kyle.
+
+The remaining parts of the software requirements specification document include the overall description of the product followed by the specific requirements of the product.
+ The purpose of the overall description section is to provide a background for the requirements that will be listed in the specific requirements section and also to explain any factors that can influence the product and its requirements. 
+ In the overall description section, it contains the product perspective, products functions, user characteristics, constraints that will limit the development of the product, and any assumptions and dependencies that we have that if changed will require altering our requirements. 
+The specific requirements section contains external user interface requirements, functional requirements, design constraints, software system attributes, and other requirements. 
+The purpose of the specific requirements section is to help us with our design process by satisfying the requirements we listed and to test whether or not we were able to meet our software requirements.  %Not sure if whether or not we should give a detailed description of the remaining SRS -Javier 
 \section{Overall Description}
 
 \subsection{Product Perspective}
@@ -143,14 +154,15 @@ in the user interface. These reports should be savable, editable and printable a
 
 \subsection{Performance Requirements}
 The web page should be up at least 99\% of the time. 95\% of the database queries should take less than 2 seconds 
-to generate a report. The sytems should store 100\% of the responses correctly.
+to generate a report. The sytems should store 100\% of the responses correctly and queries to the database should produce results that are 100\% accurate. %added that the queries should be 100% accurate  -javier 
 
 \subsection{Design Constraints}
 The database will be constrained by the storage limits of the database system utilized.
 
 \subsection{Software System Attributes}
  The system should be available to access 95\% of the time through the web page. For security purposes, 
-students' personal information should be encrypted on the database side. The software should require ease of maintenance for a non-technical background so the clients have the ability to resolve any problems after the completion of the project.
+students' personal information and users passwords should be encrypted on the data base side. %encrypt user passwords -Javier 
+The software should require ease of maintenance for a non-technical background so the clients have the ability to resolve any problems after the completion of the project.
 
 \subsection{Other Requirements}
 \newpage
