@@ -24,6 +24,16 @@
     \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
     \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}%
 }%
+
+% Credit to user lockstep at http://tex.stackexchange.com/questions/125252/section-numbering-changes-in-toc-but-not-in-body-specific-to-ieeetran for section numbering
+\renewcommand\thesection{\arabic{section}}
+\renewcommand\thesubsection{\thesection.\arabic{subsection}}
+\renewcommand\thesubsubsection{\thesubsection.\arabic{subsubsection}}
+
+\renewcommand\thesectiondis{\arabic{section}}
+\renewcommand\thesubsectiondis{\thesectiondis.\arabic{subsection}}
+\renewcommand\thesubsubsectiondis{\thesubsectiondis.\arabic{subsubsection}}
+
 \begin{document}
 
 \title{Requirements Document}
@@ -33,27 +43,22 @@
 \section{Introduction}
 \subsection{Purpose}
 This software requirements specification is intended to define the requirements of the project of developing a database 
-of surveys for STEM Academy. Defined requirements will allow for a contract between us, the developers, and Stem Academy, 
+of surveys for STEM Academy. Defined requirements will allow for a contract between us, the developers, and STEM Academy, 
 our clients, on what STEM Academy wants us to deliver in their desired software. This document is intended for review and
 reference by both the developers and the clients.
 \subsection{Scope}
-The product outlined in this requirements document will be [OUR NAME HERE]. The product will need to be able to store survey
-questions and responses from students to those questions. It will need to take those responses and generate data reports
-based on queries to the database, such as summary or demographic data. This product is intended to ease the distribution of
-surveys and collection of data for STEM Academy so they can more easily provide this information to sponsors and on
-applications for funding. % I'm pretty sure there's a better way of explaining this. -Kyle. 
-
-The software products that will be produced include a survey generator, a database that stores survey questions and responses from students to those questions, and a report generator that generates results based on queries to the database.  
-The results of the report generator will be presented as raw data or a summary of the data (average, count, sums) and it will not produce any kinds of graphs which include pie charts, bar graphs, and line graphs.  
-The goal of the software is to help STEM Academy to obtain more funding for their camps/clubs/programs by helping ease the distribution of surveys and collection of data, so that they can present this information to their sponsors and on their applications for obtaining more funding. 
+The product outlined in this requirements document will be [OUR NAME HERE].
+This product that will include a survey generator, a database that stores survey questions and responses from students to those questions, and a report generator that generates results based on queries to the database.  
+The results of the report generator will be presented as raw data or a summary of the data (such as average, count, or sum).  
+The goal of the software is to help STEM Academy to obtain more funding for their camps, clubs, and programs by helping ease the distribution of surveys and collection of data, so that they can present this information to their sponsors and on their applications for obtaining more funding. 
 The benefits that the software will have on STEM Academy is that they will be able to produce reports quickly which will save them a significant amount of time by not having to tabulate results by hand and it will prevent survey results from being untabulated.
- In addition, they will no longer have to verify their survey results since the software will generate results that are 100\% accurate.
- Another benefit that the software will have on STEM Academy is that student survey responses and survey questions will be stored in a secure database instead of a file system and their personal information will be encrypted to maintain it confidential from outside users. 
-% Would this work for the scope - Javier 
+In addition, they will no longer have to verify their survey results since the software will generate results that are 100\% accurate.
+Another benefit that the software will have on STEM Academy is that student survey responses and survey questions will be stored in a secure database instead of a file system and their personal information will be encrypted to maintain it confidential from outside users. 
+% I combiined Javier's product statement with mine, but mostly his. It was good and detailed. -Kyle.
 
 \subsection{Definitions}
 \begin{itemize}
-\item Contract - A legally binding document that is agreed upon by the customer and developers.  %Added the terms contract, customer, and developers -Javier 
+\item Contract - A legally binding document that is agreed upon by the customer and developers.  % Added the terms contract, customer, and developers -Javier 
 \item Customer - The person, or persons, who will be receiving the final product and provide feedback to the developers, so that they can meet the requirements for their desired product. 
 \item Data analyst - A user that uses the product to generate a report based on survey response data.
 \item Database - A collection of information that is organized, so that it can be easy to modify and find information. 
@@ -76,32 +81,28 @@ vary between surveys (such as the material taught) while the general structure s
 \subsection{References}
 % Do we have any outside information in this that must be cited? I haven't seen any. -Kyle.
 \subsection{Overview}
-The software requirements specification is organized as follows with a description of the overall product, the specific requirements of the
-product, and functional requirements of the product. The product description will include % finish after rest of the document done -Kyle.
-
-The remaining parts of the software requirements specification document include the overall description of the product followed by the specific requirements of the product.
- The purpose of the overall description section is to provide a background for the requirements that will be listed in the specific requirements section and also to explain any factors that can influence the product and its requirements. 
- In the overall description section, it contains the product perspective, products functions, user characteristics, constraints that will limit the development of the product, and any assumptions and dependencies that we have that if changed will require altering our requirements. 
+This software requirements specification is organized as follows with a description of the overall product, the specific requirements of the product, and functional requirements of the product.
+The product description will include a background for the requirements that will be listed in the specific requirements section and also to explain any factors that can influence the product and its requirements. 
+In the overall description section, it contains the product perspective, products functions, user characteristics, constraints that will limit the development of the product, and any assumptions and dependencies that we have that if changed will require altering our requirements. 
 The specific requirements section contains external user interface requirements, functional requirements, design constraints, software system attributes, and other requirements. 
-The purpose of the specific requirements section is to help us with our design process by satisfying the requirements we listed and to test whether or not we were able to meet our software requirements.  %Not sure if whether or not we should give a detailed description of the remaining SRS -Javier 
+The purpose of the specific requirements section is to help us with our design process by satisfying the requirements we listed and to test whether or not we were able to meet our software requirements. 
+% Not sure if whether or not we should give a detailed description of the remaining SRS -Javier 
+% Yes. -Kyle.
 \section{Overall Description}
 
 \subsection{Product Perspective}
-The product will be wholly self-contained, as it is intended as a product to specially satisfy the needs of STEM Academy's survey
-process. The user interface should be designed in such a way that user's do not need any knowledge of SQL queries to be able
-to query the database to generate reports. An example would be a list of common actions that they can perform on the database
-and text fields to retrieve information necessary for the SQL query. This web user interface will connect with the database management
-software we use for our product.
+The product will be wholly self-contained, as it is intended as a product to specially satisfy the needs of STEM Academy's survey process.
+The user interface should be designed in such a way that user's do not need any knowledge of SQL queries to be able to query the database to generate reports.
+An example would be a list of common actions that they can perform on the database and text fields to retrieve information necessary for the SQL query.
+This web user interface will connect with the database management software we use for our product.
 \subsection{Product Functions}
-The basic functionality of the product will be that a user can log on to a web page as either a survey builder,
-a survey taker or a data analyst. The survey builder can then create surveys that can be stored on the database as a survey with a
-list of questions associated with it. A survey taker can log on to the web site and take a survey stored on the database,
-while the responses they provide to survey questions are also stored on the database with an association with the user
-and the question involved. A data analyst can log on to the web site and query the database to generate a report on
-information desired.
-%This contradicts that there is no login for the survey taker would the sentences below work instead? - Javier
 The basic functionality of the product will be that a user will be able to choose from three different modes which include data analyst, survey builder, and survey taker. 
-A user that wants to enter survey taker mode will not require a login, but the other two modes will require the user to enter thier username and password in order to enter these modes. 
+The survey builder can then create surveys that can be stored on the database as a survey with a list of questions associated with it.
+A survey taker can log on to the web site and take a survey stored on the database, while the responses they provide to survey questions are also stored on the database with an association with the user and the question involved.
+A data analyst can log on to the web site and query the database to generate a report on information desired.
+% This contradicts that there is no login for the survey taker would the sentences below work instead? - Javier
+% See, I think the survey takers would have to log in, because we store associations between the responses and the users making them. -Kyle
+A user that wants to enter survey taker mode will not require a login, but the other two modes will require the user to enter th username and password in order to enter these modes. 
 
 \subsection{User Characteristics}
 The users of the software follow two basic characteristic sets. The first are survey builders and data analysts that are members of
@@ -109,16 +110,15 @@ STEM Academy. These users are educated and have experience in creating surveys a
 however they are also non-technical in regards to this kind of product. The other type of user are the survey takers, who are
 generally either grade school students or the parents of the students. The education and the experience in STEM fields
 can vary in this type of user, from minimal to deep, though most will be minimal. The technical knowledge will also vary, though
-most are likelly to have the required knowledge to navigate a web page.
+most are likely to have the required knowledge to navigate a web page.
 \subsection{Constraints}
 % This one I am not sure of. The only thing I can think of is the possibility of regulatory policies if we get to use on-campus resources -Kyle.
 \subsection{Assumptions and Dependencies}
 For this product, we assume that we will have access to a resource on campus that can store a large amount of information on
 surveys and responses. % This is all I've got -Kyle.
 \section{Specific Requirements}
-% I don't get what makes this different from other sections. Might ask Kristin about this one as well. -Kyle.
+% I don't get what makes this different from other sections. Might ask Kristin about this one as well. However, I don't know what theses regulatory policies are and if we need to include them here. -Kyle.
 \subsection{External Interface Requirements}
-% Same as above. I feel like I could use a better explanation than the standards doc here. -Kyle.
 \subsubsection{User Interface}
 The user interface will be a website. There are two views: administration and survey taker. 
 The Administration view is for those creating surveys and analyzing data. They will input a 
@@ -148,7 +148,7 @@ question text and the answer options text. The question text has the option of h
 field where the everything about the question stay exactly the same except for the subject. Questions should
 be savable and editable. \\
 
-\subsubsection{Data Collection, Analysis and Report Generation}
+\subsubsection{Data Collection, Analysis, and Report Generation}
 A survey taker should be able to take a survey and the results stored to a database. The data should be queriable
 via a user interface. Valid queries and subqueries include viewing data by: camp/club/program, student, demographic 
 information, and questions. The results of these queries should be savable to a report which will allow titling and captioning 
@@ -169,7 +169,7 @@ The database will be constrained by the storage limits of the database system ut
 students' personal information and users passwords should be encrypted on the data base side. %encrypt user passwords -Javier 
 The software should require ease of maintenance for a non-technical background so the clients have the ability to resolve any problems after the completion of the project.
 
-\subsection{Other Requirements}
+% \subsection{Other Requirements}
 \newpage
 \section{Signatures}
 By signing below, I agree to the ideas and concepts presented in this document and the list of deliverables. \\
