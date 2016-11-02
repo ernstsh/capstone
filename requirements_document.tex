@@ -43,7 +43,7 @@ based on queries to the database, such as summary or demographic data. This prod
 surveys and collection of data for STEM Academy so they can more easily provide this information to sponsors and on
 applications for funding. % I'm pretty sure there's a better way of explaining this. -Kyle. 
 
-The software products that will be produced include a survey generator, a database that stores surveys questions and responses from students to those questions, and a report generator that generates results based on queries to the database.  
+The software products that will be produced include a survey generator, a database that stores survey questions and responses from students to those questions, and a report generator that generates results based on queries to the database.  
 The results of the report generator will be presented as raw data or a summary of the data (average, count, sums) and it will not produce any kinds of graphs which include pie charts, bar graphs, and line graphs.  
 The goal of the software is to help STEM Academy to obtain more funding for their camps/clubs/programs by helping ease the distribution of surveys and collection of data, so that they can present this information to their sponsors and on their applications for obtaining more funding. 
 The benefits that the software will have on STEM Academy is that they will be able to produce reports quickly which will save them a significant amount of time by not having to tabulate results by hand and it will prevent survey results from being untabulated.
@@ -88,7 +88,7 @@ The purpose of the specific requirements section is to help us with our design p
 
 \subsection{Product Perspective}
 The product will be wholly self-contained, as it is intended as a product to specially satisfy the needs of STEM Academy's survey
-process. The user interface should be designed in such a way that user's do not need a knowledge of SQL queries to be able
+process. The user interface should be designed in such a way that user's do not need any knowledge of SQL queries to be able
 to query the database to generate reports. An example would be a list of common actions that they can perform on the database
 and text fields to retrieve information necessary for the SQL query. This web user interface will connect with the database management
 software we use for our product.
@@ -99,6 +99,10 @@ list of questions associated with it. A survey taker can log on to the web site 
 while the responses they provide to survey questions are also stored on the database with an association with the user
 and the question involved. A data analyst can log on to the web site and query the database to generate a report on
 information desired.
+%This contradicts that there is no login for the survey taker would the sentences below work instead? - Javier
+The basic functionality of the product will be that a user will be able to choose from three different modes which include data analyst, survey builder, and survey taker. 
+A user that wants to enter survey taker mode will not require a login, but the other two modes will require the user to enter thier username and password in order to enter these modes. 
+
 \subsection{User Characteristics}
 The users of the software follow two basic characteristic sets. The first are survey builders and data analysts that are members of
 STEM Academy. These users are educated and have experience in creating surveys and understanding data from surveys,
@@ -155,6 +159,7 @@ in the user interface. These reports should be savable, editable and printable a
 \subsection{Performance Requirements}
 The web page should be up at least 99\% of the time. 95\% of the database queries should take less than 2 seconds 
 to generate a report. The sytems should store 100\% of the responses correctly and queries to the database should produce results that are 100\% accurate. %added that the queries should be 100% accurate  -javier 
+A user that is an administrative view should be able to find 95\% of the time the tools they need within 2 minutes in order to consider our user interface user freindly. %added usability requirement
 
 \subsection{Design Constraints}
 The database will be constrained by the storage limits of the database system utilized.
