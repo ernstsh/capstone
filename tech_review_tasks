@@ -1,0 +1,32 @@
+Survey Generation
+-Create questions: matrix, multiple choice, text entry
+-Template question generation
+-Saving questions (Shannon will be responsible but probably won't be in tech review)
+-Control flow
+-Distribution
+-Printing of surveys
+
+Database
+-Set up: tables, accessibility, etc.
+
+Report Generation
+-Form for search
+-Save results to report
+-Caption of report
+-Printing of reports
+
+
+Shannon:
+-Creating questions
+-Templating questions
+-Control flow
+
+Kyle:
+-Set up of database
+-Disrtibution
+-Printing of surveys
+
+Javier:
+-Form for search/queries
+-Saving results to a report
+-Printing reports
