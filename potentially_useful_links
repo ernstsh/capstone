@@ -9,3 +9,12 @@ Generates surevys API.
 
 https://developer.surveymonkey.com/api/v3/#scopes
 Allows for app creation for survey monkey. 
+
+http://bootsnipp.com/forms
+UI for survey
+
+https://hackage.haskell.org/package/reform
+html form generation
+
+http://www.alpacajs.org/
+ui
