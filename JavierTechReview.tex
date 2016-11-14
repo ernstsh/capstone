@@ -12,14 +12,12 @@
 	\pagebreak
 
 \section{Search Form}
-\subsection{Options 1, 2, and 3}
-Three pieces of technology that can be used for creating a search form for querying a database include Microsoft Access, Form Tools, and Flyspeed SQL. 
-
+\subsection{Microsoft Access, Form Tools, and FlySpeed SQL}
 In Microsoft Access you can create a a search form by using a technique called query by form (QBF). First you make a form that contains empty text boxes for the search criteria and each text box represents a field in a table that is going to be queried \cite{Micro}. Empty text boxes will be ignored \cite{Micro}. To submit your search query you click on a command button on the form \cite{Micro}. When the command button is clicked it uses a macro that calls a query to produce the query results. 
 
 FlySpeed SQL is a query tool whose objective is to make the management of data a simple process and it supports data servers that include MySQL, SQL, and PostgreSQL \cite{Andrew}. It allows users to search and change their database by using two different views which include a grid format and a custom form view \cite{Andrew}.  The database connection and queries generated are saved, so that users can return and work on them at a later time \cite{Fly}. The queries that are executed are are stored automatically\cite{Fly}. FlySpeed SQL is a tool that can be downloaded for free. However, there is a paid desktop version that has some additional features that are not available in the free version and it costs \$39 for a 1 year subscription and \$99 for a lifetime subscription. The paid version features transferring office formats, printing data, and saving reports as a PDF \cite{Fly}. 
 
-"QueryTree is a web based ad hoc reporting tool that works with any Microsoft SQL Server, MySQL or PostgreSQL database" \cite{QueryTree}. Reports are created using a report building widget that is easy to use and QueryTree can be used in various devices \cite{QueryTree}. The QueryTree user interface is simple and easy to use. A user first selects a table and then is able to produce queries using widgets, produce basic calculations, and create groupings \cite{}. QueryTree is not a free tool. It costs \$29 per month and the tool can be used in two databses and allows up to ten users. 
+"QueryTree is a web based ad hoc reporting tool that works with any Microsoft SQL Server, MySQL or PostgreSQL database" \cite{QueryTree}. Reports are created using a report building widget that is easy to use and QueryTree can be used in various devices \cite{QueryTree}. The QueryTree user interface is simple and easy to use. A user first selects a table and then is able to produce queries using widgets, produce basic calculations, and create groupings \cite{QueryTree}. QueryTree is not a free tool. It costs \$29 per month and the tool can be used in two databses and allows up to ten users \cite{QueryTree}. 
 
 
 \subsection{Goals for use in design}
@@ -32,9 +30,9 @@ The criteria that will be used for evaluating the three pieces of technology inc
 \subsection{Discussion}
 The query by form technique that uses Microsoft Access is an easy method to use. A user simply enters their search criteria into input boxes and submits their query by clicking a command button which returns the query results by checking the table fields in the database using the search criteria. To create our search form we would need individual input boxes for camp, club, program, and multiple input boxes for the demographic information. Furthermore, we will need a predefined number of input boxes for searching questions, but this is a problem since we do not know the number of questions that a user will use in their query. For example, if there are only two input boxes and a user wants to search for all the students that chose the color red, attended North Salem High School, and have parent's with a college education they will not be able to do their query. The user would have to manually add more input boxes for the number of questions that they are going to query and this requires knowledge of how to use Microsoft Access which makes this method not user freindly and ineffective. Another issue with this method is that we will need to figure out how to make the Microsoft Access form into a webpage for the website user interface. 
 
-Some issues with the QueryTree tool are that it has a monthly payment of \$29, only ten people are allowed to use the tool, and two databases can only be connected. The number of users that are allowed to use the tool can be an issue if STEM Academy plans on having more than ten users that will be generating reports. If more than ten users will be generating reports the subscription will have to be upgraded which will cost more money per month to use the tool. The constraint of only being able to connect two databases will not be an issue if we are planning to store all of STEM Academy's information into one database. The benefits of QueryTree are that it is simple and easy use for searching information in the database. The user simply uses widgets to create queries to search the database. Another benefit of QueryTree is that it helps satisfy other requirements for our project which include saving a report. 
+Some issues with the QueryTree tool are that it has a monthly payment of \$29, only ten people are allowed to use the tool, and two databases can only be connected. The number of users that are allowed to use the tool can be an issue if STEM Academy plans on having more than ten users that will be generating reports. If more than ten users will be generating reports the subscription will have to be upgraded which will cost more money per month to use the tool. The constraint of only being able to connect two databases will not be an issue if we are planning to store all of STEM Academy's information into one database. The benefits of QueryTree are that it is simple and easy use for searching information in the database. The user simply uses widgets to create queries to search the database. Another benefit of QueryTree is that it helps satisfy other requirements for our project which includes saving a report. 
 
-Based on the screenshots I did not like how users generate queries to search a database. A user clicks on fields that are on the tables to generate a query and it also displays text showing the query. The tables and query text make the FlySpeed SQL tool look difficult and intimidating to use which makes the tool not user freindly. A good thing about the tool is that it can be downloaded for free which helps with testing whether or not the tool will meet our needs. 
+Based on the screenshots I did not like how users generate queries to search a database using the FlySpeed SQL tool. A user clicks on fields that are on the tables to generate a query and it also displays text showing the query. The tables and query text make the FlySpeed SQL tool look difficult and intimidating to use which makes the tool not user freindly. A good thing about the tool is that it can be downloaded for free which helps people to determine whether or not the tool will be useful to the. 
 
 \subsection{Selection of best option based on criteria} 
 The tool that I decided to choose for making the search form is QueryTree. The reason why I picked it is because it is user freindly unlike FlySpeed SQL. In addition, it will not have any issues generating multiple queries based on survey questions. I think that the usability of the tool outweights the costs instead of having to use two other technologies that have issues. 
@@ -44,14 +42,12 @@ The tool that I decided to choose for making the search form is QueryTree. The r
 
 \section{Printing Report}
 
-\subsection{Options 1, 2, and 3}
-The three pieces of technology that can be used to print a report include Javascript with CSS style sheet, jQuery Print Preview Plugin, and smart widget. 
+\subsection{JavaScript with CSS, JQuery Print Preview Plugin, and smart widget}
+First I will discuss Javascript with a CSS style sheet. When a user clicks on on a print button or hyperlink using the window.print() method it prints out the entire webpage\cite{Javascript}. To resolve the issue a separate CSS style sheet is created to exclude unwanted parts of the webpage before printing a document \cite{Javascript}. 
 
-When a user clicks on on a print button or hyperlink using the window.print() method it prints out the entire webpage\cite{JavaScript}. To resolve the issue a separate CSS style sheet is created to exclude unwanted parts of the webpage before printing a document \cite{JavaScript}. 
+"The jQuery Print Preview plugin is designed to provide visitors with a preview of the print version of a website" \cite{Sam}. "Unlike traditional print previews this plugin brings all content and print styles within a modal window" \cite{Sam}. The jQuery Print Preview Plugin consists of a source code and a demo. In the demo when a user clicks on the print icon or print this page hyperlink it displays a modal window that covers the entire page with the print version of the webpage. At the top of the modal window there are two icons for exiting the modal window and for displaying the print dialogue box which allows the user to choose their print options. The modal window forces the user to interact with it before returning to the main webpage.
 
-"The jQuery Print Preview plugin is designed to provide visitors with a preview of the print version of a website" \cite{Sam}. "Unlike traditional print previews this plugin brings all content and print styles within a modal window" \cite{Sam}. The jQuery Print Preview Plugin consists of a source code and a demo. In the demo when a user clicks on the print icon or print this page hyperlink it displays a modal window that covers the entire page with the print version of the webpage. At the top of the modal window there are two icons for exiting the modal window and for displaying the print dialogue box, which allows the user to choose their print options. The modal window forces the user to interact with it before returning to the main webpage.
-
-Smart widget makes printing more efficient by removing unnecessary things from a webpage which include headers, footers, and advertisements before showing the print dialogue box \cite{SmartW}.The smart widget tool has extra features that include a print preview, saving a page as a PDF, and a edit option for removing addiotnal content \cite{SmartW}. The website that provides the tool has the code available for incorporating the smart widget into a HTML webpage and it is only one line of code. 
+Smart widget makes printing more efficient by removing unnecessary things from a webpage which include headers, footers, and advertisements before showing the print dialogue box \cite{SmartW}.The smart widget tool has extra features that include a print preview, edit option for removing addiotnal content, and saving a page as a PDF \cite{SmartW}. The website that provides the tool has the code available for incorporating the smart widget into a HTML webpage and it is only one line of code. 
 
 \subsection{Goals for use in design}
 Reports generated using queries based on camp, program, club, demographics, student, and survey questions should be printable at all times. This will allow STEM Academy to present these results to their sponsors and on their applications to help them obtain more funding for their organization. When a report is printed it should only print out the report results and it should exclude parts of the webpage that are not related to the report. For example if a user printed a report it should not display the title of the webpage and the navigation bar. A print icon should be visible near the report to make it easy to print. The print options displayed should allow a user to choose the orientation, number of copies, margins, printer, etc. 
@@ -61,9 +57,9 @@ Reports generated using queries based on camp, program, club, demographics, stud
 The criteria that will be evaluted includes cost and usability. 
 
 \subsection{Discussion}
-The Print Preview Plugin can be adapted to help print a user's reports. If we incorporate the Print Preview Plugin we must make sure that the tool that we are using for generating the reports allows us to edit the HTML code and to include a separate CSS style page for the print version of the webpage. The modal window that appears when one of the print links is clicked seems redundant. The reason why it is redundant is becuase the print dialogue box displays the print version and it also shows what is going to be printed on each page. 
+The Print Preview Plugin can be adapted to help print a user's reports. The modal window that appears when one of the print links is clicked seems redundant. The reason why it is redundant is becuase the print dialogue box displays the print version and it also shows what is going to be printed on each page. 
 
-The smart widget tool is easy to incorporate into an HTML webpage. It also saves time by not having to write the code that excludes certain parts of a webpage. If we incorporate this tool into an HTML webpage we must verify that it is not removing content from the report that is going to be printed. If no content is removed from the report this tool will be the best option for printing a report. 
+The smart widget tool is easy to incorporate into an HTML webpage. It also saves time by not having to write the code that excludes certain parts of a webpage. If we incorporate this tool into an HTML webpage we must verify that it is not removing content from the report that is going to be printed. If no content is removed from the report then this tool will be considered the best option. 
 
 To create a print version of a webpage using JavaScript and a CSS style sheet is not hard to implement if you have experience in web development. By making our own CSS style sheet for the print version of the webpage it ensures that the report form will be printed to our liking. 
 
@@ -73,9 +69,7 @@ The tool that will be selected for printing a report is JavaScript with a CSS st
 
 \section{Saving Report Results}
 
-\subsection{Options 1, 2, and 3}
-Izenda, Storing Report Definitions, and Microsoft Access
-
+\subsection{Izenda, Storing Report Definitions, and Microsoft Access}
 There are two ways that Izenda stores reports which include a file system mode and a database mode \cite{Adams}. In the file system mode reports are stored in a default folder that is named Reports \cite{Adams}. In database mode reports are stored in default database table called IzendaAdHocReports \cite{}. Some benefits of using the filesystem mode over the database mode include quicker access to stored reports, customization of security setup, and customization of how reports are distributed and stored \cite{Adams}. 
 
 The Storing Report Definitions shows step by step how to save a report definition. 
@@ -93,12 +87,12 @@ The good part about the Izenda is that it stores reports in two different ways. 
 
 
 \subsection{Selection of best option based on criteria} 
-The best option for saving reports is XtraReports 
+The best option for saving reports is XtraReports. 
 
 \section{References}	
 \begin{thebibliography}{5}
 
-\bibitem{Adam}Adams, Joseph. "Storing Reports." \em{IZENDA}. N.p., 20 Feb. 2015. Web. 14 Nov. 2016.
+\bibitem{Adams}Adams, Joseph. "Storing Reports." \em{IZENDA}. N.p., 20 Feb. 2015. Web. 14 Nov. 2016.
 \bibitem{SimpleReport} "Create a Simple Report." \em{Microsoft}. N.p., n.d. Web. 14 Nov. 2016.
 \bibitem{Fly}"FlySpeed SQL Query." \em{Active Database Software}. N.p., n.d. Web. 12 Nov. 2016.
 \bibitem {Sam} Deering, Sam. "10 JQuery Print Page Options." \em{sitepoint}. N.p., 13 Mar. 2016. Web. 11 Nov. 2016. 
