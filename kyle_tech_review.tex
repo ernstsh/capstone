@@ -1,0 +1,74 @@
+\documentclass{IEEEtran}
+
+\begin{document}
+
+\section{Setting up and storing the database}
+For the database, we need to be able to set up the database (including the tables, relationships, etc.) and store it at a location accessible to our clients.
+\subsection{Microsoft Access}
+Microsoft Office contains Microsoft Access as a tool for creating custom SQL databases accessible from a browser \cite{access}.
+The advantage of using Microsoft Office software is that for anyone with an Oregon State email has access to the Microsoft Office suite, which includes our clients \cite{microsoftsoftware}.
+Access also utilizes SharePoint to allow for sharing of database among multiple users and database permissions \cite{access}.
+This would be really useful, as our clients can share access and permissions among any employees of STEM Academy that would need it, and since we, the developers, will likely also need access and permissions while developing the project, we can use our own Oregon State email accounts for access.
+% Need to check with Information Services or the department IT for STEM Academy about cost and server (though I'm pretty sure it's Microsoft Azure SQL Database, which comes with Access
+\subsection{phpMyAdmin}
+phpMyAdmin is a free tool written in PHP for accessing MySQL databases, specifically over the web \cite{phpmyadmin}.
+Since it is written in PHP, if we develop our system as a web application, it will become easier to write the system using PHP and use PHP to generate queries to the database.
+phpMyAdmin utilizes a web interface for setting up and editing its database, though this may see limited use as our clients will likely be using our custom web interface for dealing with the database.
+phpMyAdmin is also very well documented, which makes for ease of development \cite{phpmyadmin}.
+Another strong advantage is that phpMyAdmin is free, cutting costs for our client, though a separate web server will also be necessary.
+\subsection{MongoDB}
+MongoDB is an open-source document-oriented database software built on NoSQL \cite{mongodb}.
+Like phpMyAdmin, MongoDB is free, which reduces or eliminates the cost for our clients to uphold the database.
+MongoDB is also document-oriented, which means that it organizes and manages data as documents \cite{docdb}.
+This type of structure and orientation fits well with the storing of surveys, which are inherently documents, however, this does not work for storing data on students and their responses, which may require a more traditional relational database system to connect the students with their survey responses.
+
+\section{Distribution of surveys}
+Surveys must be distributable in URLs or other formats so that survey takers can easily access the survey from their own computer.
+\subsection{TinyURL}
+\subsection{QR Code Generator}
+\subsection{MailChimp}
+MailChimp is a tool used for sending out marketing emails and automated messages \cite{mailchimp}.
+Emails can be generated using HTML and CSS, and collaboration options are built in for working on those emails as a team \cite{mailchimp_features, mailchimp_email}.
+Tools also exist for automating emails, though this is more target towards marketing and usage, and less mailing lists, which is all our clients need \cite{mailchimp_features}.
+MailChimp also provides an API for use in developing \cite{mailchimp_features}.
+As marketing software, MailChimp has many features and uses, many of which would be superfluous for our clients, who only need a way to provide a quick-access link to the surveys and distribute them in a way that survey takers can access them from many different locations.
+Email lists and automated messages are provided by MailChimp for this, but it could be easier to use different tools that are more focused on just those features.
+
+\section{Printing of suveys}
+Surveys that are generated on our system must have the ability to be printed and distributed on paper instead of just online.
+\subsection{HTML window.print()}
+\subsection{CSS Method} % This is the one on StackExchange
+\subsection{JQuery Method} % This is a JQuery library solution for printing to PDF
+
+\section{Decision}
+
+
+\begin{thebibliography}{99} % Lower this when done
+
+\bibitem{access}
+`Database Software and Applications | Microsoft Access.' [Online] Available: https://products.office.com/en-us/access. [Accessed: Nov 13, 2016].
+
+\bibitem{microsoftsoftware}
+`Microsoft Software | Information Services | Oregon State University,' 2016. [Online]. Available: http://is.oregonstate.edu/service/software/microsoft-software. [Accessed: Nov 13, 2016].
+
+\bibitem{phpmyadmin}
+`phpMyAdmin,' 2003-2016. [Online]. Available: https://www.phpmyadmin.net/. [Accessed: Nov 13, 2016].
+
+\bibitem{mongodb}
+`MongoDB for GIANT Ideas | MongoDB,' 2016. [Online]. Available: https://www.mongodb.com/. [Accessed: Nov 13, 2016].
+
+\bibitem{docdb}
+Lijin Joseji, `11 OPEN NoQL Document Oriented Databases,' July 23, 2012. [Online]. Available: https://dzone.com/articles/11-open-nosql-document. [Accessed: Nov 13, 2016.]
+
+\bibitem{mailchimp}
+`About | MailChimp,' 2001-2016. [Online]. Available: https://mailchimp.com/about/. [Accessed: Nov 13, 2016]. 
+
+\bibitem{mailchimp_features}
+`Features | MailChimp,' 2001-2016. [Online]. Available: https://mailchimp.com/features/. [Accessed: Nov 13, 2016].
+
+\bibitem{mailchimp_email}
+`HTML Email Basics | Email Design Reference,' 2001-2016. [Online]. Available: http://templates.mailchimp.com/getting-started/html-email-basics/?\_ga=1.68323481.962129787.1479082297. [Accessed: Nov 13, 2016].
+
+\end{thebibliography}
+
+\end{document}
