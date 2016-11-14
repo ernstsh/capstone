@@ -1,0 +1,300 @@
+\documentclass[letterpaper,10pt,serif, draftclsnofoot,onecolumn, compsoc, titlepage]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{alltt}
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+\usepackage{pstricks, pst-node}
+
+\usepackage{geometry}
+\geometry{margin=.75in}
+
+\usepackage{hyperref}
+\title{The STEM Academy Data Solution}
+\author{Technology Review \\ Shannon Ernst, Kyle Nichols, Javier Franco\\ 14 November 2016\\ CS 461 Fall 2016\\ Group 48}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+\end{abstract}
+\newpage
+\section{Introduction}
+Data drives much change in today's world with the advent of data technology. The STEM Academy in Corvallis,
+ Oregon has been collecting data on their various camps and programs by paper surveys. This data has often 
+gone untabulated due to the shear amount of surveys. They now wish to move to a digital variety.
+ The STEM Academy Data Solution is comprised of three fundamental parts: survey generation, data storage and data analysis.
+At first glance, an obvious solution to the problem would be to use a piece of preexisting survey software such as Survey Monkey \cite{surveyMonkey}
+or Qualtrics\cite{qualtrics}, both of which allow a user at a basic level to create surveys with various question types, distribute the surveys 
+via a web link and view their collected data according to the survey. The primary drawback to both these solutions is that the 
+data would no longer be controlled by the STEM Academy and would be soley reliant on these programs. A secondary drawback
+ is the cost of these services which work on a premium basis\cite{surveyMonkeyCost}. Finally, the learning curve for the software is steep and contains
+many features which the STEM Academy does not require, making the software unmanageable for the STEM Academy. 
+The STEM Academy needs a solution which will allow them to maintain control of their data and meet their specific needs without
+additional fluff. As the STEM Academy is largely nontechnical, the software needs to be incredibly simple to use and require no 
+maintainence upon delivery. The following report will examine the techonologies which can be used to construct the solution. Shannon Ernst authored Section 2: Survey Generation. Kyle Nichols authored Section 3: Database Management, Section 4: Survey Distribution, Section 5: Printable Surveys and Section 6: Decision on Database Management, Survey Distribution and Printable Surveys. Javier Franco authored ... 
+\section{Survey Generation}
+In generating surveys, the user should be able to add/remove questions, adjust their ordering at any time, and control how 
+and when they are displayed. There are a multitude of ways to accomplish this and the results are as follows. 
+\subsection{Question and Survey Creation: Logic and Storage}
+The primary issue of survey generation is figuring out how to extract the information from the user that needs to be asked
+in a question and produce a digital form variant of it. If we were hard coding the surveys and questions, we would just create
+an html form with supporting logic and set it up so once a participant has filled it out it would post the responses to the data base. 
+However, our questions and survey generation need to be dynamic as the questions, ordering and content are likely to change over
+time and according to the camp or program. 
+\subsubsection{Option 1: FluidSurveys API}
+In order to avoid reinventing the wheel, an API could be used to help generate surveys. FluidSurveys is an API provided by Survey Monkey to generate questions and surveys. The surveys, questions and responses will be stored via FluidSurveys. The API returns JSON objects which could be used to generate the user interface of the project\cite{fluidSurveys}. As this is an API, the requesting of information 
+from the user can be severly masked as they could simply provide a list of questions, types, and answers and a survey will be 
+generated with a publically distributed link. 
+\subsubsection{Option 2: Qualtrics API}
+The Qualtrics API provides a variety of survey services depending on which of their platforms you want to use. For this project
+we would use there Survey Platform which allows for essentially everything but the creation of surveys\cite{qualtricsAPI}. You can only use the 
+API if you have access to a license, which OSU does have\cite{oregonStateQual}. You would construct your survey using their tool and then 
+use the API to access, update, distribute and view responses of the survey. They provide more export components and 
+transformation functions. All of their RESTful functions return JSON \cite{qualtricsAPI}. 
+\subsubsection{Option 3: From Scratch with JSON}
+One thing that most survey APIs have in common is that they store the construction of their survey and questions in a JSON structure. This will allow it to be interpretted in multiple different ways as it is just holding data. For example, a question JSON may be represented as such:
+\newline
+\{\\
+\indent "id": "ajfoijfe24",\\
+\indent "type": "multi",\\
+\indent "question": "What is your favorite animal?",\\
+\indent "answers": "dog, cat, tiger, dolphin"\\
+\}\\
+This JSON for questions could then be included in a JSON for a survey which would be constructed similarly. Then when the 
+survey is being built the user could simply select what type of question they want to insert and the JSON would continue to be constructed. The general set up of the JSON would also make it easier to store and allow for a variety of display interpretation. 
+\subsubsection{Discussion and Recommendation}
+The primary issue at hand is cost and security of data. The STEM Academy wants their data kept in house meaning that farming out
+ survey generation and data collection to a third party API is not ideal. While both FluidSurveys and Qualtrics offer many
+ aspects which allow for the simpler creation and construction of surveys, due to having to rely on them to host the surveys is a 
+deal breaker. In addition to losing direct control over the surveys and data, neither API is fully open source and some of their key feature require payments in order to get the API keys \cite{qualtricsAPI} \cite{surveyMonkeyCost}. Both however show clear structuring of JSON elements which are both
+very similar to one another. This gives a strong lead to simply construct the questions and surveys based on a similar JSON
+schema. The benefit to constructing our own JSON schema is that we can store the surveys and questions in our database
+without having to pay premiums for the API keys. We can also strip out a good portion of the functionality that we would never
+use. Therefore, constructing our own API from scratch is the best option. 
+\subsection{User Interface of Creating Survey}
+The primary issue of the user interface of creating surveys is, regardless of what is used to actually generate the survey, the 
+survey creator needs to have a sense of what their creating. They should be able to quickly and accurately create their questions
+and adjust the formatting of their survey. The fundamentals of the survey is creating a dynamic form.
+\subsubsection{Option 1: From Scratch with Backbone}
+Backbone is a javascript framework which is base on model-view-presenter which is the parent process of model-view-controller. It is
+ closely linked to UnderscoreJS for page templating services. Backbone does not do any form of data binding so it is faster for it with the trade off of if you wan the binding you have to write it yourself. This also means that Backbone relies on direct DOM manipulation
+ to enact changes \cite{backbone}. Backbone could be useful as it is lightweight, well documented and fast for large systems.
+\subsubsection{Option 2: From Scrath with React}
+React is a javascript library intended to focus primarily on the view portion of model-view-controller using a virtual DOM to selectively update portions of it. It generates the markup via javascript so you simply need to include the link to your javascript in the html \cite{react}. React is based on components, and sometimes states, but is primarily just javascript. Essentially, the javascript chooses how best to update the view in the most efficient way as data changes. React can also be rendered on the server meaning it can load faster than client based rendering. One problem with React
+ being just the view component of model-view-controller is that it does not have any support inherently for AJAX, event systems, 
+ data layer or promises. This means that it either needs to be paired with a framework or many things need to be constructed seperately \cite{reactStupid}. 
+\subsubsection{Option 3: From Scratch with AngularJS}
+AngularJS is a javascript framework which is based on model-view-controller. It has a two way binding system that binds the html
+ and javascript together so that  elements are able to dynamically appear with greater ease by continually updating the DOM \cite{angular}. By setting up templates of questions in html, these html snippets can be included multiple times in the survey. These templates would be repositories for inputs or sections of forms. Upon being submitted the information would be used to construct JSON objects which would represent the format of the survey. AngularJS is constructed with testabilitity and modularity in mind however is has a somewhat complex system of directives, controllers, factories, scopes and services which makes debugging difficult. It also requires it's own digest cycle to bind the data and the html which can make the timing of events difficult to track in debugging \cite{angVreact}. 
+\subsubsection{Discussion and Recommendation}
+The UI for creating the survey is going to require that templates are used. This is due to the nature of providing question types such
+as multiple choice, matrix and text entry which are going to be fundamentally different in their html representation. Using a model-
+view set up will allow for us to dynamically add these templates as the user adds them to the survey. As the user fills in required fields for these templates to construct their questions, we are going to want the data to be captured. This would best be done with 
+the two way data binding of AngularJS however the bigger the survey, the slower it will be due to this massive amount of binding. 
+Backbone or React would be a better option if we are looking for speed however the survey creation is not going to be largely 
+event driven eliminating the primary function of Backbone. As Backbone and React are both fairly light weight it is likely that there
+would be more overhead in generating code to get the functionality we desire. It is recommended that AngularJS is used for survey generation UI as it will allow for the developers to more easily seperate out concerns, create more html templates which will be
+specific to each question type and also dynamically store the information provided by the user via two way data binding. 
+\subsection{Creation of User Interface for Survey Taker}
+A participant needs to be able to take a survey and the their view will be generated based on the survey constructed by the user. This means that the participants survey view will be generated by predetermined schema, not a hard coded form. This dynamic
+quailty is the primary issue that needs to be addressed as most modern surveys allow for display logic and control flow. One of our requirements is usability which means the user should not have to manually skip over static elements. The survey 
+must be reactive to input and based on what the user designated in the survey generation step. 
+\subsubsection{Option 1: Angular Schema Form}
+Angular Schema Form generates a form based on JSON schema in a Bootstrap 3 style. It is open source and has many add ons for various styles, question types and features \cite{schemaio}. It posts JSON information back as it relies on AngularJS for two way data binding. The library is currently undergoing refactoring\cite{gitSchema}. This would also require that AngularJS is used which has its own limitations (see Section 2.2.3).
+\subsubsection{Option 2: From Scrath with React}
+React is a javascript library intended to focus primarily on the view portion of model-view-controller using a virtual DOM to selectively update portions of it. It generates the markup via javascript so you simply need to include the link to your javascript in the html \cite{react}. React is based on components, and sometimes states, but is primarily just javascript. Essentially, the javascript chooses how best to update the view in the most efficient way as data changes. React can also be rendered on the server meaning it can load faster than client based rendering. One problem with React
+ being just the view component of model-view-controller is that it does not have any support inherently for AJAX, event systems, 
+ data layer or promises. This means that it either needs to be paired with a framework or many things need to be constructed seperately \cite{reactStupid}. 
+\subsubsection{Option 3: JSON Form}
+JSON Form is an open source javascript library which creates an html form based on a JSON schema. The html includes client side validation where available. Upon completion of the form it returns javascript data structure model which matches the form. It is reliant upon jQuery and UnderscoreJS. The library has not been updated in three years \cite{jsonForm}. 
+
+\subsubsection{Discussion and Recommendation}
+Largely the generation of what the survey looks like will be determined in how the survey creation is stored. React would be a good option as it adjusts the view based on provided data meaning there could be more complicated control flow and display logic. The Angular Schema Form would allow for dynamic data binding and also dynamic control flow. Both of these require that the developers do more pre and post processing to ensure the form comes out correctly. The JSON Form library is set and would not require any additional set up, merely read the JSON. However it would not allow for dynamic control flow. It is recommended that React be used as it is lightweight and will allow for dynamic control flow. Though it will take more intial set up from JSON it will still be faster that Angular Schema which is also undergoing a refactoring leading to some instability of features. 
+
+\section{Database Management}
+For the database, we need to be able to set up the database (including the tables, relationships, etc.) and store it at a location accessible to our clients.
+\subsection{Microsoft Access}
+Microsoft Office contains Microsoft Access as a tool for creating custom SQL databases accessible from a browser \cite{access}.
+It stores those databases on its own Microsoft Azure SQL Database service \cite{access}.
+The advantage of using Microsoft Office software is that anyone with an Oregon State email has access to the Microsoft Office suite, which includes our clients \cite{microsoftsoftware}.
+Microsoft Access, in particular, can be installed on institutional computers by contacting the department's computer administrator, though there may still be a cost involved in this as well \cite{microsoftsoftware}.
+This is also on institutional computers only, which limits the access we have to Microsoft Access for developing the database.
+Microsoft Access also utilizes SharePoint to allow for sharing of database among multiple users and database permissions \cite{access}.
+This would be really useful, as our clients can share access and permissions among any employees of STEM Academy that would need it, and since we will likely also need access and permissions while developing the project, we can use our own Oregon State email accounts for access.
+% Need to check with Information Services or the department IT for STEM Academy about cost and server (though I'm pretty sure it's Microsoft Azure SQL Database, which comes with Access
+\subsection{phpMyAdmin}
+phpMyAdmin is a free tool written in PHP for accessing MySQL databases, specifically over the web \cite{phpmyadmin}.
+Since it is written in PHP, if we develop our system as a web application, it will become easier to write the system using PHP and use PHP to generate queries to the database.
+phpMyAdmin utilizes a web interface for setting up and editing its database, though this may see limited use as our clients will likely be using our custom web interface for dealing with the database.
+phpMyAdmin is also very well documented, which makes for ease of development \cite{phpmyadmin}.
+Another strong advantage is that phpMyAdmin is free, cutting costs for our client, though a separate web server will also be necessary.
+\subsection{MongoDB}
+MongoDB is an open-source document-oriented database software built on NoSQL \cite{mongodb}.
+MongoDB is also document-oriented, which means that it organizes and manages data as documents \cite{docdb}.
+This type of structure and orientation fits well with the storing of surveys, which are inherently documents, however, this does not work for storing data on students and their responses, which may require a more traditional relational database system to connect the students with their survey responses.
+As open source software, using the bare bones software for MongoDB is free of cost, which reduces or eliminates the cost for our clients to uphold the database. \cite{mongo_cost}.
+However, this is for the bare bones software, and if there are additional features needed by our clients that MongoDB provides, that will require additional cost \cite{mongo_cost}.
+
+\section{Survey Distribution}
+Surveys must be distributable in URLs or other formats so that survey takers can easily access the survey from their own computer. The most useful format would be through email.
+\subsection{PHP mail}
+This is the built-in mail functionality for PHP \cite{php_mail}.
+The \texttt{mail()} function covers all of the basic requirents of sending an email (sender, destination, message, additional headers such as CC information) \cite{php_mail}.
+Emails generated by HTML, similar to MailChimp below in allowing for customization of emails, can also be sent by the \texttt{mail()} function \cite{php_mail}.
+A simple, built-in function has the advantage of easily being used and integrated in our system, which may likely use PHP, without employing outside systems and services that come with more features than are necessary.
+PHP's \texttt{mail()} function doesn't employ any encryption and privacy features or automation, however.
+If we used this as our way of mailing out automated emails, we would have to do extra work to encrypt it and to generate the emails on a mailing list.
+These are still things that can be done from scratch in the PHP code, but it is also more code that we would have to write for the system.
+Another downside to generating automated emails on a mailing list is that the \texttt{mail()} function opens and closes an SMTP socket on each email, which is inefficient for iterating over a mailing list \cite{php_mail}.
+\subsection{PHPMailer}
+In direct contrast to the built in \texttt{mail()} function for PHP, PHPMailer is an open-source API for sending emails from PHP \cite{phpmailer}.
+PHPMailer uses the same basic setup details for emails that the \texttt{mail()} function does, but it also includes several other additional features that the \texttt{mail()} function does not \cite{phpmailer}.
+SMTP support is integrated in PHPMailer, meaning having a separate, local mail server is not necessary \cite{phpmailer}.
+This feature in particular could be useful if STEM Academy does not have the resources for a local web server and only has access to their own @oregonstate.edu emails.
+The SMTP integration also includes authentication \cite{phpmailer}.
+Emails in PHPMailer can use HTML for customization, but can also send alternative, non-HTML versions for non-HTML clients \cite{phpmailer}.
+\subsection{MailChimp}
+MailChimp is a tool used for sending out marketing emails and automated messages \cite{mailchimp}.
+Emails can be generated using HTML and CSS, and collaboration options are built in for working on those emails as a team \cite{mailchimp_features, mailchimp_email}.
+Tools also exist for automating emails, though this is more target towards marketing and usage, and less mailing lists, which is all our clients need \cite{mailchimp_features}.
+MailChimp also provides an API for use in developing \cite{mailchimp_features}.
+As marketing software, MailChimp has many features and uses, many of which would be superfluous for our clients, who only need a way to provide a quick-access link to the surveys and distribute them in a way that survey takers can access them from many different locations.
+Also as marketing software, it's purpose is drastically different from what we would be using it for.
+Email lists and automated messages are provided by MailChimp for this, but it could be easier to use different tools that are more focused on just those features.
+
+\section{Printable Surveys}
+Surveys that are generated on our system must have the ability to be printed and distributed on paper instead of just online.
+\subsection{HTML \texttt{window.print()}}
+This is a built-in function for HTML which will print the web page by opening up the print dialog box for the browser being used \cite{window_print}.
+The \texttt{print()} function exists as part of the Window object in HTML, which represents an open wndow in a browser \cite{window}.
+It is supported by all browsers, though without any standard enforced between them \cite{window}.
+The ease of this method is that it is supported by all browsers and can use their printing functionality, which might provide a wide variety of options in how it is printed.
+Unfortunately, this means it also not an automated method, though our clients may not need anything automated and may just want a way to easily print the surveys generated.
+The Window object contains many different properties and functions that could be used in other areas of our web service, though this is the only one that would apply to our specific need for printing of surveys and other pages.
+\subsection{CSS} % This is the one on StackExchange
+Cascading Style Sheets describe how HTML web pages are display on screen or other media, such as paper \cite{css}.
+It can even control multiple web pages at once \cite{css}.
+Although CSS can be useful in the general development of our web service, it can also be used for formatting and displaying a web page.
+This is because HTML only describes content \cite{css}.
+Since we will likely be using HTML or PHP to display content, CSS will probably be necessary to not only make our web pages user friendly in appearance, but also to ensure that they are formatted in a way that pages are easily printable.
+Although we may primarily use a different, defined method for printing pages, we may also use CSS in conjunction to format our pages so they look clean and formatted for printing.
+\subsection{css2pdf} % This is a JQuery library solution for printing to PDF
+This is a Javascript library intended to be plugged-in to a website for creating a print button on a web page that produces a PDF as embedded or downloadable (though some features are only supported by certain browsers) \cite{css2pdf}.
+The format of the generated PDF can be set and any HTML or CSS stylings are applied to the printed selections \cite{css2pdf}.
+This allows us to generate a button on the page without creating the code to do so from scratch and applying it to a built-in function, like \texttt{window.print()} above.
+It supports several HTML elements such as different block elements, tables, and lists \cite{css2pdf_home}.
+It is also in process and being improved and will likely add more features and capabilities in the future, though this may not be useful as we will most likely finish developing this project at the end of the year.
+
+\section{Decision for Database Management, Survey Distribution and Printable Surveys}
+Whichever software we use for the database setup and storage will need to depend on what cost Microsoft Access would have for STEM Academy.
+If the cost is manageable for STEM Academy, we could use Microsoft Access.
+However, if it is not, we may decide on phpMyAdmin.
+Although it would require accessing a web server that can be hosted on Oregon State's infrastructure (which is done in database classes), it is free software that can accomplish what we need without any worries of cost.
+For distributing the surveys, our best solution will probably be PHPMailer.
+It provides the functionality of the built-in \texttt{mail()} function, but with extra options that could be useful for us, including not requiring a separate web server.
+For printing surveys, the css2pdf library looks like a more rounded option than the default \texttt{print()} function without having to do some extra work on our part (such as creating our own print button). 
+
+\begin{thebibliography}{2}
+\bibitem{surveyMonkey}
+'Survey Monkey Homepage' [Online] https://www.surveymonkey.com/ [Accessed: Nov 13, 2016]
+
+\bibitem{qualtrics}
+'Qualtrics Homepage' [Online] https://www.qualtrics.com/ [Accessed: Nov 13, 2016]
+
+\bibitem{surveyMonkeyCost}
+'Survey Monkey Plans and Pricing' [Online] https://www.surveymonkey.com/pricing [Accessed: Nov 13, 2016]
+
+\bibitem{fluidSurveys}
+'Survey JSON' [Online] http://docs.fluidsurveys.com/fluidsurveys/api/json.html [Accessed: Nov 13, 2016]
+
+\bibitem{qualtricsAPI}
+'The Qualtrics Developer Hub' [Online] https://api.qualtrics.com/ [Accessed: Nov 13, 2016]
+
+\bibitem{oregonStateQual}
+'Oregon State University: Qualtrics' [Online] http://main.oregonstate.edu/qualtrics [Accessed: Nov 13, 2016]
+
+\bibitem{backbone}
+I. Herskovits, 'AngularJS vs. Backbone.js,' in Back\&, 2015. [Online] http://blog.backand.com/angular-vs-backbone/ [Accessed: Nov 13, 2016]
+
+\bibitem{react}
+'React: A javascript library for building user interfaces' [Online] https://facebook.github.io/react/ [Accessed: Nov 13 2016]
+
+\bibitem{reactStupid}
+A. Ray, 'ReactJS for Stupid People,' in Andrew Ray’s Blog, 2014. [Online] http://blog.andrewray.me/reactjs-for-stupid-people/ [Accessed: Nov 13, 2016]
+
+\bibitem{angular}
+'AngularJS Home Page' [Online] https://angularjs.org/ [Accessed: Nov 13, 2016]
+
+\bibitem{angVreact}
+K. Sanket, 'Why I Ditched Angular for React,' in Six Revisions, 2015. [Online] http://sixrevisions.com/javascript/why-i-ditched-angular-for-react/ [Accessed: Nov 13, 2016]
+
+\bibitem{schemaio}
+'Angular Schema Form' [Online] http://schemaform.io/ [Accessed: Nov 13, 2016]
+
+\bibitem{gitSchema}
+'github: angular-shema-form' [Online] https://github.com/json-schema-form/angular-schema-form/blob/master/docs/index.md [Accessed: Nov 13, 2016]
+
+\bibitem{jsonForm}
+'github: jsonform' [Online] https://github.com/joshfire/jsonform [Accessed: Nov 13, 2016]
+
+\bibitem{access}
+`Database Software and Applications | Microsoft Access.' [Online] Available: https://products.office.com/en-us/access. [Accessed: Nov 13, 2016].
+
+\bibitem{microsoftsoftware}
+`Microsoft Software | Information Services | Oregon State University.' [Online]. Available: http://is.oregonstate.edu/service/software/microsoft-software. [Accessed: Nov 13, 2016].
+
+\bibitem{phpmyadmin}
+`phpMyAdmin.' [Online]. Available: https://www.phpmyadmin.net/. [Accessed: Nov 13, 2016].
+
+\bibitem{mongodb}
+`MongoDB for GIANT Ideas | MongoDB.' [Online]. Available: https://www.mongodb.com/. [Accessed: Nov 13, 2016].
+
+\bibitem{docdb}
+Lijin Joseji, `11 OPEN NoQL Document Oriented Databases,' July 23, 2012. [Online]. Available: https://dzone.com/articles/11-open-nosql-document. [Accessed: Nov 13, 2016].
+
+\bibitem{mongo_cost}
+`MongoDB Cost Breakdown,' Dec 15, 2011. [Online]. Available: https://www.compose.com/articles/mongodb-cost-breakdown/. [Access: Nov 13, 2016].
+
+\bibitem{php_mail}
+'PHP: mail - Manual.' [Online]. Available: http://php.net/manual/en/function.mail.php. [Accessed: Nov 13, 2016].
+
+\bibitem{phpmailer}
+'PHPMailer/PHPMailer: The classic email sending library for PHP.' [Online]. Available: https://github.com/PHPMailer/PHPMailer. [Accessed: Nov 13, 2016].
+
+\bibitem{mailchimp}
+`About | MailChimp.' [Online]. Available: https://mailchimp.com/about/. [Accessed: Nov 13, 2016]. 
+
+\bibitem{mailchimp_features}
+`Features | MailChimp.' [Online]. Available: https://mailchimp.com/features/. [Accessed: Nov 13, 2016].
+
+\bibitem{mailchimp_email}
+`HTML Email Basics | Email Design Reference.' [Online]. Available: http://templates.mailchimp.com/getting-started/html-email-basics/?\_ga=1.68323481.962129787.1479082297. [Accessed: Nov 13, 2016].
+
+\bibitem{window_print}
+'Window print() Method.' [Online]. Available: http://www.w3schools.com/jsref/met\_win\_print.asp. [Accessed: Nov 13, 2016].
+
+\bibitem{window}
+'Window Object.'  [Online]. Available: http://www.w3schools.com/jsref/obj\_window.asp. [Accessed: Nov 13, 2016].
+
+\bibitem{css}
+'CSS Introduction.' [Online]. Available: http://www.w3schools.com/css/css\_intro.asp. [Accessed: Nov 13, 2016].
+
+\bibitem{css2pdf}
+'Xportability/css-to-pdf: Convert any HTML page or region to PDF - supports CSS, SVG, embedded XML objects, and more...' [Online]. Available: https://github.com/Xportability/css-to-pdf. [Accessed: Nov 13, 2016].
+
+\bibitem{css2pdf_home}
+'css2pdf@cloudformatter.' [Online]. Available: http://www.cloudformatter.com/CSS2Pdf. [Accessed: Nov 13, 2016].
+
+
+\end{thebibliography}
+\end{document}
