@@ -1,0 +1,124 @@
+\documentclass[letterpaper,10pt,serif, draftclsnofoot,onecolumn, compsoc, titlepage]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{alltt}
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+\usepackage{pstricks, pst-node}
+
+\usepackage{geometry}
+\geometry{margin=.75in}
+
+\usepackage{hyperref}
+\title{The STEM Academy Data Solution}
+\author{Technology Review for Survey Generation \\ Shannon Ernst\\ 14 November 2016\\ CS 461 Fall 2016\\ Group 48}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+\end{abstract}
+\newpage
+\section{Introduction}
+Data drives much change in today's world with the advent of data technology. The STEM Academy in Corvallis,
+ Oregon has been collecting data on their various camps and programs by paper surveys. This data has often 
+gone untabulated due to the shear amount of surveys. They now wish to move to a digital variety.
+ The STEM Academy Data Solution is comprised of three fundamental parts: survey generation, data storage and data analysis.
+At first glance, an obvious solution to the problem would be to use a piece of preexisting survey software such as Survey Monkey
+or Qualtrics, both of which allow a user at a basic level to create surveys with various question types, distribute the surveys 
+via a web link and view their collected data according to the survey. The primary drawback to both these solutions is that the 
+data would no longer be controlled by the STEM Academy and would be soley reliant on these programs. A secondary drawback
+ is the cost of these services which work on a premium basis. Finally, the learning curve for the software is steep and contains
+many features which the STEM Academy does not require, making the software unmanageable for the STEM Academy. 
+The STEM Academy needs a solution which will allow them to maintain control of their data and meet their specific needs without
+additional fluff. As the STEM Academy is largely nontechnical, the software needs to be incredibly simple to use and require no 
+maintainence upon delivery. The following report will examine the techonologies which can be used to construct the first need of 
+the STEM Academy: survey generation.
+\section{Survey Generation}
+In generating surveys, the user should be able to add/remove questions, adjust their ordering at any time, and control how 
+and when they are displayed. There are a multitude of ways to accomplish this and the results are as follows. 
+\subsection{Question and Survey Creation: Logic and Storage}
+The primary issue of survey generation is figuring out how to extract the information from the user that needs to be asked
+in a question and produce a digital form variant of it. If we were hard coding the surveys and questions, we would just create
+an html form with supporting logic and set it up so once a participant has filled it out it would post the responses to the data base. 
+However, our questions and survey generation need to be dynamic as the questions, ordering and content are likely to change over
+time and according to the camp or program. 
+\subsubsection{Option 1: FluidSurveys API}
+In order to avoid reinventing the wheel, an API could be used to help generate surveys. FluidSurveys is an API provided by Survey Monkey to generate questions and surveys. The surveys, questions and responses will be stored via FluidSurveys. The API returns JSON objects which could be used to generate the user interface of the project. As this is an API, the requesting of information 
+from the user can be severly masked as they could simply provide a list of questions, types, and answers and a survey will be 
+generated with a publically distributed link. 
+\subsubsection{Option 2: Qualtrics API}
+The Qualtrics API provides a variety of survey services depending on which of their platforms you want to use. For this project
+we would use there Survey Platform which allows for essentially everything but the creation of surveys. You can only use the 
+API if you have access to a license, which OSU does have. You would construct your survey using their tool and then 
+use the API to access, update, distribute and view responses of the survey. They provide more export components and 
+transformation functions. All of their RESTful functions return JSON. 
+\subsubsection{Option 3: From Scratch with JSON}
+One thing that most survey APIs have in common is that they store the construction of their survey and questions in a JSON structure. This will allow it to be interpretted in multiple different ways as it is just holding data. For example, a question JSON may be represented as such:
+\newline
+\{\\
+\indent "id": "ajfoijfe24",\\
+\indent "type": "multi",\\
+\indent "question": "What is your favorite animal?",\\
+\indent "answers": "dog, cat, tiger, dolphin"\\
+\}\\
+This JSON for questions could then be included in a JSON for a survey which would be constructed similarly. Then when the 
+survey is being built the user could simply select what type of question they want to insert and the JSON would continue to be constructed. The general set up of the JSON would also make it easier to store and allow for a variety of display interpretation. 
+\subsubsection{Discussion and Recommendation}
+The primary issue at hand is cost and security of data. The STEM Academy wants their data kept in house meaning that farming out
+ survey generation and data collection to a third party API is not ideal. While both FluidSurveys and Qualtrics offer many
+ aspects which allow for the simpler creationg and construction of surveys, due to having to rely on them to host the surveys is a 
+deal breaker. In addition to losing direct control over the surveys and data, neither API is fully open source and some of their key feature require payments in order to get the API keys. Both however show clear structuring of JSON elements which are both
+very similar to one another. This gives a strong lead to simply construct the questions and surveys based on a similar JSON
+schema. The benefit to constructing our own JSON schema is that we can store the surveys and questions in our database
+without having to pay premiums for the API keys. We can also strip out a good portion of the functionality that we would never
+use.
+\subsection{User Interface of Creating Survey}
+The primary issue of the user interface of creating surveys is, regardless of what is used to actually generate the survey, the 
+survey creator needs to have a sense of what their creating. They should be able to quickly and accurately create their questions
+and adjust the formatting of their survey. The fundamentals of the survey is creating a form.
+\subsubsection{Option 1: From Scratch with Backbone}
+Backbone is a javascript framework which is base on model-view-presenter which is the parent process of model-view-controller. It is
+ closely linked to UnderscoreJS for page templating services. Backbone does not do any form of data binding so it is faster for it with the trade off of if you wan the binding you have to write it yourself. This also means that Backbone relies on direct DOM manipulation
+ to enact changes. Backbone could be useful as it is lightweight, well documented and fast for large systems.
+\subsubsection{Option 2: From Scrath with React}
+React is a javascript library intended to focus primarily on the view portion of model-view-controller using a virtual DOM to selectively update portions of it. It generates the markup via javascript so you simply need to include the link to your javascript in the html. React is based on components, and sometimes states, but is primarily just javascript. Essentially, the javascript chooses how best to update the view in the most efficient way as data changes. React can also be rendered on the server meaning it can load faster than client based rendering. One problem with React
+ being just the view component of model-view-controller is that it does not have any support inherently for AJAX, event systems, 
+ data layer or promises. This means that it either needs to be paired with a framework or many things need to be constructed seperately. 
+\subsubsection{Option 3: From Scratch with AngularJS}
+AngularJS is a javascript framework which is based on model-view-controller. It has a two way binding system that binds the html
+ and javascript together so that  elements are able to dynamically appear with greater ease by continually updating the DOM. By setting up templates of questions in html, these html snippets can be included multiple times in the survey. These templates would be repositories for inputs or sections of forms. Upon being submitted the information would be used to construct JSON objects which would represent the format of the survey. AngularJS is constructed with testabilitity and modularity in mind however is has a somewhat complex system of directives, controllers, factories, scopes and services which makes debugging difficult. It also requires it's own digest cycle to bind the data and the html which can make the timing of events difficult to track in debugging. 
+\subsubsection{Discussion and Recommendation}
+The UI for creating the survey is going to require that templates are used. This is due to the nature of providing question types such
+as multiple choice, matrix and text entry which are going to be fundamentally different in their html representation. Using a model-
+view set up will allow for us to dynamically add these templates as the user adds them to the survey. As the user fills in required fields for these templates to construct their questions, we are going to want the data to be captured. This would best be done with 
+the two way data binding of AngularJS however the bigger the survey, the slower it will be due to this massive amount of binding. 
+Backbone or React would be a better option if we are looking for speed however the survey creation is not going to be largely 
+event driven eliminating the primary function of Backbone. As Backbone and React are both fairly light weight it is likely that there
+would be more overhead in generating to get the functionality we desire. It is recommended that AngularJS is used for survey generation UI as it will allow for the developers to more easily seperate out concerns, create more html templates which will be
+specific to each question type and also dynamically store the information provided by the user via two way data binding. 
+\subsection{Creation of User Interface for Survey Taker}
+\subsubsection{Option 1: Angular Schema Form}
+Angular Schema Form generates a form based on JSON schema in a Bootstrap 3 style. It is open source and has many add ons for various styles, question types and features. It posts JSON information back as it relies on AngularJS for two way data binding. The library is currently undergoing refactoring. 
+\subsubsection{Option 2: From Scrath with React}
+React is a javascript library intended to focus primarily on the view portion of model-view-controller using a virtual DOM to selectively update portions of it. It generates the markup via javascript so you simply need to include the link to your javascript in the html. React is based on components, and sometimes states, but is primarily just javascript. Essentially, the javascript chooses how best to update the view in the most efficient way as data changes. React can also be rendered on the server meaning it can load faster than client based rendering. One problem with React
+ being just the view component of model-view-controller is that it does not have any support inherently for AJAX, event systems, 
+ data layer or promises. This means that it either needs to be paired with a framework or many things need to be constructed seperately. 
+\subsubsection{Option 3: JSON Form}
+JSON Form is an open source javascript library which creates an html form based on a JSON schema. The html includes client side validation where available. Upon completion of the form it returns javascript data structure model which matches the form. It is reliant upon jQuery and UnderscoreJS. The library has not been updated in three years. 
+
+\subsubsection{Discussion and Recommendation}
+Largely the generation of what the survey looks like will be determined in how the survey creation is stored. React would be a good option as it adjusts the view based on provided data meaning there could be more complicated control flow and display logic. The Angular Schema Form would allow for dynamic data binding and also dynamic control flow. Both of these requre that the developers due more pre and post processing to ensure the form comes out correctly. The JSON Form library is set and would not require any additional set up, merely read the JSON. However it would not allow for dynamic control flow. It is recommended that React be used as it is lightweight and will allow for dynamic control flow. Though it will take more intial set up from JSON it will still be faster that Angular Schema which is also undergoing a refactoring leading to some instability of features. 
+ 
+
+\section{Conclusion}
+\end{document}
