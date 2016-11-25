@@ -1,0 +1,41 @@
+Surveys
+- Should have an ID to uniquely identify a survey
+- Should also have a title
+- Contains IDs of questions that are included in the survey
+
+Questions
+- Should have an ID
+- Text attribute of the actual question text
+- Also should have a list of IDs of surveys this question is contained in
+	- This is a many-to-many relationship, and any survey ID found in a question should have the corresponding question ID in that survey
+	
+Response
+- It's ID is a combosite of the responder and the question
+- Contains the following specializations:
+
+Multiple-choice
+- A specialization of Response
+- Uses a char attribute to save the multiple choice answer
+
+Matrix
+- A specialization of Response
+- Uses a numerical attribute to save the answer
+
+Text
+- A specialization of Response.
+- This contains a text field attribute for the response
+
+Responder
+- Describes a responder with two specializations: Parent and Student
+- Contains a unique ID
+- Contains a first_name and last_name attribute. Composited as full_name
+- A data attribute to store their birthdate
+- The numerical age attribute is derived from their birthdate
+
+Parent
+- A specialization of Responder
+- Contains the ID of their child Student
+
+Student
+- A specialization of Responder
+- Contains the ID of their Parent
