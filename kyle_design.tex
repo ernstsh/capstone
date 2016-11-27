@@ -139,4 +139,48 @@ The below diagram outlines the relational database schema described above.
 \end{tikzpicture}
 \captionof{figure}{The relational database schema}
 
+% *** TALK ABOUT TABLE GENERATION (use AUTO_INCREMENT)
+\subsection{Database creation}
+
+\subsection{Database interaction}
+To allow for interaction between the survey and report generation, an API will need to be created to work with both.
+The API will be written in PHP since PHP provides functionality to generate SQL queries with a database using \texttt{mysqli} objects and the \texttt{query()} function.
+\subsubsection{Interacting with the survey generation}
+Since the survey generation will be done using JSON, the API will need to get the POST information as the JSON object and parse it for a SQL INSERT.
+It will do so using the following design:
+\begin{enumerate}
+	\item Generate a string \texttt{sql_query} for the SQL query setting up the INSERT query with `INSERT INTO ` and adding the name of the table from the POST information.
+	\item Because each table has different sets of attributes, a switch statement will be used to check the table name and add the necessary string to \texttt{sql_query} (this switch statement will take the value from the POST and convert it all to lowercase).
+	\begin{enumerate}
+		\item The Survey table will add `(title)`.
+		\item The Contains table will add `(survey\_id, question\_id)`.
+		\item The Question table will add `(text)`.
+		\item The Response table will add `(question\_id, responder\_id)`.
+		\item The Multiple_Choice, Matrix, and Text tables will add `(question\_id, responder\_id, answer)`.
+		\item The Responder table will add `(last\_name, first\_name, birthdate, age)`
+		\item The Student table will add `(responder\_id, parent1\_id, parent2\_id)`.
+		\item The Parent table will add `(responder\_id)`.
+	\end{enumerate}
+	\item The string `VALUES ` will be appended to \texttt{sql_query}.
+	\item A while loop will wrap around the following process to account for multiple entries being added to the table.
+	\begin{enumerate}
+		\item There will be another switch structure to determine the number of values that will be inserted based on the table to be inserted into:
+		\begin{enumerate}
+			\item The Survey, Question, and Parent tables will read one value and add `(\emph{value1}),` to \texttt{sql_query} accordingly.
+			\item The Contains and Reponse tables will read two values and add `(\emph{value1}, \emph{value2}),` to \texttt{sql_query}.
+			\item The Multiple_Choice, Matrix, Text, and Student tables will read three values and add `(\emph{value1}, \emph{value2}, \emph{value3}),` to \texttt{sql_query}.
+			\item The Responder table will read four values and add `(\emph{value1}, \emph{value2}, \emph{value3}, \emph{value4}, \emph{value5}),` to \texttt{sql_query}.
+		\end{enumerate}
+	\end{enumerate}
+	\item After the loop, the last character of \texttt{sql_query} should be a comma, and it will be replaced with a semicolon.
+	\item After the string has been completed, a mysqli object \texttt{conn} will be created that connects to the server the database is stored on.
+	\item A call to \texttt{conn}'s function \texttt{query()}, passing \texttt{sql_query} as the argument query string.
+				The result will be stored in a variable called \texttt{result}.
+	\item There will be a check on if the value of \texttt{result} is true.
+	\begin{enumerate}
+		\item If it is true, then display a success message.
+		\item If it is not true, then display an error message.
+	\end{enumerate}
+\end{enumerate}
+
 \end{document}
