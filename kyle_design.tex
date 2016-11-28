@@ -27,6 +27,7 @@
 \colorlet{lightgray}{gray!20}
 
 \usepackage{caption}
+\usepackage{listings}
 
 \begin{document}
 
@@ -139,8 +140,111 @@ The below diagram outlines the relational database schema described above.
 \end{tikzpicture}
 \captionof{figure}{The relational database schema}
 
-% *** TALK ABOUT TABLE GENERATION (use AUTO_INCREMENT)
 \subsection{Database creation}
+Each table will be created with the following SQL syntax.
+In particular, tables will use AUTO INCREMENT to automatically increment and create IDs.
+They will also be done in the following order because some tables reference others.
+\lstset{breaklines=true}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Survey
+(
+ survey_id int NOT NULL AUTO_INCREMENT
+ title varchar(255)
+ PRIMARY KEY (survey_id)
+)
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Question
+(
+ question_id int NOT NULL AUTO_INCREMENT
+ text varchar(1020) NOT NULL
+ PRIMARY KEY (question_id)
+)
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Contains
+(
+ survey_id int NOT NULL
+ question_id int NOT NULL
+ PRIMARY KEY (survey_id, question_id)
+ FOREIGN KEY (survey_id) REFERENCES Survey(survey_id)
+ FOREIGN KEY (question_id) REFERENCES Question(question_id)
+)
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Responder
+(
+ responder_id int NOT NULL AUTO_INCREMENT
+ first_name varchar(255) NOT NULL
+ last_name varchar(255) NOT NULL
+ birthdate date
+ age int
+ PRIMARY KEY (responder_id)
+)
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Parent
+(
+ responder_id int NOT NULL
+ PRIMARY KEY (responder_id)
+ FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
+)
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Student
+(
+ responder_id int NOT NULL
+ parent1_id int
+ parent2_id int
+ PRIMARY KEY (responder_id)
+ FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
+ FOREIGN KEY (parent1_id) REFERENCES Parent(responder_id)
+ FOREIGN KEY (parent2_id) REFERENCES Parent(responder_id)
+)
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Response
+(
+ question_id int NOT NULL
+ responder_id int NOT NULL
+ PRIMARY KEY (question_id, responder_id)
+ FOREIGN KEY (question_id) REFERENCES Question(question_id)
+ FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
+)
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Multiple_Choice
+(
+ question_id int NOT NULL
+ responder_id int NOT NULL
+ answer char(1)
+ PRIMARY KEY (question_id, responder_id)
+ FOREIGN KEY (question_id) REFERENCES Question(question_id)
+ FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
+)
+\end{litlisting}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Matrix
+(
+ question_id int NOT NULL
+ responder_id int NOT NULL
+ answer int
+ PRIMARY KEY (question_id, responder_id)
+ FOREIGN KEY (question_id) REFERENCES Question(question_id)
+ FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
+)
+\end{listlisting}
+\begin{lstlisting}[language=SQL]
+CREATE TABLE Text
+(
+ question_id int NOT NULL
+ responder_id int NOT NULL
+ answer varchar(1020)
+ PRIMARY KEY (question_id, responder_id)
+ FOREIGN KEY (question_id) REFERENCES Question(question_id)
+ FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
+)
+\end{listlisting}
 
 \subsection{Database interaction}
 To allow for interaction between the survey and report generation, an API will need to be created to work with both.
@@ -149,38 +253,55 @@ The API will be written in PHP since PHP provides functionality to generate SQL 
 Since the survey generation will be done using JSON, the API will need to get the POST information as the JSON object and parse it for a SQL INSERT.
 It will do so using the following design:
 \begin{enumerate}
-	\item Generate a string \texttt{sql_query} for the SQL query setting up the INSERT query with `INSERT INTO ` and adding the name of the table from the POST information.
-	\item Because each table has different sets of attributes, a switch statement will be used to check the table name and add the necessary string to \texttt{sql_query} (this switch statement will take the value from the POST and convert it all to lowercase).
+	\item Generate a string \texttt{sql\_query} for the SQL query setting up the INSERT query with `INSERT INTO ` and adding the name of the table from the POST information.
+	\item Because each table has different sets of attributes, a switch statement will be used to check the table name and add the necessary string to \texttt{sql\_query} (this switch statement will take the value from the POST and convert it all to lowercase).
 	\begin{enumerate}
 		\item The Survey table will add `(title)`.
 		\item The Contains table will add `(survey\_id, question\_id)`.
 		\item The Question table will add `(text)`.
 		\item The Response table will add `(question\_id, responder\_id)`.
-		\item The Multiple_Choice, Matrix, and Text tables will add `(question\_id, responder\_id, answer)`.
+		\item The Multiple\_Choice, Matrix, and Text tables will add `(question\_id, responder\_id, answer)`.
 		\item The Responder table will add `(last\_name, first\_name, birthdate, age)`
 		\item The Student table will add `(responder\_id, parent1\_id, parent2\_id)`.
 		\item The Parent table will add `(responder\_id)`.
 	\end{enumerate}
-	\item The string `VALUES ` will be appended to \texttt{sql_query}.
+	\item The string `VALUES ` will be appended to \texttt{sql\_query}.
 	\item A while loop will wrap around the following process to account for multiple entries being added to the table.
 	\begin{enumerate}
 		\item There will be another switch structure to determine the number of values that will be inserted based on the table to be inserted into:
 		\begin{enumerate}
-			\item The Survey, Question, and Parent tables will read one value and add `(\emph{value1}),` to \texttt{sql_query} accordingly.
-			\item The Contains and Reponse tables will read two values and add `(\emph{value1}, \emph{value2}),` to \texttt{sql_query}.
-			\item The Multiple_Choice, Matrix, Text, and Student tables will read three values and add `(\emph{value1}, \emph{value2}, \emph{value3}),` to \texttt{sql_query}.
-			\item The Responder table will read four values and add `(\emph{value1}, \emph{value2}, \emph{value3}, \emph{value4}, \emph{value5}),` to \texttt{sql_query}.
+			\item The Survey, Question, and Parent tables will read one value and add `(\emph{value1}),` to \texttt{sql\_query} accordingly.
+			\item The Contains and Reponse tables will read two values and add `(\emph{value1}, \emph{value2}),` to \texttt{sql\_query}.
+			\item The Multiple\_Choice, Matrix, Text, and Student tables will read three values and add `(\emph{value1}, \emph{value2}, \emph{value3}),` to \texttt{sql\_query}.
+			\item The Responder table will read four values and add `(\emph{value1}, \emph{value2}, \emph{value3}, \emph{value4}, \emph{value5}),` to \texttt{sql\_query}.
 		\end{enumerate}
 	\end{enumerate}
-	\item After the loop, the last character of \texttt{sql_query} should be a comma, and it will be replaced with a semicolon.
+	\item After the loop, the last character of \texttt{sql\_query} should be a comma, and it will be replaced with a semicolon.
 	\item After the string has been completed, a mysqli object \texttt{conn} will be created that connects to the server the database is stored on.
-	\item A call to \texttt{conn}'s function \texttt{query()}, passing \texttt{sql_query} as the argument query string.
+	\item A call to \texttt{conn}'s function \texttt{query()}, passing \texttt{sql\_query} as the argument query string.
 				The result will be stored in a variable called \texttt{result}.
 	\item There will be a check on if the value of \texttt{result} is true.
 	\begin{enumerate}
 		\item If it is true, then display a success message.
 		\item If it is not true, then display an error message.
 	\end{enumerate}
+	\item Lastly, \texttt{connection} will be closed.
+\end{enumerate}
+
+\subsubsection{Interacting with report generation}
+% *** WORK IN PROGRESS ***
+\begin{enumerate}
+	\item The API will receive the SQL query as a string and store it as \texttt{sql\_query}.
+	\item A mysqli object \texttt{conn} will be created that connects to the server the database is stored on.
+	\item A call to \texttt{conn}'s function \texttt{query()}, passing \texttt{sql\_query} as the argument query string.
+				The result will be stored in a variable called \texttt{result}.
+	\item There will be a check on if the value of \texttt{result} is true.
+	\begin{enumerate}
+		\item If it is true, then display a success message.
+		\item If it is not true, then display an error message.
+	\end{enumerate}
+	\item \texttt{connection} will be closed.
+	\item Lastly, \texttt{result} will be echoed.
 \end{enumerate}
 
 \end{document}
