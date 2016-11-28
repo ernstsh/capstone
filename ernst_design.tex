@@ -41,7 +41,6 @@ delete button, represented by an "x", to its immediate right and an add answer b
 answer, another text entry line will appear. Upon clicking the "x" delete button, the line will be removed. The matrix option will work similarly only this time, multiple questions will be prompted for instead of answers. The answers will be selected via a drop down menu
  of common matrix style answers. \\ \\
 
- 
 \subsection{Question Generation Logic}
 Questions are going to be stored in a json format. The format is as follows: \\
 \{\\
@@ -52,7 +51,9 @@ Questions are going to be stored in a json format. The format is as follows: \\
 \}\\
 The type will be used to select which html template to use for the question in generating the survey. The html templates will be
 premade with their own services to correctly construct the survey with the included templates. The qtext will be substituted in each 
-template so it will appear as the question text. Answers will appear according the question type. 
+template so it will appear as the question text. Answers will appear according the question type. If it is a text entry, a default text area of four rows and fifty columns will be provided. If it is a mutliple choice, the answers will be produced using a loop to repeat the html structure with a different value according to the answer text. If it is a matrix, a table will be generate with one of the standard scales spanning the top, each radio button beneath it having the appropriate value. The questions will align on the left in rows with 
+the radio buttons to their right. The questions fields will be populated via a loop. In AngularJS, ng-repeat will be used to adjust the values in the templates. You can also insert html to the screen via DOM manipullation. A mixture of these methods will be used. 
+
 \section{Survey Generation}
 \subsection{Survey Generation Interface}
 Upon selecting create survey or selecting an existing survey to edit, the user will be taken to the survey creation page. 
@@ -62,7 +63,16 @@ technically a live survey but will be prepopulated with ids which will exclude t
  The distribute button will produce a link to the survey immediately beneath the buttons for the user to copy and paste and distribute 
 in whatever medium they see fit. They can exit a survey by clicking the home button in the upper left hand corner of the screen.  
 \subsection{Survey Generation Logic}
-\subsection{Preview Survey Logic}
+The survey will be saved as a json object. The json structure is as follow:\\
+\{\\
+\indent id: alphanumeric randomized string unique to the survey\\
+\indent title: string representing the title of the survey\\
+\indent questions: an array of question objects\\
+\}\\
+The survey will be generated for the user based on this json. There will be a survey template which will include the title as a variable.
+The question templates will be generated through a mixture of ng-repeat and DOM manipulation. The questions will be produced in 
+order of the appearance in the array in the json. A submit button will be included. Surveys will be a single page. Upon submit, the form will be posted to the database. Responses will be sent as json. This survey may either be a preview or the real thing. If it is a 
+preview, it will have a response id with the value of test which will exclude it from the database. 
 \subsection{Distribute Survey Logic}
 
 \end{document}
