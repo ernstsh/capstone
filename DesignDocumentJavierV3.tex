@@ -1,0 +1,62 @@
+\documentclass[letterpaper,10pt,serif, draftclsnofoot,onecolumn, compsoc, titlepage]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{alltt}
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+\usepackage{pstricks, pst-node}
+
+\usepackage{geometry}
+\geometry{margin=.75in}
+
+\usepackage{hyperref}
+
+\begin{document}
+
+\section{Search Form Interface}
+The user interface for report generation will be a search form that uses text input boxes for querying information from the database. The fields that will be shown on the webpage include survey questions, responses, student info, club, program, and student demographic information. When the user arrives at the report generation page for the first time there will be one input text box for each field by default. Each input field will have its corresponding name written above incase the user deletes all of the input fields for the search form. This will allow the user to distinguish which add button corresponds to each field. The add button for each field will be located below the most recently created text input box. The add button will allow administrative users to add additional information for their query. Each input field will have a button on the right hand side for deleting the input field which will be indicated by "x" symbol and this will allow a user to delete any input fields that are no longer necessary for their query. Once an administrative user has finished inputting their query information into the input fields they will be able to submit their query by clicking on a submit button that will be located on the bottom right hand side of the search form. Below the search form there will an empty report form if the user decided to create a new report. If the user decided to edit a saved report the report form will display the query results of their saved report. 
+
+\subsection{Search Form Logic} 
+ For creating the report generation form we will be using AngularJS, HTML, and PHP. The reason for using AngularJS is that it will enable us to create a dynamic search form which will allow the user to add additional input fields for their query. If we did not use AngularJS the form would be static and if an administrative user were to need more input fields for their query they would have to notify a developer to add the input fields manually to the HTML page which is inefficient. AngularJS requires an HTML for defining the application's user interface \cite{Lau}. The buttons for deleting and adding new input fields will have an ng-click AngularJS directive which will call their correspoding function for deleting and adding a new input field.  A controller will be used to modify the HTML expressions and the \$scope service will be used to detect any changes in the form\cite{Rav}.
+
+\subsection{Report Generation Interface} 
+When an administrative user has finished querying information for their report form they will be able to save their report by clicking on a save button that will be located at the bottom right hand side of the report form.Administrative users will be able to print out their generated reports or any saved reports by clicking on a print button that will be located on the top right hand side on the report form.
+
+
+\subsection{Report Generation Logic}
+ In order to save the report a table will be created in the database that only stores reports. By creating a table for storing reports it will permanently save them unless they are deleted from the database. PHP will be used for saving reports into the database and this will be done by using the INSERT INTO statement. For printing the report form CSS and Javascript will be used. CSS will be used to create two style sheets, so that when the print button is clicked it does not display the entire webpage as the content that is going to be printed. The first style sheet will be used to display the contents of the report generation webpage. The second style sheet will be used to exclude content on the webpage that is not related to the search form. For displaying the print dialogue box the line of code href="javascript:window.print()" will be added to the print button. The print dialogue box will allow adminstrative users to choose the orientation, number of copies to be printed, margins, page range, etc. When the submit button is clicked PHP will be used to query the information from the database using the SELECT statement. Any input text box fields left empty will be ignored when the submit button is clicked. The results of the query will be inserted into an empty form that will be located below the search form for making queries. The form will be created using the HTML $<$form$>$ tag and each query result will be saved into a $<$input$>$ element that has the type text. 
+
+The report form will be saved as a json object. The structure that the report form will have is the following:\\
+\{ \\
+	\indent id: random numerical value to identify the report\\
+	\indent title: string that contains the title of the report\\
+	\indent queries: an array of queries contained in the report \\
+\} 
+
+The queries made by administrative users will be saved as json objects. The following is the structure of the queries:\\
+\{\\
+	\indent id: a unique identifier for each query\\
+	\indent result: the text result of the query generated by an administrative user\\
+\}\\
+
+\begin{thebibliography}{2}
+\bibitem{Javascript}"How to Print a Specific Part of a HTML Page Using CSS." \em{ARCLAB}. N.p., n.d. Web. 11 Nov. 2016. 
+\bibitem{Webpage} "Web Design Choices." \em{SpiderWriting}. Web. 25 Nov. 2016. 
+\bibitem{AddField}  Muhammed, Shanid. "AngularJS | Adding Form Fields Dynamically". \em{shanidkv.com}. N.O, Web. 26 Nov. 2016. 
+\bibitem {Lau} Lau, Dmitri. "10 Reasons Why You Should Use AngularJS." \em{sitepoint}. N.p., 5 Sept. 2013. Web. 26 Nov. 2016.
+\bibitem{Rav} C, Ravindra T. "Connecting to Database Using AngularJS." \em{Code Project}. N.p., 25 Mar. 2016. Web. 26 Nov. 2016.
+
+\bibitem{Microsoft} "Storing Query Results in a Table, Array, or Cursor." \em{Microsoft}. N.p., n.d. Web. 27 Nov. 2016.
+
+\end{thebibliography}
+
+\end{document}
