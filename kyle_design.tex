@@ -19,7 +19,7 @@
 \geometry{margin=.75in}
 
 \usepackage{hyperref}
-\usepackage{vertabim}
+\usepackage{verbatim}
 
 % This method for displaying a relational schema was found on Stack Exchange from user Bruno Vandekerkhove
 % tex.stackexchange.com/questions/296948/creating-a-relational-database-schema
@@ -145,7 +145,7 @@ The below diagram outlines the relational database schema described above.
 Each table will be created with the following SQL syntax.
 In particular, tables will use AUTO INCREMENT to automatically increment and create IDs.
 They will also be done in the following order because some tables reference others.
-\lstset{language=SQL,breaklines=true}
+\lstset{language=SQL,breaklines=true,breakatwhitespace=true}
 \begin{lstlisting}
 CREATE TABLE Survey
 (
@@ -206,38 +206,37 @@ CREATE TABLE Response
  FOREIGN KEY (question_id) REFERENCES Question(question_id)
  FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
 )
+
+CREATE TABLE Multiple_Choice
+(
+ question_id int NOT NULL
+ responder_id int NOT NULL
+ answer char(1)
+ PRIMARY KEY (question_id, responder_id)
+ FOREIGN KEY (question_id) REFERENCES Question(question_id)
+ FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
+)
+
+CREATE TABLE Matrix
+(
+ question_id int NOT NULL
+ responder_id int NOT NULL
+ answer int
+ PRIMARY KEY (question_id, responder_id)
+ FOREIGN KEY (question_id) REFERENCES Question(question_id)
+ FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
+)
+
+CREATE TABLE Text
+(
+ question_id int NOT NULL
+ responder_id int NOT NULL
+ answer varchar(1020)
+ PRIMARY KEY (question_id, responder_id)
+ FOREIGN KEY (question_id) REFERENCES Question(question_id)
+ FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
+)
 \end{lstlisting}
-
-
-%CREATE TABLE Multiple_Choice
-%(
- % question_id int NOT NULL
-  %responder_id int NOT NULL
-% answer char(1)
- %PRIMARY KEY (question_id, responder_id)
- %FOREIGN KEY (question_id) REFERENCES Question(question_id)
- %FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
-%)
-
-%CREATE TABLE Matrix
-%(
- %question_id int NOT NULL
- %responder_id int NOT NULL
- %answer int
-% PRIMARY KEY (question_id, responder_id)
- %FOREIGN KEY (question_id) REFERENCES Question(question_id)
- %FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
-%)
-
-%CREATE TABLE Text
-%(
- %question_id int NOT NULL
- %responder_id int NOT NULL
- %answer varchar(1020)
- %PRIMARY KEY (question_id, responder_id)
- %FOREIGN KEY (question_id) REFERENCES Question(question_id)
- %FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
-%)
 
 \subsection{Database interaction}
 To allow for interaction between the survey and report generation, an API will need to be created to work with both.
