@@ -126,7 +126,7 @@ These will compromise the three core tables in the database, with other tables f
 All tables contain unique IDs as their primary key, and each ID is a non-negative integer.
 
 The Survey table will contain the survey\_id as its primary key to identify each individual Survey.
-Each Survey will also contain a string attribute for the title.
+Each Survey will also contain a string attribute for the title and a string attribute for the program it is used in.
 
 The Question table represents any individual kind of question.
 It's attributes include a unique question\_id to serve as its primary key and the question's text as a string attribute.
@@ -160,7 +160,8 @@ The below diagram outlines the relational database schema described above.
 \node (surveytitle) {\textbf{SURVEY}};
 \node [relation=2, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of surveytitle.west, anchor=west] (survey)
 {\underline{survey\_id}%
-\nodepart{two}		title};
+\nodepart{two}		title
+\nodepart{three}	program};
 
 \node [below=1cm of survey.west, anchor=west] (containstitle) {\textbf{CONTAINS}};
 \node [relation=2, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of containstitle.west, anchor=west] (contains)
@@ -230,12 +231,13 @@ The below diagram outlines the relational database schema described above.
 Each table will be created with the following SQL syntax.
 In particular, tables will use AUTO INCREMENT to automatically increment and create IDs.
 They will also be done in the following order because some tables reference others.
-\lstset{language=SQL,breaklines=true}
+\lstset{language=SQL,breaklines=true,breakatwhitespace=true}
 \begin{lstlisting}
 CREATE TABLE Survey
 (
  survey_id int NOT NULL AUTO_INCREMENT
  title varchar(255)
+ program varchar(255)
  PRIMARY KEY (survey_id)
 )
 
@@ -291,38 +293,37 @@ CREATE TABLE Response
  FOREIGN KEY (question_id) REFERENCES Question(question_id)
  FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
 )
+
+CREATE TABLE Multiple_Choice
+(
+ question_id int NOT NULL
+ responder_id int NOT NULL
+ answer char(1)
+ PRIMARY KEY (question_id, responder_id)
+ FOREIGN KEY (question_id) REFERENCES Question(question_id)
+ FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
+)
+
+CREATE TABLE Matrix
+(
+ question_id int NOT NULL
+ responder_id int NOT NULL
+ answer int
+ PRIMARY KEY (question_id, responder_id)
+ FOREIGN KEY (question_id) REFERENCES Question(question_id)
+ FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
+)
+
+CREATE TABLE Text
+(
+ question_id int NOT NULL
+ responder_id int NOT NULL
+ answer varchar(1020)
+ PRIMARY KEY (question_id, responder_id)
+ FOREIGN KEY (question_id) REFERENCES Question(question_id)
+ FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
+)
 \end{lstlisting}
-
-
-%CREATE TABLE Multiple_Choice
-%(
- % question_id int NOT NULL
-  %responder_id int NOT NULL
-% answer char(1)
- %PRIMARY KEY (question_id, responder_id)
- %FOREIGN KEY (question_id) REFERENCES Question(question_id)
- %FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
-%)
-
-%CREATE TABLE Matrix
-%(
- %question_id int NOT NULL
- %responder_id int NOT NULL
- %answer int
-% PRIMARY KEY (question_id, responder_id)
- %FOREIGN KEY (question_id) REFERENCES Question(question_id)
- %FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
-%)
-
-%CREATE TABLE Text
-%(
- %question_id int NOT NULL
- %responder_id int NOT NULL
- %answer varchar(1020)
- %PRIMARY KEY (question_id, responder_id)
- %FOREIGN KEY (question_id) REFERENCES Question(question_id)
- %FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
-%)
 
 \subsubsection{Database interaction}
 To allow for interaction between the survey and report generation, an API will need to be created to work with both.
@@ -334,7 +335,7 @@ It will do so using the following design:
 	\item Generate a string \texttt{sql\_query} for the SQL query setting up the INSERT query with `INSERT INTO ` and adding the name of the table from the POST information.
 	\item Because each table has different sets of attributes, a switch statement will be used to check the table name and add the necessary string to \texttt{sql\_query} (this switch statement will take the value from the POST and convert it all to lowercase).
 	\begin{enumerate}
-		\item The Survey table will add `(title)`.
+		\item The Survey table will add `(title, program)`.
 		\item The Contains table will add `(survey\_id, question\_id)`.
 		\item The Question table will add `(text)`.
 		\item The Response table will add `(question\_id, responder\_id)`.
@@ -348,8 +349,8 @@ It will do so using the following design:
 	\begin{enumerate}
 		\item There will be another switch structure to determine the number of values that will be inserted based on the table to be inserted into:
 		\begin{enumerate}
-			\item The Survey, Question, and Parent tables will read one value and add `(\emph{value1}),` to \texttt{sql\_query} accordingly.
-			\item The Contains and Reponse tables will read two values and add `(\emph{value1}, \emph{value2}),` to \texttt{sql\_query}.
+			\item The Question, and Parent tables will read one value and add `(\emph{value1}),` to \texttt{sql\_query} accordingly.
+			\item The Survey, Contains and Reponse tables will read two values and add `(\emph{value1}, \emph{value2}),` to \texttt{sql\_query}.
 			\item The Multiple\_Choice, Matrix, Text, and Student tables will read three values and add `(\emph{value1}, \emph{value2}, \emph{value3}),` to \texttt{sql\_query}.
 			\item The Responder table will read four values and add `(\emph{value1}, \emph{value2}, \emph{value3}, \emph{value4}, \emph{value5}),` to \texttt{sql\_query}.
 		\end{enumerate}
