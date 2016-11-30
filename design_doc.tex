@@ -67,7 +67,13 @@ for the STEM Academy Data Solution. This document does not include designs for s
 \subsection{Identified stakeholders and design concerns}
 
 \subsection{Question Generation}
-\subsubsection{Question Generation Interface}
+
+\subsubsection{Question Generation Interface Viewpoint}
+The user of the Question Generation Interface is the STEM Academy administrator who will be making surveys. Every survey has
+questions. The interface for the question is within the interface of the survey. The user should be able to easily add, delete and 
+reorder questions in the survey. The add, delete, and reorder functionality is in the survey scope while the results of those actions
+affect the question. The following view contians what the user will see in regards to question generation. 
+\subsubsection{Question Generation Interface View}
 Upon entering a survey to edit or create, the user can add, delete or reorder questions in the survey. A user will be able to add a 
 question by clicking an add question button. A question box will then appear in the editable area of the survey. This question box will 
 have a delete question functionality which can be triggered by clicking the "x" in the upper right hand corner of the question box. This
@@ -86,7 +92,12 @@ delete button, represented by an "x", to its immediate right and an add answer b
 answer, another text entry line will appear. Upon clicking the "x" delete button, the line will be removed. The matrix option will work similarly only this time, multiple questions will be prompted for instead of answers. The answers will be selected via a drop down menu
  of common matrix style answers. \\ \\
 
-\subsubsection{Question Generation Logic}
+\subsubsection{Question Generation Logic Viewpoint}
+The developer is concerned with what happens behind the scenes when a question is generated. In order for this section to be 
+implemented the add question button must be active in a survey. The delete and ordering function will be implemented after the 
+question generation logic has been implemented. This view examines the logic of creating the question so that the user can see 
+it in their survey creation. The developer will need to be aware of templates and being able to dynamically changes views. 
+\subsubsection{Question Generation Logic View}
 Questions are going to be stored in a json format. The format is as follows: \\
 \{\\
 \indent id: alphanumeric randomized string unique to this question \\
@@ -100,14 +111,22 @@ template so it will appear as the question text. Answers will appear according t
 the radio buttons to their right. The questions fields will be populated via a loop. In AngularJS, ng-repeat will be used to adjust the values in the templates. You can also insert html to the screen via DOM manipullation. A mixture of these methods will be used. 
 
 \subsection{Survey Generation}
-\subsubsection{Survey Generation Interface}
+\subsubsection{Survey Generation Interface Viewpoint}
+The user of the Survey Generation Interface is the STEM Academy administrator who will be making surveys. Every survey has
+questions. The user is non technical so editing and creation needs to be intuitive. This should be the first thing created in the course
+of the project.  
+\subsubsection{Survey Generation Interface View}
 Upon selecting create survey or selecting an existing survey to edit, the user will be taken to the survey creation page. 
 This page will consist of a text entry line where the title of the survey will go. There will also be an add question button, preview button, save button and distribute button to the bottom right of the title entry. Upon clicking the add question button, a question will be added to the 
 editable area between the survey title and the buttons. The questions will fill the area and once the max view has been achieved will begin to scroll. Upon clicking the preview button, a window will open with the survey in the form that survey takers will see. This is 
 technically a live survey but will be prepopulated with ids which will exclude these entries from the database. The window can be closed using the "x" in the upper right hand corner. Clicking the save button will save the current survey, whether complete or not.
  The distribute button will produce a link to the survey immediately beneath the buttons for the user to copy and paste and distribute 
 in whatever medium they see fit. They can exit a survey by clicking the home button in the upper left hand corner of the screen.  
-\subsubsection{Survey Generation Logic}
+
+\subsubsection{Survey Generation Logic Viewpoint}
+The developer is concerned with what happens behind the scenes when a survey is generated. In order for this section to be tested
+ the database will need to be set up otherwise it will the surveys will not be able to be saved. 
+\subsubsection{Survey Generation Logic View}
 The survey will be saved as a json object. The json structure is as follow:\\
 \{\\
 \indent id: alphanumeric randomized string unique to the survey\\
