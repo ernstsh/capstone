@@ -25,8 +25,22 @@
 
 \usepackage{caption}
 \usepackage{listings}
+%credit to http://tex.stackexchange.com/questions/48152/dynamic-signature-date-line
+\newcommand*{\SignatureAndDate}[1]{%
+    \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
+    \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}%
+}%
+
+\title{The STEM Academy Data Solution}
+\author{Design Document \\ Shannon Ernst, Kyle Nichols, Javier Franco\\ 2 December 2016\\ CS 461 Fall 2016\\ Group 48}
 
 \begin{document}
+
+\maketitle
+\begin{abstract}
+The STEM Academy Data Solution will generate and distribute surveys, collect the responses of these surveys, and generate reports based on these responses. The design of these components are key. Through examination of each component through an interface and logic standpoint, the developer team has created a design to satisfy the project requirements. 
+\end{abstract}
+\newpage
 
 % Adding these from the template in Annex C of the standard
 % Some may not apply, but I'm sure most will
@@ -70,6 +84,8 @@ Lastly, report generation is covered, detaling the design of the user view and h
 
 \section{Body}
 \subsection{Identified stakeholders and design concerns}
+The STEM Academy is the primary customer of this product. Their team is non-technical and require a fully functional survey generation and distribution center that will collect responses and generate summary reports based on the responses. The STEM Academy is the primary user of the software. Their camp participants will be taking the surveys. The developers are the capstone 
+group who will be delivering the project based on the following design.
 
 \subsection{Question Generation}
 
@@ -449,8 +465,17 @@ The queries made by administrative users will be saved as JSON objects. The foll
 
 An administrative user's saved report form will be generated using the JSON object for a report and a form template. The title of the report will be displayed in the form template using the title attribute of the JSON report object. The queries will be displayed in the form template using the attribute queries which is an array of query objects. Each query result will be displayed in the form by using the result attribute of the query object. Furthermore, the corresponding caption of a query result will be displayed by using the caption attribute of a query object. 
 
+\newpage
 
-
+\section{Signatures}
+By signing below, I agree to the ideas and concepts presented in this document and the list of deliverables. \\
+\SignatureAndDate{Client Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 1 Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 2 Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 3 Signature}
 
 
 
