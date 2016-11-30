@@ -41,13 +41,22 @@ Shannon Ernst, Javier Franco, Kyle Nichols
 
 \section{Introduction}
 \subsection{Purpose}
-This document outlines the design concepts for the STEM Academy Data Solution. It is to be used as a guide in the development of
-the web application. 
+This document outlines the design concepts and algorithms for the STEM Academy Data Solution.
+It is to be used as a guide in how the product will be developed during the year. 
 \subsection{Scope}
-The solution presented in this document is for survey generation, survey distribution, data collection, database management, and report generation 
-for the STEM Academy Data Solution. This document does not include designs for stretch goals. 
+The solution presented in this document is for survey generation, survey distribution, data collection, database management, and report generation for the STEM Academy Data Solution.
+The STEM Academy Data Solution will be used by STEM Academy to generate surveys, store the responses of those surveys, and view reports on the surveys.
+The design document will be used to describe our processes and solutions as a reference while developing the product.
+This document does not, however, include designs for stretch goals. 
+It instead focuses only on the necessary requirements and goals of the product.
 %\subsection{Context}
-%\subsection{Summary}
+\subsection{Summary}
+The document following describes the main components of the product.
+The first section covers question generation, covering the interface from the user perspective and the process of storing and displaying questions.
+This is followed by survey generation, which covers the user interface design and the logic of how surveys are collected in a JSON format.
+The next section covers database management, from how it is organized and created to how the other components will interact with it.
+Next is a section on the search form, which also covers the user interface design and how the search forms are displayed.
+Lastly, report generation is covered, detaling the design of the user view and how the report will be displayed.
 
 \section{References}
 
@@ -139,7 +148,7 @@ order of the appearance in the array in the json. A submit button will be includ
 preview, it will have a response id with the value of test which will exclude it from the database.
 
 \subsection{Database Management}
-\subsubsection{Database organization}
+\subsubsection{Database organization Structure Viewpoint}
 The database will be organized around the core elements of surveys, questions, and responders.
 These will compromise the three core tables in the database, with other tables functioning as relationships or specializations of these core tables.
 All tables contain unique IDs as their primary key, and each ID is a non-negative integer.
@@ -246,7 +255,7 @@ The below diagram outlines the relational database schema described above.
 \end{tikzpicture}
 \captionof{figure}{The relational database schema}
 
-\subsubsection{Database creation}
+\subsubsection{Database Creation Logical Viewpoint}
 Each table will be created with the following SQL syntax.
 In particular, tables will use AUTO INCREMENT to automatically increment and create IDs.
 They will also be done in the following order because some tables reference others.
@@ -344,7 +353,7 @@ CREATE TABLE Text
 )
 \end{lstlisting}
 
-\subsubsection{Database interaction}
+\subsubsection{Database Interaction Algorithm Viewpoint}
 To allow for interaction between the survey and report generation, an API will need to be created to work with both.
 The API will be written in PHP since PHP provides functionality to generate SQL queries with a database using \texttt{mysqli} objects and the \texttt{query()} function.
 \subsubsection{Interacting with the survey generation}
