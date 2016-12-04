@@ -1,0 +1,74 @@
+\documentclass[letterpaper,10pt,serif, draftclsnofoot,onecolumn, compsoc, titlepage]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{alltt}
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+\usepackage{pstricks, pst-node}
+
+\usepackage{geometry}
+\geometry{margin=.75in}
+
+\usepackage{hyperref}
+\title{The STEM Academy Data Solution}
+\author{Progress Report \\ Shannon Ernst, Kyle Nichols, Javier Franco\\ 7 December 2016\\ CS 461 Fall 2016\\ Group 48}
+
+\begin{document}
+\maketitle
+\newpage
+\section{Purpose and Goals}
+The STEM Academy in Corvallis, Oregon seeks to provide education in science, technology, engineering and math to the K-12 community through various programs and camps/clubs. It is self funded, relying on grants, donations and other sources, many of which require results based data on the STEM Academy. This data is collected from surveys that participants take while they are taking part in the program. Currently, these surveys are administered on paper and the responses are tabulated by hand by volunteers. This has not been an effective way of collecting current data to help secure funding and many of the surveys go untabulated. The STEM Academy has the ability to register participants online through Ideal Logic but this is the only digital component they have for collecting data. They need a system which will allow them to electronically distribute and print surveys, a database to house all of the data from those surveys, and a report generation system so they can view the most current data in a timely and meaningful way.\\
+A website which will allow the STEM Academy to create and distribute surveys as well as view the data is the best solution. The website should allow them to create questions that can be included across multiple surveys. The questions should be able to be templated so that only one part of the question need change according to the topic of the survey. Surveys should be able to be distributed via a web link or printed. After a survey is taken, the data should be stored in a database according to the type of program. This data should be queriable based on custom queries. The user should be able to make a query based on the question and collected demographics as well as filter by programs and camps/clubs. This service should be user friendly; the user should not need to know any SQL or other querying language in order to get data from the database. After a query, the data should be able to be saved and added to a printable report so that it can actually be used in grant proposals and marketing material. This website will be an all in one package for collecting and reporting on data in a timely fashion which is what the STEM Academy truly needs. By the Engineering Expo, we will be able to present this website and show the full path of data collection, from creating the survey to querying to report generation.
+
+\section{Weekly Summary}
+\subsection{Week 3}
+\subsubsection{Shannon}
+For this week Shannon wrote the problem statement for our client. In addition, the problem statement outlined the markers of success. Our group edited the document three times before the client signed the problem statement and it was submitted to our class instructors. The primary issues with the problem statement were: the language around funding was not accurately reflecting the nature of funding for the client, the word choice was too technical or ambiguous for our client, and some markers of success were not included on the first draft. All of these issues were resolved with haste. The next step that our group will be taking will be sitting down with the client to come up with a more complete solution. The client requested to model our project based on Qualtrics and we will be examining Qualtrics this week to determine the benefits and short falls that it has, so that we can improve the implementation for our project. 
+
+\subsection{Week 4}
+For this week our group focused on researching solutions to the problem. Everyone in our group examined Qualtrics. Javier thought Qualtrics was not user friendly because it took him a while to figure out how to create a new page of questions and also how to delete any additions that he made to a question. Our client emphasized that they wanted a user freindly interface and for our implementation based on Qualtrics we will have to improve this. Shannon thought Qualtrics has a great survey generation system but it is not incredibly intuitive to use. She also thought its major strength is the data visualization widgets, but these are not a high priority for our client though who would prefer the raw data. Finally she thought that there is no good way to generate reports in Qualtrics which is really what our client needs. Kyle thought that Qualtrics has many features, but most will not be useful to our client. For example, Qualtrics tools for testing surveys and visualization tools for reports are not necessary for our purposes. The reports will only display a summary of data. Kyle noticed that we can base our template questions on Qualtrics'  library of template questions. The diffrence would be that ours would not be as extensive and when the template questions are loaded into a survey a user will be able to edit them to change the vocabulary necessary for that specific survey. This will satisfy the client's request of reusing template questions, so that they can change a few words to fit their new survey. The next step that our group will be taking is working on the requirements document. Shannon pointed out that we should contact the OSU Central Networking Services as an intermediate step to see if STEM Academy has access to a public HTML and a database. This will make sure that the product we create for STEM Academy does not disappear any time soon and hopefully it will not cost much, if anything. 
+
+\subsection{Week 5}
+This week our group focused on working on the requirements document. Shannon was the only person that was able to meet up with our client to obtain their signature for the updated problem statement and requirements document. Upon digging deeper into the IEEE formatting our group began to get confused as to what we should be including in the document as well as if our formatting was correct. Kyle plans on meeting with Dr. Winters to go over some sections that he did not fully understand, so that we can flesh out our requirements document. Kyle added several of the requirements that we discussed last week to the document and later revised the requirements document to add more requirements to fit several of the IEEE formatting sections. On Tuesday Shannon finished editing the problem statement and wrote the requirements section of the requirements document. Kyle picked up later and did the introduction. Javier wrote a few non-functional requirements, but they were deleted and put in their correct IEEE format section. He created the gantt chart that outlines when each component of our product is going to be developed and added some glossary terms. Javier felt that he did not contribute his share of the work for the requirements document.  From this week, Shannon learned that we need to plan and communicate better as a team. Next week our group will continue working on updating the requirements document. 
+
+\subsection{Week 6}
+This week our group updated the requirements document primarily formatting. Each person in our group added more detail to certain sections that needed to be improved and we also included an abstract that was written by Kyle. We then received a new signature from our client. The plans for next week are to begin working on the technical review and design document. We also plan on contacting the OSU Help Desk to figure out our infrastructure, so that our technical review document is more accurate. 
+
+\subsection{Week 7}
+This week our group did not really do anything. Each person in our group was assigned 3 pieces that they will be responsible for the project. Our groups plan was to write the tech review over the weekend. Shannon pointed out that we still need to contact the OSU Help Desk to see what resources are available. 
+
+\subsection{Week 8} 
+\subsubsection{Shannon}
+This week our group finished our technical review document and each person was assigned one of three basic areas that they would be responsible for in the design document which include database management, report generation, and survey generation. Kyle wrote the abstract for the combined version of everyone's work for the technical review. The difficulty that each group member had with their part for the technical review varied. Shannon knew many great tehnologies that would make our work obsolete, but due to cost and of control of data we cannot use them which made it hard for her to find technologies to use in our project. Javier had a difficult time finding technologies for saving and generating reports. For saving reports he kept finding technologies that saved reports, but also generated reports. For generating a report he found some useful tools, but they had a monthly payment plan and another issue was whether or not we could modify the source code to incorporate the technology in our project. Our group noticed that we our going to have to implement the majority of our project from scratch and using the technologies that we find as reference for our design. Shannon contacted the OSU Help Desk and Central Services to get information on the infrastructure. She is till waiting on a response from them. Once we get the services that are provided to STEM Academy Kyle will be able to properly design a database based on those services. Shannon also ran into our client in the grocery store and was able to discuss with them future deadlines for the design document.  The next step that our group will be taking is getting a design document draft to our client by the end of Thanksgiving, so that they have time to review and provide edits. 
+
+\subsection{Week 9}
+For this week each person worked on their part for the design document. Shannon worked on designing the survey and question generation, Kyle worked on designing on how the database will be managed and interacted with it, and Javier worked on designing the report generation. While working on the design document our group had trouble understanding how to apply a viewpoint and view in the design document. The goal for our group is to complete a draft of the design document by Sunday, so that our client can view it on Monday and sign the document on Wednesday. 
+
+\subsection{Week 10}
+This week our group was able to finish our design document. Shannon was able to meet up with the client to get their signature and discovered that they may be going with Qualtrics which would render our project void. After she talked with McGrath we now know our options in the event that this happens. One new idea would be a paper scanning system for the surveys, so that they can process paper surveys faster. The plan for the entire group this weekend is to work on the progress report document and also on the PowerPoint presentation. Each person in our group will create slides for the part that they are responsible for in the design document and the other parts will be completed as a group. The goal for Saturday is to have the PowerPoint finished and to have each members recording finished on Sunday. Monday we will combine everything to finish the assignment. 
+
+\section{Retrospective}
+\begin{center}
+    \begin{tabular}{ | l | l | l | p{0.3\linewidth} |}
+    \hline
+     Positive & Delta & Action \\ \hline
+  	This is the good section & This is the section for encountered issues & this is the section for solving issues \\ \hline
+    \end{tabular}
+\end{center}
+
+\section{Current Status}
+For the project, we have currently designed out the full project and how we are going to accomplish the requirements we set out to do.
+We have not yet, however, started implementing the project or creating and storing the database.
+Until we know what services STEM Academy has access to, the database will not be able to get created fully, though we can create a prototype on our own web servers provided by Oregon State University.
+Although we have not started implementation yet, we will very soon.
+
+\end{document}
