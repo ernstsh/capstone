@@ -1,0 +1,78 @@
+\documentclass[letterpaper,10pt,serif, draftclsnofoot,onecolumn, compsoc, titlepage]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{alltt}
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+\usepackage{pstricks, pst-node}
+
+\usepackage{geometry}
+\geometry{margin=.75in}
+
+\usepackage{hyperref}
+
+\begin{document}
+\section{Question Generation}
+\subsection{Question Generation Interface}
+Upon entering a survey to edit or create, the user can add, delete or reorder questions in the survey. A user will be able to add a 
+question by clicking an add question button. A question box will then appear in the editable area of the survey. This question box will 
+have a delete question functionality which can be triggered by clicking the "x" in the upper right hand corner of the question box. This
+"x" will be there so long as the survey is in edit mode.  If the delete button is clicked, the question will be removed from the survey and the survey json. A save button will be located in the bottom right hand corner of the question box. If the save button is clicked, then the information will be saved to an appropriate json format for both a question and the survey at 
+large. There will be two buttons to the immediate left of the question: one an up arrow, the other a down arrow. The up arrow
+shall be staked on top of the down arrow. Clicking one of these buttons will move the question either before the previous question
+ in the case of the up arrow, or after the question following its current position in the case of the down arrow. The clicking of either 
+of these arrows will result in the change of the ordering of the questions in the survey json as well as the physical movement of the 
+question in the editable area of the survey. The question box will have a text entry area which will take the question text of 
+the question. \\ \\
+There will also be four buttons where the user can select which type of question it will be: text entry, multiple choice - 
+single answer, multiple choice - multi-answer, or matrix. Upon selecting one of these buttons it will change the appearance of the 
+potential answer section. The default of the answer section will be text entry which will not provide a spot for the user to put in answers. 
+Upon selecting either multiple choice options, the answer area will be transformed into one text entry available with an accompanying 
+delete button, represented by an "x", to its immediate right and an add answer button to its south east corner. Upon clicking add 
+answer, another text entry line will appear. Upon clicking the "x" delete button, the line will be removed. The matrix option will work similarly only this time, multiple questions will be prompted for instead of answers. The answers will be selected via a drop down menu
+ of common matrix style answers. \\ \\
+
+\subsection{Question Generation Logic}
+Questions are going to be stored in a json format. The format is as follows: \\
+\{\\
+\indent id: alphanumeric randomized string unique to this question \\
+\indent type: a string signifying the question type (textEntry, multi-s, multi-m, matrix)\\
+\indent qtext: the question text string \\
+\indent answers: an array of potential answer strings\\
+\}\\
+The type will be used to select which html template to use for the question in generating the survey. The html templates will be
+premade with their own services to correctly construct the survey with the included templates. The qtext will be substituted in each 
+template so it will appear as the question text. Answers will appear according the question type. If it is a text entry, a default text area of four rows and fifty columns will be provided. If it is a mutliple choice, the answers will be produced using a loop to repeat the html structure with a different value according to the answer text. If it is a matrix, a table will be generate with one of the standard scales spanning the top, each radio button beneath it having the appropriate value. The questions will align on the left in rows with 
+the radio buttons to their right. The questions fields will be populated via a loop. In AngularJS, ng-repeat will be used to adjust the values in the templates. You can also insert html to the screen via DOM manipullation. A mixture of these methods will be used. 
+
+\section{Survey Generation}
+\subsection{Survey Generation Interface}
+Upon selecting create survey or selecting an existing survey to edit, the user will be taken to the survey creation page. 
+This page will consist of a text entry line where the title of the survey will go. There will also be an add question button, preview button, save button and distribute button to the bottom right of the title entry. Upon clicking the add question button, a question will be added to the 
+editable area between the survey title and the buttons. The questions will fill the area and once the max view has been achieved will begin to scroll. Upon clicking the preview button, a window will open with the survey in the form that survey takers will see. This is 
+technically a live survey but will be prepopulated with ids which will exclude these entries from the database. The window can be closed using the "x" in the upper right hand corner. Clicking the save button will save the current survey, whether complete or not.
+ The distribute button will produce a link to the survey immediately beneath the buttons for the user to copy and paste and distribute 
+in whatever medium they see fit. They can exit a survey by clicking the home button in the upper left hand corner of the screen.  
+\subsection{Survey Generation Logic}
+The survey will be saved as a json object. The json structure is as follow:\\
+\{\\
+\indent id: alphanumeric randomized string unique to the survey\\
+\indent title: string representing the title of the survey\\
+\indent questions: an array of question objects\\
+\}\\
+The survey will be generated for the user based on this json. There will be a survey template which will include the title as a variable.
+The question templates will be generated through a mixture of ng-repeat and DOM manipulation. The questions will be produced in 
+order of the appearance in the array in the json. A submit button will be included. Surveys will be a single page. Upon submit, the form will be posted to the database. Responses will be sent as json. This survey may either be a preview or the real thing. If it is a 
+preview, it will have a response id with the value of test which will exclude it from the database. 
+\subsection{Distribute Survey Logic}
+
+\end{document}

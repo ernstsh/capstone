@@ -1,0 +1,44 @@
+\documentclass[draftclsnofoot,onecolumn,notitlepage]{article}
+\usepackage[letterpaper, portrait, margin=1in]{geometry}
+\usepackage{titling}
+\usepackage{blindtext}
+\bibliographystyle{IEEE}
+\bibliography{bibfile}
+%credit to http://tex.stackexchange.com/questions/48152/dynamic-signature-date-line
+\newcommand*{\SignatureAndDate}[1]{%
+    \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
+    \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}%
+}%
+\title{Problem Statement}
+\author{Shannon Ernst, Kyle Nichols, Javier Franco}
+\date{14 October 2016 \\ Fall 2016, CS 461}
+\begin{document}
+\begin{titlingpage}
+\maketitle
+\begin{abstract}
+Securing funding for self funded programs often requires timely, results based data. Unfortunately for the STEM Academy in Corvallis, all of their data is housed through paper surveys, making it incredibly difficult and time consuming to glean meaningful information from the data to use in marketing materials and several sources of funding. This can be detrimental to providing programs for students in the community. This project sets out to develop a user friendly database and website for the STEM Academy which will allow for the creation and distribution of surveys, collection and storage of results, and generation of reports which will be to the standard of material used in marketing materials and securing multiple different sources of funding.
+\end{abstract}
+\end{titlingpage}
+\section{Problem}
+The STEM Academy in Corvallis, Oregon seeks to provide education in science, technology, engineering and math to the K-12 community through various programs and camps/clubs. It is self funded, relying on grants, donations and other sources, many of which require results based data on the STEM Academy. This data is collected from surveys that participants take while they are taking part in the program. Currently, these surveys are administered on paper and the responses are tabulated by hand by volunteers. This has not been an effective way of collecting current data to help secure funding and many of the surveys go untabulated. The STEM Academy has the ability to register participants online through Ideal Logic but this is the only digital component they have for collecting data. They need a system which will allow them to electronically distribute and print surveys, a database to house all of the data from those surveys, and a report generation system so they can view the most current data in a timely and meaningful way.
+\section{Potential Solution}
+A website which will allow the STEM Academy to create and distribute surveys as well as view the data is the best solution. The website should allow them to create questions that can be included across multiple surveys. The questions should be able to be templated so that only one part of the question need change according to the topic of the survey. Surveys should be able to be distributed via a web link or printed. After a survey is taken, the data should be stored in a database according to the type of program. This data should be queriable based on custom queries. The user should be able to make a query based on the question and collected demographics as well as filter by programs and camps/clubs. This service should be user friendly; the user should not need to know any SQL or other querying language in order to get data from the database. After a query, the data should be able to be saved and added to a printable report so that it can actually be used in grant proposals and marketing material. This website will be an all in one package for collecting and reporting on data in a timely fashion which is what the STEM Academy truly needs. By the Engineering Expo, we will be able to present this website and show the full path of data collection, from creating the survey to querying to report generation.
+\section{Markers of Success}
+The following is a list of concepts which must be met in order for the project to be considered a success. Details on the implementation of these concepts will come in later documents. 
+\subsection{Survey Generation}
+The STEM Academy needs to be able to generate their surveys digitally in order to distribute them digitally. The survey generation tool will be available to the user. They will be able to start a survey from scratch or edit preexisting surveys. Starting a survey from scratch they will be able to add questions, change the order of questions and adjust the display logic of a question (whether a question appears to a certain user based on their previous answers). The question types will be multiple choice, matrix or text entry question. Each question will be comprised of the question text and either a text entry box or a list of potential answers. The user will be able to add indicators within the question text to allow for changing the subject of that particular question. For example, many of the surveys are identical except for the camp name. With the indicators in the question text, the user can change the subject of the question or the survey in one location and it will render through all questions with that indicator. This functionality will be referred to as a template question. This will allow for fewer unique surveys to be created, rather on rendering the value will change. Questions should also be savable for reuse in other surveys which are unique. Surveys should be savable. Upon completing a survey, the user should be able to distribute the survey via web link or print the survey. The surveys and questions should be stored in a database. 
+\subsection{Data Analysis}
+When the survey is distributed via web link, the survey taker should be able to input their answers and submit the survey. All answers should be saved based on the survey (which should represent the camp/club/program) and broken down by student and question answered. This data should then be queriable. The user will have an area in the website where they will be able to select a camp/club or list of camp/clubs to view their data. They will also be able to refine the query to look at individual students, breakout by demographic data or answers to questions. All of the query results should give the option of saving them to a report. This report should be able to take a title and allow captioning of the data that has been saved to it. This report should be printable and savable. 
+\subsection {Overall and Stretch Goals}
+The website should be user friendly to the STEM Academy. It should be easy for the user to organize, access and structure their data. Stretch goals for the project include translating the text of surveys to languages other than English, being able to collected data from printed surveys via scanning, graphic visualization of the data and natural language processing for text entry answers.
+\section{Signatures}
+By signing below, I agree to the ideas and concepts presented in this document and the list of deliverables. \\
+\SignatureAndDate{Client Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 1 Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 2 Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 3 Signature}
+
+\end{document}

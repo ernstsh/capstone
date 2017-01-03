@@ -1,0 +1,177 @@
+\documentclass[letterpaper,10pt,serif, draftclsnofoot,onecolumn, compsoc, titlepage]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{alltt}
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+\usepackage{pstricks, pst-node}
+
+\usepackage{geometry}
+\geometry{margin=.75in}
+
+\usepackage{hyperref}
+%credit to http://tex.stackexchange.com/questions/48152/dynamic-signature-date-line
+\newcommand*{\SignatureAndDate}[1]{%
+    \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
+    \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}%
+}%
+
+\title{CS461- Technology Review}
+\author{Kyle Nichols \\ STEM Academy Data Solution \\ Fall 2016}
+
+\begin{document}
+
+\maketitle
+\section{Abstract}
+The STEM Academy Data Solution will manage a database of survey questions.
+Its purpose is to automate the process of aggregating survey data and generating reports on this data.
+For this technology review, we looked at three alternative technologies for each of our subcomponents: set up and storage of an online database, automated distribution of online surveys, and printing of surveys.
+We analyzed these alternatives and came to a decision on which technology we would use for each.
+
+\newpage
+
+\section{Setting up and storing the database}
+For the database, we need to be able to set up the database (including the tables, relationships, etc.) and store it at a location accessible to our clients.
+\subsection{Microsoft Access}
+Microsoft Office contains Microsoft Access as a tool for creating custom SQL databases accessible from a browser \cite{access}.
+It stores those databases on its own Microsoft Azure SQL Database service \cite{access}.
+The advantage of using Microsoft Office software is that anyone with an Oregon State email has access to the Microsoft Office suite, which includes our clients \cite{microsoftsoftware}.
+Microsoft Access, in particular, can be installed on institutional computers by contacting the department's computer administrator, though there may still be a cost involved in this as well \cite{microsoftsoftware}.
+This is also on institutional computers only, which limits the access we have to Microsoft Access for developing the database.
+Microsoft Access also utilizes SharePoint to allow for sharing of database among multiple users and database permissions \cite{access}.
+This would be really useful, as our clients can share access and permissions among any employees of STEM Academy that would need it, and since we will likely also need access and permissions while developing the project, we can use our own Oregon State email accounts for access.
+% Need to check with Information Services or the department IT for STEM Academy about cost and server (though I'm pretty sure it's Microsoft Azure SQL Database, which comes with Access
+\subsection{phpMyAdmin}
+phpMyAdmin is a free tool written in PHP for accessing MySQL databases, specifically over the web \cite{phpmyadmin}.
+Since it is written in PHP, if we develop our system as a web application, it will become easier to write the system using PHP and use PHP to generate queries to the database.
+phpMyAdmin utilizes a web interface for setting up and editing its database, though this may see limited use as our clients will likely be using our custom web interface for dealing with the database.
+phpMyAdmin is also very well documented, which makes for ease of development \cite{phpmyadmin}.
+Another strong advantage is that phpMyAdmin is free, cutting costs for our client, though a separate web server will also be necessary.
+\subsection{MongoDB}
+MongoDB is an open-source document-oriented database software built on NoSQL \cite{mongodb}.
+MongoDB is also document-oriented, which means that it organizes and manages data as documents \cite{docdb}.
+This type of structure and orientation fits well with the storing of surveys, which are inherently documents, however, this does not work for storing data on students and their responses, which may require a more traditional relational database system to connect the students with their survey responses.
+As open source software, using the bare bones software for MongoDB is free of cost, which reduces or eliminates the cost for our clients to uphold the database. \cite{mongo_cost}.
+However, this is for the bare bones software, and if there are additional features needed by our clients that MongoDB provides, that will require additional cost \cite{mongo_cost}.
+
+\section{Distribution of surveys}
+Surveys must be distributable in URLs or other formats so that survey takers can easily access the survey from their own computer. The most useful format would be through email.
+\subsection{PHP mail}
+This is the built-in mail functionality for PHP \cite{php_mail}.
+The \texttt{mail()} function covers all of the basic requirents of sending an email (sender, destination, message, additional headers such as CC information) \cite{php_mail}.
+Emails generated by HTML, similar to MailChimp below in allowing for customization of emails, can also be sent by the \texttt{mail()} function \cite{php_mail}.
+A simple, built-in function has the advantage of easily being used and integrated in our system, which may likely use PHP, without employing outside systems and services that come with more features than are necessary.
+PHP's \texttt{mail()} function doesn't employ any encryption and privacy features or automation, however.
+If we used this as our way of mailing out automated emails, we would have to do extra work to encrypt it and to generate the emails on a mailing list.
+These are still things that can be done from scratch in the PHP code, but it is also more code that we would have to write for the system.
+Another downside to generating automated emails on a mailing list is that the \texttt{mail()} function opens and closes an SMTP socket on each email, which is inefficient for iterating over a mailing list \cite{php_mail}.
+\subsection{PHPMailer}
+In direct contrast to the built in \texttt{mail()} function for PHP, PHPMailer is an open-source API for sending emails from PHP \cite{phpmailer}.
+PHPMailer uses the same basic setup details for emails that the \texttt{mail()} function does, but it also includes several other additional features that the \texttt{mail()} function does not \cite{phpmailer}.
+SMTP support is integrated in PHPMailer, meaning having a separate, local mail server is not necessary \cite{phpmailer}.
+This feature in particular could be useful if STEM Academy does not have the resources for a local web server and only has access to their own @oregonstate.edu emails.
+The SMTP integration also includes authentication \cite{phpmailer}.
+Emails in PHPMailer can use HTML for customization, but can also send alternative, non-HTML versions for non-HTML clients \cite{phpmailer}.
+\subsection{MailChimp}
+MailChimp is a tool used for sending out marketing emails and automated messages \cite{mailchimp}.
+Emails can be generated using HTML and CSS, and collaboration options are built in for working on those emails as a team \cite{mailchimp_features, mailchimp_email}.
+Tools also exist for automating emails, though this is more target towards marketing and usage, and less mailing lists, which is all our clients need \cite{mailchimp_features}.
+MailChimp also provides an API for use in developing \cite{mailchimp_features}.
+As marketing software, MailChimp has many features and uses, many of which would be superfluous for our clients, who only need a way to provide a quick-access link to the surveys and distribute them in a way that survey takers can access them from many different locations.
+Also as marketing software, it's purpose is drastically different from what we would be using it for.
+Email lists and automated messages are provided by MailChimp for this, but it could be easier to use different tools that are more focused on just those features.
+
+\section{Printing of suveys}
+Surveys that are generated on our system must have the ability to be printed and distributed on paper instead of just online.
+\subsection{HTML \texttt{window.print()}}
+This is a built-in function for HTML which will print the web page by opening up the print dialog box for the browser being used \cite{window_print}.
+The \texttt{print()} function exists as part of the Window object in HTML, which represents an open wndow in a browser \cite{window}.
+It is supported by all browsers, though without any standard enforced between them \cite{window}.
+The ease of this method is that it is supported by all browsers and can use their printing functionality, which might provide a wide variety of options in how it is printed.
+Unfortunately, this means it also not an automated method, though our clients may not need anything automated and may just want a way to easily print the surveys generated.
+The Window object contains many different properties and functions that could be used in other areas of our web service, though this is the only one that would apply to our specific need for printing of surveys and other pages.
+\subsection{CSS} % This is the one on StackExchange
+Cascading Style Sheets describe how HTML web pages are display on screen or other media, such as paper \cite{css}.
+It can even control multiple web pages at once \cite{css}.
+Although CSS can be useful in the general development of our web service, it can also be used for formatting and displaying a web page.
+This is because HTML only describes content \cite{css}.
+Since we will likely be using HTML or PHP to display content, CSS will probably be necessary to not only make our web pages user friendly in appearance, but also to ensure that they are formatted in a way that pages are easily printable.
+Although we may primarily use a different, defined method for printing pages, we may also use CSS in conjunction to format our pages so they look clean and formatted for printing.
+\subsection{css2pdf} % This is a JQuery library solution for printing to PDF
+This is a Javascript library intended to be plugged-in to a website for creating a print button on a web page that produces a PDF as embedded or downloadable (though some features are only supported by certain browsers) \cite{css2pdf}.
+The format of the generated PDF can be set and any HTML or CSS stylings are applied to the printed selections \cite{css2pdf}.
+This allows us to generate a button on the page without creating the code to do so from scratch and applying it to a built-in function, like \texttt{window.print()} above.
+It supports several HTML elements such as different block elements, tables, and lists \cite{css2pdf_home}.
+It is also in process and being improved and will likely add more features and capabilities in the future, though this may not be useful as we will most likely finish developing this project at the end of the year.
+
+\section{Decision}
+Whichever software we use for the database setup and storage will need to depend on what cost Microsoft Access would have for STEM Academy.
+If the cost is manageable for STEM Academy, we could use Microsoft Access.
+However, if it is not, we may decide on phpMyAdmin.
+Although it would require accessing a web server that can be hosted on Oregon State's infrastructure (which is done in database classes), it is free software that can accomplish what we need without any worries of cost.
+For distributing the surveys, our best solution will probably be PHPMailer.
+It provides the functionality of the built-in \texttt{mail()} function, but with extra options that could be useful for us, including not requiring a separate web server.
+For printing surveys, the css2pdf library looks like a more rounded option than the default \texttt{print()} function without having to do some extra work on our part (such as creating our own print button).
+
+\begin{thebibliography}{99} % Lower this when done
+
+\bibitem{access}
+`Database Software and Applications | Microsoft Access.' [Online] Available: https://products.office.com/en-us/access. [Accessed: Nov 13, 2016].
+
+\bibitem{microsoftsoftware}
+`Microsoft Software | Information Services | Oregon State University.' [Online]. Available: http://is.oregonstate.edu/service/software/microsoft-software. [Accessed: Nov 13, 2016].
+
+\bibitem{phpmyadmin}
+`phpMyAdmin.' [Online]. Available: https://www.phpmyadmin.net/. [Accessed: Nov 13, 2016].
+
+\bibitem{mongodb}
+`MongoDB for GIANT Ideas | MongoDB.' [Online]. Available: https://www.mongodb.com/. [Accessed: Nov 13, 2016].
+
+\bibitem{docdb}
+Lijin Joseji, `11 OPEN NoQL Document Oriented Databases,' July 23, 2012. [Online]. Available: https://dzone.com/articles/11-open-nosql-document. [Accessed: Nov 13, 2016].
+
+\bibitem{mongo_cost}
+`MongoDB Cost Breakdown,' Dec 15, 2011. [Online]. Available: https://www.compose.com/articles/mongodb-cost-breakdown/. [Access: Nov 13, 2016].
+
+\bibitem{php_mail}
+'PHP: mail - Manual.' [Online]. Available: http://php.net/manual/en/function.mail.php. [Accessed: Nov 13, 2016].
+
+\bibitem{phpmailer}
+'PHPMailer/PHPMailer: The classic email sending library for PHP.' [Online]. Available: https://github.com/PHPMailer/PHPMailer. [Accessed: Nov 13, 2016].
+
+\bibitem{mailchimp}
+`About | MailChimp.' [Online]. Available: https://mailchimp.com/about/. [Accessed: Nov 13, 2016]. 
+
+\bibitem{mailchimp_features}
+`Features | MailChimp.' [Online]. Available: https://mailchimp.com/features/. [Accessed: Nov 13, 2016].
+
+\bibitem{mailchimp_email}
+`HTML Email Basics | Email Design Reference.' [Online]. Available: http://templates.mailchimp.com/getting-started/html-email-basics/?\_ga=1.68323481.962129787.1479082297. [Accessed: Nov 13, 2016].
+
+\bibitem{window_print}
+'Window print() Method.' [Online]. Available: http://www.w3schools.com/jsref/met\_win\_print.asp. [Accessed: Nov 13, 2016].
+
+\bibitem{window}
+'Window Object.'  [Online]. Available: http://www.w3schools.com/jsref/obj\_window.asp. [Accessed: Nov 13, 2016].
+
+\bibitem{css}
+'CSS Introduction.' [Online]. Available: http://www.w3schools.com/css/css\_intro.asp. [Accessed: Nov 13, 2016].
+
+\bibitem{css2pdf}
+'Xportability/css-to-pdf: Convert any HTML page or region to PDF - supports CSS, SVG, embedded XML objects, and more...' [Online]. Available: https://github.com/Xportability/css-to-pdf. [Accessed: Nov 13, 2016].
+
+\bibitem{css2pdf_home}
+'css2pdf@cloudformatter.' [Online]. Available: http://www.cloudformatter.com/CSS2Pdf. [Accessed: Nov 13, 2016].
+
+\end{thebibliography}
+
+\end{document}
