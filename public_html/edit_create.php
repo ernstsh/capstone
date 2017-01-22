@@ -13,6 +13,12 @@
         <div id="page" class="bodypage">
             <div id="content">
 	    <div><h3>Edit/Create</h3></div>
+	    	<label>Title</label><input type="text" name="surveyTitle"><br>
+		<label>Camp</label><select name="camp"></select><br>
+		<p>We could do a check all that apply from the camp drop down</p>
+		<label>Survey Type</label><br>
+			<input type="radio" name="surveyType" value="pre">Pre<br>
+			<input type="radio" name="surveyType" value="post">Post<br>
                 <p>
                 This is the editing and creation page for STEM Academy Database Solution.		   
 		   </p>
@@ -26,9 +32,9 @@
 			</div>
 		</div>
                 <div id="nav" class="link">
-                    <button><a href="add_question.php">Add Question</button>
-                    <button><a href="save.php">Save</button>
-		    <button><a href="preview.php">Preview</button>
+                    <button><a href="add_question.php">Add Question</button><!--this will be a function call-->
+                    <button><a href="save.php">Save</button><!-- this will be a function call-->
+		    <button><a href="preview.php">Preview</button><!-- this should launch a modal window-->
                     <button><a href="index.php">Exit</button>
                 </div>
             </div>
