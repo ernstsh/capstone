@@ -363,6 +363,24 @@ CREATE TABLE Text
  FOREIGN KEY (question_id) REFERENCES Question(question_id)
  FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
 )
+
+CREATE TABLE Camp
+(
+ camp_id int NOT NULL
+ title varchar(255)
+ start_date date NOT NULL
+ end_date date NOT NULL
+ PRIMARY KEY (camp_id)
+)
+
+CREATE TABLE Use
+(
+ camp_id int NOT NULL
+ survey_id int NOT NULL
+ PRIMARY KEY (camp_id, survey_id)
+ FOREIGN KEY (camp_id) REFERENCES Camp(camp_id)
+ FOREIGN KEY (survey_id) REFERENCES Survey(survey_id)
+)
 \end{lstlisting}
 
 \subsubsection{Database Interaction Algorithm Viewpoint}
