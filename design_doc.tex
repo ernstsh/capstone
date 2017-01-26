@@ -304,12 +304,14 @@ CREATE TABLE Responder
  last_name varchar(255) NOT NULL
  birthdate date
  age int
+ gender varchar(255)
  PRIMARY KEY (responder_id)
 )
 
 CREATE TABLE Parent
 (
  responder_id int NOT NULL
+ income int
  PRIMARY KEY (responder_id)
  FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
 )
