@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+    	<script src="../public_html/js/questionGeneration.js"></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Second Chance Association</title>
@@ -32,7 +33,12 @@
 			</div>
 		</div>
                 <div id="nav" class="link">
-                    <button><a href="add_question.php">Add Question</button><!--this will be a function call-->
+                    <select onmousedown="this.value='';" onchange="choose_question_type(this.value);">
+		    	<option value="text">Text Entry</option>
+			<option value="multi">Multiple Choice</option>
+			<option value="matrix">Matrix</option>
+		    </select>		
+                    <button onclick="add_text_question()">Add Question</button><!--this will be a function call-->
                     <button><a href="save.php">Save</button><!-- this will be a function call-->
 		    <button><a href="preview.php">Preview</button><!-- this should launch a modal window-->
                     <button><a href="index.php">Exit</button>
