@@ -20,6 +20,7 @@
 		    <ul><li><a href="addCamp.php">Add Camp</a></li></ul>
                     <ul><li><a href="edit_create.php">Edit/create</a></li></ul>
                     <ul><li><a href="report_generation.php">Generate report</a></li></ul>
+                    <ul><li><a href="adminLogOut.php">Log Out</a></li></ul>
                 </div>
             </div>
         </div>

@@ -26,7 +26,7 @@
     <body>
     	<div>
 		<h1>Please select a login type</h1>
-		<button><a href="adminLogin.php">Admin</a></button>
+		<button><a href="adminLogin.html">Admin</a></button>
 		<button><a href="studentLogin.php">Student</a></button>
 	</div>
     </body>
