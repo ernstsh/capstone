@@ -1,0 +1,9 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+</head>
+<body>
+	<div id="test">
+	</div>
+</body>
+</html>

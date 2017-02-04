@@ -81,44 +81,38 @@ function create_survey_json(){
 	return survey_json;
 }
 
-function generate_text_question(question_data) {
-	var doc = document.getElementById("test");
+function generate_text_question(question_data, doc) {
 	var form = doc.getElementsByTagName("FORM")[0];
 	var question = document.createElement("DIV");
-	question.innerHTML = "<label>"+question_data.Q_text+"</label><br><input type='text' value='Put your answer here'></input>";
+	question.innerHTML = "<br><label>"+question_data.Q_text+"</label><br><input type='text' value='Put your answer here'></input>";
 	form.appendChild(question);
 }
 
-function generate_multi_question(question_data){
-	var doc = document.getElementById("test");
+function generate_multi_question(question_data, doc){
 	var form = doc.getElementsByTagName("FORM")[0];
 	var question = document.createElement("DIV");
 	question.id = question_data.Q_id;
-	question.innerHTML = "<label>"+question_data.Q_text+"</label>";
-	form.appendChild(question);
+	question.innerHTML = "<br><label>"+question_data.Q_text+"</label>";
 	for(var i=0; i<question_data.ans.length; i++){
-		var node = document.getElementById(question_data.Q_id);
-		var answer = document.createElement("INPUT");
-		answer.type = "radio";
-		console.log(question_data.ans[i]);
-		answer.value = question_data.ans[i];
-		answer.innerHTML = question_data.ans[i]; //ISSUES HERE
-		node.appendChild(answer);
+		question.innerHTML += "<br><input type='radio' value="+question_data.ans[i]+">"+question_data.ans[i]+"";
 	}
+	form.appendChild(question);
 }
 
 function generate_html(){
 	var data = create_survey_json();
-	var doc = document.getElementById("test");
+	var external = window.open("", "external", "width=500, height=600");
+	external.document.write("<div id='test'><form></form></div>");
+	var doc = external.document.getElementById("test");
 	var form = doc.getElementsByTagName("FORM")[0];
 	form.innerHTML = "<h3>"+data.title+"</h3>";
 	doc.appendChild(form);
 	for(var i=0; i<data.questions.length; i++){
 		if(data.questions[i].type === "text"){
-			generate_text_question(data.questions[i]);
+			generate_text_question(data.questions[i], doc);
 		}
 		else if(data.questions[i].type === "multic"){
-			generate_multi_question(data.questions[i]);
+			generate_multi_question(data.questions[i], doc);
 		}
 	}
 

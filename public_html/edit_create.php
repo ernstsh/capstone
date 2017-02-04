@@ -5,9 +5,8 @@
     	<script src="../public_html/js/questionGeneration.js"></script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Second Chance Association</title>
+        <title></title>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-        <meta http-equiv="refresh" content="60" />
         <link rel="stylesheet" href="./css/style1.css">
     </head>
     <? include 'navbar.php' ?>
@@ -27,13 +26,13 @@
 				</form>	
                 <p>This is the editing and creation page for STEM Academy Database Solution.</p>
 				<div id="sandbox">
-					<div style="border-style: solid">
+					<!--<div style="border-style: solid">
 						<button>Add Answer</button>
 						<button>Change Question Type</button>
 						<button>Save</button><br> 
 						<input type="text" value="Enter Question Here"></input><br>
 							<input type="radio"><span contenteditable="true">Add Answer</span></input>
-					</div>
+					</div>-->
 				</div>
                 <div id="nav" class="link">
                     <select onmousedown="this.value='';" onchange="choose_question_type(this.value);">
