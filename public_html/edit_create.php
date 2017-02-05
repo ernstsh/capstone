@@ -41,7 +41,7 @@
 						<option value="matrix">Matrix</option>
 					</select>		
                     <button onclick="add_text_question()">Add Question</button><!--this will be a function call-->
-                    <button onclick="create_survey_json()">Save</button><!-- this will be a function call-->
+                    <button onclick="save()">Save</button><!-- this will be a function call-->
 					<button onclick="generate_html()">Preview</button><!-- this should launch a modal window-->
                     <button>Exit</button>
                 </div>

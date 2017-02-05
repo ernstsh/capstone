@@ -62,7 +62,8 @@ function create_survey_json(){
 	survey_json.questions = [];
 	for(var i = 0; i<qs.length; i++){
 		var question = {};
-		question.Q_id = qs[i].name;
+		//question.Q_id = qs[i].name;
+		question.Q_id = "101"
 		if(question.Q_id.substring(0,2) === "QT"){
 			question.type = "text";
 			question.Q_text = qs[i].getElementsByTagName("INPUT")[0].value;
@@ -116,4 +117,15 @@ function generate_html(){
 		}
 	}
 
+}
+
+function save() {
+    console.log("saving");
+	var json = create_survey_json();
+	var str = JSON.stringify(json);
+	console.log(str);
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "save_db.php", true);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send("x=" + str);
 }
