@@ -29,7 +29,7 @@ if ((isset($_GET['userName'])) && (isset($_GET['password'])) ){
 		die('Could not connect: ');
 	}
 
-	$query = "SELECT * FROM Admins WHERE UserName='$userName' and Password = '$password'";
+	$query = "SELECT * FROM Admin WHERE UserName='$userName' and Password = '$password'";
 
 	$result = mysqli_query($dbc, $query);
 	

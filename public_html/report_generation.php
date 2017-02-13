@@ -4,103 +4,122 @@ var count = 0;
 
 <html>
 <head>
+    	<script src="report_generation.js"></script>
 </head>
 <body>
+<?php
+session_start();
+?>
+<h3> Report Generation </h3>
+<form method="post" onsubmit="return checkForm2(this);" enctype="multipart/form-data" >
+        <label>Select a camp: </label>
+        <select id="select1" name="select1">
+                <?php
+                 //Connect to database 
+                $dbhost = 'oniddb.cws.oregonstate.edu';
+                $dbname = 'nichokyl-db';
+                $dbuser = 'nichokyl-db';
+                $dbpass = '1hvHqfNBEOL6iwL9';
+                $mysql_handle = mysql_connect($dbhost, $dbuser, $dbpass)
+                        or die("Error connecting to database server");
+
+                mysql_select_db($dbname, $mysql_handle)
+                        or die("Error selecting database: $dbname");
+                //Get first name and last name from Responder table 
+                $query = "SELECT * FROM Camp";
+                $result = mysql_query($query);  
+                
+                //Fills dropdown list with the name and last name of each student 
+                while ($row = mysql_fetch_array($result)) 
+                {
+                        $value = $row['camp_id'];
+                        echo "<option value='$value'>" . $row{'title'}. "</option>";
+                        
+                        //echo "<option>" .$value. "</option>";
+                }
+                                   
+                //Close connection to database 
+                mysql_close($mysql_handle);
+                ?>
+        </select>
+        <br>
+        <input type="submit" value="submit" name="submit1" id="submit1"/>
+</form> 
+
+<!--<form method="post" onsubmit='GetSurveys.php' enctype="multipart/form-data">-->
+<label>Select a survey: </label>
+        <select id="select2" name="select2">
+                <?php
+                if (isset($_POST['submit1'])) 
+                {
+                        //Connect to database 
+                        $dbhost = 'oniddb.cws.oregonstate.edu';
+                        $dbname = 'nichokyl-db';
+                        $dbuser = 'nichokyl-db';
+                        $dbpass = '1hvHqfNBEOL6iwL9';
+                        $mysql_handle = mysql_connect($dbhost, $dbuser, $dbpass)
+                                or die("Error connecting to database server");
+
+                        mysql_select_db($dbname, $mysql_handle)
+                                or die("Error selecting database: $dbname");
+                          
+                        if(isset($_POST['select1']))
+                        {
+                                $campID = $_POST['select1'];
+                                //Query the table S_Use for the rows that match the camp id 
+                                $query = "SELECT * FROM S_Use WHERE camp_id='$campID'";
+                                $result = mysql_query($query);   
+                                while ($row = mysql_fetch_array($result)) 
+                                {
+                                        $surveyID = $row['survey_id'];
+                                        $query2 = "SELECT * FROM Survey WHERE survey_id='$surveyID'";
+                                        $result2 = mysql_query($query2);
+                                        while($row2 = mysql_fetch_array($result2))
+                                        {
+                                              $value = $row2['survey_id'];
+                                              echo "<option value='$value'>" .$row2{title}. "</option>";
+                                        }
+                                       
+                                }        
+                                
+                        }
+                        //Close connection to database 
+                        mysql_close($mysql_handle);
+                }                                   
+                ?>
+        </select>
+        <br>
+        <label>Select the survey type: <label> <br> 
+        <input type="radio" name="Pre/Post" value="Pre" checked> Pre-survey<br>
+        <input type="radio" name="Pre/Post" value="Post"> Post-survey <br>
+        <!--<input type="submit" value="submit" name="submit2" id="submit2"/> <br> -->
+        <?php 
+               if(isset($_POST['submit2'])) 
+               {
+                        $_SESSION['surveyID'] = $_POST['select2'];
+                        $_SESSION['surveyType'] = $_POST['Pre/Post'];
+               }
+        ?>
+        
+</form> 
+
+<!--This is where the queries are appended to-->
 <div class="query" id="query">
         <!--<button type="button" class="question">Select question</button>
         <button type="button" class="operator">Select operator</button>
         <button type="button" class="operand">Select operand</button>
         <button type="button" class="delete">-</button>
         <button type="button" class="add">+</button>-->
-        <button type="button" class="addQuery" id="addQuery">Add Query</button>
 </div>
-<!--<button type="button" class="NewCondition">Insert New Condition</button>-->
+
+<button type="button" class="addQuery" id="addQuery" onclick="AddQuery()">Add Query</button>
+<button type="button" class="submit" id="submit"> Submit </button>
+<button type="button" class="save" id="save"> Save </button>
+<button type="button" class="exit" id="exit"><a href="dashboard.php"> Exit </a></button> <br>
+
 </body>
+
+<!--The purpose of dummy is to keep track of count to give a unique id-->
 <p id="dummy"></p>
 
 </html>
-<script>
-
-
-
-
-var count = 0;
-document.getElementById("addQuery").onclick = function(){AddQuery()};
-
-
-/*var x;
-for(x = 0; x < count; count++)
-{
-        var id = 'query' + x;
-        document.getElementById(id).onclick = function{removeElement('query', id)}
-}*/
-
-
-function AddQuery()
-{
-        count++;
-        
-        //Output to check if correct 
-        var id = 'query' + count; 
-        document.getElementById("dummy").innerHTML = id;
-        
-        var queryNew = document.createElement("div");
-        queryNew.setAttribute("id", 'query' + count);
-   
-        var button1 = document.createElement("button");
-        var text1 = document.createTextNode("Select question");
-        button1.appendChild(text1);
-
-        var button2 = document.createElement("button");
-        var text2 = document.createTextNode("Select operator");
-        button2.appendChild(text2);
-
-        var button3 = document.createElement("button");
-        var text3 = document.createTextNode("Select operand");
-        button3.appendChild(text3);
-
-        var button4 = document.createElement("button");
-        
-        button4.onclick = function(){removeElement('query', id);}
-        var text4 = document.createTextNode("-");
-        button4.appendChild(text4);
-
-        var button5 = document.createElement("button");
-        var text5 = document.createTextNode("+");
-        button5.appendChild(text5);
-        
-        
-
-        queryNew.appendChild(button1);
-        queryNew.appendChild(button2);
-        queryNew.appendChild(button3);
-        queryNew.appendChild(button4);
-        queryNew.appendChild(button5);
-
-
-        element = document.getElementById("query");
-        element.appendChild(queryNew);
-        //element.insertBefore(queryNew, element);
-}
-
-
-function removeElement(parentDiv, childDiv){
-     if (childDiv == parentDiv) 
-     {
-          alert("The parent div cannot be removed.");
-     }
-     else if (document.getElementById(childDiv)) 
-     {     
-          var child = document.getElementById(childDiv);
-          var parent = document.getElementById(parentDiv);
-          parent.removeChild(child);
-          count--;
-          document.getElementById("dummy").innerHTML = count;
-     }
-     else 
-     {
-          alert("Child div has already been removed or does not exist.");
-          return false;
-     }
-}
-</script>
