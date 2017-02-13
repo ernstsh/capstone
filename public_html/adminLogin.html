@@ -4,21 +4,11 @@
 		<title>Admin Login</title>
 	</head>
 	<body>
-		<form method='get' action='addAdmin.php' > 
-                        <p><label for="firstName"> First name: </label> </p>
-                        <p><input type="text" id="firstName"/></p>
-                
-                        <p><label for="lastName"> Lat name: </label> <p>
-                        <p><input type="text" id="lastName"/></p>
-                        
-                        <p><label for="userName">User name: </label></p>
-                        <p><input type="text" id="userName"/></p>
-                        
-                        <p><label for="password">Password: </label></p>
-                        <p><input type="text" id="password"></p>
-                        
-                
-      
+		<form method='get' action='adminLogin.php' > 
+                        <p><label for="userName">User name </label></p>
+                        <p><input type='text' id ="userName" placeholder ="enter name" name="userName"  size = "30" onblur = "checkUserName(this.value)" /> <br />  </p>
+                        <p><label for="password"> Password </label></p>
+                        <p><input type='password' id = 'password' name='password'  size = "30" /> <br /></p>
                         <p><input type="submit" value="Login" name="submit" /></p>
                         <p><input type="reset" value="Reset"><br></p>
                 </form>
