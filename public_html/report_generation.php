@@ -92,6 +92,7 @@ session_start();
         <label>Select the survey type: <label> <br> 
         <input type="radio" name="Pre/Post" value="Pre" checked> Pre-survey<br>
         <input type="radio" name="Pre/Post" value="Post"> Post-survey <br>
+        <input type="radio" name="Pre/Post" value="Both"> Both <br>
         <!--<input type="submit" value="submit" name="submit2" id="submit2"/> <br> -->
         <?php 
                if(isset($_POST['submit2'])) 
@@ -102,7 +103,7 @@ session_start();
         ?>
         
 </form> 
-
+<h4>Queries will appear here:</h4>
 <!--This is where the queries are appended to-->
 <div class="query" id="query">
         <!--<button type="button" class="question">Select question</button>
@@ -112,7 +113,19 @@ session_start();
         <button type="button" class="add">+</button>-->
 </div>
 
+<label>Query type </label> <br>
+<div id="QueryType">
+<input type="radio" name="QueryChoice" value="ChangeResponse" id="ChangeResponse" checked> Change in response <br>
+<input type="radio" name="QueryChoice" value="Regular" id="Regular"> Regular Query <br>
+</div>
+
+<label>Result type</label> <br>
+<div id="ResultType">
+<input type="radio" name="ResultChoice" value="Count" id="Count" checked> Count <br>
+<input type="radio" name="ResultChoice" value="Percent" id="Percent"> Percentage <br>
+
 <button type="button" class="addQuery" id="addQuery" onclick="AddQuery()">Add Query</button>
+<button type="button" class="DeleteAll" id="DeleteAll" onclick="DeleteAll()">Reset</button>
 <button type="button" class="submit" id="submit"> Submit </button>
 <button type="button" class="save" id="save"> Save </button>
 <button type="button" class="exit" id="exit"><a href="dashboard.php"> Exit </a></button> <br>
@@ -120,6 +133,6 @@ session_start();
 </body>
 
 <!--The purpose of dummy is to keep track of count to give a unique id-->
-<p id="dummy"></p>
-
+<p id="dummy" value="0"></p>
+<p id="currentChoice"></p>
 </html>
