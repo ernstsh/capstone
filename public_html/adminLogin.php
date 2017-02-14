@@ -29,7 +29,7 @@ if ((isset($_GET['userName'])) && (isset($_GET['password'])) ){
 		die('Could not connect: ');
 	}
 
-	$query = "SELECT * FROM Admins WHERE UserName='$userName' and Password = '$password'";
+	$query = "SELECT * FROM Admin WHERE UserName='$userName' and Password = '$password'";
 
 	$result = mysqli_query($dbc, $query);
 	
@@ -38,7 +38,8 @@ if ((isset($_GET['userName'])) && (isset($_GET['password'])) ){
         // The log-in is OK so set the user ID and username session vars (and cookies), and redirect to the home page
         $row = mysqli_fetch_array($result);
        // The log-in is OK so set the user ID and username session vars (and cookies), and redirect to the home page
-	$_SESSION['firstName'] = $row['FirstName'];
+	//$_SESSION['firstName'] = $row['FirstName'];
+        //$_SESSION['lastName'] = $row['LastName'];
 	$_SESSION['valid_user'] = $row['UserName'];
        // echo "success";
 	header('Location: dashboard.php');
