@@ -1,22 +1,18 @@
-<html>
-
-<head>
-<title>Saving to Database</title>
-</head>
-
-<body>
-
 <?php
+
 if(isset($_POST)){
-	echo "we got something";
-	echo $_POST['x'];
+	echo "we got something\n";
+	echo $_POST['x']."\n";
 }
 header("Content-Type: application/json; charset=UTF-8");
-$str = file_get_contents('php://input');
-echo "!!!".$str."!!!";
-$obj = json_decode($_POST["x"]);
 
-var_dump($obj);
+//echo "file_get_contents";
+//echo file_get_contents('php://input') + "<br>";
+//echo file_get_contents('test_json.json');
+//echo "!!!".$str."!!!";
+$obj = json_decode($_POST["x"], false);
+
+//var_dump($obj);
 
 $conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "1hvHqfNBEOL6iwL9", "nichokyl-db");
 
@@ -88,6 +84,3 @@ for ($i = 0; $i < 2; $i++) {
 */
 $conn->close();
 ?>
-
-</body>
-</html>
