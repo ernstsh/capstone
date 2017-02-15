@@ -178,27 +178,43 @@ I will also be having a midterm for Linear Algebra that I need to study for.
 
 \subsection{Kyle Nichols}
 \subsubsection{Week 1}
-Over Winter Break I set up a prototype of the database on my ONID since we still had not heard back from Central Services, but still needed something to not lose forward momentum.
-
-This week I studied AngularJS to be useful to my team mates.
+The first thing I did for the project was over winter break by setting up a prototype database on ONID.
+The ultimate plan was to store the database somewhere provided by Central Services, but since we still had not heard back from them, I still needed something so as not to lose forward momentum.
 \subsubsection{Week 2}
-This week I created the initial setup of our web page and handed it off to the others to create their pages, starting with some basic templates and functionality.
-Currently, most links go to blank pages, though the page for adding questions and surveys allows for filling in survey text, but cannot save anything or do more than one question.
-
-Our team also met with our client this week to start our weekly meetings and also to update them on what our plan is moving forward. We should them our current progress on the web pages.
+The next week, I created the initial setup of our web page and handed it off to the others to create their pages, starting with some basic templates and functionality.
+This came from a prior web page I had created for another classes at my Engineering public\_html/ space (located at web.engr.oregonstate.edu/~nichokyl/).
+This allowed us to have a place to create some prototype code and my team mates followed with their own public\_html/ pages.
+At this point, most links went to blank pages, though the page for adding questions and surveys did allow for filling in survey text, but could not save anything or create more than one question.
 \subsubsection{Week 3}
-This week I updated the database to include a Camp table based on discussing the organization of the database and their needs with the client.
-Some other modifications have also been made to other tables based on this change or demographic information that was missing.
-
-This weekend and early next week I plan on getting code written to take JSON objects and convert that into a SQL query, as well as create the code to take a SELECT query result and turn it into a useful (probably JSON) object.
-This will provide the basic functionality for interaction with the database from the rest of the service.
+During this week I updated the database to include a Camp table based on discussing the needs of the database with the client.
+In particular, they needed a way to organize surveys as based on camp.
+My original design of the database only accounted for Surveys in a general sense and not their use in camps more specifically.
+Some other modifications were also made to tables based on this change, such as adding and removing attributes.
+Plus, I added more demographic information to some tables based on an exampe survey the client provided.
 \subsubsection{Week 4}
 This week I wrote the basic code for adding to the database and selecting from a database.
-This is currently using hard-coded table entries while Shannon was setting up the JSON creation that I will parse from.
+I started this component using hard-coded table entries while Shannon was setting up the JSON creation that I would parse from.
 \subsubsection{Week 5}
-On Sunday, I worked with my group to make some progress on creating interaction between survey generation and adding those surveys to a database.
-I have the basic outline code written, but we ran into a problem where POST data was coming back empty in the PHP code.
-So far we have not found what has caused this issue, but this weekend I will be looking into this problem more as well as revising and working on documentation.
+On Sunday of week five, I worked with my group to make progress on creating interaction between survey generation and adding those surveys to a database.
+This included creating the code that would parse from the JSON objects provided by survey generation to insert to the database.
+The SQL query code seemed to work on adding to tables in the database, but we ran into a problem where POST data PHP wanted to use was empty, so nothing could actually be parsed from it.
+\subsubsection{Week 6}
+Unfortunately, we currently have not resolved the issue wtih POSTing the JSON objects to the PHP file that adds to the database.
+However, in the mean time, I have a temporary fix for this issue:
+If a .json object exists in the same directory as the source code inserting into the database, I can get the contents of that file and store that in a JSON object to be parsed.
+This is not how we will want to implement the JSON transfer in the final version, but for now I can use this to get insertion into the database functional while we continue to test our POST issue.
+
+\section{Left to Do}
+
+\subsection{Shannon Ernst}
+\subsection{Javier Franco}
+\subsection{Kyle Nichols}
+The database organization is good and there are no current plans to change it considerably.
+Some changes may continue to occur as we continue to develop our service and test it.
+Several issues have occurred already where modifications needed to be made, and more may still happen.
+Howver, looking forward and the work left to do on database interaction, the connection between the survey generation and report generation components and the database needs to be implemented fully.
+Currently, the code for generating SQL queries is written, but it is basic and does not take requests from other pages for queries.
+The code will needed to be expanded, taking in JSON objects and parsing those objects to know what kind of query or queries are being requested (i.e. a \emph{SELECT} or \emph{INSERT} and what information to send in those queries.
 
 \section{Retrospective}
 \begin{center}
