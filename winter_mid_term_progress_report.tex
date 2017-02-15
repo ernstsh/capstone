@@ -19,6 +19,8 @@
 \geometry{margin=.75in}
 
 \usepackage{hyperref}
+\usepackage{verbatim}
+
 \title{The STEM Academy Data Solution}
 \author{Progress Report \\ Shannon Ernst, Kyle Nichols, Javier Franco\\ 7 December 2016\\ CS 461 Fall 2016\\ Group 48}
 
@@ -49,9 +51,10 @@ After a query, the data should be able to be saved and added to a printable repo
 This website will be an all in one package for collecting and reporting on data in a timely fashion which is what the STEM Academy truly needs.
 By the Engineering Expo, we will be able to present this website and show the full path of data collection, from creating the survey to querying to report generation.
 
+\begin{comment}
 \section{Weekly Summary}
 \subsection{Week 1}
-Over winter break Kyle set up a prototype of the database on his ONID account since we have not heard back from central services, so that our group would not lose momentum waiting on them.
+Over winter break Kyle set up a prototype of the database on his ONID account since we have not heard back from Central Services, so that our group would not lose momentum waiting on them.
 He also studied AngularJS for the first week in order to be more useful to the group.
 This week Shannon contacted Central Services since we had not heard back from them and the reason was that they had lost our ticket.
 They told her that we can work on a LAMP stack and extend the pre-existing domain for the STEM Academy.
@@ -66,7 +69,7 @@ The next step that our group will be taking is creating the website through Cent
 This week Kyle created the initial setup of our web page and handed it off to Shannon and Javier to create their respective pages, starting with some basic templates and functionality.
 The current state consists of mostly links going to empty pages.
 Except for the survey page which is able to add text to the survey text, but it cannot save anything and do more than one question.
-Central services contacted Shannon and told her that we can do the LAMP stack which is what our group is going to go with.
+Central Services contacted Shannon and told her that we can do the LAMP stack which is what our group is going to go with.
 This week Javier wacthed another Angular 2 video and also started working on the query form page, but encountered a problem while trying to query the database for the camps to list on a drop down menu.
 This week our group met up with our client for our first weekly meeting and we updated them on our plans moving forward and we also showed them the progress we made on the web pages.
 Our groups goals for the upcoming week is to create a better HTML frame work, so that we can illustrate the flow of the program to the client. After this we will start working on functionality. 
@@ -101,13 +104,101 @@ Currently everything is going well for our capstone project.
 This week our group met up with our client and they provided feedback on the report generation page design and during the meeting Shannon drew an alternative query structure based on their feedback.
 Javier will have to make some changes to the report generation page, so that the client is able to do the queries that they requested.
 Our client also emailed us a follow up about the things they want to be able to query along with examples.
-This week Shannon contacted central services to get a sub domain.
+This week Shannon contacted Central Services to get a sub domain.
 Both Shannon and Kyle worked on getting the PHP working for posting a JSON object to the database table.
 However, they ran into a problem where the POST data was coming back empty in the PHP code and were unable to find the issue causing it.
 The plans that our group has for the upcoming week is to make revisions to our documents, create the progress report document, record the demo video, work on the capstone project, and to solve the issue with the POST data of a JSON object. 
 
 \subsection{Week 6} 
+\end{comment}
 
+\section{Weekly Progress Summary}
+\subsection{Shannon Ernst}
+\subsubsection{Week 1}
+This week I contacted Central Services as we had not heard from them.
+Our ticket had been lost.
+They told us that we can work on a LAMP stack and extend the preexisting domain for the STEM Academy.
+This means that the code would be done in PHP and MySQL.
+There is nothing inherently wrong with this.
+We also established a weekly meeting with our client for Tuesday at 9 am.
+The next steps are creating the website through Central Services.
+\subsubsection{Week 2}
+This week we met with our client to show a basic mock of what we are doing for the web app.
+We are going to continue working primarily in HTML for the moment.
+Central Services says we can do the LAMP stack which is what we are going to go with.
+Goals for the coming week is to have a better html frame work so we can illustrate the flow of the program to the client.
+We will then work on functionality.
+\subsubsection{Week 3}
+This week I started implementing functionality for adding questions to the survey.
+Over the weekend I'm going to continue working on this as well as implementing preview survey.
+I need to call Ideal Logic to figure out how to export enrollments.
+We meet with our client again next week.
+\subsubsection{Week 4}
+This week I implemented the beginnings of survey creation.
+I have constructed the json and can generate questions dynamically and create surveys.
+I still need to be able to recall surveys, save and edit preexisting ones.
+I still need to call Ideal Logic. We met with our client this week to demo and provide updates.
+All is going well.
+\subsubsection{Week 5}
+This week we contacted central services to get the sub domain.
+We are working on getting php working for posting json.
+We sketched a query structure with the client.
+This coming week we will do the progress report and wrap up alpha with successful PHP POSTs.
+
+\subsection{Javier Franco}
+\subsubsection{Week 1}
+This week I looked at creating an alternative design for creating the search form since I thought that my previous design would not work.
+The new design is based on selecting a question to query first for a survey.
+Then selecting an operator for the query and specifying a value that is going to be queried through a drop down menu or by manually entering a value.
+I compared this design idea to Qualtrics and noticed that it uses this set up.
+I also studied the operators that Qualtrics uses for the different types of questions that a user will be able to create and how it carries out multiple field queries.
+The plan for next week is to start developing our webpages, so that we can have something to show to the client and I will also be studying more on how to use Angular JS 2 to get a better understanding.
+\subsubsection{Week 2}
+My plan for next week is to create a weekly schedule and to set aside 4-6 hours a day to work on the project to better manage my time and to make progress on the project.
+This week I watched another tutorial video on Angular 2 and I worked on creating query form page, but encountered errors while trying to query the clubs, camps, and programs for the drop down list.
+I created three tables for the club, program, and camp that I need to include in Kyle's database.
+I felt that I was not as productive as I should have been and I will make it up by working on the project over the weekend.
+\subsubsection{Week 3}
+This week I added some functionality to the report form generation page.
+The page now allows a user to delete/add a query.
+I also created the functionality that allows administrative users to login/logout.
+Some issues that I faced this week was that by not having the appropriate properties on the files and folders it effected the results produced by the .js and .php files which took me a while to figure out.
+My plan for the weekend is to add more functionality to the page by allowing a user to select a camp and a survey to query.
+\subsubsection{Week 4}
+This week I was able to get the adding a camp page to work and an issue that I encountered was that it was time consuming finding the error that caused it because webpages are hard to debug.
+Our group met up with the clients and I now have a better understanding of the things they want to be able to query.
+However, I am worried that it will be difficult to come up with a good design that satisfied their demands for the report generation webpage.
+For the upcoming week I will be focusing more on the part of the project that I am responsible for and my goals for the week is to complete the query functionality for a survey.
+\subsubsection{Week 5}
+This week our group met up with the client and they gave me feedback on my report generation design.
+I am going to have to change my design in order to meet their requests of the stuff they want to be able to query.
+The plans for the upcoming week are to create the demo video, make revisions on our documents, make a progress report, and also work on the capstone project.
+For the upcoming week I am worried that I will not have time to work on the capstone project since we have to make revisions to our documents, make a progress report, and a demo video.
+I will also be having a midterm for Linear Algebra that I need to study for.
+
+\subsection{Kyle Nichols}
+\subsubsection{Week 1}
+Over Winter Break I set up a prototype of the database on my ONID since we still had not heard back from Central Services, but still needed something to not lose forward momentum.
+
+This week I studied AngularJS to be useful to my team mates.
+\subsubsection{Week 2}
+This week I created the initial setup of our web page and handed it off to the others to create their pages, starting with some basic templates and functionality.
+Currently, most links go to blank pages, though the page for adding questions and surveys allows for filling in survey text, but cannot save anything or do more than one question.
+
+Our team also met with our client this week to start our weekly meetings and also to update them on what our plan is moving forward. We should them our current progress on the web pages.
+\subsubsection{Week 3}
+This week I updated the database to include a Camp table based on discussing the organization of the database and their needs with the client.
+Some other modifications have also been made to other tables based on this change or demographic information that was missing.
+
+This weekend and early next week I plan on getting code written to take JSON objects and convert that into a SQL query, as well as create the code to take a SELECT query result and turn it into a useful (probably JSON) object.
+This will provide the basic functionality for interaction with the database from the rest of the service.
+\subsubsection{Week 4}
+This week I wrote the basic code for adding to the database and selecting from a database.
+This is currently using hard-coded table entries while Shannon was setting up the JSON creation that I will parse from.
+\subsubsection{Week 5}
+On Sunday, I worked with my group to make some progress on creating interaction between survey generation and adding those surveys to a database.
+I have the basic outline code written, but we ran into a problem where POST data was coming back empty in the PHP code.
+So far we have not found what has caused this issue, but this weekend I will be looking into this problem more as well as revising and working on documentation.
 
 \section{Retrospective}
 \begin{center}
