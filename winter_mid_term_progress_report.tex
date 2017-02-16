@@ -195,21 +195,20 @@ In particular, they needed a way to organize surveys as based on camp.
 My original design of the database only accounted for Surveys in a general sense and not their use in camps more specifically.
 This also required that I create an S\_Use table to account for the many-to-many relationship that Surveys are used in Camps and Camps use surveys.
 Some other modifications were also made to tables based on this change, such as adding and removing attributes.
-These include removing a 
-Plus, I added more demographic information to some tables based on an exampe survey the client provided.
+Plus, I added more demographic information to some tables based on an example survey the client provided: gender and parental income.
 \subsubsection{Week 4}
 This week I wrote the basic code for adding to the database and selecting from a database.
-I started this component using hard-coded table entries while Shannon was setting up the JSON creation that I would parse from.
+To do this, I used the mysqli object in PHP and connected it to my personal ONID database.
+\begin{lstlisting}
+   \$conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "password", "nichokyl-db");
+   \$result = \$conn->query("INSERT INTO `nichokyl-db`.`Survey` (`survey\_id`, `title`) VALUES (NULL, '".\$survey->\$title."')");
+\end{lstlisting}
+I started this component using hard-coded table entries (i.e. the survey->title variable in the example above was given a value of "Example" before insertion) while Shannon was setting up the JSON creation that I would parse from.
 \subsubsection{Week 5}
 On Sunday of week five, I worked with my group to make progress on creating interaction between survey generation and adding those surveys to a database.
 This included creating the code that would parse from the JSON objects provided by survey generation to insert to the database.
 The SQL query code seemed to work on adding to tables in the database, but we ran into a problem where POST data PHP wanted to use was empty, so nothing could actually be parsed from it.
 \subsubsection{Week 6}
-Unfortunately, we currently have not resolved the issue wtih POSTing the JSON objects to the PHP file that adds to the database.
-However, in the mean time, I have a temporary fix for this issue:
-If a .json object exists in the same directory as the source code inserting into the database, I can get the contents of that file and store that in a JSON object to be parsed.
-This is not how we will want to implement the JSON transfer in the final version, but for now I can use this to get insertion into the database functional while we continue to test our POST issue.
-
 
 
 \section{Retrospective}
@@ -230,6 +229,19 @@ The survey generation can currently allow the user to add a title, select if it 
 The report generation page currently allows a user to select a camp and returns all of the camp's surveys. There are three sets of radio buttons for specifying the type of query, result, and survey. Based on the type of query that is selected the "Add Query" button adds a query template based on the selection along with a functioning delete button for removing the query. The "Reset" button for the page removes all of the query templates currently on the page and the "Exit" button redirects the user back to the dashboard.
 
 \subsection{Kyle Nichols}
+Currently, the database is within the organization it will need to be at.
+There may still be some changes to the database once we have fully coded the interaction with the database, as some organization needs for possible queries may not exist.
+However, this changes should be minor and consist mostly of superfluous or missing attributes or a need for other relations that don't exist.
+Some sample data exists in the database, but this is arbitrary data.
+I have some example surveys from STEM Academy, but this have not been added to the database while kinks are still being worked out.
+
+Unfortunately, we currently have not resolved the issue wtih POSTing the JSON objects to the PHP file that adds to the database.
+This is preventing us from implementing full interaction between the database and other components, at least in a secure way.
+However, in the mean time, I have a temporary fix for this issue:
+If a .json object exists in the same directory as the source code inserting into the database, I can get the contents of that file and store that in a JSON object to be parsed.
+This is not how we will want to implement the JSON transfer in the final version, but for now I can use this to get insertion into the database functional while we continue to test our POST issue.
+I can create example .json files to implement the parsing of JSON objects for insertion or selection data for the SQL queries.
+In addition, Shannon and Javier can create .json instead of using POST until we resolve the issue with POST.
 
 \section{Left to Do}
 
