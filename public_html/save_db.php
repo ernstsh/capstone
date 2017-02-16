@@ -1,29 +1,29 @@
 <?php
 
-if(isset($_POST)){
+if(isset($_POST['x'])){
 	echo "we got something\n";
 	echo $_POST['x']."\n";
 }
-header("Content-Type: application/json; charset=UTF-8");
+//header("Content-Type: application/json; charset=UTF-8");
 
 //echo "file_get_contents";
 //echo file_get_contents('php://input') + "<br>";
 //echo file_get_contents('test_json.json');
 //echo "!!!".$str."!!!";
-$obj = json_decode($_POST["x"], false);
+$obj = json_decode($_POST['x']);
 
 //var_dump($obj);
 
 $conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "1hvHqfNBEOL6iwL9", "nichokyl-db");
 
 # ADD SURVEY
-$sql = "INSERT INTO Survey (`survey_id`, `title`) VALUES ('121', '".$obj->$title."');";
+$sql = "INSERT INTO Survey (`survey_id`, `title`) VALUES ('222', '".$obj->$title."');";
 
 $result = $conn->query($sql);
 
 if ($result) {
-   echo "Successfully added survey. <br>";
-   $survey_id = $conn->insert_id;
+  echo "Successfully added survey. <br>";
+  $survey_id = $conn->insert_id;
 } else {
    echo "Error: ".$conn->error." <br>";
 }
