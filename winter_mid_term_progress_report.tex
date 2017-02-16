@@ -210,17 +210,7 @@ However, in the mean time, I have a temporary fix for this issue:
 If a .json object exists in the same directory as the source code inserting into the database, I can get the contents of that file and store that in a JSON object to be parsed.
 This is not how we will want to implement the JSON transfer in the final version, but for now I can use this to get insertion into the database functional while we continue to test our POST issue.
 
-\section{Left to Do}
 
-\subsection{Shannon Ernst}
-\subsection{Javier Franco}
-\subsection{Kyle Nichols}
-The database organization is good and there are no current plans to change it considerably.
-Some changes may continue to occur as we continue to develop our service and test it.
-Several issues have occurred already where modifications needed to be made, and more may still happen.
-Howver, looking forward and the work left to do on database interaction, the connection between the survey generation and report generation components and the database needs to be implemented fully.
-Currently, the code for generating SQL queries is written, but it is basic and does not take requests from other pages for queries.
-The code will needed to be expanded, taking in JSON objects and parsing those objects to know what kind of query or queries are being requested (i.e. a \emph{SELECT} or \emph{INSERT} and what information to send in those queries.
 
 \section{Retrospective}
 \begin{center}
@@ -236,5 +226,26 @@ The code will needed to be expanded, taking in JSON objects and parsing those ob
 
 \section{Current Status}
 
+\subsection{Shannon Ernst}
+
+\subsection{Javier Franco}
+The report generation page currently allows a user to select a camp and returns all of the camp's surveys. There are three sets of radio buttons for specifying the type of query, result, and survey. Based on the type of query that is selected the "Add Query" button adds a query template based on the selection along with a functioning delete button for removing the query. The "Reset" button for the page removes all of the query templates currently on the page and the "Exit" button redirects the user back to the dashboard.
+
+\subsection{Kyle Nichols}
+
+\section{Left to Do}
+
+\subsection{Shannon Ernst}
+
+\subsection{Javier Franco}
+The things that remain to implement for the report generation page include returning a query result when the Submit button is clicked and displaying the result of the query in an empty form that will allow a user to add a caption to the result.  In addition, I need to implement saving the report results into the database and also allowing a user to return to those results to make additional queries or changes. I also need to add check boxes for the demographic information incase the user wants to breakdown the query result information. Once I get the query results working for one camp I will have to make adjustments to make the report generation page work for multiple camps. 
+
+\subsection{Kyle Nichols}
+The database organization is good and there are no current plans to change it considerably.
+Some changes may continue to occur as we continue to develop our service and test it.
+Several issues have occurred already where modifications needed to be made, and more may still happen.
+Howver, looking forward and the work left to do on database interaction, the connection between the survey generation and report generation components and the database needs to be implemented fully.
+Currently, the code for generating SQL queries is written, but it is basic and does not take requests from other pages for queries.
+The code will needed to be expanded, taking in JSON objects and parsing those objects to know what kind of query or queries are being requested (i.e. a \emph{SELECT} or \emph{INSERT} and what information to send in those queries.
 
 \end{document}
