@@ -179,17 +179,23 @@ I will also be having a midterm for Linear Algebra that I need to study for.
 \subsection{Kyle Nichols}
 \subsubsection{Week 1}
 The first thing I did for the project was over winter break by setting up a prototype database on ONID.
+I did this through creating the tables as outlined in the design document: Survey, Question, Contains, Responder, Student, Parent, Response, Multiple\_Choice, Text, and Matrix.
+These tables were created empty.
+I did not yet add any example data to the database.
 The ultimate plan was to store the database somewhere provided by Central Services, but since we still had not heard back from them, I still needed something so as not to lose forward momentum.
 \subsubsection{Week 2}
 The next week, I created the initial setup of our web page and handed it off to the others to create their pages, starting with some basic templates and functionality.
-This came from a prior web page I had created for another classes at my Engineering public\_html/ space (located at web.engr.oregonstate.edu/~nichokyl/).
+This template-like code came from what I had created for another class at my Engineering public\_html/ space (located at web.engr.oregonstate.edu/~nichokyl).
 This allowed us to have a place to create some prototype code and my team mates followed with their own public\_html/ pages.
+We still stored all of our web service code in public\_html/ in our github directory, but used our own Engineering web pages to test our code for each of our purposes.
 At this point, most links went to blank pages, though the page for adding questions and surveys did allow for filling in survey text, but could not save anything or create more than one question.
 \subsubsection{Week 3}
 During this week I updated the database to include a Camp table based on discussing the needs of the database with the client.
 In particular, they needed a way to organize surveys as based on camp.
 My original design of the database only accounted for Surveys in a general sense and not their use in camps more specifically.
+This also required that I create an S\_Use table to account for the many-to-many relationship that Surveys are used in Camps and Camps use surveys.
 Some other modifications were also made to tables based on this change, such as adding and removing attributes.
+These include removing a 
 Plus, I added more demographic information to some tables based on an exampe survey the client provided.
 \subsubsection{Week 4}
 This week I wrote the basic code for adding to the database and selecting from a database.
