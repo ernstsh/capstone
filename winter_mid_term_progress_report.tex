@@ -217,17 +217,15 @@ This is not how we will want to implement the JSON transfer in the final version
     \begin{tabular}{ | p{5cm} | p{5cm} | p{5cm} |}
     \hline
      Positive & Delta & Action \\ \hline
-  	Every assignment was completed & Our writing is not always concise and does not always accurately convey our ideas & To solve the writing issue we will consult more with the instructors and TAs as well as go to the writing lab \\\hline
-	We have a solid understanding of our project & We had a really tough time with the IEEE formats & To solve the IEEE formatting issue, we will ask more questions in the future and take notes on the answer \\ \hline
-	We have a good relationship with our client & We could still make sure to more frequently update our clients on our progress & We will make sure to have email or in-person communication once a week \\ \hline
-	&We need to do a better job of scheduling and keeping to the schedule& To fix the scheduling we will start having a calendar on github which we can all monitor and stick to \\ \hline
+	We have a weekly meeting with our client so we are able to iterate quickly & We need to do a better job of following up with Central Services and other outside entities & To fix the follow up problem we will set aside a weekly call time to place these phone calls to get the answers we need \\ \hline
+  	We are doing well at keeping up with the coding, much of the functionality is in place & We are not good at meeting with our TA (people sometimes miss the meeting) and we often miss the Friday deadline for the blog posts, updating them on Saturday instead & To change this, we will set better alarms and reminders to make sure we are keeping up with these adminstrative tasks \\ \hline
     \end{tabular}
 \end{center}
 
 \section{Current Status}
 
 \subsection{Shannon Ernst}
-
+The survey generation can currently allow the user to add a title, select if it is a pre or post survey, add text questions and add multiple choice questions. The survey can be previewed in a seperate window as well. This means that we are currently successful in dynamically manipulating the DOM of the page and generating the appropriate json to view a survey. The save feature is being debugged. There is a place to associate the survey with the camp. We also have the login established thanks to Javier and the overall flow of the web app is complete.  
 \subsection{Javier Franco}
 The report generation page currently allows a user to select a camp and returns all of the camp's surveys. There are three sets of radio buttons for specifying the type of query, result, and survey. Based on the type of query that is selected the "Add Query" button adds a query template based on the selection along with a functioning delete button for removing the query. The "Reset" button for the page removes all of the query templates currently on the page and the "Exit" button redirects the user back to the dashboard.
 
@@ -237,6 +235,12 @@ The report generation page currently allows a user to select a camp and returns 
 
 \subsection{Shannon Ernst}
 
+The survey generation is functionally mostly done. The primary issues at the moment are saving and some functional UI components
+such as moving questions, deleting questions and developing the matrix question. The functional UI components will not be difficult to implement as the matrix question is pretty much the same code as the multiple choice with some changes and moving questions requires more DOM manipulation. Deleting a question is going to be a little tricky as via DOM manipulation you need to delete from 
+the parent node which may not always be clear. Saving the surevy has been the top priority as we have not been able to get the 
+json to be decoded correctly on the PHP side to insert things into the database. This is a major blocker as we will be posting many 
+json objects to alter the database. The next steps once saving is complete is to clean up the UI from a css perspective and make sure the surveys are being recalled 
+correctly from the database. Once we know how to successfully pass around json between client and server, the hard work is done.
 \subsection{Javier Franco}
 The things that remain to implement for the report generation page include returning a query result when the Submit button is clicked and displaying the result of the query in an empty form that will allow a user to add a caption to the result.  In addition, I need to implement saving the report results into the database and also allowing a user to return to those results to make additional queries or changes. I also need to add check boxes for the demographic information incase the user wants to breakdown the query result information. Once I get the query results working for one camp I will have to make adjustments to make the report generation page work for multiple camps. 
 
