@@ -40,6 +40,9 @@
 \begin{abstract}
 The STEM Academy Data Solution will generate and distribute surveys, collect the responses of these surveys, and generate reports based on these responses. The design of these components are key. Through examination of each component through an interface and logic standpoint, the developer team has created a design to satisfy the project requirements. 
 \end{abstract}
+
+\newpage
+\tableofcontents
 \newpage
 
 % Adding these from the template in Annex C of the standard
@@ -161,15 +164,15 @@ preview, it will have a response id with the value of test which will exclude it
 
 \subsection{Database Management}
 \subsubsection{Database organization Structure Viewpoint}
-The database will be organized around the core elements of surveys, questions, and responders.
-These will compromise the three core tables in the database, with other tables functioning as relationships or specializations of these core tables.
+The database will be organized around the core elements of surveys, questions, camps, and responders.
+These will compromise the four core tables in the database, with other tables functioning as relationships or specializations of these core tables.
 All tables contain unique IDs as their primary key, and each ID is a non-negative integer.
 
 The Survey table will contain the survey\_id as its primary key to identify each individual Survey.
-Each Survey will also contain a string attribute for the title and a string attribute for the program it is used in.
+Each Survey will also contain a string attribute for the title, a string representing the array of questions, and the type of survey (i.e. "pre" or "post").
 
 The Question table represents any individual kind of question.
-It's attributes include a unique question\_id to serve as its primary key and the question's text as a string attribute.
+It's attributes include a unique question\_id to serve as its primary key, the question's text as a string attribute, the type of question (Matrix, Multiple\_Choice, or Text), and a string representation of the array of answers.
 The question text will be generated through the survey generation process and be stored here when the Question is created.
 
 Surveys and Questions have a many-to-many relationship: Questions can exist in many different Surveys and Surveys contain many different questions.
@@ -177,13 +180,18 @@ To create this relationship in our database, a Contains table will exist.
 The Contains table's primary key will be a combination of a survey\_id and a question\_id to correspond a questions use in a survey.
 The question\_id and survey\_id individually can be used in other Contains entries, but since surveys don't have the same question multiple times, the combination will be unique for each table entry.
 
+The Camp table will contain information on each camp STEM Academy hosts.
+This table will contain attributes including a unique integer ID, a string for the title of the camp, the start\_date and end\_date of the camp stored as the date type, and integers refering to the survey\_ids of the pre and post surveys.
+
+Since every Camp has two surveys, and Surveys can be used in multiple Camps, there exists an relationship table, S\_Use to represent this.
+It stores a combination of the survey\_id and camp\_id.
+
 The Responder table will store information on the individual responders.
 This includes a unique responder\_id for the primary key, two string attributes for first\_name and last\_name, the birthdate as a date attribute, and a non-negative integer attribute for the age derived from the birthdate and the current date.
 The age can be updated or refreshed when necessary.
-The Responder table has two specializations: a Student and a Parent.
-A Parent does not contain any extra information, but a Student contains a parent1\_id and a parent2\_id to correspond to both of its parents.
-The specialization is to allow for more accurate and specified queries of students and parents separately or together.
-As specializations, they also contain a matching responder\_id to their corresponding Responder table entry.
+
+The Admin table stores information on administrators using our system to create surveys.
+Each admin has a unique admin\_id, their full name is stored in strings of their first and last names, and their login username and password are also saved as strings.
 
 To save responses, a Response table will exist.
 This functions as the many-to-many relationship between Responders and Questions, but also stores the answer provided for the question.
@@ -198,10 +206,11 @@ The below diagram outlines the relational database schema described above.
 % Relations
 
 \node (surveytitle) {\textbf{SURVEY}};
-\node [relation=2, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of surveytitle.west, anchor=west] (survey)
+\node [relation=4, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of surveytitle.west, anchor=west] (survey)
 {\underline{survey\_id}%
 \nodepart{two}		title
-\nodepart{three}	program};
+\nodepart{three}	arr\_questions
+\nodepart{four}	survey\_type};
 
 \node [below=1cm of survey.west, anchor=west] (containstitle) {\textbf{CONTAINS}};
 \node [relation=2, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of containstitle.west, anchor=west] (contains)
@@ -209,9 +218,11 @@ The below diagram outlines the relational database schema described above.
 \nodepart{two}	\underline{question\_id}};
 
 \node [below=1cm of contains.west, anchor=west] (questiontitle) {\textbf{QUESTION}};
-\node [relation=2, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of questiontitle.west, anchor=west] (question)
+\node [relation=4, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of questiontitle.west, anchor=west] (question)
 {\underline{question\_id}%
-\nodepart{two}		text};
+\nodepart{two}		text,
+\nodepart{three}	type
+\nodepart{four}	arr\_answers};
 
 \node [below=1cm of question.west, anchor=west] (responsetitle) {\textbf{RESPONSE}};
 \node [relation=2, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of responsetitle.west, anchor=west] (response)
@@ -244,25 +255,41 @@ The below diagram outlines the relational database schema described above.
 \nodepart{four}	birthdate
 \nodepart{five}		age};
 
-\node [below=1cm of responder.west, anchor=west] (parenttitle) {\textbf{PARENT}};
-\node [relation=1, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of parenttitle.west, anchor=west] (parent)
-{\underline{responder\_id}};
+\node [below=1cm of responder.west, anchor=west] (admintitle) {\textbf{ADMIN}};
+\node [relation=5, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of admintitle.west, anchor=west] (admin)
+{\underline{admin\_id}%
+\nodepart{two}		FirstName
+\nodepart{three}	LastName
+\nodepart{four}	username
+\nodepart{five}		password};
 
-\node [below=1cm of parent.west, anchor=west] (studenttitle) {\textbf{STUDENT}};
-\node [relation=3, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of studenttitle.west, anchor=west] (student)
-{\underline{responder\_id}%
-\nodepart{two}		parent1\_id
-\nodepart{three}	parent2\_id};
+\node [below=1cm of admin.west, anchor=west] (camptitle) {\textbf{CAMP}};
+\node [relation=6, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of camptitle.west, anchor=west] (camp)
+{\underline{camp\_id}%
+\nodepart{two}		title
+\nodepart{three}	start\_date
+\nodepart{four}	end\_date
+\nodepart{five}		pre
+\nodepart{six}	post};
+
+\node [below=1cm of camp.west, anchor=west] (susetitle) {\textbf{SUSE}};
+\node [relation=2, rectangle split horizontal, rectangle split part fill={lightgray!50}, anchor=north west, below=0.6cm of susetitle.west, anchor=west] (suse)
+{\underline{camp\_id}%
+\nodepart{two}		\underline{survey\_id}};
 
 % Foreign keys
 
 \draw[-latex] (contains.one south) -- ++(0,-0.2) -| ($(contains.one south) + (-1,0)$) |- ($(survey.one south) + (0.25,-0.40)$) -| ($(survey.one south) + (0.25,0)$);
 
-\draw[-latex] (contains.two south) -- ++(0,-0.2) -| ($(contains.two south) + (2,0)$) |- ($(question.one south) + (0.25,-0.20)$) -| ($(question.one south) + (0.10,0)$);
+\draw[-latex] (contains.two south) -- ++(0,-0.2) -| ($(contains.two south) + (4,0)$) |- ($(question.one south) + (0.25,-0.20)$) -| ($(question.one south) + (0.10,0)$);
 
-\draw[-latex] (response.one south) -- ++(0,-0.25) -| ($(response.one south) + (4,0)$) |- ($(question.one south) + (0.25,-0.50)$) -| ($(question.one south) + (0.25,0)$);
+\draw[-latex] (response.one south) -- ++(0,-0.25) -| ($(response.one south) + (3,0)$) |- ($(question.one south) + (0.25,-0.50)$) -| ($(question.one south) + (0.25,0)$);
 
 \draw[-latex] (response.two south) -- ++(0,-0.2) -| ($(response.two south) + (5.50,0)$) |- ($(responder.one south) + (0.25,-0.40)$) -| ($(responder.one south) + (0.25,0)$);
+
+\draw[-latex] (suse.one south) -- ++(0,-0.2) -| ($(suse.one south) + (-1,0)$) |- ($(camp.one south) + (0.25,-0.40)$) -| ($(camp.one south) + (0.25,0)$);
+
+\draw[-latex] (suse.one south) -- ++(0,-0.2) -| ($(suse.one south) + (8,0)$) |- ($(survey.one south) + (0.25,-0.40)$) -| ($(survey.one south) + (0.40,0)$);
 
 \end{tikzpicture}
 \captionof{figure}{The relational database schema}
@@ -273,18 +300,30 @@ In particular, tables will use AUTO INCREMENT to automatically increment and cre
 They will also be done in the following order because some tables reference others.
 \lstset{language=SQL,breaklines=true,breakatwhitespace=true}
 \begin{lstlisting}
+CREATE TABLE Admin
+(
+ admin_id int NOT NULL
+ FirstName varchar(20)
+ LastName varchar(20)
+ UserName varchar(20)
+ Password  varchar(20)
+)
+
 CREATE TABLE Survey
 (
- survey_id int NOT NULL AUTO_INCREMENT
+ survey_id int NOT NULL
  title varchar(255)
- program varchar(255)
+ arr_questions varchar(1024)
+ survey_type varchar(20)
  PRIMARY KEY (survey_id)
 )
 
 CREATE TABLE Question
 (
- question_id int NOT NULL AUTO_INCREMENT
+ question_id int NOT NUL
  text varchar(1020) NOT NULL
+ type varchar(32) NOT NULL
+ arr_answers varchar(1024)
  PRIMARY KEY (question_id)
 )
 
@@ -299,32 +338,13 @@ CREATE TABLE Contains
 
 CREATE TABLE Responder
 (
- responder_id int NOT NULL AUTO_INCREMENT
+ responder_id int NOT NULL
  first_name varchar(255) NOT NULL
  last_name varchar(255) NOT NULL
  birthdate date
  age int
  gender varchar(255)
  PRIMARY KEY (responder_id)
-)
-
-CREATE TABLE Parent
-(
- responder_id int NOT NULL
- income int
- PRIMARY KEY (responder_id)
- FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
-)
-
-CREATE TABLE Student
-(
- responder_id int NOT NULL
- parent1_id int
- parent2_id int
- PRIMARY KEY (responder_id)
- FOREIGN KEY (responder_id) REFERENCES Responder(responder_id)
- FOREIGN KEY (parent1_id) REFERENCES Parent(responder_id)
- FOREIGN KEY (parent2_id) REFERENCES Parent(responder_id)
 )
 
 CREATE TABLE Response
@@ -368,14 +388,16 @@ CREATE TABLE Text
 
 CREATE TABLE Camp
 (
- camp_id int NOT NULL AUTO_INCREMENT
+ camp_id int NOT NULL
  title varchar(255)
  start_date date NOT NULL
  end_date date NOT NULL
+ pre int
+ post int
  PRIMARY KEY (camp_id)
 )
 
-CREATE TABLE Usage
+CREATE TABLE S_Use
 (
  camp_id int NOT NULL
  survey_id int NOT NULL

@@ -31,7 +31,11 @@ Its purpose is to automate the process of aggregating survey data and generating
 For this technology review, split our product into subcomponents and compared three different alternatives for those subcomponents.
 We analyzed these alternatives and came to a decision on which technology we would use for each.
 \end{abstract}
+
 \newpage
+\tableofcontents
+\newpage
+
 \section{Introduction}
 Data drives much change in today's world with the advent of data technology. The STEM Academy in Corvallis,
  Oregon has been collecting data on their various camps and programs by paper surveys. This data has often 
@@ -148,6 +152,13 @@ MongoDB is also document-oriented, which means that it organizes and manages dat
 This type of structure and orientation fits well with the storing of surveys, which are inherently documents, however, this does not work for storing data on students and their responses, which may require a more traditional relational database system to connect the students with their survey responses.
 As open source software, using the bare bones software for MongoDB is free of cost, which reduces or eliminates the cost for our clients to uphold the database. \cite{mongo_cost}.
 However, this is for the bare bones software, and if there are additional features needed by our clients that MongoDB provides, that will require additional cost \cite{mongo_cost}.
+\subsection{Discussion and Recommendation}
+Whichever software we use for the database setup and storage will need to depend on what cost Microsoft Access would have for STEM Academy.
+If the cost is manageable for STEM Academy, we could use Microsoft Access.
+However, if it is not, we may decide on phpMyAdmin.
+Although it would require accessing a web server that can be hosted on Oregon State's infrastructure (which is done in database classes), it is free software that can accomplish what we need without any worries of cost.
+However, most likely, the software used will be whatever Central Services provides.
+We can use phpMyAdmin to prototype, but the final technology will be primarily decided for us.
 
 \section{Survey Distribution}
 Surveys must be distributable in URLs or other formats so that survey takers can easily access the survey from their own computer. The most useful format would be through email.
@@ -175,6 +186,11 @@ MailChimp also provides an API for use in developing \cite{mailchimp_features}.
 As marketing software, MailChimp has many features and uses, many of which would be superfluous for our clients, who only need a way to provide a quick-access link to the surveys and distribute them in a way that survey takers can access them from many different locations.
 Also as marketing software, it's purpose is drastically different from what we would be using it for.
 Email lists and automated messages are provided by MailChimp for this, but it could be easier to use different tools that are more focused on just those features.
+\subsection{Discussion and Recommendation}
+For distributing the surveys, our best solution will probably be PHPMailer.
+It provides the functionality of the built-in \texttt{mail()} function, but with extra options that could be useful for us, including not requiring a separate web server.
+However, as of now, we are not looking at distribution of surveys through a specific technology.
+Instead, we will provide a link to the surveys to students at each camp.
 
 \section{Printable Surveys}
 Surveys that are generated on our system must have the ability to be printed and distributed on paper instead of just online.
@@ -198,15 +214,10 @@ The format of the generated PDF can be set and any HTML or CSS stylings are appl
 This allows us to generate a button on the page without creating the code to do so from scratch and applying it to a built-in function, like \texttt{window.print()} above.
 It supports several HTML elements such as different block elements, tables, and lists \cite{css2pdf_home}.
 It is also in process and being improved and will likely add more features and capabilities in the future, though this may not be useful as we will most likely finish developing this project at the end of the year.
-
-\section{Decision for Database Management, Survey Distribution and Printable Surveys}
-Whichever software we use for the database setup and storage will need to depend on what cost Microsoft Access would have for STEM Academy.
-If the cost is manageable for STEM Academy, we could use Microsoft Access.
-However, if it is not, we may decide on phpMyAdmin.
-Although it would require accessing a web server that can be hosted on Oregon State's infrastructure (which is done in database classes), it is free software that can accomplish what we need without any worries of cost.
-For distributing the surveys, our best solution will probably be PHPMailer.
-It provides the functionality of the built-in \texttt{mail()} function, but with extra options that could be useful for us, including not requiring a separate web server.
+\subsection{Discussion and Recommendation}
 For printing surveys, the css2pdf library looks like a more rounded option than the default \texttt{print()} function without having to do some extra work on our part (such as creating our own print button). 
+However, this is another component we are not currently looking at implementing separately.
+We will display previewable versions of surveys, which can be printed through the browser.
 
 %Javier's part begins here 
 %Search Form 
