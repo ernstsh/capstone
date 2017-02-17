@@ -20,6 +20,7 @@
 
 \usepackage{hyperref}
 \usepackage{verbatim}
+\usepackage{listings}
 
 \title{The STEM Academy Data Solution}
 \author{Progress Report \\ Shannon Ernst, Kyle Nichols, Javier Franco\\ 7 December 2016\\ CS 461 Fall 2016\\ Group 48}
@@ -50,67 +51,6 @@ This service should be user friendly; the user should not need to know any SQL o
 After a query, the data should be able to be saved and added to a printable report so that it can actually be used in grant proposals and marketing material.
 This website will be an all in one package for collecting and reporting on data in a timely fashion which is what the STEM Academy truly needs.
 By the Engineering Expo, we will be able to present this website and show the full path of data collection, from creating the survey to querying to report generation.
-
-\begin{comment}
-\section{Weekly Summary}
-\subsection{Week 1}
-Over winter break Kyle set up a prototype of the database on his ONID account since we have not heard back from Central Services, so that our group would not lose momentum waiting on them.
-He also studied AngularJS for the first week in order to be more useful to the group.
-This week Shannon contacted Central Services since we had not heard back from them and the reason was that they had lost our ticket.
-They told her that we can work on a LAMP stack and extend the pre-existing domain for the STEM Academy.
-This would mean that the code would be done using php and mysql, but there is nothing inherently wrong with this
- For this week Javier worked on an alternative design for querying information since he thinks his previous design will not work.
-The new design for a query consists of three drop downs for selecting a question, response, and an operator for a query which is similar to the one that Qualtrics uses.
-He also studied Qualtrics to see what operators the tool uses for querying information and the flow on generating a result for a query.
-Our group established a weekly meeting with our client for Tuesdays at 9:00 am.
-The next step that our group will be taking is creating the website through Central Services. 
-
-\subsection{Week 2}
-This week Kyle created the initial setup of our web page and handed it off to Shannon and Javier to create their respective pages, starting with some basic templates and functionality.
-The current state consists of mostly links going to empty pages.
-Except for the survey page which is able to add text to the survey text, but it cannot save anything and do more than one question.
-Central Services contacted Shannon and told her that we can do the LAMP stack which is what our group is going to go with.
-This week Javier wacthed another Angular 2 video and also started working on the query form page, but encountered a problem while trying to query the database for the camps to list on a drop down menu.
-This week our group met up with our client for our first weekly meeting and we updated them on our plans moving forward and we also showed them the progress we made on the web pages.
-Our groups goals for the upcoming week is to create a better HTML frame work, so that we can illustrate the flow of the program to the client. After this we will start working on functionality. 
-
-\subsection{Week 3}
-For week 3 Javier added some functionality to the report generation page which now allows a user to delete or add a query.
-He also created the functionality that allows admins to login or logout of their accounts.
-He plans on continuing adding more functionality to the report generation page for the upcoming week.
-Some issues that he faced this week was that by not having the correct property value for the files it resulted in the files not functioning which took him a while to figure out.
-This week Kyle updated the database to include a Camp table based on discussing the organization of the database and their needs with the client
- He also made other modifications to other tablese based on this change or demographic information that was missing.
-For this weekend and early next week Kyle plans on getting code written to take JSON objects and convert that into a SQL query, as well as creating the code to take a SELECT query result and turn it into a useful (probably JSON) object.
-This will help provide the basic functionality for interaction with the database from the rest of the service.
-This week Shannon started implementing the functionality for adding questions to the survey.
-Over the weekend she is going to continue working on this as well as implementing the preview survey.
-In addition, she plans on calling Ideal Logic to figure out how to export the enrollments of studnets. 
-
-\subsection{Week 4}
-This week Kyle wrote the basic code for adding to the database and selecting from the database
- However, this is using hard-coded table entries due to Shannon working on the creation of the JSON object that he plans to parse from.
-This week Javier fixed the add a camp page and an issue he encountered was that it was difficult debugging the problem that the page had.
-The meeting with he client helped give Javier a better understanding of the queries that the client wants to be able to do, but is worried about coming up with a good design that will help meet their needs
-For the upcoming week Javier plans on focusing more on report generation since this is the part of the project he is responsible for.
-For this week Shannnon implemented the beginnings of the survey creation which is now able to generate questions dynamically and also create surveys.
-In addition, she was able to construct the JSON object.
-For the survey generation she still needs to implement saving a survey, edit pre-existing surveys, and have the ability to recall surveys.
-She stills needs to contact Ideal Logic.
-This week we met with our client to provide updates and to demo what we have.
-Currently everything is going well for our capstone project. 
-
-\subsection{Week 5}
-This week our group met up with our client and they provided feedback on the report generation page design and during the meeting Shannon drew an alternative query structure based on their feedback.
-Javier will have to make some changes to the report generation page, so that the client is able to do the queries that they requested.
-Our client also emailed us a follow up about the things they want to be able to query along with examples.
-This week Shannon contacted Central Services to get a sub domain.
-Both Shannon and Kyle worked on getting the PHP working for posting a JSON object to the database table.
-However, they ran into a problem where the POST data was coming back empty in the PHP code and were unable to find the issue causing it.
-The plans that our group has for the upcoming week is to make revisions to our documents, create the progress report document, record the demo video, work on the capstone project, and to solve the issue with the POST data of a JSON object. 
-
-\subsection{Week 6} 
-\end{comment}
 
 \section{Weekly Progress Summary}
 \subsection{Shannon Ernst}
@@ -208,8 +148,6 @@ I started this component using hard-coded table entries (i.e. the survey->title 
 On Sunday of week five, I worked with my group to make progress on creating interaction between survey generation and adding those surveys to a database.
 This included creating the code that would parse from the JSON objects provided by survey generation to insert to the database.
 The SQL query code seemed to work on adding to tables in the database, but we ran into a problem where POST data PHP wanted to use was empty, so nothing could actually be parsed from it.
-\subsubsection{Week 6}
-
 
 \section{Retrospective}
 \begin{center}
