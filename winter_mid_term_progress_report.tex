@@ -1,6 +1,7 @@
 \documentclass[letterpaper,10pt,serif, draftclsnofoot,onecolumn, compsoc, titlepage]{IEEEtran}
 
 \usepackage{graphicx}
+\usepackage{listings}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
@@ -59,23 +60,40 @@ This week I contacted Central Services as we had not heard from them.
 Our ticket had been lost.
 They told us that we can work on a LAMP stack and extend the preexisting domain for the STEM Academy.
 This means that the code would be done in PHP and MySQL.
-There is nothing inherently wrong with this.
+There is nothing inherently wrong with this as we were intending on using these any way for our database management.
 We also established a weekly meeting with our client for Tuesday at 9 am.
 The next steps are creating the website through Central Services.
 \subsubsection{Week 2}
-This week we met with our client to show a basic mock of what we are doing for the web app.
+This week we met with our client to show a basic mock of what we are doing for the web app. The demo was basic HTML with no 
+functionality aside from some links to different pages to simulate functionality. 
 We are going to continue working primarily in HTML for the moment.
-Central Services says we can do the LAMP stack which is what we are going to go with.
+Central Services says we can do the LAMP stack which is what we are going to go with however they have not gotten back to us.
 Goals for the coming week is to have a better html frame work so we can illustrate the flow of the program to the client.
 We will then work on functionality.
 \subsubsection{Week 3}
 This week I started implementing functionality for adding questions to the survey.
+\begin{figure}
+\includegraphics[scale=.5, width=\textwidth]{code_snippet_1.png}
+\caption{This code is an example of the DOM manipulation process of adding a question to the survey generator.}
+\label{fig:code1}
+\end{figure}
+Figure 1 is an example of the code I worked on. I am using DOM manipulation to add questions to the survey creator as we
+don't know how many questions the admin is going to want to add and they should be able to add as many as they want. These 
+should come up at the click of a button. In this case of adding a multiple choice question, I add it to the sandbox and give it some
+ids so it can be identified on the page. I then add the inner html which will initially provide a place for getting the question text 
+and a place for getting one answer. There is also a button to add answers to this particular div. We pass in the id of the div to 
+know what question that answer corresponds to. 
 Over the weekend I'm going to continue working on this as well as implementing preview survey.
-I need to call Ideal Logic to figure out how to export enrollments.
-We meet with our client again next week.
+I need to call Ideal Logic to figure out how to export enrollments so that we can associate them with camps to set up our new log in
+functionality. Instead of distributing surveys via links we are going to do it via the students selecting their camp and then themselves from the enrollment list. 
 \subsubsection{Week 4}
 This week I implemented the beginnings of survey creation.
-I have constructed the json and can generate questions dynamically and create surveys.
+\begin{figure}
+\includegraphics[scale=.5, width=\textwidth]{code_snippet_2.png}
+\caption{This code is an example of the DOM manipulation process of adding a question to the survey generator.}
+\label{fig:code2}
+\end{figure}
+Figure 2 illustrates how I have constructed the json and to generate questions dynamically and create surveys.
 I still need to be able to recall surveys, save and edit preexisting ones.
 I still need to call Ideal Logic. We met with our client this week to demo and provide updates.
 All is going well.
