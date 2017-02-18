@@ -19,25 +19,26 @@
 \geometry{margin=.75in}
 
 \usepackage{hyperref}
+\usepackage[utf8]{inputenc}
 %credit to http://tex.stackexchange.com/questions/48152/dynamic-signature-date-line
 \newcommand*{\SignatureAndDate}[1]{%
     \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
     \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}%
 }%
 \title{The STEM Academy Data Solution}
-\author{Requirements Document \\ Kyle Nichols, Shannon Ernst, Javier Franco\\ 4 November 2016\\ CS 461 Fall 2016}
+\author{Requirements Document \\ Kyle Nichols, Shannon Ernst, Javier Franco\\ 17 February 2017\\ CS 462 Winter 2017}
 
 \begin{document}
 
 \maketitle
 
-\section{Abstract}
+\begin{abstract}
 The STEM Academy Data Solution is a product proposed to the clients, STEM Academy, as a solution to their need for an efficient way of collecting survey data and reporting summary information.
 The software requirements specification is written to lay out what STEM Academy requires of the developers in providing a product to accomplish their needs.
 It explains what the product does and any information necessary to understanding the project and its scope.
 It also discusses the requirements themselves, from the user interface to generate surveys and report summary data to the database storing survey response data.
 Lastly, it clarifies performance requirements to ensure that the product functions within reasonable expectations for the clients.
-
+\end{abstract}
 \newpage
 \tableofcontents
 \newpage

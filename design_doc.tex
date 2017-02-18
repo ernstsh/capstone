@@ -25,6 +25,7 @@
 
 \usepackage{caption}
 \usepackage{listings}
+\usepackage[utf8]{inputenc}
 %credit to http://tex.stackexchange.com/questions/48152/dynamic-signature-date-line
 \newcommand*{\SignatureAndDate}[1]{%
     \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
@@ -32,7 +33,7 @@
 }%
 
 \title{The STEM Academy Data Solution}
-\author{Design Document \\ Shannon Ernst, Kyle Nichols, Javier Franco\\ 2 December 2016\\ CS 461 Fall 2016\\ Group 48}
+\author{Design Document \\ Shannon Ernst, Kyle Nichols, Javier Franco\\ 17 February 2017\\ CS 462 Winter 2017\\ Group 48}
 
 \begin{document}
 
@@ -125,7 +126,7 @@ Questions are going to be stored in a json format. The format is as follows: \\
 The type will be used to select which html template to use for the question in generating the survey. The html templates will be
 premade with their own services to correctly construct the survey with the included templates. The qtext will be substituted in each 
 template so it will appear as the question text. Answers will appear according the question type. If it is a text entry, a default text area of four rows and fifty columns will be provided. If it is a mutliple choice, the answers will be produced using a loop to repeat the html structure with a different value according to the answer text. If it is a matrix, a table will be generate with one of the standard scales spanning the top, each radio button beneath it having the appropriate value. The questions will align on the left in rows with 
-the radio buttons to their right. The questions fields will be populated via a loop. In AngularJS, ng-repeat will be used to adjust the values in the templates. You can also insert html to the screen via DOM manipullation. A mixture of these methods will be used. 
+the radio buttons to their right. The questions fields will be populated via a loop. This will be done with DOM manipulation. 
 
 \subsection{Survey Generation}
 \subsubsection{Survey Generation Interface Viewpoint}
@@ -150,8 +151,7 @@ The survey will be saved as a json object. The json structure is as follow:\\
 \indent title: string representing the title of the survey\\
 \indent questions: an array of question objects\\
 \}\\
-The survey will be generated for the user based on this json. There will be a survey template which will include the title as a variable.
-The question templates will be generated through a mixture of ng-repeat and DOM manipulation. The questions will be produced in 
+The survey will be generated for the user based on this json. The DOM will be scraped to generate the json. The questions will be produced in 
 order of the appearance in the array in the json. A submit button will be included. Surveys will be a single page. Upon submit, the form will be posted to the database. Responses will be sent as json. This survey may either be a preview or the real thing. If it is a 
 preview, it will have a response id with the value of test which will exclude it from the database.
 
