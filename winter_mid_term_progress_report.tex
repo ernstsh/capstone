@@ -23,6 +23,12 @@
 \usepackage{verbatim}
 \usepackage{listings}
 
+%credit to http://tex.stackexchange.com/questions/48152/dynamic-signature-date-line
+\newcommand*{\SignatureAndDate}[1]{%
+    \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
+    \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}%
+}%
+
 \title{The STEM Academy Data Solution}
 \author{Progress Report \\ Shannon Ernst, Kyle Nichols, Javier Franco\\ 17 February 2017\\ CS 462 Winter 2017\\ Group 48}
 
