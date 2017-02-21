@@ -15,17 +15,17 @@ session_start();
         <label>Select a camp: </label>
         <select id="select1" name="select1">
                 <?php
-                 //Connect to database 
+                 //Connect to database  
                 $dbhost = 'oniddb.cws.oregonstate.edu';
                 $dbname = 'nichokyl-db';
                 $dbuser = 'nichokyl-db';
                 $dbpass = '1hvHqfNBEOL6iwL9';
                 $mysql_handle = mysql_connect($dbhost, $dbuser, $dbpass)
                         or die("Error connecting to database server");
-
+                //Checks to see if the connection was successful or not 
                 mysql_select_db($dbname, $mysql_handle)
                         or die("Error selecting database: $dbname");
-                //Get first name and last name from Responder table 
+                //Gets all of the information from the camp table 
                 $query = "SELECT * FROM Camp";
                 $result = mysql_query($query);  
                 
@@ -126,8 +126,8 @@ session_start();
 
 <button type="button" class="addQuery" id="addQuery" onclick="AddQuery()">Add Query</button>
 <button type="button" class="DeleteAll" id="DeleteAll" onclick="DeleteAll()">Reset</button>
-<button type="button" class="submit" id="submit"> Submit </button>
-<button type="button" class="save" id="save"> Save </button>
+<button type="button" class="submit" id="submit" onclick="AddQueryResult()"> Submit </button>
+<button type="button" class="save" id="save" onClick="Report_JSON()"> Save </button>
 <button type="button" class="exit" id="exit"><a href="dashboard.php"> Exit </a></button> <br>
 
 </body>
@@ -135,4 +135,15 @@ session_start();
 <!--The purpose of dummy is to keep track of count to give a unique id-->
 <p id="dummy" value="0"></p>
 <p id="currentChoice"></p>
+
+<!--This is where the query results will go-->
+<h4>Query Results</h4>
+<form class="QueryResult" id="QueryResult" method="post" onsubmit="SaveReport.php">
+
+</form>
+<!--<div class="QueryResult" id="QueryResult">
+</div>
+-->
+
+<p id="reportJSON"></p>
 </html>
