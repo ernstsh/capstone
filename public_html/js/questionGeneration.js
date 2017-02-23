@@ -9,7 +9,7 @@ function uuid(prefix){
 function add_text_question(){
 	var node = document.getElementById("sandbox");
 	var question = document.createElement("DIV");
-	question.id = uuid("QT_");
+	question.id = uuid("QT_"); //fix
 	question.name = uuid("QT_");
 	question.className = "question";
 	question.style ="border-style: solid";
@@ -26,10 +26,19 @@ function add_answer(id) {
 	node.appendChild(ans);	
 }
 
+function add_question(id) {
+	var node = document.getElementById(id);
+	var ans = document.createElement("INPUT");
+	ans.type = "text";
+	ans.name = "qtext";
+	ans.value = "Enter question here";
+	node.appendChild(ans);	
+}
+
 function add_multi_question(){
 	var node = document.getElementById("sandbox");
 	var question = document.createElement("DIV");
-	question.id = uuid("QMC_");
+	question.id = uuid("QMC_"); //fix
 	question.name = uuid("QMC_");
 	question.className = "question";
 	question.style ="border-style: solid";
@@ -37,16 +46,33 @@ function add_multi_question(){
 	node.appendChild(question); 	
 }
 
+function add_matrix_question() {
+	console.log("hit");
+	var node = document.getElementById("sandbox");
+	var question = document.createElement("DIV");
+	var id = uuid("M_");
+	question.id = id;
+	question.name = id;
+	question.style = "border-style: solid";
+	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' value='Enter the topic text'><br><input type='text' name='qtext' value='Enter question here'><br><button onclick='add_question(\""+question.id+"\")'>Add Question</button>";
+	node.appendChild(question);
+	
+}
+
 function choose_question_type(value){
+	console.log(value);
 	if(value === "text"){
 		add_text_question();	
 	}
 	else if(value === "multi"){
 		add_multi_question();	
 	}
-	else{
-			
+	
+	else if(value === "matrix"){
+		console.log("hit hit");
+		add_matrix_question();	
 	}
+	else{}
 }
 
 function create_survey_json(){
@@ -76,6 +102,10 @@ function create_survey_json(){
 			for(var j=1; j<input_elements.length; j++){
 				question.ans[j-1] = input_elements[j].value;
 			}
+		}
+		else if(question.Q_id.substring(0,2) === "M_"){
+			question.type = "matrix";
+			input
 		}
 		survey_json.questions[i] = question;
 	}

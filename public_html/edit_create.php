@@ -35,20 +35,18 @@
 					</div>-->
 				</div>
                 <div id="nav" class="link">
+					Add a question
                     <select onmousedown="this.value='';" onchange="choose_question_type(this.value);">
 						<option value="text">Text Entry</option>
 						<option value="multi">Multiple Choice</option>
 						<option value="matrix">Matrix</option>
 					</select>		
-                    <button onclick="add_text_question()">Add Question</button><!--this will be a function call-->
+                    <!--<button onclick="add_text_question()">Add Question</button>--><!--this will be a function call-->
                     <button onclick="save()">Save</button><!-- this will be a function call-->
 					<button onclick="generate_html()">Preview</button><!-- this should launch a modal window-->
                     <button>Exit</button>
                 </div>
-				<div id="test">
-					<form>
-					</form>
-				</div>
+				
             </div>
         </div>
     </body>
