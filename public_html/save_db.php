@@ -1,32 +1,50 @@
 <?php
 
-if(isset($_POST['x'])){
+/*if(isset($_POST['x'])){
 	echo "we got something\n";
 	echo $_POST['x']."\n";
-}
-//header("Content-Type: application/json; charset=UTF-8");
+	$obj = $_POST['x'];
+	$ar = json_decode($obj);
+	//echo $ar->title;
+}*/
 
-//echo "file_get_contents";
-//echo file_get_contents('php://input') + "<br>";
-//echo file_get_contents('test_json.json');
-//echo "!!!".$str."!!!";
-$obj = json_decode($_POST['x']);
-
-//var_dump($obj);
-
+$obj = $_POST['x'];
+$ar = json_decode($obj);
 $conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "1hvHqfNBEOL6iwL9", "nichokyl-db");
 
 # ADD SURVEY
-$sql = "INSERT INTO Survey (`survey_id`, `title`) VALUES ('222', '".$obj->$title."');";
-
-$result = $conn->query($sql);
-
-if ($result) {
-  echo "Successfully added survey. <br>";
-  $survey_id = $conn->insert_id;
-} else {
-   echo "Error: ".$conn->error." <br>";
+$sql = "INSERT INTO Survey(survey_id, title) VALUES (?,?)";
+if($statement = $conn->prepare($sql)){
+	$survey_id = rand(1000, 5000);
+	$title = $ar->title;
+	echo $title;
+	$statement->bind_param('is', $survey_id, $title);
+	$statement->execute();
+	$statement->close();
 }
+else {
+	printf("Error: %s\n", $conn->error);
+}
+
+if($result = $conn->query("Select * From Survey")){
+	while($obje = $result->fetch_object()){
+		echo $obje->survey_id;
+		echo $obje->title;
+	}
+	$result->close();
+}
+else{
+	echo "<h1> Things went wrong </h1>";
+}
+
+//$result = $conn->query($sql);
+
+//if ($result) {
+//  echo "Successfully added survey. <br>";
+//  $survey_id = $conn->insert_id;
+//} else {
+ //  echo "Error: ".$conn->error." <br>";
+//}
 
 /*
 # ADD S_USE
