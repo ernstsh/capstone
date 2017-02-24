@@ -6,6 +6,10 @@ function uuid(prefix){
 	}
 	return id;
 }
+function remove_question(id) {
+	var node = document.getElementById(id);
+	node.parentNode.removeChild(node);
+}
 function add_text_question(){
 	var node = document.getElementById("sandbox");
 	var question = document.createElement("DIV");
@@ -13,7 +17,7 @@ function add_text_question(){
 	question.name = uuid("QT_");
 	question.className = "question";
 	question.style ="border-style: solid";
-	question.innerHTML="Provide your text entry question <input type='text' name='q1' value='Enter Question Here'></input>";
+	question.innerHTML="Provide your text entry question <input type='text' name='q1' value='Enter Question Here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question);
 }
 
@@ -42,25 +46,24 @@ function add_multi_question(){
 	question.name = uuid("QMC_");
 	question.className = "question";
 	question.style ="border-style: solid";
-	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br><input type='text' name='qtext' value='Enter Question Here'></input><br><input type='text' name='atext' value='Enter answer here'></input>";
+	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br><input type='text' name='qtext' value='Enter Question Here'></input><br><input type='text' name='atext' value='Enter answer here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question); 	
 }
 
 function add_matrix_question() {
-	console.log("hit");
 	var node = document.getElementById("sandbox");
 	var question = document.createElement("DIV");
-	var id = uuid("M_");
+	var id = uuid("QM_");
 	question.id = id;
 	question.name = id;
+	question.className = "question";
 	question.style = "border-style: solid";
-	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' value='Enter the topic text'><br><input type='text' name='qtext' value='Enter question here'><br><button onclick='add_question(\""+question.id+"\")'>Add Question</button>";
+	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' value='Enter the topic text'><br><input type='text' name='qtext' value='Enter question here'><br><button onclick='add_question(\""+question.id+"\")'>Add Question</button><button onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question);
 	
 }
 
 function choose_question_type(value){
-	console.log(value);
 	if(value === "text"){
 		add_text_question();	
 	}
@@ -69,7 +72,6 @@ function choose_question_type(value){
 	}
 	
 	else if(value === "matrix"){
-		console.log("hit hit");
 		add_matrix_question();	
 	}
 	else{}
@@ -96,16 +98,22 @@ function create_survey_json(){
 		}
 		else if(question.Q_id.substring(0,3) === "QMC"){
 			question.type = "multic";
-			input_elements = qs[i].getElementsByTagName("INPUT");
+			var input_elements = qs[i].getElementsByTagName("INPUT");
 			question.Q_text = input_elements[0].value;
 			question.ans = [];
 			for(var j=1; j<input_elements.length; j++){
 				question.ans[j-1] = input_elements[j].value;
 			}
 		}
-		else if(question.Q_id.substring(0,2) === "M_"){
+		else if(question.Q_id.substring(0,2) === "QM"){
 			question.type = "matrix";
-			input
+			var input_elements = qs[i].getElementsByTagName("INPUT");
+			question.Q_topic = input_elements[0].value;
+			question.Q_scale = qs[i].getElementsByTagName("SELECT")[0].value;
+			question.questions = [];
+			for(var j=1; j<input_elements.length; j++){
+				question.questions[j-1] = input_elements[j].value;
+			}
 		}
 		survey_json.questions[i] = question;
 	}
@@ -130,6 +138,35 @@ function generate_multi_question(question_data, doc){
 	form.appendChild(question);
 }
 
+function generate_matrix_question(question_data, doc){
+	var form = doc.getElementsByTagName("FORM")[0];
+	var question = document.createElement("DIV");
+	question.innerHTML = "<br><label>"+question_data.Q_topic+"</label><br>";
+	if(question_data.Q_scale === "agree"){
+		question.innerHTML += "<table><tr>      <th></th><th>Strongly Disagree</th><th>Disagree</th><th>Agree</th><th>Strongly Agree</th></tr>";
+		for(var i=0; i<question_data.questions.length; i++){
+			question.innerHTML += "<tr><td>"+question_data.questions[i]+"</td><td><input type='radio' value='SD'></td><td><input type='radio' value='D'></td><td><input type='radio' value='A'></td><td><input type='radio' value='SA'></td></tr><br>";
+		}
+		question.innerHTML += "</table>";
+	}
+	else if(question_data.Q_scale === "not-deal"){
+		question.innerHTML += "<table><tr>      <th></th><th>Not at All</th><th>Slightly</th><th>Moderately</th><th>A Great Deal</th></tr>";
+		for(var i=0; i<question_data.questions.length; i++){
+			question.innerHTML += "<tr><td>"+question_data.questions[i]+"</td><td><input type='radio' value='NA'></td><td><input type='radio' value='S'></td><td><input type='radio' value='M'></td><td><input type='radio' value='GD'></td></tr><br>";
+		}
+		question.innerHTML += "</table>";
+	}
+	form.appendChild(question);
+	
+}
+
+function add_submit(doc){
+	var form = doc.getElementsByTagName("FORM")[0];
+	var submit_button = document.createElement("DIV");
+	submit_button.innerHTML = "<input type='submit' value='Submit'>";
+	form.appendChild(submit_button);
+}
+
 function generate_html(){
 	var data = create_survey_json();
 	var external = window.open("", "external", "width=500, height=600");
@@ -145,12 +182,15 @@ function generate_html(){
 		else if(data.questions[i].type === "multic"){
 			generate_multi_question(data.questions[i], doc);
 		}
+		else if(data.questions[i].type === "matrix"){
+			generate_matrix_question(data.questions[i], doc);
+		}
 	}
+	add_submit(doc);
 
 }
 
 function save() {
-    console.log("saving");
 	var json = create_survey_json();
 	var str = JSON.stringify(json);
 	console.log(str);
