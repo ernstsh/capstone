@@ -13,38 +13,27 @@ $ar = json_decode($obj);
 $conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "1hvHqfNBEOL6iwL9", "nichokyl-db");
 
 # ADD SURVEY
-$sql = "INSERT INTO Survey(survey_id, title) VALUES (?,?)";
+$sql = "INSERT INTO Survey(survey_id, title, arr_questions, survey_type) VALUES (?,?,?,?)";
 if($statement = $conn->prepare($sql)){
 	$survey_id = rand(1000, 5000);
 	$title = $ar->title;
-	echo $title;
-	$statement->bind_param('is', $survey_id, $title);
+	$type = $ar->type;
+
+	// Generate the array of questions string
+	$str = "";
+	foreach ($ar->questions as $question) {
+	   $str = $str + $question->Q_text + ", "; 
+	}
+	$len = strlen($str);
+	$arr_questions = rtrim($str, " ,");
+
+	$statement->bind_param('isss', $survey_id, $title, $arr_questions, $survey_type);
 	$statement->execute();
 	$statement->close();
 }
 else {
 	printf("Error: %s\n", $conn->error);
 }
-
-if($result = $conn->query("Select * From Survey")){
-	while($obje = $result->fetch_object()){
-		echo $obje->survey_id;
-		echo $obje->title;
-	}
-	$result->close();
-}
-else{
-	echo "<h1> Things went wrong </h1>";
-}
-
-//$result = $conn->query($sql);
-
-//if ($result) {
-//  echo "Successfully added survey. <br>";
-//  $survey_id = $conn->insert_id;
-//} else {
- //  echo "Error: ".$conn->error." <br>";
-//}
 
 /*
 # ADD S_USE
@@ -56,7 +45,7 @@ if ($result) {
 } else {
    echo "Error: ".$conn->error." <br>";
 }
-
+ 
 # ADD PRE/POST TO CAMP
 if ($obj->$type == "PRE") {
    $sql = "UPDATE Camp SET pre='".$survey_id."' WHERE Camp.camp_id='".$obj->$camp."'";
@@ -75,30 +64,35 @@ if ($obj->$type == "PRE" || $obj->$type == "POST") {
       echo "Error: ".$conn->error." <br>";
    }
 }
+ */
 
 # ADD QUESTIONS
-for ($i = 0; $i < 2; $i++) {
-   $sql = "INSERT INTO Question (`question_id`, `text`, `type`, `arr_answers`) VALUES (NULL, '".$obj->$questions[$i]->$Q_text."');"
-   $result = $conn->query();
+foreach ($ar->questions as $question) {
+   $sql = "INSERT INTO Question (question_id, text, type, arr_answers) VALUES (?,?,?,?)";
+   if($statement = $conn->prepare($sql)) {
+      $question_id = rand(1000,5000);
+      $text = $question->Q_text;
+      $type = $question->text;
 
-   if ($result) {
-      echo "Successfully added question. <br>";
-      $q_ids[$i] = $conn->insert_id;
-
-      $result = $conn->query("INSERT INTO `nichokyl-db`.`Contains` (`survey_id`, `question_id`) VALUES 
-	 ((SELECT survey_id FROM Survey WHERE survey_id='".$survey->id."'),
-	 (SELECT question_id FROM Question WHERE question_id='".$q_ids[$i]."'));");
-
-      if ($result) {
-	 echo "Successfully added relation. <br>";
+      // Generate array of answers
+      $str = "";
+      if ($type != "text") {
+	 foreach ($question->ans as $answer) {
+	    $str = $str + $answer + ", ";
+	 }
+         $arr_answers = rtrim($str, " ,");
       } else {
-         echo "Error: ".$conn->error." <br>";
+         $arr_answers = $str;
       }
 
+   $statement->bind_param('isss', $question_id, $text, $type, $arr_answers);
+   $statement->execute();
+   $statement->close();
+
    } else {
-      echo "Error: ".$conn->error." <br>";
+      printf("Error: %s\n", $conn->error);
    }
+
 }
-*/
 $conn->close();
 ?>
