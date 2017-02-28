@@ -18,7 +18,8 @@
 				</div>
 				<form name="create_survey">
 					<label>Title</label><input type="text" name="surveyTitle"><br>
-					<label>Camp</label><select name="camp"></select><br>
+					<label>Camp</label><select name="camp" onclick="pop_camps()">
+					</select><br>
 					<p>We could do a check all that apply from the camp drop down</p>
 					<label>Survey Type</label><br>
 						<input type="radio" name="surveyType" value="pre">Pre<br>

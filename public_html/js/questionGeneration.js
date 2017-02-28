@@ -6,6 +6,19 @@ function uuid(prefix){
 	}
 	return id;
 }
+function pop_camps(){
+	console.log("hit camps");
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("GET", "pop_camp.php", true);
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				alert(xmlhttp.responseText);	
+			}	
+		}	
+	}
+	xmlhttp.send(null);
+}
 function remove_question(id) {
 	var node = document.getElementById(id);
 	node.parentNode.removeChild(node);
