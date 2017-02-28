@@ -5,7 +5,8 @@
 	echo $_POST['x']."\n";
 	$obj = $_POST['x'];
 	$ar = json_decode($obj);
-	//echo $ar->title;
+	echo json_encode($ar->questions);
+	echo $ar->questions[0]->Q_text;
 }*/
 
 $obj = $_POST['x'];
@@ -20,14 +21,9 @@ if($statement = $conn->prepare($sql)){
 	$type = $ar->type;
 
 	// Generate the array of questions string
-	$str = "";
-	foreach ($ar->questions as $question) {
-	   $str = $str + $question->Q_text + ", "; 
-	}
-	$len = strlen($str);
-	$arr_questions = rtrim($str, " ,");
+	$arr_questions = json_encode($ar->questions);
 
-	$statement->bind_param('isss', $survey_id, $title, $arr_questions, $survey_type);
+	$statement->bind_param('isss', $survey_id, $title, $arr_questions, $type);
 	$statement->execute();
 	$statement->close();
 }
