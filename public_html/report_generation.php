@@ -90,9 +90,9 @@ session_start();
         </select>
         <br>
         <label>Select the survey type: <label> <br> 
-        <input type="radio" name="Pre/Post" value="Pre" checked> Pre-survey<br>
-        <input type="radio" name="Pre/Post" value="Post"> Post-survey <br>
-        <input type="radio" name="Pre/Post" value="Both"> Both <br>
+        <input type="radio" name="Pre/Post" id="Pre" value="Pre" checked onClick="RemoveChangeResponse()"> Pre-survey<br>
+        <input type="radio" name="Pre/Post" id="Post" value="Post" onClick="RemoveChangeResponse()"> Post-survey <br>
+        <input type="radio" name="Pre/Post" id="Both" value="Both"> Both <br>
         <!--<input type="submit" value="submit" name="submit2" id="submit2"/> <br> -->
         <?php 
                if(isset($_POST['submit2'])) 
@@ -103,16 +103,6 @@ session_start();
         ?>
         
 </form> 
-<h4>Queries will appear here:</h4>
-<!--This is where the queries are appended to-->
-<div class="query" id="query">
-        <!--<button type="button" class="question">Select question</button>
-        <button type="button" class="operator">Select operator</button>
-        <button type="button" class="operand">Select operand</button>
-        <button type="button" class="delete">-</button>
-        <button type="button" class="add">+</button>-->
-</div>
-
 <label>Query type </label> <br>
 <div id="QueryType">
 <input type="radio" name="QueryChoice" value="ChangeResponse" id="ChangeResponse" checked> Change in response <br>
@@ -124,12 +114,58 @@ session_start();
 <input type="radio" name="ResultChoice" value="Count" id="Count" checked> Count <br>
 <input type="radio" name="ResultChoice" value="Percent" id="Percent"> Percentage <br>
 
+<h4>Demographic options:</h4><br>
+
+<label>Gender</label>
+<select>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+</select><br>
+
+<label>Student grade level</label>
+<select>
+        <option value="1Grade">1</option>
+        <option value="2Grade">2</option>
+        <option value="3Grade">3</option>
+        <option value="4Grade">4</option>
+        <option value="5Grade">5</option>
+        <option value="6Grade">6</option>
+        <option value="7Grade">7</option>
+        <option value="8Grade">8</option>
+        <option value="9Grade">9</option>
+        <option value="10Grade">10</option>
+        <option value="11Grade">11</option>
+        <option value="12Grade">12</option>
+</select><br> 
+
+<label>Parent's highest education</label>
+<select>
+        <option>Middle school</option>
+        <option>High School</option>
+        <option>2yr. College degree</option>
+        <option>4yr. College degree</option>
+        <option>4+yr. College degree</option>
+</select><br>
+<h4>Queries will appear here:</h4>
+<!--This is where the queries are appended to-->
+<div class="query" id="query">
+        <!--<button type="button" class="question">Select question</button>
+        <button type="button" class="operator">Select operator</button>
+        <button type="button" class="operand">Select operand</button>
+        <button type="button" class="delete">-</button>
+        <button type="button" class="add">+</button>-->
+</div>
+<!--
+<input type="checkbox" id="cbox2" value="second_checkbox"> <label for="cbox2">This is the second checkbox</label>
+-->
+
+<form>
 <button type="button" class="addQuery" id="addQuery" onclick="AddQuery()">Add Query</button>
 <button type="button" class="DeleteAll" id="DeleteAll" onclick="DeleteAll()">Reset</button>
 <button type="button" class="submit" id="submit" onclick="AddQueryResult()"> Submit </button>
 <button type="button" class="save" id="save" onClick="Report_JSON()"> Save </button>
 <button type="button" class="exit" id="exit"><a href="dashboard.php"> Exit </a></button> <br>
-
+</form>
 </body>
 
 <!--The purpose of dummy is to keep track of count to give a unique id-->

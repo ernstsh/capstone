@@ -4,8 +4,7 @@ var count2 = 0;
 function AddQuery()
 {
         if(document.getElementById("Regular").checked)
-        {
-                
+        {               
                 count++;
                 
                 //Output to check if correct 
@@ -19,6 +18,7 @@ function AddQuery()
            
         //This is for selecting a survey question to query 
                 var dropDown1 = document.createElement("select");
+                //dropDown1.onClick = function(){dispQuestions();}
                 var option100 = document.createElement("option");
                 var text100 = document.createTextNode("Select Question");
                 option100.appendChild(text100);
@@ -67,8 +67,12 @@ function AddQuery()
                 element.appendChild(queryNew);
         }
         
-        if(document.getElementById("ChangeResponse").checked)
+        if(document.getElementById("ChangeResponse").checked && document.getElementById("Both").checked)
         {
+                
+                
+                
+                
                 count++;
                 
                 //Output to check if correct 
@@ -81,10 +85,48 @@ function AddQuery()
            
         //This is for selecting a survey question to query 
                 var dropDown1 = document.createElement("select");
+                //dropDown1.onClick = function(){dispQuestions();}
                 var option100 = document.createElement("option");
                 var text100 = document.createTextNode("Select Question");
                 option100.appendChild(text100);
                 dropDown1.appendChild(option100);
+                
+//delete this
+                //document.getElementById("dummy").innerHTML = "Testing getting value";
+                var e = document.getElementById("select2");
+                var choice = e.options[e.selectedIndex].value;
+                //document.getElementById("dummy").innerHTML = "testing";
+                
+                var request= new XMLHttpRequest();
+                request.open("POST", "GetQuestionsDropDown.php", true);
+                request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");;
+                request.send(choice);
+                request.onreadystatechange=function(){
+                        if(request.readyState == 4){
+                                if(request.status == 200){
+                                       //alert(request.responseText);
+                                       //document.getElementById("dummy").innerHTML = request.responseText;
+                                       var recArrQues = JSON.stringify(request.responseText);
+                                       recArrQues = recArrQues.replace('"[','"');
+                                       recArrQues = recArrQues.replace(']"' ,'"');
+                                       document.getElementById("dummy").innerHTML = recArrQues;
+                                       var jsonObject = JSON.parse(recArrQues);
+                                       document.getElementById("dummy").innerHTML = jsonObject;
+                                       var json = JSON.parse(jsonObject);
+                                       alert(json["id"]); 
+                                       alert(json["qtext"]);                                                                           
+                                }	
+                        }	
+                }
+                
+                
+                
+
+       
+  
+                
+                
+        
                
         //This is for creating the dropdown for response changed from 
                 var dropDown3 = document.createElement("select");
@@ -170,45 +212,45 @@ function AddQueryResult(){
 //functions for removing a query template when its delete button is clicked 
 //It also deletes query results when their delete butto  is clicked 
 function removeElement(parentDiv, childDiv){
-if(parentDiv!="QueryResult"){
-     if (childDiv == parentDiv) 
-     {
-          alert("The parent div cannot be removed.");
-     }
-     //deletes the query template child 
-     else if (document.getElementById(childDiv)) 
-     {     
-          //Gets the parent and child using their IDs 
-          var child = document.getElementById(childDiv);
-          var parent = document.getElementById(parentDiv);
-          //Parent removes the child 
-          parent.removeChild(child);
-          //decrement count for keeping track the # of children 
-          count--;
-          //For displaying the number of children that remain 
-          document.getElementById("dummy").innerHTML = count;
-     }
-     else 
-     {
-          alert("Child div has already been removed or does not exist.");
-          return false;
-     }
-}
-//For deleting the query result that was selected 
-else{
-   //deletes the query template child 
-     if (document.getElementById(childDiv)) 
-     {     
-          //Gets the parent and child using their IDs 
-          var child = document.getElementById(childDiv);
-          var parent = document.getElementById(parentDiv);
-          //Parent removes the child 
-          parent.removeChild(child);
-          //decrement count for keeping track the # of children 
-          count2--;
-          
-     }        
-}
+        if(parentDiv!="QueryResult"){
+             if (childDiv == parentDiv) 
+             {
+                  alert("The parent div cannot be removed.");
+             }
+             //deletes the query template child 
+             else if (document.getElementById(childDiv)) 
+             {     
+                  //Gets the parent and child using their IDs 
+                  var child = document.getElementById(childDiv);
+                  var parent = document.getElementById(parentDiv);
+                  //Parent removes the child 
+                  parent.removeChild(child);
+                  //decrement count for keeping track the # of children 
+                  count--;
+                  //For displaying the number of children that remain 
+                  document.getElementById("dummy").innerHTML = count;
+             }
+             else 
+             {
+                  alert("Child div has already been removed or does not exist.");
+                  return false;
+             }
+        }
+        //For deleting the query result that was selected 
+        else{
+           //deletes the query template child 
+             if (document.getElementById(childDiv)) 
+             {     
+                  //Gets the parent and child using their IDs 
+                  var child = document.getElementById(childDiv);
+                  var parent = document.getElementById(parentDiv);
+                  //Parent removes the child 
+                  parent.removeChild(child);
+                  //decrement count for keeping track the # of children 
+                  count2--;
+                  
+             }        
+        }
 }
 
 //Deletes all query children of the parent 
@@ -226,46 +268,6 @@ function DeleteAll(){
         document.getElementById("dummy").innerHTML = count;
 }
 
-//Report generation JSON 
-/*function Report_JSON(){
-        //Create a json for the report 
-	var report_json = {};
-        //Create an array JSON for all the query results 
-	report_json.queryResults = [];
-        //Stores all of the query label and results into the array 
-        var x = 0;
-        //Iterates all of the query results 
-        while(x != count2) {
-            x++;
-            //Creates a JSON for a query result 
-            var query_json = {};
-            //Gets the query label and query result 
-            var label = document.getElementById('label' + x).value;
-            var query = document.getElementById('input' + x).value;
-            query_json.label = label;
-            query_json.query = query;
-            report_json.queryResults[x-1] = query_json;
-        }
-        //document.getElementById("reportJSON").innerHTML = JSON.stringify(report_json);
-        var str_json = JSON.stringify(report_json);
-        document.getElementById("reportJSON").innerHTML = str_json;
-     
-       
-        var request= new XMLHttpRequest();
-        request.open("POST", "SaveReport.php", true);
-        request.setRequestHeader("Content-type", "application/json");
-        request.send(str_json);
-        
-       
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "SaveReport.php", !0);
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.send(str_json);
-      
-
-
-}*/
 function Report_JSON(){
         //Create a json for the report 
 	var report_json = {};
@@ -301,30 +303,42 @@ function Report_JSON(){
 		}	
 	}
         
-        
-        /*console.log("saving");
-	console.log(str_json);
-	str_json = "x=" + encodeURIComponent(str_json);
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", "SaveReport.php", true);
-	xmlhttp.onreadystatechange=function(){
-		if(xmlhttp.readyState == 4){
-			if(xmlhttp.status == 200){
-				alert(xmlhttp.responseText);	
-			}	
-		}	
-	}
-	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xmlhttp.send(str_json);*/
-	
 }
 
+//For deleting change in response queries if the user chose Post or Pre for the survey type to query 
+function RemoveChangeResponse(){
+        //Gets all of the child div tags   
+        var childDivs = document.getElementById('query').getElementsByTagName('div');
+        //Gets the number of children div tags 
+        var NumDelete = childDivs.length;
+        
+        var tot = 0;
+        //loop is for deleting only the change in response query templates 
+        while(tot != NumDelete){
+                //gets the child div tag 
+                var childDiv = childDivs[tot];
+                var ID = childDiv.id;
+                //if the child is a change in respons child delete it  
+                if(ID.includes("ChangeRes")==true){
+                        removeElement("query", ID);    
+                }
+                //else the child is a regular query delete 
+                else{
+                        tot++;
+                }
+                //updates the number of children div tags that remain 
+                NumDelete = childDivs.length;   
+        }       
+}
 
-
-
+//Function for populating the question drop down 
 function dispQuestions(){
-        
+        //var val = document.getElementById("select2").value; 
+        document.getElementById("dummy").innerHTML = "hello world";
 }
+
+
+
 
 
 
