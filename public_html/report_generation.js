@@ -68,11 +68,7 @@ function AddQuery()
         }
         
         if(document.getElementById("ChangeResponse").checked && document.getElementById("Both").checked)
-        {
-                
-                
-                
-                
+        {                                            
                 count++;
                 
                 //Output to check if correct 
@@ -91,12 +87,13 @@ function AddQuery()
                 option100.appendChild(text100);
                 dropDown1.appendChild(option100);
                 
-//delete this
+//For getting the questions 
                 //document.getElementById("dummy").innerHTML = "Testing getting value";
                 var e = document.getElementById("select2");
                 var choice = e.options[e.selectedIndex].value;
                 //document.getElementById("dummy").innerHTML = "testing";
                 
+                //For sending the javascript variable containing the surveyID and for receiving a JSON array of questions 
                 var request= new XMLHttpRequest();
                 request.open("POST", "GetQuestionsDropDown.php", true);
                 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");;
@@ -104,30 +101,37 @@ function AddQuery()
                 request.onreadystatechange=function(){
                         if(request.readyState == 4){
                                 if(request.status == 200){
-                                       //alert(request.responseText);
-                                       //document.getElementById("dummy").innerHTML = request.responseText;
-                                       var recArrQues = JSON.stringify(request.responseText);
-                                       recArrQues = recArrQues.replace('"[','"');
-                                       recArrQues = recArrQues.replace(']"' ,'"');
-                                       document.getElementById("dummy").innerHTML = recArrQues;
-                                       var jsonObject = JSON.parse(recArrQues);
-                                       document.getElementById("dummy").innerHTML = jsonObject;
-                                       var json = JSON.parse(jsonObject);
-                                       alert(json["id"]); 
-                                       alert(json["qtext"]);                                                                           
+                                        //alert(request.responseText);
+                                        document.getElementById("dummy").innerHTML = request.responseText;
+                                        //Get the response json for the array of questions
+                                        var recArrQues = request.responseText;
+                                        //converts the javascript value to a JSON string
+                                        var recArrQues2 = JSON.stringify(recArrQues);
+                                        //parses the JSON string to construct the object of the string 
+                                        var recArrQues3 = JSON.parse(recArrQues2);
+                                        //parses the JSON string to construct the object of the string 
+                                        var json = JSON.parse(recArrQues3);
+                                        //for iterating through the JSON array of questions 
+                                        for (var i = 0; i < json.length; i++) {
+                                                //Creates each question for the dropdown 
+                                                //alert(json[i].id);
+                                                //alert(json[i].qtext);
+                                                
+                                                questionText = json[i].qtext;
+                                                questionID = json[i].id;
+                                                //dropDown1.onClick = function(){dispQuestions();}
+                                                var optionQues = document.createElement("option");
+                                                optionQues.setAttribute("id", questionID);
+                                                var textQues = document.createTextNode(questionText);
+                                                optionQues.appendChild(textQues);
+                                                dropDown1.appendChild(optionQues);                                                                                              
+                                        }
+                                                                                                                                                        
                                 }	
                         }	
                 }
                 
-                
-                
-
-       
-  
-                
-                
-        
-               
+                             
         //This is for creating the dropdown for response changed from 
                 var dropDown3 = document.createElement("select");
                 dropDown3.onclick = function(){dispOperators();}
@@ -333,8 +337,43 @@ function RemoveChangeResponse(){
 
 //Function for populating the question drop down 
 function dispQuestions(){
-        //var val = document.getElementById("select2").value; 
-        document.getElementById("dummy").innerHTML = "hello world";
+                //For sending the javascript variable containing the surveyID and for receiving a JSON array of questions 
+                var request= new XMLHttpRequest();
+                request.open("POST", "GetQuestionsDropDown.php", true);
+                request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");;
+                request.send(choice);
+                request.onreadystatechange=function(){
+                        if(request.readyState == 4){
+                                if(request.status == 200){
+                                        //alert(request.responseText);
+                                        document.getElementById("dummy").innerHTML = request.responseText;
+                                        //Get the response json for the array of questions
+                                        var recArrQues = request.responseText;
+                                        //converts the javascript value to a JSON string
+                                        var recArrQues2 = JSON.stringify(recArrQues);
+                                        //parses the JSON string to construct the object of the string 
+                                        var recArrQues3 = JSON.parse(recArrQues2);
+                                        //parses the JSON string to construct the object of the string 
+                                        var json = JSON.parse(recArrQues3);
+                                        //for iterating through the JSON array of questions 
+                                        for (var i = 0; i < json.length; i++) {
+                                                //Creates each question for the dropdown 
+                                                //alert(json[i].id);
+                                                //alert(json[i].qtext);
+                                                
+                                                questionText = json[i].qtext;
+                                                questionID = json[i].id;
+                                                //dropDown1.onClick = function(){dispQuestions();}
+                                                var optionQues = document.createElement("option");
+                                                optionQues.setAttribute("id", questionID);
+                                                var textQues = document.createTextNode(questionText);
+                                                optionQues.appendChild(textQues);
+                                                dropDown1.appendChild(optionQues);                                                                                              
+                                        }
+                                                                                                                                                        
+                                }	
+                        }	
+                }        
 }
 
 
