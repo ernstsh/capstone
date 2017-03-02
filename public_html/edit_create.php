@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="./css/style1.css">
     </head>
     <? include 'navbar.php' ?>
-    <body>
+    <body onload="pop_camps()">
         <div id="page" class="bodypage">
             <div id="content">
 				<div>
@@ -18,7 +18,7 @@
 				</div>
 				<form name="create_survey">
 					<label>Title</label><input type="text" name="surveyTitle"><br>
-					<label>Camp</label><select name="camp" onclick="pop_camps()">
+					<label>Camp</label><select name="camp">
 					</select><br>
 					<p>We could do a check all that apply from the camp drop down</p>
 					<label>Survey Type</label><br>

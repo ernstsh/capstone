@@ -7,17 +7,17 @@ function uuid(prefix){
 	return id;
 }
 function pop_camps(){
-	console.log("hit camps");
 	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET", "pop_camp.php", true);
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
-				alert(xmlhttp.responseText);	
+				var doc = document.getElementsByTagName("SELECT")[0];
+				doc.innerHTML = xmlhttp.responseText;
 			}	
 		}	
 	}
-	xmlhttp.send(null);
+	xmlhttp.open("GET", "pop_camp.php");
+	xmlhttp.send();
 }
 function remove_question(id) {
 	var node = document.getElementById(id);
@@ -92,11 +92,12 @@ function choose_question_type(value){
 
 function create_survey_json(){
 	var title = document.forms["create_survey"]["surveyTitle"].value;
-	//var camp = document.forms["create_survey"]["camp"].value;
+	var camp = document.getElementsByTagName("SELECT")[0].value;
+	console.log(document.getElementsByTagName("SELECT")[0].value);
 	var type = document.forms["create_survey"]["surveyType"].value;
 	var survey_json = {};
 	survey_json.title = title;
-	//survey_json.camp = camp;
+	survey_json.camp = camp;
 	survey_json.type = type;
 	var doc = document.getElementById("sandbox");
 	var qs = doc.getElementsByClassName("question");
