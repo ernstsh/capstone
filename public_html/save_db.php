@@ -17,10 +17,9 @@ $conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "1hvHqfNBEOL6iwL
 $sql = "INSERT INTO Survey(survey_id, title, arr_questions, survey_type) VALUES (?,?,?,?)";
 $survey_id = rand(1000, 5000);
 if($statement = $conn->prepare($sql)){
-	//$survey_id = rand(1000, 5000);
+	// $survey_id = rand(1000, 5000);
 	$title = $ar->title;
 	$type = $ar->type;
-	$camp = $ar->camp;
 
 	// Generate the array of questions string
 	$arr_questions = json_encode($ar->questions);
@@ -47,15 +46,33 @@ if ($result) {
  
 # ADD PRE/POST TO CAMP
 if ($ar->type == "pre") {
-   $sql = "UPDATE Camp SET pre='".$survey_id."' WHERE Camp.camp_id='".$ar->camp."'";
-   $result = $conn->query($sql);
+   $sql = "UPDATE Camp SET pre='?' WHERE Camp.camp_id='?'";
+   if ($statement = $conn->prepare($sql)) {
+      $camp_id = $ar->camp;
+
+      $statement->bind_param('ii', $survey_id, $camp_id);
+      $statement->execute();
+      $statement->close();
+   } else {
+      printf("Error: %s\n", $conn->error);
+   }
 } else if ($ar->type == "post") {
-   $sql = "UPDATE Camp SET post='".$survey_id."' WHERE Camp.camp_id='".$ar->camp."'";
-   $result = $conn->query($sql);
+   $sql = "UPDATE Camp SET post='?' WHERE Camp.camp_id='?'";
+
+   if ($statement = $conn->prepare($sql)) {
+      $camp_id = $ar->camp;
+
+      $statement->bind_param('ii', $survey_id, $camp_id);
+      $statement->execute();
+      $statement->close();
+   } else {
+      printf("Error: %s\n", $conn->error);
+   }
 } else {
    echo "Error in pre/post type in JSON.\n";
 }
 
+/*
 if ($ar->type == "pre" || $ar->type == "post") {
    if ($result) {
       echo "Successfully updated Camp row.\n";
