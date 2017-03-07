@@ -11,7 +11,7 @@ function pop_camps(){
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
-				var doc = document.getElementsByTagName("SELECT")[0];
+				var doc = document.getElementsByTagName("SELECT")[1];
 				doc.innerHTML = xmlhttp.responseText;
 			}	
 		}	
@@ -19,6 +19,26 @@ function pop_camps(){
 	xmlhttp.open("GET", "pop_camp.php");
 	xmlhttp.send();
 }
+
+function load_surveys(){
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				var doc = document.getElementsByTagName("SELECT")[0];
+				doc.innerHTML = xmlhttp.responseText;
+			}	
+		}	
+	}
+	xmlhttp.open("GET", "get_surveys.php");
+	xmlhttp.send();
+}
+
+function load() {
+	//load_surveys();
+	pop_camps();
+}
+
 function remove_question(id) {
 	var node = document.getElementById(id);
 	node.parentNode.removeChild(node);
@@ -30,7 +50,7 @@ function add_text_question(){
 	question.name = uuid("QT_");
 	question.className = "question";
 	question.style ="border-style: solid";
-	question.innerHTML="Provide your text entry question <input type='text' name='q1' value='Enter Question Here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	question.innerHTML="Provide your text entry question <input type='text' name='q1' placeholder='Enter Question Here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question);
 }
 
@@ -59,7 +79,7 @@ function add_multi_question(){
 	question.name = uuid("QMC_");
 	question.className = "question";
 	question.style ="border-style: solid";
-	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br><input type='text' name='qtext' value='Enter Question Here'></input><br><input type='text' name='atext' value='Enter answer here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br><input type='text' name='qtext' placeholder='Enter Question Here'></input><br><input type='text' name='atext' value='Enter answer here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question); 	
 }
 
@@ -71,7 +91,7 @@ function add_matrix_question() {
 	question.name = id;
 	question.className = "question";
 	question.style = "border-style: solid";
-	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' value='Enter the topic text'><br><input type='text' name='qtext' value='Enter question here'><br><button onclick='add_question(\""+question.id+"\")'>Add Question</button><button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' placeholder='Enter the topic text'><br><input type='text' name='qtext' value='Enter question here'><br><button onclick='add_question(\""+question.id+"\")'>Add Question</button><button onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question);
 	
 }
