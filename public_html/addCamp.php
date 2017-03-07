@@ -8,8 +8,7 @@
 			<label>Camp Dates</label><br>
 			<label>Start Date</label><input type="date" name="startDate" id="startDate"/>
 			<label>End Date</label><input type="date" name="endDate" id="endDate"/><br>
-			<label>Enrollment</label><br>
-			<p>Depending on how enrollment is collected, it may be uploaded or manually input</p><br>
+			<label>Enrollment</label><input type="file" name="enrollment" accept=".csv"/><br>
 			<input type="submit" value="submit" name="submit" id="submit"/>
 		</form>
 	</body>
@@ -36,6 +35,15 @@
                         echo $endDate;
                         echo $startDate;     
                         echo $campName;
+						$enrollment = $_FILES['enrollment']['tmp_name'];
+						echo $enrollment;
+						$row = 1;
+						if (($handle = fopen($enrollment, "r")) !== FALSE) {
+							while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+								echo $data[1] . "<br />\n";//Need to add to database, not sure of structure
+							}
+							fclose($handle);
+						}
                         $campName = mysql_real_escape_string($campName);
                         $startDate = mysql_real_escape_string($startDate);                                                
                         $endDate = mysql_real_escape_string($endDate);
