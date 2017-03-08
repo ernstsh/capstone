@@ -13,7 +13,7 @@
 		</form>
 	</body>
 		
-</html>
+
 <?php
         if (isset($_POST['submit'])) 
 	{
@@ -40,19 +40,24 @@
 						$row = 1;
 						if (($handle = fopen($enrollment, "r")) !== FALSE) {
 						   while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-						      sql = "INSERT INTO Responder (responder_id, first_name, last_name) VALUES (?,?,?)";
-						      if ($statement = $conn->prepare($sql)) {
-							 $name = preg_split("/[\s,]+/", $data[1]);
+
+						      if ($row > 3) {
+//						         echo $data[1] . "<br />\n";//Need to add to database, not sure of structure
+
+						         $name = preg_split("/[\s,]+/", $data[1]);
 						         $responder_id = rand(1000, 5000);
 
-							 $statement->bind_param("iss", $responder_id, $name[1], $name[0]);
-							 $statement->execute();
-							 $statement->close();
-						      } else {
-						         printf("Error: %s\n", $conn->error);
+						         $sql = "INSERT INTO Responder (responder_id, first_name, last_name) VALUES ('$responder_id','$name[1]','$name[0]')";
+
+						         if (mysql_query($sql)) {
+						            echo "Added student" . $data[1] . "<br />\n";
+						         } else {
+						            echo "Error in adding student" . $data[1] . "<br />\n";
+						         }
 						      }
-//								echo $data[1] . "<br />\n";//Need to add to database, not sure of structure
-					   	   }
+
+						      $row++;
+						   }
 							fclose($handle);
 						}
                         $campName = mysql_real_escape_string($campName);
@@ -75,4 +80,4 @@
         //Close connection to database 
         mysql_close($mysql_handle);
 ?>
-
+</html>
