@@ -39,9 +39,20 @@
 						echo $enrollment;
 						$row = 1;
 						if (($handle = fopen($enrollment, "r")) !== FALSE) {
-							while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-								echo $data[1] . "<br />\n";//Need to add to database, not sure of structure
-							}
+						   while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+						      sql = "INSERT INTO Responder (responder_id, first_name, last_name) VALUES (?,?,?)";
+						      if ($statement = $conn->prepare($sql)) {
+							 $name = preg_split("/[\s,]+/", $data[1]);
+						         $responder_id = rand(1000, 5000);
+
+							 $statement->bind_param("iss", $responder_id, $name[1], $name[0]);
+							 $statement->execute();
+							 $statement->close();
+						      } else {
+						         printf("Error: %s\n", $conn->error);
+						      }
+//								echo $data[1] . "<br />\n";//Need to add to database, not sure of structure
+					   	   }
 							fclose($handle);
 						}
                         $campName = mysql_real_escape_string($campName);
