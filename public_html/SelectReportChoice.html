@@ -1,0 +1,21 @@
+<html>
+<head>
+    	<script src="SelectReportChoice.js"></script>
+</head>
+
+<body>
+<!--Creating a report option-->
+<h4>Click the button below to create a new report:</h4>
+<button type="button" class="submit" id="CreateButton"><a href="report_generation.php"> Submit </a></button> 
+
+
+<!--Editing a report option-->
+<h4>Select the report that you want to edit:</h4>
+<select id="selection" name="selection" onClick="GetReports()">
+        <option value="default">Select a report</option>
+</select><br>
+<button type="button" class="submit" id="EditButton"> Submit </button>
+<p id="dummy"></p>
+</body>
+
+</html>
