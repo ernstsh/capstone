@@ -11,6 +11,7 @@ var count2 = 0;
 
 function AddQuery()
 {
+//Regular query
         if(document.getElementById("Regular").checked)
         {               
                 count++;
@@ -96,7 +97,7 @@ function AddQuery()
                 element = document.getElementById("query");
                 element.appendChild(queryNew);
         }
-        
+//Change in response query        
         if(document.getElementById("ChangeResponse").checked && document.getElementById("Both").checked)
         {                                            
                 count++;
@@ -117,7 +118,7 @@ function AddQuery()
                 option100.appendChild(text100);
                 dropDown1.appendChild(option100);
                 
-//For getting the questions 
+        //For getting the questions 
                 //Gets the surveyID
                 var e = document.getElementById("select2");
                 var choice = e.options[e.selectedIndex].value;
@@ -164,15 +165,16 @@ function AddQuery()
                              
         //This is for creating the dropdown for response changed from 
                 var dropDown3 = document.createElement("select");
-                dropDown3.onclick = function(){dispOperators();}
+                dropDown3.onclick = function(){dispResponses(id);}
                 //Select Operator option
                 var option10 = document.createElement("option");
                 var text10 = document.createTextNode("Response changed from");
                 option10.appendChild(text10);
                 dropDown3.appendChild(option10);
+                
         //This is for creating the dropdown for response changed to
                 var dropDown4 = document.createElement("select");
-                dropDown4.onclick = function(){dispOperators();}
+                dropDown4.onclick = function(){dispResponses2(id);}
                 //Select Operator option
                 var option11 = document.createElement("option");
                 var text11 = document.createTextNode("Response changed to");
@@ -365,14 +367,11 @@ function RemoveChangeResponse(){
         }       
 }
 
-//Function for populating the question drop down 
+
+
+
+//Function for displaying the responses for a regular query template 
 function dispResponses(id){
-        
-        
-        
-        
-        
-        
         //Gets the parent template 
         parentTemplate = document.getElementById(id);
         //document.getElementById("dummy").innerHTML = "Hello" + parentTemplate.getAttribute("id");
@@ -387,20 +386,15 @@ function dispResponses(id){
         
         // NumChildResponse = child2.children().length;
         //document.getElementById("dummy").innerHTML = NumChildResponse;
-
-        
-        
-        
-        
+                                
         //Gets the question that was selected 
         var choiceQues = child.options[child.selectedIndex].value;
         //document.getElementById("dummy").innerHTML = choiceQues;
-       
-        
+            
         //Gets the surveyID 
         var e = document.getElementById("select2");
         var choice = e.options[e.selectedIndex].value;
-       //document.getElementById("dummy").innerHTML = choice;
+        //document.getElementById("dummy").innerHTML = choice;
                 
         //For sending the javascript variable containing the surveyID and for receiving a JSON array of questions 
         var request= new XMLHttpRequest();
@@ -443,22 +437,91 @@ function dispResponses(id){
                                                                 optionQues.appendChild(textQues);
                                                                 child2.appendChild(optionQues); 
                                                         }                                                          
-                                                }
-                                                
-                                                
-                                                
-                                                //dropDown1.onClick = function(){dispQuestions();}
-                                                /*var optionQues = document.createElement("option");
-                                                optionQues.setAttribute("id", questionID);
-                                                var textQues = document.createTextNode(questionText);
-                                                optionQues.appendChild(textQues);
-                                                dropDown1.appendChild(optionQues); */                                                                                             
+                                                }                                                                                                
+                                                                                                                                                                                      
                                         }
                                                                                                                                                         
                                 }	
                         }	
                 }               
 }
+
+//Function for displaying the responses for the change in response template 
+function dispResponses2(id){
+        //Gets the parent template 
+        parentTemplate = document.getElementById(id);
+        //document.getElementById("dummy").innerHTML = "Hello" + parentTemplate.getAttribute("id");
+        //Get the drop dop element that displays the questions 
+        child = parentTemplate.getElementsByTagName("select")[0];
+        //Gets the drop down element that displays the responses
+        child2 = parentTemplate.getElementsByTagName("select")[2];
+        NumChildren = child2.length;
+        for(var x = 0; x < NumChildren-1; x++){
+                child2.removeChild(child2.lastChild); 
+        }
+        
+        // NumChildResponse = child2.children().length;
+        //document.getElementById("dummy").innerHTML = NumChildResponse;
+                                
+        //Gets the question that was selected 
+        var choiceQues = child.options[child.selectedIndex].value;
+        //document.getElementById("dummy").innerHTML = choiceQues;
+            
+        //Gets the surveyID 
+        var e = document.getElementById("select2");
+        var choice = e.options[e.selectedIndex].value;
+        //document.getElementById("dummy").innerHTML = choice;
+                
+        //For sending the javascript variable containing the surveyID and for receiving a JSON array of questions 
+        var request= new XMLHttpRequest();
+        request.open("POST", "GetQuestionsDropDown.php", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(choice);
+        request.onreadystatechange=function(){
+                if(request.readyState == 4){
+                        if(request.status == 200){
+                                        //alert(request.responseText);
+                                        //document.getElementById("dummy").innerHTML = request.responseText;
+                                        //Get the response json for the array of questions
+                                        var recArrQues = request.responseText;
+                                        //converts the javascript value to a JSON string
+                                        var recArrQues2 = JSON.stringify(recArrQues);
+                                        //parses the JSON string to construct the object of the string 
+                                        var recArrQues3 = JSON.parse(recArrQues2);
+                                        //parses the JSON string to construct the object of the string 
+                                        var json = JSON.parse(recArrQues3);
+                                        
+                                        //for iterating through the JSON array of questions 
+                                 
+                                        
+                                        //document.getElementById("dummy").innerHTML = json.length;
+                                        for (var i = 0; i < json.length; i++) {
+                                                //Creates each question for the dropdown 
+                                                //alert(json[i].id);
+                                                //alert(json[i].answer);
+                                                //alert(json[i].qtext);
+                                                
+                                                questionText = json[i].qtext;
+                                                questionID = json[i].id;
+                                                if(choiceQues == questionText){
+                                                        //alert(json[i].answer);
+                                                        for(var j = 0; j < json[i].answer.length; j++){
+                                                                //alert(json[i].answer[j]);
+                                                                var optionQues = document.createElement("option");
+                                                                    //optionQues.setAttribute("id", questionID);
+                                                                var textQues = document.createTextNode(json[i].answer[j]);
+                                                                optionQues.appendChild(textQues);
+                                                                child2.appendChild(optionQues); 
+                                                        }                                                          
+                                                }                                                                                                
+                                                                                                                                                                                      
+                                        }
+                                                                                                                                                        
+                                }	
+                        }	
+                }               
+}
+
 
 
 
