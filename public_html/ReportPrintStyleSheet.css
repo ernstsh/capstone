@@ -1,0 +1,133 @@
+@media print{
+#select1{
+        display:none;
+}
+#select2{
+        display:none;
+}
+#addQuery{
+        display:none;
+}
+#DeleteAll{
+        display:none;
+}
+#submit1{
+        display:none;
+}
+#submit2{
+        display:none;
+}
+#save{
+        display:none;
+}
+#exit{
+        display:none;
+}
+#Pre{
+        display: none;
+}
+#Post{
+        display:none;
+}
+#Both{
+        display:none;
+}
+#print{
+        display:none;
+}
+#SelectGrade{
+        display:none;
+}
+#SelectEducation{
+        display:none;
+}
+#GradeLevel{
+        display:none;
+}
+#PreText{
+        display:none;
+}
+#PostText{
+        display:none;
+}
+#BothText{
+        display:none;
+}
+#Gender{
+        display:none;
+}
+#ResultType{
+        display:none;
+}
+#label-1{
+        display:none;
+}
+#label-2{
+        display:none;
+}
+#label-3{
+        display:none;
+}
+#label-4{
+        display:none;
+}
+#label-5{
+        display:none;
+}
+#label-6{
+        display:none;
+}
+#label-7{
+        display:none;
+}
+#label-8{
+        display:none;
+}
+#QueryType{
+        display:none;
+}
+#currentChoice{
+        display:none;
+}
+#dummy{
+        display:none;
+}
+#reportJSON{
+        display:none;
+}
+#query{
+        display:none;
+}
+#Demographics{
+        display:none;
+}
+#QueryText{
+        display:none;
+}
+#PageTitle{
+        display:none;
+}
+#QueryResultsText{
+        display:none;
+}
+#QueryResult{
+         background-color: white;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 15px;
+        font-size: 14px;
+        line-height: 18px; 
+}
+input{
+        border:0;
+}
+button{
+        display:none;
+}
+
+}
+
