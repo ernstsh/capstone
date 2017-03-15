@@ -17,7 +17,7 @@
 					<h3>Edit/Create</h3>
 				</div>
 				<form name="create_survey">
-					<label>Load Preexisting Survey</label><select onmousedown="this.value='';" onchange="load_survey();"></select><br>
+					<label>Load Preexisting Survey</label><select onmousedown="this.value='';" onchange="load_survey(this.value);"></select><br>
 					<label>Title</label><input type="text" name="surveyTitle"><br>
 					<label>Camp</label><select name="camp">
 					</select><br>
@@ -31,12 +31,15 @@
 					<!--This is where the content goes-->
 				</div>
                 <div id="nav" class="link">
-					Add a question
+					Add a New Question
                     <select onmousedown="this.value='';" onchange="choose_question_type(this.value);">
 						<option value="text">Text Entry</option>
 						<option value="multi">Multiple Choice</option>
 						<option value="matrix">Matrix</option>
-					</select>		
+					</select>	
+					Add Frequently Used Question
+                    <select onmousedown="this.value='';" onchange="choose_question_type(this.value);">
+					</select>
                     <button onclick="save()">Save</button><!-- this will be a function call-->
 					<button onclick="generate_html()">Preview</button><!-- this should launch a modal window-->
                     <button>Exit</button>

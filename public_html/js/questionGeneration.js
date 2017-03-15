@@ -16,7 +16,7 @@ function pop_camps(){
 			}	
 		}	
 	}
-	xmlhttp.open("GET", "pop_camp.php");
+	xmlhttp.open("GET", "pop_camp.php", false);
 	xmlhttp.send();
 }
 
@@ -30,13 +30,15 @@ function load_surveys(){
 			}	
 		}	
 	}
-	xmlhttp.open("GET", "get_surveys.php");
+	xmlhttp.open("GET", "get_surveys.php", false);
 	xmlhttp.send();
+	
 }
 
 function load() {
-	//load_surveys();
+	load_surveys();
 	pop_camps();
+	
 }
 
 function remove_question(id) {
