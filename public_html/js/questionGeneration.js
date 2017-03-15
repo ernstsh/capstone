@@ -52,7 +52,7 @@ function add_text_question(){
 	question.name = uuid("QT_");
 	question.className = "question";
 	question.style ="border-style: solid";
-	question.innerHTML="Provide your text entry question <input type='text' name='q1' placeholder='Enter Question Here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	question.innerHTML="Provide your text entry question <input type='text' placeholder='Enter Question Here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button><input type='checkbox'>Frequent Question</input>";
 	node.appendChild(question);
 }
 
@@ -81,7 +81,7 @@ function add_multi_question(){
 	question.name = uuid("QMC_");
 	question.className = "question";
 	question.style ="border-style: solid";
-	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br><input type='text' name='qtext' placeholder='Enter Question Here'></input><br><input type='text' name='atext' value='Enter answer here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br><input type='text' name='qtext' placeholder='Enter Question Here'></input><input type='checkbox'>Frequent Question</input><br><input type='text' name='atext' value='Enter answer here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question); 	
 }
 
@@ -93,7 +93,7 @@ function add_matrix_question() {
 	question.name = id;
 	question.className = "question";
 	question.style = "border-style: solid";
-	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' placeholder='Enter the topic text'><br><input type='text' name='qtext' value='Enter question here'><br><button onclick='add_question(\""+question.id+"\")'>Add Question</button><button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' placeholder='Enter the topic text'><input type='checkbox'>Frequent Question</input><br><input type='text' name='qtext' value='Enter question here'><br><button onclick='add_question(\""+question.id+"\")'>Add Question</button><button onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question);
 	
 }
@@ -112,12 +112,31 @@ function choose_question_type(value){
 	else{}
 }
 
+function add_fuqs(questions_array){
+	str = JSON.stringify(questions_array);
+	console.log(str);
+	str = "x=" + encodeURIComponent(str);
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "add_freq_use_q.php", true);
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				alert(xmlhttp.responseText);	
+			}	
+		}	
+	}
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(str);
+	
+}
+
 function create_survey_json(){
 	var title = document.forms["create_survey"]["surveyTitle"].value;
 	var camp = document.getElementsByTagName("SELECT")[0].value;
-	console.log(document.getElementsByTagName("SELECT")[0].value);
+	//console.log(document.getElementsByTagName("SELECT")[0].value);
 	var type = document.forms["create_survey"]["surveyType"].value;
 	var survey_json = {};
+	var fuqs = [];
 	survey_json.title = title;
 	survey_json.camp = camp;
 	survey_json.type = type;
@@ -131,14 +150,20 @@ function create_survey_json(){
 		if(question.Q_id.substring(0,2) === "QT"){
 			question.type = "text";
 			question.Q_text = qs[i].getElementsByTagName("INPUT")[0].value;
+			if(qs[i].getElementsByTagName("INPUT")[1].checked == true){
+				fuqs.push(question);
+			}
 		}
 		else if(question.Q_id.substring(0,3) === "QMC"){
 			question.type = "multic";
 			var input_elements = qs[i].getElementsByTagName("INPUT");
 			question.Q_text = input_elements[0].value;
 			question.ans = [];
-			for(var j=1; j<input_elements.length; j++){
-				question.ans[j-1] = input_elements[j].value;
+			for(var j=2; j<input_elements.length; j++){
+				question.ans[j-2] = input_elements[j].value;
+			}
+			if(input_elements[1].checked == true){
+				fuqs.push(question);
 			}
 		}
 		else if(question.Q_id.substring(0,2) === "QM"){
@@ -147,13 +172,17 @@ function create_survey_json(){
 			question.Q_topic = input_elements[0].value;
 			question.Q_scale = qs[i].getElementsByTagName("SELECT")[0].value;
 			question.questions = [];
-			for(var j=1; j<input_elements.length; j++){
-				question.questions[j-1] = input_elements[j].value;
+			for(var j=2; j<input_elements.length; j++){
+				question.questions[j-2] = input_elements[j].value;
+			}
+			if(input_elements[1].checked == true){
+				fuqs.push(question);
 			}
 		}
 		survey_json.questions[i] = question;
 	}
-	return survey_json;
+	var res = {"survey": survey_json, "fuqs": fuqs};
+	return res;
 }
 
 function generate_text_question(question_data, doc) {
@@ -227,7 +256,10 @@ function generate_html(){
 }
 
 function save() {
-	var json = create_survey_json();
+	var res = create_survey_json();
+	console.log(res.fuqs);
+	add_fuqs(res.fuqs);
+	/*var json = res.survey;
 	var str = JSON.stringify(json);
 	console.log(str);
 	str = "x=" + encodeURIComponent(str);
@@ -241,5 +273,5 @@ function save() {
 		}	
 	}
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xmlhttp.send(str);
+	xmlhttp.send(str);*/
 }
