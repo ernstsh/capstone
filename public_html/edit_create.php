@@ -38,7 +38,7 @@
 						<option value="matrix">Matrix</option>
 					</select>	
 					Add Frequently Used Question
-                    <select onmousedown="this.value='';" onchange="choose_question_type(this.value);">
+                    <select onmousedown="this.value='';" onchange="choose_freq_q(this.value);">
 					</select>
                     <button onclick="save()">Save</button><!-- this will be a function call-->
 					<button onclick="generate_html()">Preview</button><!-- this should launch a modal window-->

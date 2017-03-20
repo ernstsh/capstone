@@ -35,9 +35,24 @@ function load_surveys(){
 	
 }
 
+function load_fuqs(){
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				var doc = document.getElementsByTagName("SELECT")[3];
+				doc.innerHTML = xmlhttp.responseText;
+			}	
+		}	
+	}
+	xmlhttp.open("GET", "get_freq_q.php", false);
+	xmlhttp.send();
+}
+
 function load() {
 	load_surveys();
 	pop_camps();
+	load_fuqs();
 	
 }
 
@@ -53,6 +68,18 @@ function add_text_question(){
 	question.className = "question";
 	question.style ="border-style: solid";
 	question.innerHTML="Provide your text entry question <input type='text' placeholder='Enter Question Here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button><input type='checkbox'>Frequent Question</input>";
+	node.appendChild(question);
+}
+
+function freq_text_question(info){
+	console.log(info);
+	var node = document.getElementById("sandbox");
+	var question = document.createElement("DIV");
+	question.id = info.Q_id; //fix
+	question.name = info.Q_id;
+	question.className = "question";
+	question.style ="border-style: solid";
+	question.innerHTML="Provide your text entry question <input type='text' value='"+info.Q_text+"'></input><button onclick='remove_question(\""+question.id+"\")'>X</button><input type='checkbox'>Frequent Question</input>";
 	node.appendChild(question);
 }
 
@@ -85,6 +112,38 @@ function add_multi_question(){
 	node.appendChild(question); 	
 }
 
+function freq_multi_question(info){
+	var node = document.getElementById("sandbox");
+	var question = document.createElement("DIV");
+	question.id = info.Q_id; //fix
+	question.name = info.Q_id;
+	question.className = "question";
+	question.style ="border-style: solid";
+	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br><input type='text' name='qtext' value='"+info.Q_text+"'></input><input type='checkbox'>Frequent Question</input><br>";
+	for(var i=0; i<info.ans.length; i++){
+		question.innerHTML += "<input type='text' name='atext' value='"+info.ans[i]+"'></input><br>";
+	}
+	question.innerHTML += "<button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	node.appendChild(question); 	
+}
+
+function freq_matrix_question(info) {
+	var node = document.getElementById("sandbox");
+	var question = document.createElement("DIV");
+	var id = info.Q_id;
+	question.id = id;
+	question.name = id;
+	question.className = "question";
+	question.style = "border-style: solid";
+	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' value='"+info.Q_topic+"'><input type='checkbox'>Frequent Question</input><br>";
+	for(var i=0; i<info.questions.length; i++){
+		question.innerHTML += "<input type='text' name='qtext' value='"+info.question[i]+"'></input><br>";
+	}
+	question.innerHTML += "<button onclick='add_question(\""+question.id+"\")'>Add Question</button><button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	node.appendChild(question);
+	
+}
+
 function add_matrix_question() {
 	var node = document.getElementById("sandbox");
 	var question = document.createElement("DIV");
@@ -112,16 +171,64 @@ function choose_question_type(value){
 	else{}
 }
 
+function load_survey(value){
+	str = "x=" + encodeURIComponent(value);
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "load_survey.php", true);
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				alert(xmlhttp.responseText);
+				/*var res = JSON.parse(xmlhttp.responseText);
+				if(res.type === "text"){
+					freq_text_question(res);	
+				}
+				else if(res.type === "multi"){
+					freq_multi_question(res);	
+				}
+				else if(res.type === "matrix"){
+					freq_matrix_question(res);	
+				}*/	
+			}
+		}	
+	}
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(str);	
+}
+
+function choose_freq_q(value){
+	str = "x=" + encodeURIComponent(value);
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "choose_freq_q.php", true);
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				var res = JSON.parse(xmlhttp.responseText);
+				if(res.type === "text"){
+					freq_text_question(res);	
+				}
+				else if(res.type === "multi"){
+					freq_multi_question(res);	
+				}
+				else if(res.type === "matrix"){
+					freq_matrix_question(res);	
+				}	
+			}	
+		}	
+	}
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(str);
+}
+
 function add_fuqs(questions_array){
 	str = JSON.stringify(questions_array);
-	console.log(str);
 	str = "x=" + encodeURIComponent(str);
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "add_freq_use_q.php", true);
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
-				alert(xmlhttp.responseText);	
+				//alert(xmlhttp.responseText);	
 			}	
 		}	
 	}
