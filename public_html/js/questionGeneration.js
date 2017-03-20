@@ -108,7 +108,7 @@ function add_multi_question(){
 	question.name = uuid("QMC_");
 	question.className = "question";
 	question.style ="border-style: solid";
-	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br><input type='text' name='qtext' placeholder='Enter Question Here'></input><input type='checkbox'>Frequent Question</input><br><input type='text' name='atext' value='Enter answer here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br>Question<input type='text' name='qtext' placeholder='Enter Question Here'></input><input type='checkbox'>Frequent Question</input><br><input type='text' name='atext' value='Enter answer here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question); 	
 }
 
@@ -119,7 +119,7 @@ function freq_multi_question(info){
 	question.name = info.Q_id;
 	question.className = "question";
 	question.style ="border-style: solid";
-	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br><input type='text' name='qtext' value='"+info.Q_text+"'></input><input type='checkbox'>Frequent Question</input><br>";
+	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br>Question<input type='text' name='qtext' value='"+info.Q_text+"'></input><input type='checkbox'>Frequent Question</input><br>";
 	for(var i=0; i<info.ans.length; i++){
 		question.innerHTML += "<input type='text' name='atext' value='"+info.ans[i]+"'></input><br>";
 	}
@@ -178,17 +178,24 @@ function load_survey(value){
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
-				alert(xmlhttp.responseText);
-				/*var res = JSON.parse(xmlhttp.responseText);
-				if(res.type === "text"){
-					freq_text_question(res);	
+				//alert(xmlhttp.responseText);
+				var res = JSON.parse(xmlhttp.responseText);
+				console.log(res);
+				document.forms["create_survey"]["surveyTitle"].value = res.title;
+				document.forms["create_survey"]["surveyType"].value = res.type;
+				var questions = JSON.parse(res.questions);
+				console.log(questions.length);
+				for(var i=0; i<questions.length; i++){
+					if(questions[i].type === "text"){
+						freq_text_question(questions[i]);	
+					}
+					else if(questions[i].type === "multi"){
+						freq_multi_question(questions[i]);	
+					}
+					else if(questions[i].type === "matrix"){
+						freq_matrix_question(questions[i]);	
+					}
 				}
-				else if(res.type === "multi"){
-					freq_multi_question(res);	
-				}
-				else if(res.type === "matrix"){
-					freq_matrix_question(res);	
-				}*/	
 			}
 		}	
 	}
@@ -366,7 +373,7 @@ function save() {
 	var res = create_survey_json();
 	console.log(res.fuqs);
 	add_fuqs(res.fuqs);
-	/*var json = res.survey;
+	var json = res.survey;
 	var str = JSON.stringify(json);
 	console.log(str);
 	str = "x=" + encodeURIComponent(str);
@@ -380,5 +387,5 @@ function save() {
 		}	
 	}
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xmlhttp.send(str);*/
+	xmlhttp.send(str);
 }
