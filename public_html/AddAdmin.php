@@ -9,7 +9,7 @@ if(isset($_SESSION['valid_user'])){
                 $dbhost = 'oniddb.cws.oregonstate.edu';
                 $dbname = 'nichokyl-db';
                 $dbuser = 'nichokyl-db';
-                $dbpass = '1hvHqfNBEOL6iwL9';
+                $dbpass = 'ZlpiHLTMmA44Z0tg';
         
                 //Create a connection to the database
                 $dbc = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
@@ -48,7 +48,6 @@ if(isset($_SESSION['valid_user'])){
         }       
 }
 ?>
-
 
 
 

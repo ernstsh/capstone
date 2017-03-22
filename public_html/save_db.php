@@ -11,7 +11,7 @@ error_reporting(-1);
 
 $obj = $_POST['x'];
 $ar = json_decode($obj);
-$conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "1hvHqfNBEOL6iwL9", "nichokyl-db");
+$conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "ZlpiHLTMmA44Z0tg", "nichokyl-db");
 
 # ADD SURVEY
 $sql = "INSERT INTO Survey(survey_id, title, arr_questions, survey_type) VALUES (?,?,?,?)";
@@ -101,9 +101,14 @@ foreach ($ar->questions as $question) {
          $arr_answers = $str;
       }
 
-   $statement->bind_param('isss', $question_id, $text, $type, $arr_answers);
-   $statement->execute();
-   $statement->close();
+      echo "Question_id: $question_id\n";
+      echo "Text: $text\n";
+      echo "Type: $type\n";
+      echo "Answers: $arr_answers\n";
+
+      $statement->bind_param('isss', $question_id, $text, $type, $arr_answers);
+      $statement->execute();
+      $statement->close();
 
    } else {
       printf("Error: %s\n", $conn->error);

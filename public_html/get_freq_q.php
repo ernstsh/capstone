@@ -1,5 +1,5 @@
 <?php 
-$conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "1hvHqfNBEOL6iwL9", "nichokyl-db");
+$conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "ZlpiHLTMmA44Z0tg", "nichokyl-db");
 $sql = "SELECT question_id, obj_string FROM Question";
 if($result = $conn->query($sql)){
 	while($obj = $result->fetch_object()){

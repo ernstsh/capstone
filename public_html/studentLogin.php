@@ -15,7 +15,7 @@ enrolled in that camp-->
                                         $dbhost = 'oniddb.cws.oregonstate.edu';
                                         $dbname = 'nichokyl-db';
                                         $dbuser = 'nichokyl-db';
-                                        $dbpass = '1hvHqfNBEOL6iwL9';
+                                        $dbpass = 'ZlpiHLTMmA44Z0tg';
                                         $mysql_handle = mysql_connect($dbhost, $dbuser, $dbpass)
                                             or die("Error connecting to database server");
 
@@ -43,7 +43,7 @@ enrolled in that camp-->
                                         $dbhost = 'oniddb.cws.oregonstate.edu';
                                         $dbname = 'nichokyl-db';
                                         $dbuser = 'nichokyl-db';
-                                        $dbpass = '1hvHqfNBEOL6iwL9';
+                                        $dbpass = 'ZlpiHLTMmA44Z0tg';
                                         $mysql_handle = mysql_connect($dbhost, $dbuser, $dbpass)
                                             or die("Error connecting to database server");
 
