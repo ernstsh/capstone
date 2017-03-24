@@ -347,7 +347,8 @@ function add_submit(doc){
 }
 
 function generate_html(){
-	var data = create_survey_json();
+	var data = create_survey_json().survey;
+	console.log(data);
 	var external = window.open("", "external", "width=500, height=600");
 	external.document.write("<div id='test'><form></form></div>");
 	var doc = external.document.getElementById("test");
