@@ -1,0 +1,28 @@
+#content{
+        text-align:center;
+}
+#nav{
+        text-align:center;
+        margin:auto;
+        width:200px;
+}
+#AddAdmin{
+        text-decoration:none;
+        
+}
+#DeleteAdmin{
+        text-decoration:none;
+       
+}
+#AddCamp{
+        text-decoration:none;
+}
+#SurveyGen{
+        text-decoration:none;
+}
+#ReportGen{
+        text-decoration:none;
+}
+#LogOut{
+        text-decoration:none;
+}
