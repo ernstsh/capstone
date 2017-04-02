@@ -1,20 +1,29 @@
 <html>
 <head>
     	<script src="SelectReportChoice.js"></script>
+        <link rel="stylesheet" href="SelectReportChoice.css" type="text/css" />
+
 </head>
 
 <body>
 <!--Creating a report option-->
-<h4>Click the button below to create a new report:</h4>
-<button type="button" class="submit" id="CreateButton"><a href="report_generation.php"> Submit </a></button> 
-
+<h4 id="NewReportHeader">Click the button below to create a new report:</h4>
+<div id="CreateNewSection">
+        <button type="button" class="submit" id="CreateButton"><a href="report_generation.php" id="CreateSubmit"> Submit </a></button> 
+</div>
 
 <!--Editing a report option-->
-<h4>Select the report that you want to edit:</h4>
-<select id="selection" name="selection" onClick="GetReports()">
-        <option value="default">Select a report</option>
-</select><br>
-<button type="button" class="submit" id="EditButton" onClick="SaveData()"> Submit </button>
+<h4 id="EditReportHeader">Select the report that you want to edit:</h4>
+<div id="EditReportSection">
+        <select id="selection" name="selection" onClick="GetReports()">
+                <option value="default">Select a report</option>
+        </select>
+        <br>
+        <br>
+        <button type="button" class="submit" id="EditButton" onClick="SaveData()"> Submit </button>
+        <button type="button" class="Exit" id="Exit"><a href="dashboard.php" id="ExitLink"> Exit </a></button>
+</div>
+<!--Element used for verifying that the page is working properly-->
 <p id="dummy"></p>
 </body>
 
