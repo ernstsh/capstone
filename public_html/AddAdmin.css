@@ -1,0 +1,12 @@
+#Login{
+        text-align:center;
+}
+/*Creates space between reset and exit button-*/
+#exit{
+        margin-left:10px;
+}
+/*Removes the hyperlink from exit button and changes the text color to black*/
+#ExitLink{
+        text-decoration:none;
+        color:black;
+}
