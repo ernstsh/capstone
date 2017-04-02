@@ -5,8 +5,22 @@ var count = 0;
 var count2 = 0; 
 
 
-//For keeping track of the s
-
+//Deletes all query children of the parent 
+function DeleteAllQueries(){
+        document.getElementById("dummy").innerHTML = "Deleting all";
+        
+        //Gets the ID of the parent that contains all of the children 
+        Element = document.getElementById("query");
+        //Loop for deleting all of the query children 
+        while (count > 0) {
+                //Removes last child that was recently created 
+                Element.removeChild(Element.lastChild);
+                //Decrements the number of children 
+                count--;
+        }
+        //Testing purposes for displaying the number of children that are on the page 
+        document.getElementById("dummy").innerHTML = count;
+}
 
 
 function AddQuery()
@@ -77,7 +91,7 @@ function AddQuery()
                          
         //This is for selecting a response for the question that was chosen 
                 var dropDown2 = document.createElement("select");
-                dropDown2.onclick = function(){dispResponses(id);}
+                dropDown2.onclick = function(){DeleteElements(id);}   
                 var option200 = document.createElement("option");
                 var text200 = document.createTextNode("Select Question Response");
                 option200.appendChild(text200);
@@ -164,8 +178,8 @@ function AddQuery()
                 
                              
         //This is for creating the dropdown for response changed from 
-                var dropDown3 = document.createElement("select");
-                dropDown3.onclick = function(){dispResponses(id);}
+                var dropDown3 = document.createElement("select");              
+                dropDown3.onClick =function(){DeleteElements(id);}
                 //Select Operator option
                 var option10 = document.createElement("option");
                 var text10 = document.createTextNode("Response changed from");
@@ -174,7 +188,7 @@ function AddQuery()
                 
         //This is for creating the dropdown for response changed to
                 var dropDown4 = document.createElement("select");
-                dropDown4.onclick = function(){dispResponses2(id);}
+                dropDown4.onmousedown = function(){dispResponses2(id);}
                 //Select Operator option
                 var option11 = document.createElement("option");
                 var text11 = document.createTextNode("Response changed to");
@@ -213,6 +227,14 @@ function AddQueryResult(){
         //Creates a text box for the result of the query
         var label = document.createElement("input");
         label.setAttribute("id", 'label' + count2)
+        //To make label input textbox longer and to make the font larger 
+        label.style.width="640px";
+        label.style.fontSize="12pt";
+        label.style.fontFamily="Times New Roman";
+        //Restricts the number of characters for the label to 95
+        label.setAttribute("maxLength", '95');      
+        //shifts the label to the left for aligning purposes
+        label.style.marginLeft="22px"
         
         //Creates a break tag
         var break1 = document.createElement("br");
@@ -220,6 +242,14 @@ function AddQueryResult(){
         //Creates a text box for a label for the query result 
         var input = document.createElement("input");
         input.setAttribute("id", 'input' + count2);
+        //To make input textbox longer with larger font 
+        input.style.width="640px";
+        input.style.fontSize="12pt";
+        input.style.fontFamily="Times New Roman";
+        //restricts the number of characters for the input result to 95
+        input.setAttribute("maxLength", '95');
+        
+
         
         //Creates a break tag
         var break2 = document.createElement("br");
@@ -246,8 +276,9 @@ function AddQueryResult(){
 
 
 //functions for removing a query template when its delete button is clicked 
-//It also deletes query results when their delete butto  is clicked 
+//It also deletes query results when their delete button  is clicked 
 function removeElement(parentDiv, childDiv){
+        document.getElementById("dummy").innerHTML = "deleting query or a result";
         if(parentDiv!="QueryResult"){
              if (childDiv == parentDiv) 
              {
@@ -284,29 +315,19 @@ function removeElement(parentDiv, childDiv){
                   parent.removeChild(child);
                   //decrement count for keeping track the # of children 
                   count2--;
-                  
+                  document.getElementById("dummy").innerHTML = "Deleting Query Result";
              }        
         }
 }
 
-//Deletes all query children of the parent 
-function DeleteAll(){
-        //Gets the ID of the parent that contains all of the children 
-        element = document.getElementById("query");
-        //Loop for deleting all of the query children 
-        while (count > 0) {
-                //Removes last child that was recently created 
-                element.removeChild(element.lastChild);
-                //Decrements the number of children 
-                count--;
-        }
-        //Testing purposes for displaying the number of children that are on the page 
-        document.getElementById("dummy").innerHTML = count;
-}
+
 
 function Report_JSON(){
         //Create a json for the report 
 	var report_json = {};
+        
+        //Sets the title of the report JSON
+        report_json.title = document.getElementById("TitleReport").value;    
         //Create an array JSON for all the query results 
 	report_json.queryResults = [];
         //Stores all of the query label and results into the array 
@@ -367,8 +388,22 @@ function RemoveChangeResponse(){
         }       
 }
 
-
-
+//Function deletes the current elements the in 2nd drop down for regular and change and response templates 
+function DeleteElements(id){
+        //Gets the parent template 
+        parentTemplate = document.getElementById(id);
+        //document.getElementById("dummy").innerHTML = "Hello" + parentTemplate.getAttribute("id");
+        //Get the drop dop element that displays the questions 
+        child = parentTemplate.getElementsByTagName("select")[0];
+        //Gets the drop down element that displays the responses
+        child2 = parentTemplate.getElementsByTagName("select")[1];
+        NumChildren = child2.length;
+        for(var x = 0; x < (NumChildren - 1); x++){
+                child2.removeChild(child2.lastChild); 
+        }
+        dispResponses(id);
+        
+}
 
 //Function for displaying the responses for a regular query template 
 function dispResponses(id){
@@ -379,10 +414,10 @@ function dispResponses(id){
         child = parentTemplate.getElementsByTagName("select")[0];
         //Gets the drop down element that displays the responses
         child2 = parentTemplate.getElementsByTagName("select")[1];
-        NumChildren = child2.length;
-        for(var x = 0; x < NumChildren-1; x++){
+        /*NumChildren = child2.length;
+        for(var x = 0; x < (NumChildren - 1); x++){
                 child2.removeChild(child2.lastChild); 
-        }
+        }*/
         
         // NumChildResponse = child2.children().length;
         //document.getElementById("dummy").innerHTML = NumChildResponse;
@@ -522,8 +557,46 @@ function dispResponses2(id){
                 }               
 }
 
+//Fills the dropdown for selecting a camp for querying a survey
+function GetCamps(){
+        xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				//var doc = document.getElementsByTagName("SELECT")[0];
+                                var doc = document.getElementById("select1");
+				doc.innerHTML = xmlhttp.responseText;
+			}	
+		}	
+	}
+	xmlhttp.open("GET", "GetCamps.php", false);
+	xmlhttp.send();
+        
+}
 
-
+//Fills the dropdown for selecting a survey based on camp selection
+function GetSurveys(){
+        //Gets the selected camp from 1st drop down
+        var  e = document.getElementById("select1");
+        var choice = e.options[e.selectedIndex].value;
+        
+        document.getElementById("dummy").innerHTML = choice;
+        
+        
+        var request= new XMLHttpRequest();
+        request.open("POST", "GetSurveys.php", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(choice);
+        request.onreadystatechange=function(){
+                if(request.readyState == 4){
+                        if(request.status == 200){ 
+                                //alert(request.responseText);
+                                var doc = document.getElementById("select2");
+				doc.innerHTML = request.responseText;                                             
+                        }
+                }
+        }                                                                                             
+}
 
 
 
