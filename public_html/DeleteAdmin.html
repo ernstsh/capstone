@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+            	<script src="DeleteAdmin.js"></script>
+                <link rel="stylesheet" href="DeleteAdmin.css" type="text/css" />
+		<title>Delete Admin</title>
+	</head>
+	<body>
+                <div id="DeleteAdmin">
+                <h3>Delete an Admin</h3>
+                <!--Input box for entering the admin's first name-->
+                <label>Enter the first name:</label>
+                <br>            
+                <input type="text" id="FirstName"/>
+                <br>
+                <br>
+                <!--Input box for entering the admin's last name-->
+                <label>Enter the last name:</label>
+                <br>
+                <input type="text" id="LastName"/>
+                <br>
+                <br>
+                <!--Input box for entering the admin's user name-->
+                <label>Enter the user name:</label>
+                <br>
+                <input type="text" id="UserName"/>
+                <br>
+                <br>
+                <!--Buttons for submitting request and returning to dashboard-->               
+                <button type="button" id="Submit" onClick="DeleteAdmin()"> Submit </button>
+                <button type="button" class="exit" id="exit"><a href="dashboard.php" id="ExitLink"> Exit </a></button>
+                </div>
+                <!--Element is for verifying if the page works-->
+                <p id="dummy"></p>
+	</body>	
+        <footer>
+        
+        </footer>
+</html>

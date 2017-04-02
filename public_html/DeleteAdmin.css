@@ -1,0 +1,13 @@
+#DeleteAdmin{
+        text-align:center;
+}
+/*Changes the exit button text-color to black and removes the hyperlink*/
+#ExitLink{
+        text-decoration:none;
+        color:black;
+        text-align:center;
+}
+/*Creates space between the submit and exit buttons*/
+#exit{
+        margin-left:10px;
+}
