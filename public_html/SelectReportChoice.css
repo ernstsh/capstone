@@ -1,0 +1,37 @@
+/*New report elements section*/
+#NewReportHeader{
+        text-align:center;
+}
+#CreateNewSection{
+        text-align:center;
+}
+#CreateButton{
+        margin:auto;
+}
+/*Removes the hyperlink of the submit button for creating a new report*/
+#CreateSubmit{
+        text-decoration:none;
+        color:black;
+}
+/*Edit report elements*/
+#EditReportHeader{
+        text-align:center;
+}
+#EditReportSection{
+        text-align:center;
+}
+#EditButton{
+        margin:auto;
+}
+#selection{
+        margin:auto;
+}
+/*The formatting button for exiting the report edit/create page*/
+#ExitLink{
+        text-decoration:none;
+        color:black;        
+}
+/*Creates space between the submit an exit buttons*/
+#Exit{
+        margin-left:10px;
+}

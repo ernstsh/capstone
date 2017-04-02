@@ -13,39 +13,14 @@
       
         echo "We got: ".$str_json."\n";
         
-        $data = json_decode($str_json);
+        $data = json_decode($str_json);                    
         
-        /*foreach ( $data->queryResults as $query )
-        {
-            //echo "{$query->label}\n";
-            echo "The label is: ".$query->label."\n";
-            echo "The query is: ".$query->query."\n";
-            $sql = "INSERT INTO Report (title, arr_results) VALUES ('$query->label', '$query->query')";
-                if (mysqli_query($dbc, $sql)) {
-                    echo "New record created successfully";
-                } else {
-                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                }
-            
-        }*/
-        
-        /*$arr_results = "[";
-        foreach ( $data->queryResults as $query )
-        {
-            //echo "{$query->label}\n";
-            echo "The label is: ".$query->label."\n";
-            echo "The query is: ".$query->query."\n";
-            
-            $arr_results = $arr_results + "{label:" + json_encode($query->label) + "," + "query:" + json_encode($query->query) + "}";   
-        }
-        $arr_results = $arr_results + "]";*/
-        
-        
-        
-        //gets the query results array and converts the json to a string 
+        //gets the query results array and converts the JSON to a string 
         $queryResults = json_encode($data->queryResults);
+        //gets the title of the report JSON
+        $title = json_encode($data->title);
         //Inserts the report into the Report table 
-        $sql = "INSERT INTO Report (arr_results) VALUES ('$queryResults')";
+        $sql = "INSERT INTO Report (arr_results, title) VALUES ('$queryResults', '$title')";
         //Checks if the report was saved into the database 
         if (mysqli_query($dbc, $sql)) {
                 echo "New record created successfully";
@@ -55,11 +30,6 @@
         
         //closes the database connection  
 	mysqli_close($dbc);
-        
-        
-        
-        
-    
-        
+                             
 ?>
 
