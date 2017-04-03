@@ -31,25 +31,28 @@
 
                 mysql_select_db($dbname, $mysql_handle)
                         or die("Error selecting database: $dbname");
-                        
+                 $enrollment_arr = array();       
                 if ((isset($_POST['campName'])) && (isset($_POST['endDate'])) && (isset($_POST ['startDate'])) ){
                         $campName = $_POST['campName'];
                         $endDate = $_POST['endDate'];
                         $startDate = $_POST['startDate'];
                         echo $endDate;
                         echo $startDate;     
-                        echo $campName;
-						$enrollment = $_FILES['enrollment']['tmp_name'];
+			echo $campName;
+
+			
+			$enrollment = $_FILES['enrollment']['tmp_name'];
 						echo $enrollment;
 						$row = 1;
 						if (($handle = fopen($enrollment, "r")) !== FALSE) {
 						   while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
-						      if ($row > 3) {
+						      if ($row > 4) {
 //						         echo $data[1] . "<br />\n";//Need to add to database, not sure of structure
-
+							 
 						         $name = preg_split("/[\s,]+/", $data[1]);
-						         $responder_id = rand(1000, 5000);
+							 $responder_id = rand(1000, 5000);
+                                                         array_push($enrollment_arr, "$name[1], $name[0]");
 
 						         $sql = "INSERT INTO Responder (responder_id, first_name, last_name) VALUES ('$responder_id','$name[1]','$name[0]')";
 
@@ -62,6 +65,8 @@
 
 						      $row++;
 						   }
+
+						   $enrollment_str = $enrollment_str . "] }";
 							fclose($handle);
 						}
                         $campName = mysql_real_escape_string($campName);
@@ -70,9 +75,11 @@
 
                 }
 
+
+		$enrollment_str = serialize($enrollment_arr);
 		$camp_id = rand(1000, 5000);
                 //$sql = "INSERT INTO Camp(title, start_date, end_date) VALUES ($campName, $startDate, $endDate)";
-                $query = "INSERT INTO Camp (`camp_id`, `title`, `start_date`, `end_date`) VALUES ('$camp_id', '$campName', '$startDate', '$endDate');";
+                $query = "INSERT INTO Camp (`camp_id`, `title`, `start_date`, `end_date`, `enrollment` ) VALUES ('$camp_id', '$campName', '$startDate', '$endDate', '$enrollment_str');";
                 //mysql_query($query);
                 
                 
