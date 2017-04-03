@@ -17,6 +17,8 @@
 		
 
 <?php
+
+
         if (isset($_POST['submit'])) 
 	{
                 //Connect to database 
@@ -67,16 +69,17 @@
                         $endDate = mysql_real_escape_string($endDate);
 
                 }
-             
+
+		$camp_id = rand(1000, 5000);
                 //$sql = "INSERT INTO Camp(title, start_date, end_date) VALUES ($campName, $startDate, $endDate)";
-                $query = "INSERT INTO Camp (`title`, `start_date`, `end_date`) VALUES ('$campName', '$startDate', '$endDate');";
+                $query = "INSERT INTO Camp (`camp_id`, `title`, `start_date`, `end_date`) VALUES ('$camp_id', '$campName', '$startDate', '$endDate');";
                 //mysql_query($query);
                 
                 
                 if (mysql_query($query)) {
                         echo "New record created successfully";
                 } else {
-                        echo "Error";
+		   echo "Error: " . mysql_error($query);
                 }
         }                                   
         //Close connection to database 
