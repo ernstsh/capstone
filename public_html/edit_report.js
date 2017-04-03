@@ -46,7 +46,7 @@ window.onload = function() {
                 request.onreadystatechange=function(){
                         if(request.readyState == 4){
                                 if(request.status == 200){                                                                            
-                                        alert(request.responseText);                                                                             
+                                        //alert(request.responseText);                                                                             
                                         //document.getElementById("dummy").innerHTML = request.responseText; 
                                         
                                         //Turns the string JSON from PHP to a JavaScript object 
