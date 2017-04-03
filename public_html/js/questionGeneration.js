@@ -89,7 +89,7 @@ function add_answer(id) {
 	ans.type = "text";
 	ans.name = "atext";
 	ans.placeholder = "Enter answer here";
-	node.innerHTML += "<br>";
+	//node.innerHTML += "<br>";
 	node.appendChild(ans);	
 }
 
@@ -99,7 +99,7 @@ function add_question(id) {
 	ans.type = "text";
 	ans.name = "qtext";
 	ans.placeholder = "Enter question here";
-	node.innerHTML += "<br>";
+	//node.innerHTML += "<br>";
 	node.appendChild(ans);	
 }
 
@@ -156,7 +156,7 @@ function add_matrix_question() {
 	question.name = id;
 	question.className = "question";
 	question.style = "border-bottom: solid; padding-bottom: 10px;";
-	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' placeholder='Enter the topic text'><input class='fuq' type='checkbox'>Frequent Question</input><br><input type='text' name='qtext' placeholder='Enter question here'><button onclick='add_question(\""+question.id+"\")'>Add Question</button><button class='delete' onclick='remove_question(\""+question.id+"\")'>X</button>";
+	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' placeholder='Enter the topic text'><input class='fuq' type='checkbox'>Frequent Question</input><br><button onclick='add_question(\""+question.id+"\")'>Add Question</button><input type='text' name='qtext' placeholder='Enter question here'><button class='delete' onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question);
 	
 }
