@@ -293,14 +293,23 @@ function QueryJSON(){
                             
         }
         
-        //Sends the query JSON to PHP to return the query results
-        
-      
         //outputs the JSON to the webpage for testing purposes
         document.getElementById("reportJSON").innerHTML = JSON.stringify(queryJSON);
         
-        
-        
+        //Converts the query JSON into a string
+        var str_JSON = JSON.stringify(queryJSON);
+        //Sends the query JSON to PHP to return the query results
+        var request= new XMLHttpRequest()
+        request.open("POST", "ReportQuerying.php", true)
+        request.setRequestHeader("Content-type", "application/json")
+        request.send(str_JSON)
+        request.onreadystatechange=function(){
+		if(request.readyState == 4){
+			if(request.status == 200){
+				alert(request.responseText);	
+			}	
+		}	
+	}      
 }
 
 
