@@ -52,7 +52,7 @@
 							 
 						         $name = preg_split("/[\s,]+/", $data[1]);
 							 $responder_id = rand(1000, 5000);
-                                                         array_push($enrollment_arr, "$name[1], $name[0]");
+                                                         array_push($enrollment_arr, "$responder_id");
 
 						         $sql = "INSERT INTO Responder (responder_id, first_name, last_name) VALUES ('$responder_id','$name[1]','$name[0]')";
 
