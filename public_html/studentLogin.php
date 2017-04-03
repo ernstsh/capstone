@@ -4,14 +4,20 @@ going on based on the current date. The second one needs to be students
 enrolled in that camp--> 
 <html>
 	<head>
+		<script src="../public_html/js/surveyTaking.js"></script>
+		<meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        <link rel="stylesheet" href="../public_html/css/style1.css">
 	</head>
 	<body onload="pop_camp();">
 		<form name="determineSurvey" action="get_active_survey.php" method="POST">
 		
-			<label>Select Your Camp</label><select></select><br>
-			<label>Select Your Name</label><select onmousedown="this.value='';" onchange="load_enrollment(this.value);"></select><br>
+			<label>Select Your Camp</label><select onmousedown="this.value='';" onchange="load_enrollment(this.value);"></select><br>
+			<label>Select Your Name</label><select></select><br>
 			
-			<p>Select your name </p>
+			<!--<p>Select your name </p>
 			<select name="student">
 				<option selected="selected">--Select</option>
                                 <?php
@@ -66,7 +72,7 @@ enrolled in that camp-->
                                         //Close connection to database 
                                         mysql_close($mysql_handle);
                                 ?>
-			</select><br>
+			</select><br>-->
 			<input type="submit" value="Submit">
 		</form>
 	</body>
