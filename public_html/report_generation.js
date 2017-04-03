@@ -32,7 +32,7 @@ function AddQuery()
                 
                 //Output to check if correct 
                 var id = 'Reg' + count; 
-                //document.getElementById("dummy").innerHTML = id;
+                document.getElementById("dummy").innerHTML = id;
                 
                 
         //Creates a div for creating a new query 
@@ -214,7 +214,7 @@ function AddQuery()
 }
 
 
-//Code for creating the query JSON
+//Code for creating the query JSON for returning the query results 
 function QueryJSON(){
 
         //JSON for storing the query information entered by the user 
@@ -245,23 +245,56 @@ function QueryJSON(){
         //JSON array for storing the query template options that were produced 
         queryJSON.queries = [];
         
-        var Parent = document.getElementById("query");      
-        for(var x = 0; x < Parent.childNodes.length; x++){
-                var childID = Parent.childNodes[x].id;              
-                //document.getElementById("dummy").innerHTML = childID;                
+        //Gets the query parent div that contains the query templates 
+        Parent = document.getElementById("query");   
+        //iterates each query template 
+        for(var x = 1; x < Parent.childNodes.length; x=x+1){
+                //Beginning string ID of regular query temp
+                var RegularTemp = "Reg";
+                //Beginning string ID of change response temp
+                var ChangeResponse = "ChangeRes";
+
+                //Creates a query template JSON
+                var queryTempJSON = {};
+                //Gets the query template 
+                childID = Parent.childNodes[x].id;
+                
+                
                 var parentTemplate = document.getElementById(childID);
+                //Gets the first drop down menu of the query template 
                 var child = parentTemplate.getElementsByTagName("select")[0];
-                choice = child.options[child.selectedIndex].text;
-                document.getElementById("dummy").innerHTML = choice;
-                //document.getElementById("reportJSON").innerHTML = choice2;
-                //var e = document.getElementById("ddlViewBy");
-                //var strUser = e.options[e.selectedIndex].text;
-                
-               
-              
-            
-                
+                //Gets the choice selected from the first drop down 
+                var choice1 = child.options[child.selectedIndex].value;
+                queryTempJSON.Drop1 = choice1;               
+                        
+                //Gets the second drop down menu of the query template
+                var child2 = parentTemplate.getElementsByTagName("select")[1];
+                //Gets the choice selected from the second drop down menu
+                var choice2 = child2.options[child2.selectedIndex].value;
+                queryTempJSON.Drop2 = choice2;
+                        
+                //alert(choice1);
+                //alert(choice2);
+                        
+                //Checks to see if its a change response template to get the third drop down selected value 
+                if(childID.includes(ChangeResponse)){
+                        //Gets the third drop down menu of the change response query template
+                        var child3 = parentTemplate.getElementsByTagName("select")[2];
+                        //Gets the choice selected from the third drop down menu
+                        var choice3 = child3.options[child3.selectedIndex].value;
+                        queryTempJSON.Drop3 = choice3;
+                                
+                        //alert(choice3);
+                }
+                        
+                //Adds the query template JSON to the JSON that contains all of the query information
+                var ArrayPos = x - 1;
+                queryJSON.queries[ArrayPos] = queryTempJSON;
+                            
         }
+        
+        //Sends the query JSON to PHP to return the query results
+        
       
         //outputs the JSON to the webpage for testing purposes
         document.getElementById("reportJSON").innerHTML = JSON.stringify(queryJSON);

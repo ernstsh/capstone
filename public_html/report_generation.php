@@ -164,8 +164,8 @@ session_start();
         <button type="button" class="addQuery" id="addQuery" onclick="AddQuery()">Add Query</button>
         <button type="button" class="DeleteAll" id="DeleteAll" onclick="DeleteAllQueries()">Reset</button>
         
-        <button type="button" class="submit" id="submit2" onclick="AddQueryResult()"> Submit </button>
-        <!--<button type="button" class="submit" id="submit2" onclick="QueryJSON()"> Submit </button>-->
+        <!--<button type="button" class="submit" id="submit2" onclick="AddQueryResult()"> Submit </button>-->
+        <button type="button" class="submit" id="submit2" onclick="QueryJSON()"> Submit </button>
         
         <button type="button" class="save" id="save" onClick="Report_JSON()"> Save </button>
         <button type="button" class="exit" id="exit"><a href="dashboard.php" id="ExitLink"> Exit </a></button>
