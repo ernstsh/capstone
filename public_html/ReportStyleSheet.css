@@ -1,0 +1,167 @@
+#TitleReport{
+        width:640px;
+        font-size:16pt;
+        text-align:center;
+        font-family:"Times New Roman";
+}
+#PageTitle{
+        text-align:center;
+}
+/*Selecting a camp*/
+#label-1{
+        text-align:center;
+}
+#select1{
+        display:block;
+        margin:auto;
+}
+/*Selecting a survey*/
+#label-2{
+        text-align:center;
+}
+#select2{
+        display:block;
+        margin:auto;
+}
+/*Selecting the survey type*/
+#label-3{
+        text-align:center;
+}
+#SurveyType{
+        margin:0 auto; 
+        width:100px;
+}
+/*Selecting the query type*/
+#label-4{
+        text-align:center;
+}
+#QueryType{
+        margin:0 auto;
+        width:100px;
+}
+/*Selecting the result type*/
+#label-5{
+        text-align:center;
+}
+#ResultType{
+        margin:0 auto;
+        width:100px;
+}
+/*---Selecting demographic information---*/
+#Demographics{
+        text-align:center;
+}
+/*Selecting gender*/
+#label-6{
+       margin:auto;
+}
+#Gender{
+       
+        margin:auto;
+}
+#GenderDiv{
+        text-align:center;
+       
+}
+
+/*Selecting grade level*/
+#label-7{
+        margin:auto;
+}
+#SelectGrade{
+        margin:auto;      
+}
+#GradeDiv{
+        text-align:center;
+        margin-left:45px;
+}
+/*Select parent's education level*/
+#label-8{
+       margin:auto;
+}
+#SelectEducation{
+        margin:auto;
+}
+#ParentEducationDiv{
+        text-align:center;
+        margin-left:345px;
+}
+/*Select student race*/
+#label-9{
+        margin:auto;
+}
+#SelectRace{
+        margin:auto;
+}
+#RaceDiv{
+        text-align:center;
+        margin-left:235px;
+}
+/*Select student ethnicity*/
+#label-10{
+        margin:auto;
+}
+#SelectEthinicity{
+        margin:auto;
+}
+#EthnicityDiv{
+        text-align:center;
+        margin-left:145px;
+}
+/*Free or reduced lunch*/
+#label-11{
+        margin:auto;
+}
+#SelectLunchType{
+        margin:auto;
+}
+#LunchDiv{
+        text-align:center;
+        margin-left:230px;
+}
+/*Queries*/
+#QueryText{
+        text-align:center;
+}
+#query{
+        text-align:center;
+}
+/*Buttons reset, add query, save, exit, submit, and print*/
+#Buttons{
+        text-align:center;
+}
+/*Removes the hyperlink underneath the print and exit buttons*/
+#ExitLink{
+        text-decoration:none;
+        color:black;
+}
+#PrintLink{
+        text-decoration:none;
+        color:black;
+}
+/*Create spacing between buttons*/
+#DeleteAll{
+        margin-left:10px;
+}
+#submit2{
+        margin-left:10px;
+}
+#save{
+        margin-left:10px;                     
+}
+#exit{
+        margin-left:10px;
+}
+#print{
+        margin-left:10px;
+}
+/*query results*/
+#QueryResultsText{
+        text-align:center;
+}
+#TitleReport{
+        margin:auto;
+}
+#QueryResult{
+        text-align:center;
+}

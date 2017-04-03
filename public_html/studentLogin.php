@@ -5,8 +5,12 @@ enrolled in that camp-->
 <html>
 	<head>
 	</head>
-	<body>
-		<form action="" method="post">
+	<body onload="pop_camp();">
+		<form name="determineSurvey" action="get_active_survey.php" method="POST">
+		
+			<label>Select Your Camp</label><select></select><br>
+			<label>Select Your Name</label><select onmousedown="this.value='';" onchange="load_enrollment(this.value);"></select><br>
+			
 			<p>Select your name </p>
 			<select name="student">
 				<option selected="selected">--Select</option>

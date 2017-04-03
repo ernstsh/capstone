@@ -1,117 +1,107 @@
 @media print{
-#select1{
+        
+/*Tittle of the page*/        
+#PageTitle{
         display:none;
-}
-#select2{
-        display:none;
-}
-#addQuery{
-        display:none;
-}
-#DeleteAll{
-        display:none;
-}
-#submit1{
-        display:none;
-}
-#submit2{
-        display:none;
-}
-#save{
-        display:none;
-}
-#exit{
-        display:none;
-}
-#Pre{
-        display: none;
-}
-#Post{
-        display:none;
-}
-#Both{
-        display:none;
-}
-#print{
-        display:none;
-}
-#SelectGrade{
-        display:none;
-}
-#SelectEducation{
-        display:none;
-}
-#GradeLevel{
-        display:none;
-}
-#PreText{
-        display:none;
-}
-#PostText{
-        display:none;
-}
-#BothText{
-        display:none;
-}
-#Gender{
-        display:none;
-}
-#ResultType{
-        display:none;
-}
+}  
+
+/*Select Camp*/      
 #label-1{
         display:none;
 }
+#SelectCamp{
+        display:none;
+}
+
+/*Select survey*/
 #label-2{
         display:none;
 }
+#SelectSurvey{
+        display:none;
+}
+
+/*Select survey type*/
 #label-3{
         display:none;
 }
+#SurveyType{
+        display:none;
+}
+
+/*Select query type*/
 #label-4{
-        display:none;
-}
-#label-5{
-        display:none;
-}
-#label-6{
-        display:none;
-}
-#label-7{
-        display:none;
-}
-#label-8{
         display:none;
 }
 #QueryType{
         display:none;
 }
-#currentChoice{
+
+/*Select result type*/
+#label-5{
         display:none;
 }
-#dummy{
+#ResultType{
         display:none;
 }
-#reportJSON{
+
+/*Demographic information begins here*/
+#Demographics{
+        display:none;
+}
+
+/*Select student gender*/
+#GenderDiv{
+        display:none;
+}
+
+/*Select student grade level*/
+#GradeDiv{
+        display:none;
+}
+
+/*Selecting parent education level*/
+#ParentEducationDiv{
+        display:none;
+}
+
+/*Selecting student race*/
+#RaceDiv{
+        display:none;
+}
+
+/*Selecting student ethnicity*/
+#EthnicityDiv{
+        display:none;
+}
+
+/*Selecting free reduced lunch*/
+#LunchDiv{
+        display:none;
+}
+
+/*Queries location where they appear*/
+#QueryText{
         display:none;
 }
 #query{
         display:none;
 }
-#Demographics{
+
+/*Buttons for the form*/
+#Buttons{
         display:none;
 }
-#QueryText{
-        display:none;
-}
-#PageTitle{
-        display:none;
-}
+
+/*Where the query results are displayed*/
 #QueryResultsText{
         display:none;
 }
+button{
+        display:none;
+}
 #QueryResult{
-         background-color: white;
+        background-color: white;
         height: 100%;
         width: 100%;
         position: fixed;
@@ -121,13 +111,22 @@
         padding: 15px;
         font-size: 14px;
         line-height: 18px; 
+       
 }
 input{
         border:0;
 }
-button{
+
+
+/*The elements used for verifying results*/
+#dummy{
+        display:none;
+}
+#reportJSON{
+        display:none;
+}
+#currentChoice{
         display:none;
 }
 
 }
-

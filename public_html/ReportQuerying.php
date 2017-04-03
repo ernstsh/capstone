@@ -13,7 +13,7 @@
       
         echo "We got: ".$str_json."\n";
         
-        $data = json_decode($str_json);                    
+        /*$data = json_decode($str_json);                    
         
         //gets the query results array and converts the JSON to a string 
         $queryResults = json_encode($data->queryResults);
@@ -26,10 +26,9 @@
                 echo "New record created successfully";
         } else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        }
+        }*/
         
         //closes the database connection  
 	mysqli_close($dbc);
                              
 ?>
-

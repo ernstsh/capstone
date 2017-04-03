@@ -66,8 +66,8 @@ function add_text_question(){
 	question.id = uuid("QT_"); //fix
 	question.name = uuid("QT_");
 	question.className = "question";
-	question.style ="border-style: solid";
-	question.innerHTML="Provide your text entry question <input type='text' placeholder='Enter Question Here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button><input type='checkbox'>Frequent Question</input>";
+	question.style ="border-bottom: solid; padding-bottom: 10px;";
+	question.innerHTML="Provide your text entry question <input type='text' placeholder='Enter Question Here'></input><button class='delete' onclick='remove_question(\""+question.id+"\")'>X</button><input class='fuq' type='checkbox'>Frequent Question</input>";
 	node.appendChild(question);
 }
 
@@ -78,8 +78,8 @@ function freq_text_question(info){
 	question.id = info.Q_id; //fix
 	question.name = info.Q_id;
 	question.className = "question";
-	question.style ="border-style: solid";
-	question.innerHTML="Provide your text entry question <input type='text' value='"+info.Q_text+"'></input><button onclick='remove_question(\""+question.id+"\")'>X</button><input type='checkbox'>Frequent Question</input>";
+	question.style ="border-bottom: solid; padding-bottom: 10px;";
+	question.innerHTML="Provide your text entry question <input type='text' value='"+info.Q_text+"'></input><button class='delete' onclick='remove_question(\""+question.id+"\")'>X</button><input class='fuq' type='checkbox'>Frequent Question</input>";
 	node.appendChild(question);
 }
 
@@ -88,7 +88,8 @@ function add_answer(id) {
 	var ans = document.createElement("INPUT");
 	ans.type = "text";
 	ans.name = "atext";
-	ans.value = "Enter answer here";
+	ans.placeholder = "Enter answer here";
+	//node.innerHTML += "<br>";
 	node.appendChild(ans);	
 }
 
@@ -97,7 +98,8 @@ function add_question(id) {
 	var ans = document.createElement("INPUT");
 	ans.type = "text";
 	ans.name = "qtext";
-	ans.value = "Enter question here";
+	ans.placeholder = "Enter question here";
+	//node.innerHTML += "<br>";
 	node.appendChild(ans);	
 }
 
@@ -107,39 +109,41 @@ function add_multi_question(){
 	question.id = uuid("QMC_"); //fix
 	question.name = uuid("QMC_");
 	question.className = "question";
-	question.style ="border-style: solid";
-	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br>Question<input type='text' name='qtext' placeholder='Enter Question Here'></input><input type='checkbox'>Frequent Question</input><br><input type='text' name='atext' value='Enter answer here'></input><button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	question.style ="border-bottom: solid; padding-bottom: 10px;";
+	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br>Question<input type='text' name='qtext' placeholder='Enter Question Here'></input><input class='fuq' type='checkbox'>Frequent Question</input><br><input type='text' name='atext' placeholder='Enter answer here'></input><button class='delete' onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question); 	
 }
 
 function freq_multi_question(info){
+	console.log("In freq_multi");
 	var node = document.getElementById("sandbox");
 	var question = document.createElement("DIV");
 	question.id = info.Q_id; //fix
 	question.name = info.Q_id;
 	question.className = "question";
-	question.style ="border-style: solid";
-	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br>Question<input type='text' name='qtext' value='"+info.Q_text+"'></input><input type='checkbox'>Frequent Question</input><br>";
+	question.style ="border-bottom: solid; padding-bottom: 10px;";
+	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>Add Answer</button><br>Question<input type='text' name='qtext' value='"+info.Q_text+"'></input><input class='fuq' type='checkbox'>Frequent Question</input><br>";
 	for(var i=0; i<info.ans.length; i++){
 		question.innerHTML += "<input type='text' name='atext' value='"+info.ans[i]+"'></input><br>";
 	}
-	question.innerHTML += "<button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	question.innerHTML += "<button id='delete' onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question); 	
 }
 
 function freq_matrix_question(info) {
+	console.log("In the freq_matrix");
 	var node = document.getElementById("sandbox");
 	var question = document.createElement("DIV");
 	var id = info.Q_id;
 	question.id = id;
 	question.name = id;
 	question.className = "question";
-	question.style = "border-style: solid";
-	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' value='"+info.Q_topic+"'><input type='checkbox'>Frequent Question</input><br>";
+	question.style = "border-bottom: solid; padding-bottom: 10px;";
+	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' value='"+info.Q_topic+"'><input class='fuq' type='checkbox'>Frequent Question</input><br>";
 	for(var i=0; i<info.questions.length; i++){
-		question.innerHTML += "<input type='text' name='qtext' value='"+info.question[i]+"'></input><br>";
+		question.innerHTML += "<input type='text' name='qtext' value='"+info.questions[i]+"'></input><br>";
 	}
-	question.innerHTML += "<button onclick='add_question(\""+question.id+"\")'>Add Question</button><button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	question.innerHTML += "<button onclick='add_question(\""+question.id+"\")'>Add Question</button><button class='delete' onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question);
 	
 }
@@ -151,8 +155,8 @@ function add_matrix_question() {
 	question.id = id;
 	question.name = id;
 	question.className = "question";
-	question.style = "border-style: solid";
-	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' placeholder='Enter the topic text'><input type='checkbox'>Frequent Question</input><br><input type='text' name='qtext' value='Enter question here'><br><button onclick='add_question(\""+question.id+"\")'>Add Question</button><button onclick='remove_question(\""+question.id+"\")'>X</button>";
+	question.style = "border-bottom: solid; padding-bottom: 10px;";
+	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' placeholder='Enter the topic text'><input class='fuq' type='checkbox'>Frequent Question</input><br><button onclick='add_question(\""+question.id+"\")'>Add Question</button><input type='text' name='qtext' placeholder='Enter question here'><button class='delete' onclick='remove_question(\""+question.id+"\")'>X</button>";
 	node.appendChild(question);
 	
 }
@@ -180,7 +184,11 @@ function load_survey(value){
 			if(xmlhttp.status == 200){
 				//alert(xmlhttp.responseText);
 				var res = JSON.parse(xmlhttp.responseText);
-				console.log(res);
+				console.log(JSON.stringify(res));
+				var el = document.getElementById("sandbox");
+				while(el.firstChild){
+					el.removeChild(el.firstChild);
+				}
 				document.forms["create_survey"]["surveyTitle"].value = res.title;
 				document.forms["create_survey"]["surveyType"].value = res.type;
 				var questions = JSON.parse(res.questions);
@@ -189,7 +197,7 @@ function load_survey(value){
 					if(questions[i].type === "text"){
 						freq_text_question(questions[i]);	
 					}
-					else if(questions[i].type === "multi"){
+					else if(questions[i].type === "multic"){
 						freq_multi_question(questions[i]);	
 					}
 					else if(questions[i].type === "matrix"){
@@ -214,7 +222,7 @@ function choose_freq_q(value){
 				if(res.type === "text"){
 					freq_text_question(res);	
 				}
-				else if(res.type === "multi"){
+				else if(res.type === "multic"){
 					freq_multi_question(res);	
 				}
 				else if(res.type === "matrix"){
@@ -302,7 +310,7 @@ function create_survey_json(){
 function generate_text_question(question_data, doc) {
 	var form = doc.getElementsByTagName("FORM")[0];
 	var question = document.createElement("DIV");
-	question.innerHTML = "<br><label>"+question_data.Q_text+"</label><br><input type='text' value='Put your answer here'></input>";
+	question.innerHTML = "<br><label>"+question_data.Q_text+"</label><br><input type='text' placeholder='Put your answer here'></input>";
 	form.appendChild(question);
 }
 
@@ -322,18 +330,18 @@ function generate_matrix_question(question_data, doc){
 	var question = document.createElement("DIV");
 	question.innerHTML = "<br><label>"+question_data.Q_topic+"</label><br>";
 	if(question_data.Q_scale === "agree"){
-		question.innerHTML += "<table><tr>      <th></th><th>Strongly Disagree</th><th>Disagree</th><th>Agree</th><th>Strongly Agree</th></tr>";
+		var string = "";
 		for(var i=0; i<question_data.questions.length; i++){
-			question.innerHTML += "<tr><td>"+question_data.questions[i]+"</td><td><input type='radio' value='SD'></td><td><input type='radio' value='D'></td><td><input type='radio' value='A'></td><td><input type='radio' value='SA'></td></tr><br>";
+			string += "<tr><td>"+question_data.questions[i]+"</td><td><input type='radio' value='SD'></td><td><input type='radio' value='D'></td><td><input type='radio' value='A'></td><td><input type='radio' value='SA'></td></tr><br>";
 		}
-		question.innerHTML += "</table>";
+		question.innerHTML += "<table><tr>      <th>Question</th><th>Strongly Disagree</th><th>Disagree</th><th>Agree</th><th>Strongly Agree</th></tr>"+string+"</table>";
 	}
 	else if(question_data.Q_scale === "not-deal"){
-		question.innerHTML += "<table><tr>      <th></th><th>Not at All</th><th>Slightly</th><th>Moderately</th><th>A Great Deal</th></tr>";
+		var string = "";
 		for(var i=0; i<question_data.questions.length; i++){
-			question.innerHTML += "<tr><td>"+question_data.questions[i]+"</td><td><input type='radio' value='NA'></td><td><input type='radio' value='S'></td><td><input type='radio' value='M'></td><td><input type='radio' value='GD'></td></tr><br>";
+			string += "<tr><td>"+question_data.questions[i]+"</td><td><input type='radio' value='NA'></td><td><input type='radio' value='S'></td><td><input type='radio' value='M'></td><td><input type='radio' value='GD'></td></tr><br>";
 		}
-		question.innerHTML += "</table>";
+		question.innerHTML += "<table><tr>      <th>Question</th><th>Not at All</th><th>Slightly</th><th>Moderately</th><th>A Great Deal</th></tr>"+string+"</table>";
 	}
 	form.appendChild(question);
 	
@@ -350,7 +358,7 @@ function generate_html(){
 	var data = create_survey_json().survey;
 	console.log(data);
 	var external = window.open("", "external", "width=500, height=600");
-	external.document.write("<div id='test'><form></form></div>");
+	external.document.write("<head><link rel='stylesheet' href='../public_html/css/style1.css'></head><div id='test'><form></form></div>");
 	var doc = external.document.getElementById("test");
 	var form = doc.getElementsByTagName("FORM")[0];
 	form.innerHTML = "<h3>"+data.title+"</h3>";

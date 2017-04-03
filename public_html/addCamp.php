@@ -1,15 +1,17 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
+	 <link rel="stylesheet" href="../public_html/css/style1.css">
 	</head>
 	<body>
+		<h3>Add Camp</h3>
 		<form method="post" onsubmit="return checkForm2(this);" enctype="multipart/form-data" >
 			<label>Camp Name</label><input type="text" name="campName" id="campName"/><br>
 			<label>Camp Dates</label><br>
 			<label>Start Date</label><input type="date" name="startDate" id="startDate"/>
 			<label>End Date</label><input type="date" name="endDate" id="endDate"/><br>
-			<label>Enrollment</label><input type="file" name="enrollment" accept=".csv"/><br>
-			<input type="submit" value="submit" name="submit" id="submit"/>
+			<label>Enrollment (must be csv) </label><input type="file" name="enrollment" accept=".csv"/><br>
+			<input type="submit" value="submit" name="submit" id="submit"></input>
 		</form>
 	</body>
 		

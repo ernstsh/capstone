@@ -1,16 +1,25 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
+                <link rel="stylesheet" href="adminLogin.css" type="text/css" />
 		<title>Admin Login</title>
 	</head>
 	<body>
-		<form method='get' action='adminLogin.php' > 
-                        <p><label for="userName">User name </label></p>
-                        <p><input type='text' id ="userName" placeholder ="enter name" name="userName"  size = "30" onblur = "checkUserName(this.value)" /> <br />  </p>
-                        <p><label for="password"> Password </label></p>
-                        <p><input type='password' id = 'password' name='password'  size = "30" /> <br /></p>
-                        <p><input type="submit" value="Login" name="submit" /></p>
-                        <p><input type="reset" value="Reset"><br></p>
+                <h3 id="LoginHeader">Admin Login</h3>
+		<form method='get' action='adminLogin.php' id="LoginForm"> 
+                        <!--For entering the admin's user name-->
+                        <label for="userName" id="UserLabel"> User name: </label>
+                        <input type='text' id ="userName" name="userName"  size = "30" onblur = "checkUserName(this.value)" /> 
+                        <br>
+                        <br>
+                        <!--For entering the admin's password-->
+                        <label for="password"> Password: </label>
+                        <input type='password' id = 'password' name='password'  size = "30" /> 
+                        <br>
+                        <br>
+                        <!--Buttons for submitting and resetting-->
+                        <input type="submit" value="Login" name="submit" id="submit"/>
+                        <input type="reset" value="Reset" id="reset"/>
                 </form>
 	</body>	
 </html>
