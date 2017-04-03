@@ -81,18 +81,18 @@ session_start();
 <div id="GradeDiv">
 <label id="label-7">Student grade level:</label>
 <select id="SelectGrade">
-        <option value="1Grade">1</option>
-        <option value="2Grade">2</option>
-        <option value="3Grade">3</option>
-        <option value="4Grade">4</option>
-        <option value="5Grade">5</option>
-        <option value="6Grade">6</option>
-        <option value="7Grade">7</option>
-        <option value="8Grade">8</option>
-        <option value="9Grade">9</option>
-        <option value="10Grade">10</option>
-        <option value="11Grade">11</option>
-        <option value="12Grade">12</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
 </select>
 </div>
 
@@ -163,7 +163,10 @@ session_start();
 <form id="Buttons">
         <button type="button" class="addQuery" id="addQuery" onclick="AddQuery()">Add Query</button>
         <button type="button" class="DeleteAll" id="DeleteAll" onclick="DeleteAllQueries()">Reset</button>
+        
         <button type="button" class="submit" id="submit2" onclick="AddQueryResult()"> Submit </button>
+        <!--<button type="button" class="submit" id="submit2" onclick="QueryJSON()"> Submit </button>-->
+        
         <button type="button" class="save" id="save" onClick="Report_JSON()"> Save </button>
         <button type="button" class="exit" id="exit"><a href="dashboard.php" id="ExitLink"> Exit </a></button>
         <button type="button" id="print"><a href="javascript:window.print()" id="PrintLink"> Print  </a></button> <br>
