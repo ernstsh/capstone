@@ -51,7 +51,16 @@ abbr {
 	border-bottom: none;
 	}
 
-
+button.delete{
+	float: right;
+  display:inline-block;
+  overflow: auto;
+  white-space: nowrap;
+  margin:0px auto; 
+}
+input.fuq {
+	
+}
 /* specific divs */
 .page-wrapper { 
 	background: url(zen-bg.jpg) no-repeat top left; 
@@ -369,12 +378,16 @@ input.charity_description {
     width: 700px;
     height: 250px;
 }
-
-table.charity_input {
-    border: 1px solid;
-    border-spacing:10px 10px;
+table{
+	width: 100%;
+}
+td, tr {
+	 border: 1px solid black;
+	 text-align: left;
+    padding: 8px;
+}
+table, th, td, tr {
+   border: 1px solid black;
 }
 
-tr.add_charity {
-    
-}
+
