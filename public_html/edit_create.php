@@ -40,9 +40,9 @@
 					Add Frequently Used Question
                     <select onmousedown="this.value='';" onchange="choose_freq_q(this.value);">
 					</select>
-                    <button onclick="save()">Save</button><!-- this will be a function call-->
+                    <button onclick="save()"><a href="dashboard.php">Save</a></button><!-- this will be a function call-->
 					<button onclick="generate_html()">Preview</button><!-- this should launch a modal window-->
-                    <button>Exit</button>
+                    <button><a href="dashboard.php">Exit</a></button>
                 </div>
 				
             </div>

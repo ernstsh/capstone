@@ -18,7 +18,7 @@
                     <ul><li><a href="AddAdmin.html" id="AddAdmin">Add Admin</a></li></ul>
                     <ul><li><a href="DeleteAdmin.html" id="DeleteAdmin">Delete Admin</a></li></ul>
 		    <ul><li><a href="addCamp.php" id="AddCamp">Add Camp</a></li></ul>
-                    <ul><li><a href="edit_create.php" id="SurveyGen">Edit/create</a></li></ul>
+                    <ul><li><a href="edit_create.php" id="SurveyGen">Edit/create a Survey</a></li></ul>
                     <ul><li><a href="SelectReportChoice.html" id="ReportGen">Edit/Create a Report</a></li></ul>
                     <ul><li><a href="adminLogOut.php" id="LogOut">Log Out</a></li></ul>
                 </div>
