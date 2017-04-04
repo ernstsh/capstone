@@ -14,7 +14,6 @@ function pop_camp(){
 }
 
 function load_enrollment(value){
-	console.log(value);
 	str = "x=" + encodeURIComponent(value);
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.open("POST", "get_enrollment.php", true);
@@ -22,7 +21,6 @@ function load_enrollment(value){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
 				var doc = document.getElementsByTagName("SELECT")[1];
-				console.log(xmlhttp.responseText);
 				doc.innerHTML = xmlhttp.responseText;
 			}
 		}	
@@ -30,60 +28,26 @@ function load_enrollment(value){
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.send(str);
 }
-
-function create_survey_json(){
-	var title = document.forms["create_survey"]["surveyTitle"].value;
+function get_survey(){
 	var camp = document.getElementsByTagName("SELECT")[0].value;
-	//console.log(document.getElementsByTagName("SELECT")[0].value);
-	var type = document.forms["create_survey"]["surveyType"].value;
-	var survey_json = {};
-	var fuqs = [];
-	survey_json.title = title;
-	survey_json.camp = camp;
-	survey_json.type = type;
-	var doc = document.getElementById("sandbox");
-	var qs = doc.getElementsByClassName("question");
-	survey_json.questions = [];
-	for(var i = 0; i<qs.length; i++){
-		var question = {};
-		question.Q_id = qs[i].name;
-		//question.Q_id = "101"
-		if(question.Q_id.substring(0,2) === "QT"){
-			question.type = "text";
-			question.Q_text = qs[i].getElementsByTagName("INPUT")[0].value;
-			if(qs[i].getElementsByTagName("INPUT")[1].checked == true){
-				fuqs.push(question);
+	var student = document.getElementsByTagName("SELECT")[1].value;
+	str = "x=" + encodeURIComponent(camp);
+	console.log(str);
+	var json;
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "get_active_survey.php", true);
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				console.log(xmlhttp.responseText);
+				json = xmlhttp.responseText;
+				generate_html(json);
 			}
-		}
-		else if(question.Q_id.substring(0,3) === "QMC"){
-			question.type = "multic";
-			var input_elements = qs[i].getElementsByTagName("INPUT");
-			question.Q_text = input_elements[0].value;
-			question.ans = [];
-			for(var j=2; j<input_elements.length; j++){
-				question.ans[j-2] = input_elements[j].value;
-			}
-			if(input_elements[1].checked == true){
-				fuqs.push(question);
-			}
-		}
-		else if(question.Q_id.substring(0,2) === "QM"){
-			question.type = "matrix";
-			var input_elements = qs[i].getElementsByTagName("INPUT");
-			question.Q_topic = input_elements[0].value;
-			question.Q_scale = qs[i].getElementsByTagName("SELECT")[0].value;
-			question.questions = [];
-			for(var j=2; j<input_elements.length; j++){
-				question.questions[j-2] = input_elements[j].value;
-			}
-			if(input_elements[1].checked == true){
-				fuqs.push(question);
-			}
-		}
-		survey_json.questions[i] = question;
+		}	
 	}
-	var res = {"survey": survey_json, "fuqs": fuqs};
-	return res;
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(str);
+	
 }
 
 function generate_text_question(question_data, doc) {
@@ -133,9 +97,8 @@ function add_submit(doc){
 	form.appendChild(submit_button);
 }
 
-function generate_html(){
-	var data = create_survey_json().survey;
-	console.log(data);
+function generate_html(data){
+	
 	var external = window.open("", "external", "width=500, height=600");
 	external.document.write("<head><link rel='stylesheet' href='../public_html/css/style1.css'></head><div id='test'><form></form></div>");
 	var doc = external.document.getElementById("test");
