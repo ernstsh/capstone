@@ -61,6 +61,7 @@ function AddQuery()
                                 if(request.status == 200){
                                         //alert(request.responseText);
                                         //document.getElementById("dummy").innerHTML = request.responseText;
+                                     
                                         //Get the response json for the array of questions
                                         var recArrQues = request.responseText;
                                         //converts the javascript value to a JSON string
@@ -70,20 +71,45 @@ function AddQuery()
                                         //parses the JSON string to construct the object of the string 
                                         var json = JSON.parse(recArrQues3);
                                         //for iterating through the JSON array of questions 
+                                        document.getElementById("dummy").innerHTML = json.length;
                                         for (var i = 0; i < json.length; i++) {
                                                 //Creates each question for the dropdown 
-                                                //alert(json[i].id);
-                                                //alert(json[i].qtext);
+                                                //alert(json[i].Q_id);
                                                 
-                                                questionText = json[i].qtext;
-                                                questionID = json[i].id;
-                                                //dropDown1.onClick = function(){dispQuestions();}
-                                                var optionQues = document.createElement("option");
-                                                optionQues.setAttribute("id", questionID);
-                                                var textQues = document.createTextNode(questionText);
-                                                optionQues.appendChild(textQues);
-                                                dropDown1.appendChild(optionQues);                                                                                              
+                                                
+                                                var QuestionType = json[i].type;
+                                                //Checks to see if the question is a matrix 
+                                                if(QuestionType == "matrix"){
+                                                        var questionText = json[i].Q_topic;
+                                                        var questionID = json[i].Q_id;
+                                                        //dropDown1.onClick = function(){dispQuestions();}
+                                                        var optionQues = document.createElement("option");
+                                                        optionQues.setAttribute("id", questionID);
+                                                        
+                                                        optionQues.value = questionID;
+                                                        
+                                                        var textQues = document.createTextNode(questionText);
+                                                        optionQues.appendChild(textQues);
+                                                        dropDown1.appendChild(optionQues);
+                                                }
+                                                //else it is a text or a multiple choice question 
+                                                else{
+                                                        
+                                                        var questionText = json[i].Q_text;
+                                                        var questionID = json[i].Q_id;
+                                                        //dropDown1.onClick = function(){dispQuestions();}
+                                                        var optionQues = document.createElement("option");
+                                                        optionQues.setAttribute("id", questionID);
+                                                        
+                                                        optionQues.value = questionID;
+                                                        
+                                                        var textQues = document.createTextNode(questionText);
+                                                        optionQues.appendChild(textQues);
+                                                        dropDown1.appendChild(optionQues);
+                                                }
+                                                                                           
                                         }
+                                        
                                                                                                                                                         
                                 }	
                         }	
@@ -149,6 +175,7 @@ function AddQuery()
                                 if(request.status == 200){
                                         //alert(request.responseText);
                                         //document.getElementById("dummy").innerHTML = request.responseText;
+                                     
                                         //Get the response json for the array of questions
                                         var recArrQues = request.responseText;
                                         //converts the javascript value to a JSON string
@@ -158,20 +185,44 @@ function AddQuery()
                                         //parses the JSON string to construct the object of the string 
                                         var json = JSON.parse(recArrQues3);
                                         //for iterating through the JSON array of questions 
+                                        document.getElementById("dummy").innerHTML = json.length;
+                                        //Iterates through each question JSON 
                                         for (var i = 0; i < json.length; i++) {
                                                 //Creates each question for the dropdown 
-                                                //alert(json[i].id);
-                                                //alert(json[i].qtext);
-                                                
-                                                questionText = json[i].qtext;
-                                                questionID = json[i].id;
-                                                //dropDown1.onClick = function(){dispQuestions();}
-                                                var optionQues = document.createElement("option");
-                                                optionQues.setAttribute("id", questionID);
-                                                var textQues = document.createTextNode(questionText);
-                                                optionQues.appendChild(textQues);
-                                                dropDown1.appendChild(optionQues);                                                                                              
+                                                //alert(json[i].Q_id);
+                                                            
+                                                //Gets the question type            
+                                                var QuestionType = json[i].type;
+                                                //Checks to see if the question is a matrix 
+                                                if(QuestionType == "matrix"){
+                                                        var questionText = json[i].Q_topic;
+                                                        var questionID = json[i].Q_id;                                                       
+                                                        var optionQues = document.createElement("option");
+                                                        optionQues.setAttribute("id", questionID);
+                                                        
+                                                        optionQues.value = questionID;
+                                                        
+                                                        var textQues = document.createTextNode(questionText);
+                                                        optionQues.appendChild(textQues);
+                                                        dropDown1.appendChild(optionQues);
+                                                }
+                                                //else it is a text or a multiple choice question 
+                                                else{
+                                                        
+                                                        var questionText = json[i].Q_text;
+                                                        var questionID = json[i].Q_id;                                                        
+                                                        var optionQues = document.createElement("option");
+                                                        optionQues.setAttribute("id", questionID);
+                                                        
+                                                        optionQues.value = questionID;
+                                                      
+                                                        var textQues = document.createTextNode(questionText);
+                                                        optionQues.appendChild(textQues);
+                                                        dropDown1.appendChild(optionQues);
+                                                }
+                                                                                           
                                         }
+                                        
                                                                                                                                                         
                                 }	
                         }	
@@ -489,24 +540,6 @@ function RemoveChangeResponse(){
         }       
 }
 
-//Function deletes the current elements the in 2nd drop down for regular and change and response templates 
-/*function DeleteElements(id){
-        //Gets the parent template 
-        parentTemplate = document.getElementById(id);
-        //document.getElementById("dummy").innerHTML = "Hello" + parentTemplate.getAttribute("id");
-        //Get the drop dop element that displays the questions 
-        child = parentTemplate.getElementsByTagName("select")[0];
-        //Gets the drop down element that displays the responses
-        child2 = parentTemplate.getElementsByTagName("select")[1];
-        NumChildren = child2.length;
-        for(var x = 0; x < (NumChildren - 1); x++){
-                child2.removeChild(child2.lastChild); 
-        }
-        dispResponses(id);    
-}*/
-
-
-
 //Function for displaying the responses for the change in response template 
 function DisplayResponses2(id){
         //Gets the parent template 
@@ -543,7 +576,8 @@ function DisplayResponses2(id){
                 if(request.readyState == 4){
                         if(request.status == 200){
                                         //alert(request.responseText);
-                                        document.getElementById("dummy").innerHTML = request.responseText;
+                                        //document.getElementById("dummy").innerHTML = request.responseText;
+                                        
                                         //Get the response json for the array of questions
                                         var recArrQues = request.responseText;
                                         //converts the javascript value to a JSON string
@@ -553,32 +587,38 @@ function DisplayResponses2(id){
                                         //parses the JSON string to construct the object of the string 
                                         var json = JSON.parse(recArrQues3);
                                         
-                                        //for iterating through the JSON array of questions 
-                                 
-                                        
-                                        //document.getElementById("dummy").innerHTML = json.length;
+                                        //Loop iterates through the JSON questions                                                                          
                                         for (var i = 0; i < json.length; i++) {
-                                                //Creates each question for the dropdown 
-                                                //alert(json[i].id);
-                                                //alert(json[i].answer);
-                                                //alert(json[i].qtext);
-                                                
-                                                questionText = json[i].qtext;
-                                                questionID = json[i].id;
-                                                if(choiceQues == questionText){
-                                                        //alert(json[i].answer);
-                                                        for(var j = 0; j < json[i].answer.length; j++){
-                                                                //alert(json[i].answer[j]);
-                                                                var optionQues = document.createElement("option");
-                                                                    //optionQues.setAttribute("id", questionID);
-                                                                var textQues = document.createTextNode(json[i].answer[j]);
-                                                                optionQues.appendChild(textQues);
-                                                                child2.appendChild(optionQues); 
-                                                        }                                                          
-                                                }                                                                                                
-                                                                                                                                                                                      
+                                                //If we found the selected question 
+                                                if(choiceQues == json[i].Q_id){
+                                                        //Gets the type of the question 
+                                                        var QuestionType = json[i].type;
+                                                        //The question type is text 
+                                                        if(QuestionType == "text"){
+                                                                //fill drop down with responses made by students 
+                                                                //alert("text question fill drop down with student responses");
+                                                                                                                               
+                                                        }
+                                                        //The question is multiple choice 
+                                                        else if(QuestionType == "multic"){
+                                                                //Fill the drop down with the multiple choice options 
+                                                                for(var j = 0; j < json[i].ans.length; j++){
+                                                                        //alert(json[i].answer[j]);
+                                                                        var optionQues = document.createElement("option");
+                                                                        //optionQues.setAttribute("id", questionID);
+                                                                        var textQues = document.createTextNode(json[i].ans[j]);
+                                                                        optionQues.appendChild(textQues);
+                                                                        child2.appendChild(optionQues); 
+                                                                }  
+                                                        }
+                                                        //The question is a matrix 
+                                                        else{
+                                                                //Do nothing for now until we fix the issue
+                                                                //alert("matrix can't do anything for now");
+                                                        }
+                                                }                                                                                                                                                                                         
                                         }
-                                        document.getElementById("dummy").innerHTML = "Finished changed response to";
+                                                                  
                                                                                                                                                         
                                 }	
                         }	
@@ -608,7 +648,7 @@ function dispResponses(id){
                                 
         //Gets the question that was selected 
         var choiceQues = child.options[child.selectedIndex].value;
-        //document.getElementById("dummy").innerHTML = choiceQues;
+        document.getElementById("dummy").innerHTML = choiceQues;
             
         //Gets the surveyID 
         var e = document.getElementById("select2");
@@ -624,7 +664,8 @@ function dispResponses(id){
                 if(request.readyState == 4){
                         if(request.status == 200){
                                         //alert(request.responseText);
-                                        document.getElementById("dummy").innerHTML = request.responseText;
+                                        //document.getElementById("dummy").innerHTML = request.responseText;
+                                        
                                         //Get the response json for the array of questions
                                         var recArrQues = request.responseText;
                                         //converts the javascript value to a JSON string
@@ -634,30 +675,37 @@ function dispResponses(id){
                                         //parses the JSON string to construct the object of the string 
                                         var json = JSON.parse(recArrQues3);
                                         
-                                        //for iterating through the JSON array of questions 
-                                 
-                                        
-                                        //document.getElementById("dummy").innerHTML = json.length;
+                                        //Loop iterates through the JSON questions                                                                          
                                         for (var i = 0; i < json.length; i++) {
-                                                //Creates each question for the dropdown 
-                                                //alert(json[i].id);
-                                                //alert(json[i].answer);
-                                                //alert(json[i].qtext);
-                                                
-                                                questionText = json[i].qtext;
-                                                questionID = json[i].id;
-                                                if(choiceQues == questionText){
-                                                        //alert(json[i].answer);
-                                                        for(var j = 0; j < json[i].answer.length; j++){
-                                                                //alert(json[i].answer[j]);
-                                                                var optionQues = document.createElement("option");
-                                                                optionQues.setAttribute("id", questionID);
-                                                                var textQues = document.createTextNode(json[i].answer[j]);
-                                                                optionQues.appendChild(textQues);
-                                                                child2.appendChild(optionQues); 
-                                                        }                                                          
-                                                }                                                                                                
-                                                                                                                                                                                      
+                                                //If we found the selected question 
+                                                if(choiceQues == json[i].Q_id){
+                                                        //Gets the type of the question 
+                                                        var QuestionType = json[i].type;
+                                                        //The question type is text 
+                                                        if(QuestionType == "text"){
+                                                                //fill drop down with responses made by students 
+                                                                //alert("text question fill drop down with student responses");
+                                                                
+                                                                
+                                                        }
+                                                        //The question is multiple choice 
+                                                        else if(QuestionType == "multic"){
+                                                                //Fill the drop down with the multiple choice options 
+                                                                for(var j = 0; j < json[i].ans.length; j++){
+                                                                        //alert(json[i].answer[j]);
+                                                                        var optionQues = document.createElement("option");
+                                                                        //optionQues.setAttribute("id", questionID);
+                                                                        var textQues = document.createTextNode(json[i].ans[j]);
+                                                                        optionQues.appendChild(textQues);
+                                                                        child2.appendChild(optionQues); 
+                                                                }  
+                                                        }
+                                                        //The question is a matrix 
+                                                        else{
+                                                                //Do nothing for now until we fix the issue
+                                                                //alert("matrix can't do anything for now");
+                                                        }
+                                                }                                                                                                                                                                                         
                                         }
                                                                                                                                                         
                                 }	
@@ -689,7 +737,7 @@ function GetSurveys(){
         var  e = document.getElementById("select1");
         var choice = e.options[e.selectedIndex].value;
         
-        document.getElementById("dummy").innerHTML = choice;
+        //document.getElementById("dummy").innerHTML = choice;
         
         
         var request= new XMLHttpRequest();
