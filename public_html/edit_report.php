@@ -9,7 +9,7 @@ var count = 0;
         <script src="report_generation.js"></script>
         <link rel="stylesheet" href="ReportStyleSheet.css" type="text/css" />
         <link rel="stylesheet" href="ReportPrintStyleSheet.css" type="text/css" media="print" />
-        <link rel="stylesheet" href="TopNav.css" type="text/css" />
+        <!--<link rel="stylesheet" href="TopNav.css" type="text/css" />-->
 
 </head>
 
@@ -17,7 +17,7 @@ var count = 0;
 
 <?php
         session_start();
-        include_once('TopNav.php');
+        //include_once('TopNav.php');
 ?>
 
 <h3 id="PageTitle"> Report Generation </h3>

@@ -15,16 +15,30 @@
         //echo "We got: ".$campID."\n";
         
         
-        $query = "SELECT * FROM S_Use WHERE camp_id='$campID'";
+        $query = "SELECT * FROM Camp WHERE camp_id='$campID'";
         $result = mysql_query($query);   
         while ($row = mysql_fetch_array($result)) {
-                $surveyID = $row['survey_id'];
-                $query2 = "SELECT * FROM Survey WHERE survey_id='$surveyID'";
+                $PreSurveyID = $row['pre'];
+                $query2 = "SELECT * FROM Survey WHERE survey_id='$PreSurveyID'";
+                
+                $PostSurveyID = $row['post'];
+                $query3 = "SELECT * FROM Survey WHERE survey_id='$PostSurveyID'";
+                
                 $result2 = mysql_query($query2);
+                $result3 = mysql_query($query3);
+                
                 while($row2 = mysql_fetch_array($result2)){
                         $value = $row2['survey_id'];
                         echo "<option value='$value'>" .$row2{title}. "</option>";                                 
-                }                                     
+                } 
+                
+                while($row3 = mysql_fetch_array($result3)){
+                        $value = $row3['survey_id'];
+                        echo "<option value='$value'>" .$row3{title}. "</option>";                                 
+                } 
+                
+                
+                
         }       
         
         
