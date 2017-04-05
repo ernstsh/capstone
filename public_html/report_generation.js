@@ -4,6 +4,8 @@ var count = 0;
 //For keeping track of # of query result templates and ID purposes
 var count2 = 0; 
 
+//To keep track the ID of a saved report and to save edits
+var SavedReportID; 
 
 //Deletes all query children of the parent 
 function DeleteAllQueries(){
@@ -315,7 +317,7 @@ function QueryJSON(){
                 //Gets the first drop down menu of the query template 
                 var child = parentTemplate.getElementsByTagName("select")[0];
                 //Gets the choice selected from the first drop down 
-                var choice1 = child.options[child.selectedIndex].value;
+                var choice1 = child.options[child.selectedIndex].text;
                 queryTempJSON.Drop1 = choice1;               
                         
                 //Gets the second drop down menu of the query template
@@ -477,6 +479,9 @@ function removeElement(parentDiv, childDiv){
 function Report_JSON(){
         //Create a json for the report 
 	var report_json = {};
+              
+        //Sets the report ID of the report JSON
+        report_json.ReportID = SavedReportID;        
         
         //Sets the title of the report JSON
         report_json.title = document.getElementById("TitleReport").value;    
@@ -498,7 +503,7 @@ function Report_JSON(){
         }
         //document.getElementById("reportJSON").innerHTML = JSON.stringify(report_json);
         var str_json = JSON.stringify(report_json);
-        document.getElementById("reportJSON").innerHTML = str_json;
+        //document.getElementById("reportJSON").innerHTML = str_json;
         
         var request= new XMLHttpRequest()
         request.open("POST", "SaveReport.php", true)
@@ -507,7 +512,9 @@ function Report_JSON(){
         request.onreadystatechange=function(){
 		if(request.readyState == 4){
 			if(request.status == 200){
-				alert(request.responseText);	
+				//alert(request.responseText);
+                                //document.getElementById("dummy").innerHTML = request.responseText;
+                                SavedReportID = request.responseText;
 			}	
 		}	
 	}
