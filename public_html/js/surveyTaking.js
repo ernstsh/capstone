@@ -39,6 +39,7 @@ function get_survey(){
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
+				//location.href = "active_survey.php";
 				console.log(xmlhttp.responseText);
 				data = JSON.parse(xmlhttp.responseText);
 				data.camp_id = camp;
@@ -55,16 +56,16 @@ function get_survey(){
 
 
 function generate_text_question(question_data, doc) {
-	var form = doc.getElementById("test");
+	//var form = doc.getElementById("test");
 	var question = document.createElement("DIV");
 	question.id = "QT"+question_data.Q_id;
 	question.className = "question";
 	question.innerHTML = "<br><label>"+question_data.Q_text+"</label><br><input type='text' placeholder='Put your answer here'></input>";
-	form.appendChild(question);
+	doc.appendChild(question);
 }
 
 function generate_multi_question(question_data, doc){
-	var form = doc.getElementById("test");
+	//var form = doc.getElementsById("test");
 	var question = document.createElement("DIV");
 	question.id = "QMC"+question_data.Q_id;
 	question.className = "question";
@@ -72,19 +73,19 @@ function generate_multi_question(question_data, doc){
 	for(var i=0; i<question_data.ans.length; i++){
 		question.innerHTML += "<br><input type='radio' value="+question_data.ans[i]+">"+question_data.ans[i]+"";
 	}
-	form.appendChild(question);
+	doc.appendChild(question);
 }
 
 function generate_matrix_question(question_data, doc){
-	var form = doc.getElementById("test");
+	//var form = doc.getElementsById("test");
 	var question = document.createElement("DIV");
-	question.id = "QM"+question_data.Q_id;
+	question.id = question_data.Q_id;
 	question.className = "question";
 	question.innerHTML = "<br><label>"+question_data.Q_topic+"</label><br>";
 	if(question_data.Q_scale === "agree"){
 		var string = "";
 		for(var i=0; i<question_data.questions.length; i++){
-			string += "<tr><td>"+question_data.questions[i]+"</td><td><input type='radio' value='SD'></td><td><input type='radio' value='D'></td><td><input type='radio' value='A'></td><td><input type='radio' value='SA'></td></tr><br>";
+			string += "<tr id='matrix_q'><td>"+question_data.questions[i]+"</td><td><input type='radio' value='SD'></td><td><input type='radio' value='D'></td><td><input type='radio' value='A'></td><td><input type='radio' value='SA'></td></tr><br>";
 		}
 		question.innerHTML += "<table><tr>      <th>Question</th><th>Strongly Disagree</th><th>Disagree</th><th>Agree</th><th>Strongly Agree</th></tr>"+string+"</table>";
 	}
@@ -95,54 +96,87 @@ function generate_matrix_question(question_data, doc){
 		}
 		question.innerHTML += "<table><tr>      <th>Question</th><th>Not at All</th><th>Slightly</th><th>Moderately</th><th>A Great Deal</th></tr>"+string+"</table>";
 	}
-	form.appendChild(question);
+	doc.appendChild(question);
 	
 }
+
+function send_response(id_json){
+	id_json = JSON.stringify(id_json);
+	str = "x=" + encodeURIComponent(id_json);
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "insert_response.php", false);
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				//var doc = document.getElementsByTagName("SELECT")[1];
+				console.log(xmlhttp.responseText);
+			}
+		}	
+	}
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(str);
+}
+
 function collect_response(id_json){
 	id_json.ans = [];
 	var doc = document.getElementById("test");
 	var qs = doc.getElementsByClassName("question");
 	for(var i = 0; i<qs.length; i++){
-		if(qs[i].Q_id.substring(0,2) === "QT"){
-			id_json.ans[i] = qs[i].getElementsByTagName("INPUT")[0].value;
+		console.log(i);
+		if(qs[i].id.substring(0,2) === "QT"){
+			id_json.ans.push(qs[i].getElementsByTagName("INPUT")[0].value);
 		}
-		else if(qs[i].Q_id.substring(0,3) === "QMC"){
+		else if(qs[i].id.substring(0,3) === "QMC"){
 			var els = qs[i].getElementsByTagName("INPUT");
-			console.log(els);
-			for(int k=0; k<els.length; k++){
+			for(var k=0; k<els.length; k++){
 				if(els[k].checked){
-					id_json.ans[i] = els[k].value;
+					id_json.ans.push(els[k].value);
 				}
 			}
 		}
-		else if(qs[i].Q_id.substring(0,2) === "QM"){
-			var els = qs[i].getElementsById("matrix_q");
-			console.log(els);
-			for(int k=0; k<els.length; k++){
+		else if(qs[i].id.substring(0,2) === "QM"){
+			var els = qs[i].getElementsByTagName("tr");
+			for(var k=0; k<els.length; k++){
 				var inputs = els[k].getElementsByTagName("INPUT");
-				for(int j=0; j<inputs.length; j++){
+				for(var j=0; j<inputs.length; j++){
 					if(inputs[j].checked){
-						id_json.ans[i] = inputs[j].value;
+						id_json.ans.push(inputs[j].value);
 					}
 				}
 			}
 		}
 	}
 	console.log(id_json);
+	send_response(id_json);
+	/*id_json = JSON.stringify(id_json);
+	str = "x=" + encodeURIComponent(id_json);
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "insert_response.php", false);
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				//var doc = document.getElementsByTagName("SELECT")[1];
+				console.log(xmlhttp.responseText);
+			}
+		}	
+	}
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(str);*/
+	
 }
 
 function add_submit(doc, id_json){
-	var doc = doc.getElementById("test");
+	//var doc = doc.getElementById("test");
 	var submit_button = document.createElement("DIV");
-	submit_button.innerHTML = "<button onclick='collect_response("+id_json+")'>Submit</button>";
+	submit_button.innerHTML = "<button onclick='collect_response("+JSON.stringify(id_json)+");'>Submit</button>";
 	doc.appendChild(submit_button);
 }
 
 function generate_html(data){
 	//data = JSON.parse(data);
-	var external = window.open("", "external", "width=500, height=600");
-	external.document.write("<head><link rel='stylesheet' href='../public_html/css/style1.css'></head><div id='test'></div>");
-	var doc = external.document.getElementById("test");
+	//var external = window.open("", "external", "width=500, height=600");
+	//document.write("<head><link rel='stylesheet' href='../public_html/css/style1.css'></head><body><div id='test'></div></body>");
+	var doc = document.getElementById("test");
 	//var form = doc.getElementsByTagName("FORM")[0];
 	doc.innerHTML = "<h3>"+data.title+"</h3>";
 	//doc.appendChild(form);

@@ -13,11 +13,14 @@ enrolled in that camp-->
 	</head>
 	<body onload="pop_camp();">
 		
-		
+		<div>
 			<label>Select Your Camp</label><select onmousedown="this.value='';" onchange="load_enrollment(this.value);"></select><br>
 			<label>Select Your Name</label><select></select><br>
 			
 			<button onclick="get_survey();">Submit</button>
+		</div>
+		<div id="test">
+		</div>
 		
 	</body>
 </html>
