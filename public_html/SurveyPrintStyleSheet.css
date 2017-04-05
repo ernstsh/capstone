@@ -1,0 +1,86 @@
+#PageType{
+        display:none;
+}
+/*Omitts the page header*/
+#h3-1{
+        display:none;
+}
+/*Omitts all of the labels on the page*/ 
+#label-1{
+        display:none;
+}
+#label-2{
+        display:none;
+}
+#label-3{
+        display:none;
+}
+#label-4{
+        display:none;
+}
+#label-5{
+        display:none;
+}
+#label-6{
+        display:none;
+}
+/*Omitts the Title of the survey input box*/
+#SurveyTitle{
+        display:none;
+}
+/*Omitts the load pre-existing surveys drop down*/ 
+#LoadSurvey{
+        display:none;
+}
+/*Omitts the Camp drop down*/
+#Camp{
+        display:none;
+}
+/*Omitts the pre and post radio buttons along with its paragraph header*/
+#Pre{
+        display:none;
+}
+#Post{
+        display:none;
+}
+#CheckApply{
+        display:none;
+}
+#create_survey{
+        display:none;
+}
+/*Omitts the question type drop down*/
+#QuestionType{
+        display:none;
+}
+/*Omitts the frequent asked questions*/
+#FrequentQuestions{
+        display:none;
+}
+/*Omitts the save, print, exit, and preview buttons*/ 
+#SaveButton{
+        display:none;
+}
+#Exit{
+        display:none;
+}
+#Print{
+        display:none;
+}
+#Preview{
+        display:none;
+}
+/*Gets rid off the empty space above the sand box caused from omitting the other content of the page*/
+#sandbox{
+        background-color: white;
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 15px;
+        font-size: 14px;
+        line-height: 18px; 
+       
+}
