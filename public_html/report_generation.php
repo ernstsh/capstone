@@ -86,6 +86,7 @@ This is the navigation bar of the page-->
 <div id="GenderDiv">
 <label id="label-6">Gender:</label>
 <select id="Gender">
+        <option>--Select--</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
 </select>
@@ -97,6 +98,7 @@ This is the navigation bar of the page-->
 <div id="GradeDiv">
 <label id="label-7">Student grade level:</label>
 <select id="SelectGrade">
+        <option value="select">--Select--</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
@@ -118,6 +120,7 @@ This is the navigation bar of the page-->
 <div id="ParentEducationDiv">
 <label id="label-8">Parent's highest education:</label>
 <select id="SelectEducation">
+        <option>--Select--</option>
         <option>Did not complete high school</option>
         <option>High school diploma or GED</option>
         <option>Some college but no degree</option>
@@ -134,6 +137,7 @@ This is the navigation bar of the page-->
 <div id="RaceDiv">
 <label id="label-9">Student Race:</label>
 <select id="SelectRace">
+        <option>--Select--</option>
         <option>African American</option>
         <option>White</option>
         <option>Asian</option>
@@ -149,6 +153,7 @@ This is the navigation bar of the page-->
 <div id="EthnicityDiv">
 <label id="label-10">Student Ethnicity</label>
 <select id="SelectEthinicity">
+        <option>--Select--</option>
         <option>Hispanic or Latino</option>
         <option>Not Hispanic or Latino</option>
 </select>
@@ -160,6 +165,7 @@ This is the navigation bar of the page-->
 <div id="LunchDiv">
 <label id="label-11">Free or Reduced Lunch</label>
 <select id="SelectLunchType">
+        <option>--Select--</option>
         <option>Yes</option>
         <option>Eligible but did not participate</option>
         <option>Not eligible</option>
@@ -180,8 +186,8 @@ This is the navigation bar of the page-->
         <button type="button" class="addQuery" id="addQuery" onclick="AddQuery()">Add Query</button>
         <button type="button" class="DeleteAll" id="DeleteAll" onclick="DeleteAllQueries()">Reset</button>
         
-        <button type="button" class="submit" id="submit2" onclick="AddQueryResult()"> Submit </button>
-        <!--<button type="button" class="submit" id="submit2" onclick="QueryJSON()"> Submit </button>-->
+        <!--<button type="button" class="submit" id="submit2" onclick="AddQueryResult()"> Submit </button>-->
+        <button type="button" class="submit" id="submit2" onclick="QueryJSON()"> Submit </button>
         
         <button type="button" class="save" id="save" onClick="Report_JSON()"> Save </button>
         <button type="button" class="exit" id="exit"><a href="dashboard.php" id="ExitLink"> Exit </a></button>
