@@ -102,14 +102,16 @@ function generate_matrix_question(question_data, doc){
 
 function send_response(id_json){
 	id_json = JSON.stringify(id_json);
-	str = "x=" + encodeURIComponent(id_json);
+	console.log(id_json);
+	var str = "x=" + encodeURIComponent(id_json);
 	xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("POST", "insert_response.php", false);
+	xmlhttp.open("POST", "insert_response.php", true);
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
 				//var doc = document.getElementsByTagName("SELECT")[1];
 				console.log(xmlhttp.responseText);
+				location.href="preview.php";
 			}
 		}	
 	}

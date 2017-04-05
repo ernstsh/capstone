@@ -1,4 +1,5 @@
 <?php 
+error_reporting(-1);
 $obj = $_POST['x'];
 $ar = json_decode($obj);
 $conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "ZlpiHLTMmA44Z0tg", "nichokyl-db");
@@ -23,16 +24,6 @@ if($statement = $conn->prepare($sql)){
 else {
 	printf("Error: %s\n", $conn->error);
 }
-$sql2 = "SELECT * FROM Response";
-while($result = $conn-query($sql2)){
-	if($obj2 = $result->fetch_object()){
-		echo $obj2->survey_id;
-		echo $obj2->camp_id;
-		echo $obj2->responder_id;
-		echo $obj2->type;
-		echo json_decode($obj2->answers);
-	}
-	$result->close;
-}
+
 $conn->close();
 ?>
