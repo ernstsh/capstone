@@ -4,6 +4,8 @@ var count = 0;
 //For keeping track of # of query result templates and ID purposes
 var count2 = 0; 
 
+//To keep track the ID of a saved report and to save edits of the current report 
+var SavedReportID; 
 
 //Deletes all query children of the parent 
 function DeleteAllQueries(){
@@ -283,16 +285,22 @@ function QueryJSON(){
         
         //Gets the gender that was selected
         queryJSON.Gender = document.getElementById("Gender").value;
+        
         //Gets the grade level chosen
         queryJSON.StudentGradeLvl = document.getElementById("SelectGrade").value;
+        
         //Gets the parent's highest level of education
         queryJSON.ParentEducation = document.getElementById("SelectEducation").value;
+        
         //Gets the race that was selected
         queryJSON.Race = document.getElementById("SelectRace").value;
+        
         //Gets the ethnicity that was selected
         queryJSON.Ethnicity = document.getElementById("SelectEthinicity").value;
+        
         //Gets the free reduced lunch option that was selected
         queryJSON.LunchOption = document.getElementById("SelectLunchType").value;
+        
         //JSON array for storing the query template options that were produced 
         queryJSON.queries = [];
         
@@ -315,7 +323,7 @@ function QueryJSON(){
                 //Gets the first drop down menu of the query template 
                 var child = parentTemplate.getElementsByTagName("select")[0];
                 //Gets the choice selected from the first drop down 
-                var choice1 = child.options[child.selectedIndex].value;
+                var choice1 = child.options[child.selectedIndex].text;
                 queryTempJSON.Drop1 = choice1;               
                         
                 //Gets the second drop down menu of the query template
@@ -476,12 +484,17 @@ function removeElement(parentDiv, childDiv){
 
 function Report_JSON(){
         //Create a json for the report 
-	var report_json = {};
+	var report_json = {};          
+        
+        //Sets the report ID of the report JSON
+        report_json.ReportID = SavedReportID;
         
         //Sets the title of the report JSON
-        report_json.title = document.getElementById("TitleReport").value;    
+        report_json.title = document.getElementById("TitleReport").value; 
+        
         //Create an array JSON for all the query results 
 	report_json.queryResults = [];
+        
         //Stores all of the query label and results into the array 
         var x = 0;
         //Iterates all of the query results 
@@ -498,7 +511,7 @@ function Report_JSON(){
         }
         //document.getElementById("reportJSON").innerHTML = JSON.stringify(report_json);
         var str_json = JSON.stringify(report_json);
-        document.getElementById("reportJSON").innerHTML = str_json;
+        //document.getElementById("reportJSON").innerHTML = str_json;
         
         var request= new XMLHttpRequest()
         request.open("POST", "SaveReport.php", true)
@@ -507,7 +520,9 @@ function Report_JSON(){
         request.onreadystatechange=function(){
 		if(request.readyState == 4){
 			if(request.status == 200){
-				alert(request.responseText);	
+				//alert(request.responseText);
+                                //document.getElementById("dummy").innerHTML = request.responseText;
+                                SavedReportID = request.responseText;
 			}	
 		}	
 	}

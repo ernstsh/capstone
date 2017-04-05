@@ -43,17 +43,28 @@ if(isset($_SESSION['valid_user'])){
         //echo $UserName;
         //echo "The user logged in is: ".$_SESSION['valid_user']."\n";
         
-        
+        //Check to see if its a valid admin that can delete accounts 
         if($_SESSION['valid_user'] == 'CaroleR' Or $_SESSION['valid_user'] == 'CatherineL'){
-                //echo "Valid Admin";
-                $sql = "DELETE FROM Admin WHERE FirstName = '$FirstName' AND LastName = '$LastName' AND UserName = '$UserName'";
-                if(mysqli_query($dbc, $sql) == TRUE){
-                        echo "You were able to delete ".$FirstName." ".$LastName." account\n";
+                //Makes sure that Cathy and Carole do not delete each others or their own accounts 
+                if( ($FirstName != 'Catherine' and $LastName != 'Law' and $UserName != 'CatherineL')
+                        and ($FirstName != 'Carole' and $LastName != 'Rodriguez' and $UserName != 'CaroleR') ){
+                                
+                        $sql = "DELETE FROM Admin WHERE FirstName = '$FirstName' AND LastName = '$LastName' AND UserName = '$UserName'";
+                        //$resultQuery = mysqli_query($dbc, $sql);
+                        if(mysqli_query($dbc, $sql)){                     
+                                echo "You were able to delete ".$FirstName." ".$LastName." account\n";
+                        }
+                        else{
+                                echo "You were NOT able to delete ".$FirstName." ".$LastName." account\n";
+                        }
+                        mysqli_free_result($resultQuery);
                 }
+                //Else attempting to delete Catherine's or Carole's account 
                 else{
-                        echo "You were NOT able to delete ".$FirstName." ".$LastName." account\n";
+                        echo "Carole Rodriguez and Catherine Law accounts cannot be deleted!!!\n";
                 }
         }
+        //invalid admin they are not allowed to delete accounts!!!
         else{
                 echo "Your admin account is not allowed to delete admins only Catherine Law and Carole Rodriguez are allowed!!!";
         }            
