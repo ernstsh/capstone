@@ -11,22 +11,57 @@
 	
         $str_json = file_get_contents('php://input');
       
-        echo "We got: ".$str_json."\n";
+        //echo "We got: ".$str_json."\n";
         
-        /*$data = json_decode($str_json);                    
         
-        //gets the query results array and converts the JSON to a string 
-        $queryResults = json_encode($data->queryResults);
-        //gets the title of the report JSON
-        $title = json_encode($data->title);
-        //Inserts the report into the Report table 
-        $sql = "INSERT INTO Report (arr_results, title) VALUES ('$queryResults', '$title')";
-        //Checks if the report was saved into the database 
-        if (mysqli_query($dbc, $sql)) {
-                echo "New record created successfully";
-        } else {
-                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-        }*/
+        $data = json_decode($str_json); 
+               
+        //Gets the survey ID from the json 
+        $SurveyID = json_encode($data->SurveyID);      
+        $SurveyID = json_decode($SurveyID);
+       
+        //JSON object to store the survey questions and student responses
+        class QueryResults{
+                public $Survey;
+                public $StudentResponses;
+        }
+        $Q = new QueryResults();
+       
+        
+        //Query statement for getting the survey questions        
+        $sql = "SELECT * FROM Survey WHERE survey_id='$SurveyID'";
+        $result = mysqli_query($dbc, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+                //echo $row['arr_questions'];
+                $Q->Survey = $row['arr_questions'];
+            }
+        } 
+        else {
+            echo "0 results";
+        }
+   
+        //Array to store the student responses
+        $StudentResponses = [];
+        $count = 0;
+        //Query statement to get all of the student responses 
+        $sql2 = "SELECT * FROM Response WHERE survey_id='$SurveyID'";
+        $result2 = mysqli_query($dbc, $sql2);       
+        if (mysqli_num_rows($result2) > 0) {
+            while($row2 = mysqli_fetch_assoc($result2)) {
+                //$count = $count + 1;
+                $StudentResponses[] = $row2['answers'];
+                //echo $row2['answers'];
+                
+            }
+        } 
+        else {
+            echo "0 results";
+        }
+        $Q->StudentResponses = $StudentResponses;
+        echo json_encode($Q);
+
         
         //closes the database connection  
 	mysqli_close($dbc);

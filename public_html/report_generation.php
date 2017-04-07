@@ -57,8 +57,8 @@ This is the navigation bar of the page-->
 <!--Radio buttons for selecting the survey type-->        
 <h4 id="label-3">Select the survey type: </h4>            
 <form id="SurveyType">
-        <input type="radio" name="Pre/Post" id="Pre" value="Pre" onClick="RemoveChangeResponse()" checked> Pre-survey<br>
-        <input type="radio" name="Pre/Post" id="Post" value="Post" onClick="RemoveChangeResponse()"> Post-survey<br>
+        <input type="radio" name="Pre/Post" id="Pre" value="pre" onClick="RemoveChangeResponse()" checked> Pre-survey<br>
+        <input type="radio" name="Pre/Post" id="Post" value="post" onClick="RemoveChangeResponse()"> Post-survey<br>
         <input type="radio" name="Pre/Post" id="Both" value="Both"> Both
 </form>
    
@@ -204,7 +204,9 @@ This is the navigation bar of the page-->
 
 
 <!--Elements for verifying if the page is functioning properly-->
+
 <p id="dummy" value="0"></p>
+<p id="dummy2"></p>
 <p id="currentChoice"></p>
 <p id="reportJSON"></p>
 

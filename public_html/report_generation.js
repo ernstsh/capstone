@@ -272,6 +272,16 @@ function QueryJSON(){
 
         //JSON for storing the query information entered by the user 
         var queryJSON = {};
+  
+        var SurveyDropDown = document.getElementById("select2");   
+        //Gets the survey ID 
+        var SurveyID = SurveyDropDown.options[SurveyDropDown.selectedIndex].value;
+        //Gets the survey title 
+        var SurveyName = SurveyDropDown.options[SurveyDropDown.selectedIndex].text;
+        //document.getElementById("dummy").innerHTML = SurveyID;
+        queryJSON.SurveyName = SurveyName;
+        queryJSON.SurveyID = SurveyID;
+  
         //Gets the survey type selected 
         var SurveyTypeSelected;
         var SurveyTypes = document.getElementById("SurveyType");
@@ -282,6 +292,16 @@ function QueryJSON(){
            }
         }     
         queryJSON.SurveyType = SurveyTypeSelected;
+        
+        //Gets the return type which is count or percentage
+        if (document.getElementById('Count').checked) {
+                queryJSON.ReturnType = document.getElementById('Count').value;
+        }
+        if (document.getElementById('Percent').checked) {
+                queryJSON.ReturnType = document.getElementById('Percent').value;
+        }
+        
+        
         
         //Gets the gender that was selected
         queryJSON.Gender = document.getElementById("Gender").value;
@@ -318,13 +338,16 @@ function QueryJSON(){
                 //Gets the query template 
                 childID = Parent.childNodes[x].id;
                 
-                
-                var parentTemplate = document.getElementById(childID);
+                                             
+                var parentTemplate = document.getElementById(childID);                
                 //Gets the first drop down menu of the query template 
                 var child = parentTemplate.getElementsByTagName("select")[0];
                 //Gets the choice selected from the first drop down 
                 var choice1 = child.options[child.selectedIndex].text;
-                queryTempJSON.Drop1 = choice1;               
+                queryTempJSON.Drop1 = choice1;  
+                
+                //Gets the ID of the question
+                queryTempJSON.ID = child.options[child.selectedIndex].value;
                         
                 //Gets the second drop down menu of the query template
                 var child2 = parentTemplate.getElementsByTagName("select")[1];
@@ -353,7 +376,7 @@ function QueryJSON(){
         }
         
         //outputs the JSON to the webpage for testing purposes
-        document.getElementById("reportJSON").innerHTML = JSON.stringify(queryJSON);
+        //document.getElementById("reportJSON").innerHTML = JSON.stringify(queryJSON);
         
         //Converts the query JSON into a string
         var str_JSON = JSON.stringify(queryJSON);
@@ -365,7 +388,53 @@ function QueryJSON(){
         request.onreadystatechange=function(){
 		if(request.readyState == 4){
 			if(request.status == 200){
-				alert(request.responseText);	
+				//alert(request.responseText);	
+                                //document.getElementById("dummy").innerHTML = request.responseText;
+                                
+                                //Gets the Query JSON containing the survey and responses 
+                                var QueryJSON = JSON.parse(request.responseText);
+                                
+                                //Gets the survey
+                                var Survey = QueryJSON.Survey;
+                                //document.getElementById("dummy").innerHTML = Survey;
+                                                     
+                                //Gets the student responses
+                                var StudentResponses = QueryJSON.StudentResponses;
+                                // document.getElementById("currentChoice").innerHTML = JSON.stringify(StudentResponses);  
+
+                                
+                                
+                                //Querying Result starts here
+                                //document.getElementById("dummy").innerHTML = JSON.stringify(queryJSON.queries);
+                                //Gets the query template objects
+                                var ArrayQueries = JSON.stringify(queryJSON.queries);
+                                ArrayQueries = JSON.parse(ArrayQueries);
+                                //document.getElementById("dummy2").innerHTML = ArrayQueries;
+                                
+                                //Loops through the query templates 
+                                var LengthQueries = ArrayQueries.length;
+                                for(var x = 0; x < LengthQueries; x++){
+                                        
+                                        //Gets the ID of the query temp question 
+                                        var QueryID = ArrayQueries[x].ID;
+                                        //alert(QueryID);
+                                        
+                                        //Loops through students survey responses 
+                                        var LengthStudResponse = StudentResponses.length;
+                                        //document.getElementById("dummy").innerHTML = LengthStudResponse;                                       
+                                        for(var x = 0; x < LengthStudResponse; x++){
+                                                //Gets the student's survey
+                                                var SurveyJSON = StudentResponses[x];
+                                                document.getElementById("dummy").innerHTML = SurveyJSON;
+                                                var SurveyAnswers = JSON.parse(SurveyJSON.ans);
+                                                document.getElementById("dummy").innerHTML = SurveyAnswers;
+                                                
+                                                
+                                        }
+                                        
+                                        
+                                }
+                                //document.getElementById("dummy2").innerHTML = LengthQueries;                                
 			}	
 		}	
 	}      
