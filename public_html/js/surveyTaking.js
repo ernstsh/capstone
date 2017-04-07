@@ -58,7 +58,7 @@ function get_survey(){
 function generate_text_question(question_data, doc) {
 	//var form = doc.getElementById("test");
 	var question = document.createElement("DIV");
-	question.id = "QT"+question_data.Q_id;
+	question.id = question_data.Q_id;
 	question.className = "question";
 	question.innerHTML = "<br><label>"+question_data.Q_text+"</label><br><input type='text' placeholder='Put your answer here'></input>";
 	doc.appendChild(question);
@@ -67,7 +67,7 @@ function generate_text_question(question_data, doc) {
 function generate_multi_question(question_data, doc){
 	//var form = doc.getElementsById("test");
 	var question = document.createElement("DIV");
-	question.id = "QMC"+question_data.Q_id;
+	question.id = question_data.Q_id;
 	question.className = "question";
 	question.innerHTML = "<br><label>"+question_data.Q_text+"</label>";
 	for(var i=0; i<question_data.ans.length; i++){
@@ -111,7 +111,7 @@ function send_response(id_json){
 			if(xmlhttp.status == 200){
 				//var doc = document.getElementsByTagName("SELECT")[1];
 				console.log(xmlhttp.responseText);
-				location.href="preview.php";
+				//location.href="preview.php";
 			}
 		}	
 	}
@@ -124,29 +124,41 @@ function collect_response(id_json){
 	var doc = document.getElementById("test");
 	var qs = doc.getElementsByClassName("question");
 	for(var i = 0; i<qs.length; i++){
+		var answer = {};
 		console.log(i);
 		if(qs[i].id.substring(0,2) === "QT"){
-			id_json.ans.push(qs[i].getElementsByTagName("INPUT")[0].value);
+			answer.type = "text";
+			answer.Q_id = qs[i].id;
+			//id_json.ans.push(qs[i].getElementsByTagName("INPUT")[0].value);
+			answer.ans = qs[i].getElementsByTagName("INPUT")[0].value;
 		}
 		else if(qs[i].id.substring(0,3) === "QMC"){
+			answer.type = "multic";
+			answer.Q_id = qs[i].id;
 			var els = qs[i].getElementsByTagName("INPUT");
 			for(var k=0; k<els.length; k++){
 				if(els[k].checked){
-					id_json.ans.push(els[k].value);
+					//id_json.ans.push(els[k].value);
+					answer.ans = els[k].value;
 				}
 			}
 		}
 		else if(qs[i].id.substring(0,2) === "QM"){
+			answer.type = "matrix";
+			answer.Q_id = qs[i].id;
+			answer.ans = [];
 			var els = qs[i].getElementsByTagName("tr");
 			for(var k=0; k<els.length; k++){
 				var inputs = els[k].getElementsByTagName("INPUT");
 				for(var j=0; j<inputs.length; j++){
 					if(inputs[j].checked){
-						id_json.ans.push(inputs[j].value);
+						//id_json.ans.push(inputs[j].value);
+						answer.ans.push(inputs[j].value);
 					}
 				}
 			}
 		}
+		id_json.ans.push(answer);
 	}
 	console.log(id_json);
 	send_response(id_json);

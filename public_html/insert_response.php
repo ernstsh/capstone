@@ -14,10 +14,12 @@ if($statement = $conn->prepare($sql)){
 	$responder = $ar->responder;
 	$ans = json_encode($ar->ans);
 
+
 	// Generate the array of questions string
 	//$arr_questions = json_encode($ar->questions);
 
 	$statement->bind_param('iiiss', $survey, $camp, $responder, $ans, $type);
+//	echo $statement;
 	$statement->execute();
 	$statement->close();
 }
