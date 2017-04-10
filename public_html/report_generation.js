@@ -530,8 +530,10 @@ function QueryJSON(){
 
                                 }
                                 //Output the answer to a query result
-                                AddQueryResult(TotCount);
+                                AddQueryResult(TotCount, queryJSON.ReturnType, LengthStudResponse);
                                 document.getElementById("dummy5").innerHTML = TotCount;
+                                
+                             
 			}	
 		}	
 	}      
@@ -563,7 +565,7 @@ function OccurenceQuestion(QueryID, ArrayQueries, LengthQueries){
 }
 
 //Creates a queryResult template 
-function AddQueryResult(TotCount){                  
+function AddQueryResult(TotCount, ReturnType, NumStuds){                  
         count2++;
                 
         //Output to check if correct 
@@ -600,8 +602,16 @@ function AddQueryResult(TotCount){
         input.setAttribute("maxLength", '95');
         
         //Inserts the result into the text box
-        //document.getElementById('input' + count2).innerHTML = TotCount;       
-        input.value  = TotCount;
+        //document.getElementById('input' + count2).innerHTML = TotCount;   
+        //Return type is a count 
+        if(ReturnType == "Count"){
+                input.value = TotCount; 
+        }
+        //Return type is a percent 
+        else{
+                input.value = TotCount / NumStuds; 
+        }
+        //input.value  = TotCount;
         
         //Creates a break tag
         var break2 = document.createElement("br");
