@@ -496,8 +496,19 @@ function QueryJSON(){
                                                                 document.getElementById("dummy4").innerHTML = ObjAnswer;
                                                                 
                                                                 //if query temp question is equal to student question responded....
-                                                                if(QueryID == ObjID &&  Drop2Val == ObjAnswer ){                                                                 
+                                                                /*if(QueryID == ObjID &&  Drop2Val == ObjAnswer ){                                                                 
                                                                         CountCorrect++;
+                                                                }*/
+                                                                
+                                                                
+                                                                if(QueryID == ObjID){
+                                                                       
+                                                                        if(ArrayVals.includes(ObjAnswer)){
+                                                                                CountCorrect++;
+                                                                        }
+                                                                        if(ArrayVals.length > 1){
+                                                                                CountCorrect = CountCorrect + (ArrayVals.length - 1);
+                                                                        }
                                                                 }
                                                                 
                                                         }
