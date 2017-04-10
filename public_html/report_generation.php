@@ -204,9 +204,13 @@ This is the navigation bar of the page-->
 
 
 <!--Elements for verifying if the page is functioning properly-->
-
+ 
 <p id="dummy" value="0"></p>
 <p id="dummy2"></p>
+<p id="dummy3"></p>
+<p id="dummy4"></p>
+<p id="dummy5"></p>
+<p id="dummy6"></p>
 <p id="currentChoice"></p>
 <p id="reportJSON"></p>
 

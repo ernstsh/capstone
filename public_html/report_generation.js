@@ -34,7 +34,7 @@ function AddQuery()
                 
                 //Output to check if correct 
                 var id = 'Reg' + count; 
-                document.getElementById("dummy").innerHTML = id;
+                //document.getElementById("dummy").innerHTML = id;
                 
                 
         //Creates a div for creating a new query 
@@ -73,7 +73,7 @@ function AddQuery()
                                         //parses the JSON string to construct the object of the string 
                                         var json = JSON.parse(recArrQues3);
                                         //for iterating through the JSON array of questions 
-                                        document.getElementById("dummy").innerHTML = json.length;
+                                        //document.getElementById("dummy").innerHTML = json.length;
                                         for (var i = 0; i < json.length; i++) {
                                                 //Creates each question for the dropdown 
                                                 //alert(json[i].Q_id);
@@ -147,7 +147,7 @@ function AddQuery()
                 
                 //Output to check if correct 
                 var id = 'ChangeRes' + count; 
-                document.getElementById("dummy").innerHTML = id;
+                //document.getElementById("dummy").innerHTML = id;
                 
         //Creates a div for creating a new query 
                 var queryNew = document.createElement("div");
@@ -187,7 +187,7 @@ function AddQuery()
                                         //parses the JSON string to construct the object of the string 
                                         var json = JSON.parse(recArrQues3);
                                         //for iterating through the JSON array of questions 
-                                        document.getElementById("dummy").innerHTML = json.length;
+                                        //document.getElementById("dummy").innerHTML = json.length;
                                         //Iterates through each question JSON 
                                         for (var i = 0; i < json.length; i++) {
                                                 //Creates each question for the dropdown 
@@ -404,46 +404,155 @@ function QueryJSON(){
 
                                 
                                 
-                                //Querying Result starts here
-                                //document.getElementById("dummy").innerHTML = JSON.stringify(queryJSON.queries);
+        //Querying Result starts here
                                 //Gets the query template objects
                                 var ArrayQueries = JSON.stringify(queryJSON.queries);
+                                //document.getElementById("reportJSON").innerHTML = ArrayQueries;
                                 ArrayQueries = JSON.parse(ArrayQueries);
-                                //document.getElementById("dummy2").innerHTML = ArrayQueries;
+                                //document.getElementById("reportJSON").innerHTML = ArrayQueries;
+                                
+                                //Keeps track of the # of students that the query temps applied to 
+                                var TotCount = 0;
                                 
                                 //Loops through the query templates 
                                 var LengthQueries = ArrayQueries.length;
+                                //document.getElementById("dummy").innerHTML = LengthQueries; 
                                 for(var x = 0; x < LengthQueries; x++){
                                         
                                         //Gets the ID of the query temp question 
                                         var QueryID = ArrayQueries[x].ID;
                                         //alert(QueryID);
                                         
-                                        //Loops through students survey responses 
+                                        //Gets the value of the query temp
+                                        var Drop2Val = ArrayQueries[x].Drop2;
+                                        //alert(Drop2Val);
+                                        
+                                        
+                                        
+                                        //Determines if there are more than one query temps with the same question
+                                        //Returns an array containing all of the values 
+                                        var ArrayVals = OccurenceQuestion(QueryID, ArrayQueries, LengthQueries);
+                                        document.getElementById("dummy6").innerHTML = ArrayVals;
+                                          
+
+
+                                          
+                                        //Loops through students 
                                         var LengthStudResponse = StudentResponses.length;
+                                        //document.getElementById("dummy").innerHTML = LengthStudResponse;
                                         //document.getElementById("dummy").innerHTML = LengthStudResponse;                                       
                                         for(var x = 0; x < LengthStudResponse; x++){
                                                 //Gets the student's survey
                                                 var SurveyJSON = StudentResponses[x];
-                                                document.getElementById("dummy").innerHTML = SurveyJSON;
-                                                var SurveyAnswers = JSON.parse(SurveyJSON.ans);
-                                                document.getElementById("dummy").innerHTML = SurveyAnswers;
+                                                //document.getElementById("dummy2").innerHTML = SurveyJSON;
+                                                //alert(SurveyJSON);
                                                 
+                                                //Gets the array that contains object responses  
+                                                var SurveyAnswers = JSON.parse(SurveyJSON);
+                                                SurveyAnswers = SurveyAnswers.ans;
+                                                //document.getElementById("dummy3").innerHTML = JSON.stringify(SurveyAnswers);
+
+                                                //# of question responded the same as the query temp 
+                                                var CountCorrect = 0;
                                                 
+                                                //Loops through each response object 
+                                                var LengthSurveyQues = SurveyAnswers.length;
+                                                //document.getElementById("dummy4").innerHTML = LengthSurveyQues;                                                                                                                                              
+                                                for(var y = 0; y < LengthSurveyQues; y++){
+                                                     
+                                                        
+                                                        //Gets the response question obj                                                       
+                                                        var ResponseObj = JSON.stringify(SurveyAnswers[y]);
+                                                        ResponseObj = JSON.parse(ResponseObj);
+                                                        //document.getElementById("dummy").innerHTML = JSON.stringify(ResponseObj);
+                                                        
+                                                        //Gets the ID of the obj
+                                                        var ObjID = ResponseObj.Q_id;
+                                                        ObjID = JSON.stringify(ObjID);
+                                                        //document.getElementById("dummy2").innerHTML = JSON.stringify(ObjID);
+                                                        ObjID = JSON.parse(ObjID);
+                                                        //document.getElementById("dummy2").innerHTML = ObjID;
+                                                        
+                                                        //Gets the Q_type of the obj 
+                                                        var ObjType = ResponseObj.type;
+                                                        ObjType = JSON.stringify(ObjType);
+                                                        //document.getElementById("dummy3").innerHTML = ObjType;
+                                                        ObjType = JSON.parse(ObjType);
+                                                       
+                                                        //document.getElementById("dummy3").innerHTML = ObjType;
+                                                        
+                                                        if(ObjType == 'multic' || ObjType == 'text'){
+                                                                //document.getElementById("dummy3").innerHTML = "We got a non matrix";
+                                                                //Gets the answer of the multiple choice or a text question
+                                                                var ObjAnswer = ResponseObj.ans;
+                                                                ObjAnswer = JSON.stringify(ObjAnswer);
+                                                                ObjAnswer = JSON.parse(ObjAnswer);
+                                                                //document.getElementById("dummy3").innerHTML = ObjAnswer;
+                                                                
+                                                                
+                                                                document.getElementById("dummy").innerHTML = QueryID;
+                                                                document.getElementById("dummy2").innerHTML = ObjID;
+                                                                document.getElementById("dummy3").innerHTML = Drop2Val;
+                                                                document.getElementById("dummy4").innerHTML = ObjAnswer;
+                                                                
+                                                                //if query temp question is equal to student question responded....
+                                                                if(QueryID == ObjID &&  Drop2Val == ObjAnswer ){                                                                 
+                                                                        CountCorrect++;
+                                                                }
+                                                                
+                                                        }
+                                                        else{
+                                                                //Gets the ans which is either answer(s) of the obj 
+                                                                //var QuestionAnswer = JSON.stringify(SurveyAnswers[0].ans);
+                                                                //QuestionAnswer = JSON.parse(QuestionAnswer);
+                                                                //document.getElementById("dummy3").innerHTML = QuestionAnswer[0];
+
+                                                        }
+
+                                                }
+                                                //alert(CountCorrect);
+                                                //Check to see if the all the query temps applied to the student 
+                                                if(CountCorrect == LengthQueries){
+                                                        TotCount++;
+                                                }
                                         }
-                                        
-                                        
+
                                 }
-                                //document.getElementById("dummy2").innerHTML = LengthQueries;                                
+                                //Output the answer to a query result
+                                AddQueryResult(TotCount);
+                                document.getElementById("dummy5").innerHTML = TotCount;
 			}	
 		}	
 	}      
 }
 
-
+//Returns the occurrence of a question incase there are multiple query temps of the same question
+function OccurenceQuestion(QueryID, ArrayQueries, LengthQueries){
+        //Loops through the query templates 
+        //document.getElementById("dummy").innerHTML = LengthQueries;
+        //document.getElementById("dummy6").innerHTML = "Entered occurrence";
+        //Array for storing the vals for repeated question query temps 
+        var ArrayVals = [];
+       // var count = 0;
+        for(var x = 0; x < LengthQueries; x++){                                        
+                //Gets the ID of the query temp question 
+                var QueryID2 = ArrayQueries[x].ID;                 
+                //Gets the value of the query temp
+                var Drop2Val = ArrayQueries[x].Drop2;  
+                //If the IDs are the same..
+                if(QueryID == QueryID2){
+                        //Store the value of the response to the array 
+                        alert("We got an occurence!!!");
+                        //ArrayVals[count];
+                        //count++;
+                        ArrayVals.push(Drop2Val);
+                }
+        }
+        return ArrayVals;
+}
 
 //Creates a queryResult template 
-function AddQueryResult(){                  
+function AddQueryResult(TotCount){                  
         count2++;
                 
         //Output to check if correct 
@@ -456,6 +565,7 @@ function AddQueryResult(){
         //Creates a text box for the result of the query
         var label = document.createElement("input");
         label.setAttribute("id", 'label' + count2)
+
         //To make label input textbox longer and to make the font larger 
         label.style.width="640px";
         label.style.fontSize="12pt";
@@ -468,7 +578,7 @@ function AddQueryResult(){
         //Creates a break tag
         var break1 = document.createElement("br");
         
-        //Creates a text box for a label for the query result 
+        //Creates a text box for the query result 
         var input = document.createElement("input");
         input.setAttribute("id", 'input' + count2);
         //To make input textbox longer with larger font 
@@ -478,7 +588,9 @@ function AddQueryResult(){
         //restricts the number of characters for the input result to 95
         input.setAttribute("maxLength", '95');
         
-
+        //Inserts the result into the text box
+        //document.getElementById('input' + count2).innerHTML = TotCount;       
+        input.value  = TotCount;
         
         //Creates a break tag
         var break2 = document.createElement("br");
@@ -500,14 +612,14 @@ function AddQueryResult(){
         element = document.getElementById("QueryResult");
         element.appendChild(queryResultNew);
         
-        document.getElementById("reportJSON").innerHTML = document.getElementById('label' + count2).id;
+        //document.getElementById("reportJSON").innerHTML = document.getElementById('label' + count2).id;
 }
 
 
 //functions for removing a query template when its delete button is clicked 
 //It also deletes query results when their delete button  is clicked 
 function removeElement(parentDiv, childDiv){
-        document.getElementById("dummy").innerHTML = "deleting query or a result";
+        //document.getElementById("dummy").innerHTML = "deleting query or a result";
         if(parentDiv!="QueryResult"){
              if (childDiv == parentDiv) 
              {
@@ -634,7 +746,7 @@ function DisplayResponses2(id){
         //Gets the drop down element that displays the responses
         child2 = parentTemplate.getElementsByTagName("select")[2];
         NumChildren = child2.length;
-        document.getElementById("dummy").innerHTML = NumChildren;
+        //document.getElementById("dummy").innerHTML = NumChildren;
         for(var x = 0; x < NumChildren-1; x++){
                 child2.removeChild(child2.lastChild); 
         }
@@ -644,7 +756,7 @@ function DisplayResponses2(id){
                                 
         //Gets the question that was selected 
         var choiceQues = child.options[child.selectedIndex].value;
-        document.getElementById("dummy").innerHTML = choiceQues;
+        //document.getElementById("dummy").innerHTML = choiceQues;
             
         //Gets the surveyID 
         var e = document.getElementById("select2");
