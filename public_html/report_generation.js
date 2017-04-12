@@ -82,8 +82,9 @@ function AddQuery()
                                                 var QuestionType = json[i].type;
                                                 //Checks to see if the question is a matrix 
                                                 if(QuestionType == "matrix"){
-                                                        var questionText = json[i].Q_topic;
+                                                        /*var questionText = json[i].Q_topic;
                                                         var questionID = json[i].Q_id;
+                                                    
                                                         //dropDown1.onClick = function(){dispQuestions();}
                                                         var optionQues = document.createElement("option");
                                                         optionQues.setAttribute("id", questionID);
@@ -92,7 +93,34 @@ function AddQuery()
                                                         
                                                         var textQues = document.createTextNode(questionText);
                                                         optionQues.appendChild(textQues);
+                                                        dropDown1.appendChild(optionQues);*/
+                                                        
+                                                        
+                                                        //Gets matrix question and id 
+                                                        var questionText = json[i].Q_topic;
+                                                        var questionID = json[i].Q_id;
+                                                        
+                                                        //option group element created for matrix question 
+                                                        var optionQues = document.createElement("OPTGROUP");
+                                                        optionQues.setAttribute("id", questionID);
+                                                        
+                                                        optionQues.value = questionID;
+                                                        optionQues.label = questionText;
+
+                                                        //Gets each sub question of the matrix 
+                                                        var SubQuestions = json[i].questions;
+                                                        var LengthSubQues = SubQuestions.length;
+                                                        for(var j =0; j < LengthSubQues; j++){
+                                                                var SubText = document.createTextNode(SubQuestions[j]);
+                                                                var SubQuestion = document.createElement("option");
+                                                                SubQuestion.appendChild(SubText);
+                                                                optionQues.appendChild(SubQuestion);
+                                                                
+                                                                
+                                                        }
                                                         dropDown1.appendChild(optionQues);
+
+                                                        //document.getElementById("dummy6").innerHTML = SubQuestions[0];
                                                 }
                                                 //else it is a text or a multiple choice question 
                                                 else{
@@ -197,7 +225,7 @@ function AddQuery()
                                                 var QuestionType = json[i].type;
                                                 //Checks to see if the question is a matrix 
                                                 if(QuestionType == "matrix"){
-                                                        var questionText = json[i].Q_topic;
+                                                        /*var questionText = json[i].Q_topic;
                                                         var questionID = json[i].Q_id;                                                       
                                                         var optionQues = document.createElement("option");
                                                         optionQues.setAttribute("id", questionID);
@@ -206,7 +234,33 @@ function AddQuery()
                                                         
                                                         var textQues = document.createTextNode(questionText);
                                                         optionQues.appendChild(textQues);
+                                                        dropDown1.appendChild(optionQues);*/
+                                                        
+                                                        //Gets matrix question and id 
+                                                        var questionText = json[i].Q_topic;
+                                                        var questionID = json[i].Q_id;
+                                                        
+                                                        //option group element created for matrix question 
+                                                        var optionQues = document.createElement("OPTGROUP");
+                                                        optionQues.setAttribute("id", questionID);
+                                                        
+                                                        optionQues.value = questionID;
+                                                        optionQues.label = questionText;
+
+                                                        //Gets each sub question of the matrix 
+                                                        var SubQuestions = json[i].questions;
+                                                        var LengthSubQues = SubQuestions.length;
+                                                        for(var j =0; j < LengthSubQues; j++){
+                                                                var SubText = document.createTextNode(SubQuestions[j]);
+                                                                var SubQuestion = document.createElement("option");
+                                                                SubQuestion.appendChild(SubText);
+                                                                optionQues.appendChild(SubQuestion);
+                                                                
+                                                                
+                                                        }
                                                         dropDown1.appendChild(optionQues);
+                                                        
+                                                        
                                                 }
                                                 //else it is a text or a multiple choice question 
                                                 else{
@@ -490,10 +544,10 @@ function QueryJSON(){
                                                                 //document.getElementById("dummy3").innerHTML = ObjAnswer;
                                                                 
                                                                 
-                                                                document.getElementById("dummy").innerHTML = QueryID;
-                                                                document.getElementById("dummy2").innerHTML = ObjID;
-                                                                document.getElementById("dummy3").innerHTML = Drop2Val;
-                                                                document.getElementById("dummy4").innerHTML = ObjAnswer;
+                                                                //document.getElementById("dummy").innerHTML = QueryID;
+                                                                //document.getElementById("dummy2").innerHTML = ObjID;
+                                                                //document.getElementById("dummy3").innerHTML = Drop2Val;
+                                                                //document.getElementById("dummy4").innerHTML = ObjAnswer;
                                                                 
                                                                 //if query temp question is equal to student question responded....
                                                                 /*if(QueryID == ObjID &&  Drop2Val == ObjAnswer ){                                                                 
@@ -531,7 +585,7 @@ function QueryJSON(){
                                 }
                                 //Output the answer to a query result
                                 AddQueryResult(TotCount, queryJSON.ReturnType, LengthStudResponse);
-                                document.getElementById("dummy5").innerHTML = TotCount;
+                                //document.getElementById("dummy5").innerHTML = TotCount;
                                 
                              
 			}	
@@ -609,7 +663,7 @@ function AddQueryResult(TotCount, ReturnType, NumStuds){
         }
         //Return type is a percent 
         else{
-                input.value = TotCount / NumStuds; 
+                input.value = (TotCount / NumStuds)  * 100; 
         }
         //input.value  = TotCount;
         
@@ -757,6 +811,7 @@ function RemoveChangeResponse(){
         }       
 }
 
+
 //Function for displaying the responses for the change in response template 
 function DisplayResponses2(id){
         //Gets the parent template 
@@ -783,7 +838,11 @@ function DisplayResponses2(id){
         var e = document.getElementById("select2");
         var choice = e.options[e.selectedIndex].value;
         document.getElementById("dummy").innerHTML = choice;
-                
+//        
+//        //Gets the selected camp from 1st drop down
+//        var  e2 = document.getElementById("select1");
+//        var choice2 = e2.options[e2.selectedIndex].value;
+//               
         //For sending the javascript variable containing the surveyID and for receiving a JSON array of questions 
         var request= new XMLHttpRequest();
         request.open("POST", "GetQuestionsDropDown.php", true);
@@ -871,7 +930,13 @@ function dispResponses(id){
         var e = document.getElementById("select2");
         var choice = e.options[e.selectedIndex].value;
         //document.getElementById("dummy").innerHTML = choice;
-                
+         
+         
+        //Gets the selected camp from 1st drop down
+        var  e2 = document.getElementById("select1");
+        var choice2 = e2.options[e2.selectedIndex].value; 
+
+         
         //For sending the javascript variable containing the surveyID and for receiving a JSON array of questions 
         var request= new XMLHttpRequest();
         request.open("POST", "GetQuestionsDropDown.php", true);
@@ -902,6 +967,8 @@ function dispResponses(id){
                                                         if(QuestionType == "text"){
                                                                 //fill drop down with responses made by students 
                                                                 //alert("text question fill drop down with student responses");
+                                                                var TextAnswers = TextEntryResponses(choice ,choice2);
+                                                                document.getElementById("dummy4").innerHTML = TextAnswers;
                                                                 
                                                                 
                                                         }
@@ -929,6 +996,93 @@ function dispResponses(id){
                         }	
                 }               
 }
+
+//Returns an array of unique student responses for a text entry question
+function TextEntryResponses(SurveyID, CampID){
+        
+        //Array for storing all of the unique text entry responses
+        var TextArray = [];
+        
+        
+        //JSON object for storing the campd and survey IDs 
+        var jsonObj = {};
+        jsonObj.camp_id = CampID;
+        jsonObj.survey_id = SurveyID;
+        jsonObj = JSON.stringify(jsonObj);
+        var request= new XMLHttpRequest();
+        request.open("POST", "GetTextResponses.php", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(jsonObj);
+        request.onreadystatechange=function(){
+                if(request.readyState == 4){
+                        if(request.status == 200){
+                                //alert(request.responseText);
+                                //document.getElementById("dummy2").innerHTML = request.responseText;
+                                
+                                //Gets the JSON containing the responses 
+                                var QueryJSON = JSON.parse(request.responseText);
+                                                    
+                                //Gets the student responses
+                                var StudentResponses = QueryJSON.StudentResponses;
+                                document.getElementById("currentChoice").innerHTML = JSON.stringify(StudentResponses);  
+                                
+                                //Loops through students 
+                                var LengthStudResponse = StudentResponses.length;
+                                
+                                //document.getElementById("dummy6").innerHTML = LengthStudResponse;
+                                //document.getElementById("dummy").innerHTML = LengthStudResponse;                                       
+                                for(var x = 0; x < LengthStudResponse; x++){
+                                        //Gets the student's survey responses 
+                                        var SurveyJSON = StudentResponses[x];
+                                        //document.getElementById("dummy3").innerHTML = SurveyJSON;                                            
+                                        var Survey = JSON.parse(SurveyJSON);
+                                        
+                                        //Loops through each response object 
+                                        var LengthSurveyQues = Survey.length;
+                                        //document.getElementById("dummy4").innerHTML = LengthSurveyQues;                                                                                                                                              
+                                        for(var y = 0; y < LengthSurveyQues; y++){
+                                        
+                                                //Gets the response question obj                                                       
+                                                var ResponseObj = JSON.stringify(Survey[y]);
+                                                ResponseObj = JSON.parse(ResponseObj);
+                                                //document.getElementById("dummy").innerHTML = JSON.stringify(ResponseObj);
+                                                        
+                                                //Gets the ID of the obj
+                                                var ObjID = ResponseObj.Q_id;
+                                                ObjID = JSON.stringify(ObjID);
+                                                //document.getElementById("dummy2").innerHTML = JSON.stringify(ObjID);
+                                                ObjID = JSON.parse(ObjID);
+                                                //document.getElementById("dummy2").innerHTML = ObjID;
+                                                        
+                                                //Gets the Q_type of the obj 
+                                                var ObjType = ResponseObj.type;
+                                                ObjType = JSON.stringify(ObjType);
+                                                //document.getElementById("dummy3").innerHTML = ObjType;
+                                                ObjType = JSON.parse(ObjType);
+                                                
+                                                //If its a text question...
+                                                if(ObjType == 'text'){
+                                                        //document.getElementById("dummy").innerHTML = "Text response!!!";
+                                                        //Gets the answer of the text question
+                                                        var ObjAnswer = ResponseObj.ans;
+                                                        ObjAnswer = JSON.stringify(ObjAnswer);
+                                                        ObjAnswer = JSON.parse(ObjAnswer);
+                                                        //document.getElementById("dummy2").innerHTML = ObjAnswer;
+                                                        TextArray.push(ObjAnswer); 
+                                                        document.getElementById("dummy2").innerHTML = TextArray;
+                                                        
+
+                                                }
+                                                
+                                        }
+                                }
+                        }
+                }
+        }
+        document.getElementById("dummy3").innerHTML = TextArray;
+        return TextArray;
+}
+
 
 
 //Fills the dropdown for selecting a camp for querying a survey
