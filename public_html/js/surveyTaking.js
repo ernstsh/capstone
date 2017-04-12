@@ -39,7 +39,7 @@ function get_survey(){
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
-				location.href = "active_survey.php";
+				//location.href = "active_survey.php";
 				console.log(xmlhttp.responseText);
 				data = JSON.parse(xmlhttp.responseText);
 				data.camp_id = camp;
