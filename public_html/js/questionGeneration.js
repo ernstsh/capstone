@@ -89,7 +89,6 @@ function add_answer(id) {
 	ans.type = "text";
 	ans.name = "atext";
 	ans.placeholder = "Enter answer here";
-	//node.innerHTML += "<br>";
 	node.appendChild(ans);	
 }
 
@@ -99,7 +98,6 @@ function add_question(id) {
 	ans.type = "text";
 	ans.name = "qtext";
 	ans.placeholder = "Enter question here";
-	//node.innerHTML += "<br>";
 	node.appendChild(ans);	
 }
 
@@ -139,7 +137,7 @@ function freq_matrix_question(info) {
 	question.name = id;
 	question.className = "question";
 	question.style = "border-bottom: solid; padding-bottom: 10px;";
-	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' value='"+info.Q_topic+"'><input class='fuq' type='checkbox'>Frequent Question</input><br>";
+	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' value='"+info.Q_text+"'><input class='fuq' type='checkbox'>Frequent Question</input><br>";
 	for(var i=0; i<info.questions.length; i++){
 		question.innerHTML += "<input type='text' name='qtext' value='"+info.questions[i]+"'></input><br>";
 	}
@@ -226,8 +224,6 @@ function choose_freq_q(value){
 					freq_multi_question(res);	
 				}
 				else if(res.type === "matrix"){
-				   var str = "Choose q: " + responseText;
-				   console.log(str);
 					freq_matrix_question(res);	
 				}	
 			}	
@@ -245,7 +241,6 @@ function add_fuqs(questions_array){
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
-				//alert(xmlhttp.responseText);	
 			}	
 		}	
 	}
@@ -257,7 +252,6 @@ function add_fuqs(questions_array){
 function create_survey_json(){
 	var title = document.forms["create_survey"]["surveyTitle"].value;
 	var camp = document.getElementsByTagName("SELECT")[0].value;
-	//console.log(document.getElementsByTagName("SELECT")[0].value);
 	var type = document.forms["create_survey"]["surveyType"].value;
 	var survey_json = {};
 	var fuqs = [];
@@ -270,7 +264,6 @@ function create_survey_json(){
 	for(var i = 0; i<qs.length; i++){
 		var question = {};
 		question.Q_id = qs[i].name;
-		//question.Q_id = "101"
 		if(question.Q_id.substring(0,2) === "QT"){
 			question.type = "text";
 			question.Q_text = qs[i].getElementsByTagName("INPUT")[0].value;
@@ -293,7 +286,7 @@ function create_survey_json(){
 		else if(question.Q_id.substring(0,2) === "QM"){
 			question.type = "matrix";
 			var input_elements = qs[i].getElementsByTagName("INPUT");
-			question.Q_topic = input_elements[0].value;
+			question.Q_text = input_elements[0].value;
 			question.Q_scale = qs[i].getElementsByTagName("SELECT")[0].value;
 			question.questions = [];
 			for(var j=2; j<input_elements.length; j++){
@@ -330,7 +323,7 @@ function generate_multi_question(question_data, doc){
 function generate_matrix_question(question_data, doc){
 	var form = doc.getElementsByTagName("FORM")[0];
 	var question = document.createElement("DIV");
-	question.innerHTML = "<br><label>"+question_data.Q_topic+"</label><br>";
+	question.innerHTML = "<br><label>"+question_data.Q_text+"</label><br>";
 	if(question_data.Q_scale === "agree"){
 		var string = "";
 		for(var i=0; i<question_data.questions.length; i++){
@@ -393,7 +386,6 @@ function save() {
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
-				//alert(xmlhttp.responseText);	
 			}	
 		}	
 	}
