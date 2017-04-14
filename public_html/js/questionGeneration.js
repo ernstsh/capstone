@@ -137,7 +137,7 @@ function freq_matrix_question(info) {
 	question.name = id;
 	question.className = "question";
 	question.style = "border-bottom: solid; padding-bottom: 10px;";
-	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' value='"+info.Q_text+"'><input class='fuq' type='checkbox'>Frequent Question</input><br>";
+	question.innerHTML = "Select a scale<select><option value='agree'>Agree - Disagree</option><option value='not-deal'>Not at All - Great Deal</option></select><br>What is the topic of the matrix?<input type='text' name='topic' value='"+info.Q_topic+"'><input class='fuq' type='checkbox'>Frequent Question</input><br>";
 	for(var i=0; i<info.questions.length; i++){
 		question.innerHTML += "<input type='text' name='qtext' value='"+info.questions[i]+"'></input><br>";
 	}
@@ -286,7 +286,7 @@ function create_survey_json(){
 		else if(question.Q_id.substring(0,2) === "QM"){
 			question.type = "matrix";
 			var input_elements = qs[i].getElementsByTagName("INPUT");
-			question.Q_text = input_elements[0].value;
+			question.Q_topic = input_elements[0].value;
 			question.Q_scale = qs[i].getElementsByTagName("SELECT")[0].value;
 			question.questions = [];
 			for(var j=2; j<input_elements.length; j++){
@@ -323,7 +323,7 @@ function generate_multi_question(question_data, doc){
 function generate_matrix_question(question_data, doc){
 	var form = doc.getElementsByTagName("FORM")[0];
 	var question = document.createElement("DIV");
-	question.innerHTML = "<br><label>"+question_data.Q_text+"</label><br>";
+	question.innerHTML = "<br><label>"+question_data.Q_topic+"</label><br>";
 	if(question_data.Q_scale === "agree"){
 		var string = "";
 		for(var i=0; i<question_data.questions.length; i++){
