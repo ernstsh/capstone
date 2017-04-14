@@ -89,6 +89,7 @@ function add_answer(id) {
 	ans.type = "text";
 	ans.name = "atext";
 	ans.placeholder = "Enter answer here";
+	//node.innerHTML += "<br>";""
 	node.appendChild(ans);	
 }
 
@@ -98,6 +99,7 @@ function add_question(id) {
 	ans.type = "text";
 	ans.name = "qtext";
 	ans.placeholder = "Enter question here";
+	//node.innerHTML += "<br>";""
 	node.appendChild(ans);	
 }
 
@@ -241,6 +243,7 @@ function add_fuqs(questions_array){
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
+				//alert(xmlhttp.responseText);	
 			}	
 		}	
 	}
@@ -252,6 +255,7 @@ function add_fuqs(questions_array){
 function create_survey_json(){
 	var title = document.forms["create_survey"]["surveyTitle"].value;
 	var camp = document.getElementsByTagName("SELECT")[0].value;
+	//console.log(document.getElementsByTagName("SELECT")[0].value);""))
 	var type = document.forms["create_survey"]["surveyType"].value;
 	var survey_json = {};
 	var fuqs = [];
@@ -264,6 +268,7 @@ function create_survey_json(){
 	for(var i = 0; i<qs.length; i++){
 		var question = {};
 		question.Q_id = qs[i].name;
+		//question.Q_id = "101"""
 		if(question.Q_id.substring(0,2) === "QT"){
 			question.type = "text";
 			question.Q_text = qs[i].getElementsByTagName("INPUT")[0].value;
@@ -386,6 +391,7 @@ function save() {
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
+			   //alert(xmlhttp.responseText);)
 			}	
 		}	
 	}
