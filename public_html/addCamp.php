@@ -48,7 +48,6 @@
 						   while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
 						      if ($row > 4) {
-//						         echo $data[1] . "<br />\n";//Need to add to database, not sure of structure
 							 
 						         $name = preg_split("/[\s,]+/", $data[1]);
 							 $responder_id = rand(1000, 5000);
@@ -78,9 +77,7 @@
 
 		$enrollment_str = serialize($enrollment_arr);
 		$camp_id = rand(1000, 5000);
-                //$sql = "INSERT INTO Camp(title, start_date, end_date) VALUES ($campName, $startDate, $endDate)";
                 $query = "INSERT INTO Camp (`camp_id`, `title`, `start_date`, `end_date`, `enrollment` ) VALUES ('$camp_id', '$campName', '$startDate', '$endDate', '$enrollment_str');";
-                //mysql_query($query);
                 
                 
                 if (mysql_query($query)) {
@@ -89,7 +86,6 @@
 		   echo "Error: " . mysql_error($query);
                 }
         }                                   
-        //Close connection to database 
         mysql_close($mysql_handle);
 ?>
 </html>

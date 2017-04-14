@@ -1,7 +1,6 @@
 <?php 
 	$obj = $_POST['x'];
 	$ar = json_decode($obj);
-	//echo $ar[0]->Q_text;
 	$conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "ZlpiHLTMmA44Z0tg", "nichokyl-db");
 	$sql = "INSERT INTO Question (question_id, type, obj_string) VALUES (?,?,?)";
 	for($i = 0; $i < count($ar); $i++){

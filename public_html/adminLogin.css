@@ -1,14 +1,15 @@
-/*Header of the login page*/
 #LoginHeader{
         text-align:center;
 }
-/*For entering the user name and password*/
+
 #LoginForm{
         text-align:center;
 }
+
 #password{
         margin-left:10px;
 }
+
 #reset{
         margin-left:10px;
 }
