@@ -1,21 +1,20 @@
 <?php
 error_reporting(-1);
-/*if(isset($_POST['x'])){
-	echo "we got something\n";
-	echo $_POST['x']."\n";
-	$obj = $_POST['x'];
-	$ar = json_decode($obj);
-	echo json_encode($ar->questions);
-	echo $ar->questions[0]->Q_text;
-}*/
 
 $obj = $_POST['x'];
 $ar = json_decode($obj);
 $conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "ZlpiHLTMmA44Z0tg", "nichokyl-db");
 
+# To avoid possible scoping issues later, init now
+$survey_id = 0;
+$question_id = 0;
+
 # ADD SURVEY
 $sql = "INSERT INTO Survey(survey_id, title, arr_questions, survey_type) VALUES (?,?,?,?)";
-$survey_id = rand(1000, 5000);
+do {
+   $survey_id = rand(1000, 5000);
+   $result = $conn->query("SELECT * FROM Survey WHERE survey_id='".$survey_id."'");
+} while (!$result);
 if($statement = $conn->prepare($sql)){
 	// $survey_id = rand(1000, 5000);
 	$title = $ar->title;
@@ -32,18 +31,6 @@ else {
 	printf("Error: %s\n", $conn->error);
 }
 
-/*
-# ADD S_USE
-$sql = "INSERT INTO S_Use (`camp_id`, `survey_id`) VALUES ('".$obj->$camp."', '".$survey_id."');";
-$result = $conn->query($sql);
-
-if ($result) {
-   echo "Successfully added survey-camp relation. <br>";
-} else {
-   echo "Error: ".$conn->error." <br>";
-}
-*/
- 
 # ADD PRE/POST TO CAMP
 if ($ar->type == "pre") {
    $sql = "UPDATE Camp SET pre='?' WHERE Camp.camp_id='?'";
@@ -72,21 +59,15 @@ if ($ar->type == "pre") {
    echo "Error in pre/post type in JSON.\n";
 }
 
-/*
-if ($ar->type == "pre" || $ar->type == "post") {
-   if ($result) {
-      echo "Successfully updated Camp row.\n";
-   } else {
-      echo "Error: ".$conn->error." <br>";
-   }
-}
- */
-
 # ADD QUESTIONS
-foreach ($ar->questions as $question) {
+/*foreach ($ar->questions as $question) {
    $sql = "INSERT INTO Question (question_id, text, type, arr_answers) VALUES (?,?,?,?)";
    if($statement = $conn->prepare($sql)) {
-      $question_id = rand(1000,5000);
+      do {
+         $question_id = rand(1000, 5000);
+         $result = $conn->query("SELECT * FROM Survey WHERE survey_id='".$survey_id."'");
+      } while (!$result);
+
       $text = $question->Q_text;
       $type = $question->text;
 
@@ -114,6 +95,6 @@ foreach ($ar->questions as $question) {
       printf("Error: %s\n", $conn->error);
    }
 
-}
+}*/
 $conn->close();
 ?>
