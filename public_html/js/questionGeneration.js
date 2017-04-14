@@ -226,6 +226,8 @@ function choose_freq_q(value){
 					freq_multi_question(res);	
 				}
 				else if(res.type === "matrix"){
+				   var str = "Choose q: " + responseText;
+				   console.log(str);
 					freq_matrix_question(res);	
 				}	
 			}	
