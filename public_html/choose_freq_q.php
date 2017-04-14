@@ -4,7 +4,7 @@
 	$sql = "SELECT type, obj_string FROM Question WHERE question_id=".$obj;
 	if($result = $conn->query($sql)){
 	while($obj = $result->fetch_object()){
-		echo $obj->type." ".$obj->obj_string;
+		echo $obj->obj_string;
 	}
 	$result->close();
 }
