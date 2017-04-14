@@ -18,6 +18,8 @@
 
 <?php
 
+# In case of possible issues with scope, init here
+$camp_id = 0;
 
         if (isset($_POST['submit'])) 
 	{
@@ -36,13 +38,8 @@
                         $campName = $_POST['campName'];
                         $endDate = $_POST['endDate'];
                         $startDate = $_POST['startDate'];
-                        echo $endDate;
-                        echo $startDate;     
-			echo $campName;
 
-			
 			$enrollment = $_FILES['enrollment']['tmp_name'];
-						echo $enrollment;
 						$row = 1;
 						if (($handle = fopen($enrollment, "r")) !== FALSE) {
 						   while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
@@ -50,9 +47,12 @@
 						      if ($row > 4) {
 							 
 						         $name = preg_split("/[\s,]+/", $data[1]);
-							 $responder_id = rand(1000, 5000);
-                                                         array_push($enrollment_arr, "$responder_id");
+							 do {
+							    $responder_id = rand(1000, 5000);
+							 } while (!mysql_query("SELECT * FROM Responder WHERE responder_id='".$responder_id."'"));
+							 array_push($enrollment_arr, "$responder_id");
 
+							 
 						         $sql = "INSERT INTO Responder (responder_id, first_name, last_name) VALUES ('$responder_id','$name[1]','$name[0]')";
 
 						         if (mysql_query($sql)) {
@@ -76,9 +76,10 @@
 
 
 		$enrollment_str = serialize($enrollment_arr);
-		$camp_id = rand(1000, 5000);
+		do{
+		   $camp_id = rand(1000, 5000);
+		} while (!mysql_query("SELECT * FROM Camp WHERE camp_id='".$camp_id."'"));
                 $query = "INSERT INTO Camp (`camp_id`, `title`, `start_date`, `end_date`, `enrollment` ) VALUES ('$camp_id', '$campName', '$startDate', '$endDate', '$enrollment_str');";
-                
                 
                 if (mysql_query($query)) {
                         echo "New record created successfully";

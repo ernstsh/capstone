@@ -59,42 +59,5 @@ if ($ar->type == "pre") {
    echo "Error in pre/post type in JSON.\n";
 }
 
-# ADD QUESTIONS
-/*foreach ($ar->questions as $question) {
-   $sql = "INSERT INTO Question (question_id, text, type, arr_answers) VALUES (?,?,?,?)";
-   if($statement = $conn->prepare($sql)) {
-      do {
-         $question_id = rand(1000, 5000);
-         $result = $conn->query("SELECT * FROM Survey WHERE survey_id='".$survey_id."'");
-      } while (!$result);
-
-      $text = $question->Q_text;
-      $type = $question->text;
-
-      // Generate array of answers
-      $str = "";
-      if ($type != "text") {
-	 foreach ($question->ans as $answer) {
-	    $str = $str + $answer + ", ";
-	 }
-         $arr_answers = rtrim($str, " ,");
-      } else {
-         $arr_answers = $str;
-      }
-
-      echo "Question_id: $question_id\n";
-      echo "Text: $text\n";
-      echo "Type: $type\n";
-      echo "Answers: $arr_answers\n";
-
-      $statement->bind_param('isss', $question_id, $text, $type, $arr_answers);
-      $statement->execute();
-      $statement->close();
-
-   } else {
-      printf("Error: %s\n", $conn->error);
-   }
-
-}*/
 $conn->close();
 ?>
