@@ -276,9 +276,14 @@ function QueryJSON(){
         var SurveyDropDown = document.getElementById("select2");   
         //Gets the survey ID 
         var SurveyID = SurveyDropDown.options[SurveyDropDown.selectedIndex].value;
+        
+        //Gets the selected camp from 1st drop down
+        var CampDrop = document.getElementById("select1");
+        var CampID = CampDrop.options[CampDrop.selectedIndex].value; 
+        queryJSON.CampID = CampID;
+        
         //Gets the survey title 
         var SurveyName = SurveyDropDown.options[SurveyDropDown.selectedIndex].text;
-        //document.getElementById("dummy").innerHTML = SurveyID;
         queryJSON.SurveyName = SurveyName;
         queryJSON.SurveyID = SurveyID;
   
@@ -302,6 +307,11 @@ function QueryJSON(){
         }
         
         
+        var Checked = false;
+        if(document.getElementById('ChangeResponse').checked) {
+                Checked = true;
+        }
+                
         
         //Gets the gender that was selected
         queryJSON.Gender = document.getElementById("Gender").value;
@@ -378,32 +388,93 @@ function QueryJSON(){
         //outputs the JSON to the webpage for testing purposes
         //document.getElementById("reportJSON").innerHTML = JSON.stringify(queryJSON);
         
+        var CountStuds = 0;
+        
         //Converts the query JSON into a string
         var str_JSON = JSON.stringify(queryJSON);
         //Sends the query JSON to PHP to return the query results
-        var request= new XMLHttpRequest()
-        request.open("POST", "ReportQuerying.php", true)
-        request.setRequestHeader("Content-type", "application/json")
-        request.send(str_JSON)
+        var request= new XMLHttpRequest();
+        request.open("POST", "ReportQuerying.php", true);
+        request.setRequestHeader("Content-type", "application/json");
+        request.send(str_JSON);
         request.onreadystatechange=function(){
 		if(request.readyState == 4){
 			if(request.status == 200){
-				//alert(request.responseText);	
+				alert(request.responseText);	
                                 //document.getElementById("dummy").innerHTML = request.responseText;
                                 
                                 //Gets the Query JSON containing the survey and responses 
                                 var QueryJSON = JSON.parse(request.responseText);
                                 
-                                //Gets the survey
-                                var Survey = QueryJSON.Survey;
-                                //document.getElementById("dummy").innerHTML = Survey;
-                                                     
-                                //Gets the student responses
-                                var StudentResponses = QueryJSON.StudentResponses;
-                                // document.getElementById("currentChoice").innerHTML = JSON.stringify(StudentResponses);  
-
+                                var Index = 0;
+                                var Type = '';
                                 
                                 
+                                //for each query 
+                                for(var x = 0; x < queryJSON.queries.length; x++){
+                                        //for each response question
+                                        for(var z = 0; z < QueryJSON.StudentResponses[y].ans.length; z++){
+                                                        
+                                                if(queryJSON.queries[x].ID == QueryJSON.StudentResponses[0].ans[z].Q_id){
+                                                        Index = z;
+                                                        Type = QueryJSON.StudentResponses[0].ans[z].type;
+                                                        break;
+                                                }
+                                                        
+                                        }
+                                        //for each student
+                                        //for(var y = 0; y < QueryJSON.StudentResponses.length; y++){
+                                                if(Type == 'matrix' && Checked == true){
+                                                        
+                                                }
+                                                else if(Type == 'multic'){
+                                                        //for each response
+                                                        for(var a = 0; a < QueryJSON.StudentResponses.length; a++){
+                                                                if(QueryJSON.StudentResponses[a].ans[Index].ans == queryJSON.queries[x].Drop2){
+                                                                        CountStuds = CountStuds + 1;
+                                                                        AddQueryResult(CountStuds, ReturnType, QueryJSON.StudentResponses.length);
+                                                                }
+                                                        }                                                     
+                                                }
+                                                else if(Type == 'text'){
+                                                        var RowString = '';
+                                                        for(var a = 0; a < QueryJSON.StudentResponses.length; a++){
+                                                                RowString = RowString + "<tr><td>" + QueryJSON.StudentResponses[a].responder + "</td><yd>" + QueryJSON.StudentResponses[a].ans[Index].ans + "</td><tr>";
+                                                        }
+                                                        //create div for table
+                                                        var Table = document.createElement("div");
+                                                        Table.innerHTML = "<table>" + RowString + "</table";
+                                                        element = document.getElementById("QueryResult");
+                                                        element.appendChild(Table);
+                                                        
+                                                }
+                                                else if(Type == 'matrix'){
+                                                        
+                                                        /*for(var a = 0; a < QueryJSON.StudentResponses.length; a++){
+                                                                var Answer = QueryJSOn.StudentResponses[a]
+                                                                if( .ans.ans[]== 'SD' || == 'NA'){
+                                                                        count1++;
+                                                                }
+                                                                else if ( == 'D' ||  == 'S'){
+                                                                        count2++;
+                                                                }
+                                                                else if ( == 'A' || == 'M'){
+                                                                        count3++;
+                                                                }
+                                                                else if( == 'SA' || == 'GD'){
+                                                                        count4++;
+                                                                }
+                                                        }*/
+                                                        
+                                                }       
+                                        //}
+                                }
+                                
+                        }        
+                }                
+        }
+}
+ /*      
         //Querying Result starts here
                                 //Gets the query template objects
                                 var ArrayQueries = JSON.stringify(queryJSON.queries);
@@ -441,7 +512,7 @@ function QueryJSON(){
                                         var LengthStudResponse = StudentResponses.length;
                                         //document.getElementById("dummy").innerHTML = LengthStudResponse;
                                         //document.getElementById("dummy").innerHTML = LengthStudResponse;                                       
-                                        for(var x = 0; x < LengthStudResponse; x++){
+                                        for(var x = 0; x < QueryJSON.length; x++){
                                                 //Gets the student's survey
                                                 var SurveyJSON = StudentResponses[x];
                                                 //document.getElementById("dummy2").innerHTML = SurveyJSON;
@@ -495,10 +566,7 @@ function QueryJSON(){
                                                                 document.getElementById("dummy3").innerHTML = Drop2Val;
                                                                 document.getElementById("dummy4").innerHTML = ObjAnswer;
                                                                 
-                                                                //if query temp question is equal to student question responded....
-                                                                /*if(QueryID == ObjID &&  Drop2Val == ObjAnswer ){                                                                 
-                                                                        CountCorrect++;
-                                                                }*/
+                                                             
                                                                 
                                                                 
                                                                 if(QueryID == ObjID){
@@ -562,7 +630,7 @@ function OccurenceQuestion(QueryID, ArrayQueries, LengthQueries){
                 }
         }
         return ArrayVals;
-}
+}*/
 
 //Creates a queryResult template 
 function AddQueryResult(TotCount, ReturnType, NumStuds){                  
@@ -902,6 +970,11 @@ function dispResponses(id){
                                                         if(QuestionType == "text"){
                                                                 //fill drop down with responses made by students 
                                                                 //alert("text question fill drop down with student responses");
+
+                                                                var TextAnswers = TextEntryResponses(choice ,choice2);
+                                                                alert(TextAnswers);
+                                                                //document.getElementById("dummy4").innerHTML = TextAnswers;
+
                                                                 
                                                                 
                                                         }
@@ -929,6 +1002,92 @@ function dispResponses(id){
                         }	
                 }               
 }
+
+
+//Returns an array of unique student responses for a text entry question
+function TextEntryResponses(SurveyID, CampID){
+        
+        //Array for storing all of the unique text entry responses
+        var arr = [];
+        
+        //JSON object for storing the campd and survey IDs 
+        var jsonObj = {};
+        jsonObj.camp_id = CampID;
+        jsonObj.survey_id = SurveyID;
+        jsonObj = JSON.stringify(jsonObj);
+        var request= new XMLHttpRequest();
+        request.open("POST", "GetTextResponses.php", true);
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.send(jsonObj);
+        request.onreadystatechange=function(){
+                if(request.readyState == 4){
+                        if(request.status == 200){
+                                //alert(request.responseText);
+                                //document.getElementById("dummy2").innerHTML = request.responseText;
+                                
+                                //Gets the JSON containing the responses 
+                                var QueryJSON = JSON.parse(request.responseText);
+                                                    
+                                //Gets the student responses
+                                var StudentResponses = QueryJSON.StudentResponses;
+                                document.getElementById("currentChoice").innerHTML = JSON.stringify(StudentResponses);  
+                                
+                                //Loops through students 
+                                var LengthStudResponse = StudentResponses.length;
+                                
+                                //document.getElementById("dummy6").innerHTML = LengthStudResponse;
+                                //document.getElementById("dummy").innerHTML = LengthStudResponse;                                       
+                                for(var x = 0; x < LengthStudResponse; x++){
+                                        //Gets the student's survey responses 
+                                        var SurveyJSON = StudentResponses[x];
+                                        //document.getElementById("dummy3").innerHTML = SurveyJSON;                                            
+                                        var Survey = JSON.parse(SurveyJSON);
+                                        
+                                        //Loops through each response object 
+                                        var LengthSurveyQues = Survey.length;
+                                        //document.getElementById("dummy4").innerHTML = LengthSurveyQues;                                                                                                                                              
+                                        for(var y = 0; y < LengthSurveyQues; y++){
+                                        
+                                                //Gets the response question obj                                                       
+                                                var ResponseObj = JSON.stringify(Survey[y]);
+                                                ResponseObj = JSON.parse(ResponseObj);
+                                                //document.getElementById("dummy").innerHTML = JSON.stringify(ResponseObj);
+                                                        
+                                                //Gets the ID of the obj
+                                                var ObjID = ResponseObj.Q_id;
+                                                ObjID = JSON.stringify(ObjID);
+                                                //document.getElementById("dummy2").innerHTML = JSON.stringify(ObjID);
+                                                ObjID = JSON.parse(ObjID);
+                                                //document.getElementById("dummy2").innerHTML = ObjID;
+                                                        
+                                                //Gets the Q_type of the obj 
+                                                var ObjType = ResponseObj.type;
+                                                ObjType = JSON.stringify(ObjType);
+                                                //document.getElementById("dummy3").innerHTML = ObjType;
+                                                ObjType = JSON.parse(ObjType);
+                                                
+                                                //If its a text question...
+                                                if(ObjType === 'text'){
+                                                        //document.getElementById("dummy").innerHTML = "Text response!!!";
+                                                        //Gets the answer of the text question
+                                                        //var ObjAnswer = ResponseObj.ans;
+                                                        //alert(ResponseObj.ans);
+                                                        arr.push(ResponseObj.ans); 
+                                                        alert(arr);
+                                                        //document.getElementById("dummy2").innerHTML = TextArray;
+                                                }
+                                                
+                                        }
+                                }
+                        }
+                }   
+        
+        return arr;   
+        }   
+        //return arr;
+}
+
+
 
 
 //Fills the dropdown for selecting a camp for querying a survey
