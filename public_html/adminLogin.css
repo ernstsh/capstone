@@ -13,3 +13,11 @@
 #reset{
         margin-left:10px;
 }
+/*Removes the hyperlink underneath the print and exit buttons*/
+#ExitLink{
+        text-decoration:none;
+        color:black;
+}
+#exit{
+        margin-left:10px;
+}
