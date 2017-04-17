@@ -51,6 +51,9 @@ if(isset($_SESSION['valid_user'])){
                                 
                         $sql = "DELETE FROM Admin WHERE FirstName = '$FirstName' AND LastName = '$LastName' AND UserName = '$UserName'";
                         //$resultQuery = mysqli_query($dbc, $sql);
+                        
+                        //mysqli_query($dbc, $sql);
+                        
                         if(mysqli_query($dbc, $sql)){                     
                                 echo "You were able to delete ".$FirstName." ".$LastName." account\n";
                         }
