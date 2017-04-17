@@ -12,6 +12,8 @@
 			<label>End Date</label><input type="date" name="endDate" id="endDate"/><br>
 			<label>Enrollment (must be csv) </label><input type="file" name="enrollment" accept=".csv"/><br>
 			<input type="submit" value="submit" name="submit" id="submit"></input>
+                        <button type="button" class="exit" id="exit"><a href="dashboard.php" id="ExitLink"> Exit </a></button>
+
 		</form>
 	</body>
 		
