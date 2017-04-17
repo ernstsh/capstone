@@ -1,6 +1,7 @@
 <?php
+
 session_start();
-		
+	        	
 //Checks if the user is logged in 
 if(isset($_SESSION['valid_user'])){
      
@@ -11,11 +12,11 @@ if(isset($_SESSION['valid_user'])){
         
         $dbc = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
         if (!$dbc){
-		echo "Error connecting to database."
+		echo "Error connecting to database.";
 	}
         
         $admin_json = file_get_contents('php://input');
-
+        
         $data = json_decode($admin_json); 
         
         $LastName = json_encode($data->lastName);
