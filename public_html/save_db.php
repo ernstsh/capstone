@@ -14,7 +14,7 @@ if($statement = $conn->prepare($sql)){
 	do {
            $survey_id = rand(1000, 5000);
            $result = $conn->query("SELECT * FROM Survey WHERE survey_id='".$survey_id."'");
-        } while ($result);
+        } while (!$result);
 // $survey_id = rand(1000, 5000);
 	$title = $ar->title;
 	$type = $ar->type;
