@@ -11,10 +11,10 @@ $question_id = 0;
 
 # ADD SURVEY
 $sql = "INSERT INTO Survey(survey_id, title, arr_questions, survey_type) VALUES (?,?,?,?)";
-//do {
+do {
    $survey_id = rand(1000, 5000);
-  // $result = $conn->query("SELECT * FROM Survey WHERE survey_id='".$survey_id."'");
-//} while (!$result);
+   $result = $conn->query("SELECT * FROM Survey WHERE survey_id='".$survey_id."'");
+} while ($result);
 if($statement = $conn->prepare($sql)){
 	// $survey_id = rand(1000, 5000);
 	$title = $ar->title;
