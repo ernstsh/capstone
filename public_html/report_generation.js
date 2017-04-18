@@ -84,8 +84,12 @@ function AddQuery()
                                                 if(QuestionType == "matrix"){
                                                         var questionText = json[i].Q_topic;
                                                         var questionID = json[i].Q_id;
+                                                        var SubQues = json[i].questions;
+                                                        document.getElementById("dummy").innerHTML = json[i].questions.length;
                                                         //dropDown1.onClick = function(){dispQuestions();}
-                                                        var optionQues = document.createElement("option");
+                                                        
+                                                        var optionQues = document.createElement("OPTGROUP");
+                                                        optionQues.label = questionText;
                                                         optionQues.setAttribute("id", questionID);
                                                         
                                                         optionQues.value = questionID;
@@ -141,7 +145,8 @@ function AddQuery()
                 element.appendChild(queryNew);
         }
 //Change in response query        
-        if(document.getElementById("ChangeResponse").checked && document.getElementById("Both").checked)
+        //if(document.getElementById("ChangeResponse").checked && document.getElementById("Both").checked)
+        if(document.getElementById("ChangeResponse").checked)
         {                                            
                 count++;
                 
@@ -232,20 +237,20 @@ function AddQuery()
                                            
                 
         //This is for creating the dropdown for change in response from 
-                var dropDown2 = document.createElement("select");
+                /*var dropDown2 = document.createElement("select");
                 dropDown2.onclick = function(){dispResponses(id);}   
                 var option200 = document.createElement("option");
                 var text200 = document.createTextNode("Response changed from");
                 option200.appendChild(text200);
-                dropDown2.appendChild(option200);
+                dropDown2.appendChild(option200);*/
                 
         //This is for creating the dropdown for response changed to
-                var dropDown3 = document.createElement("select");
+                /*var dropDown3 = document.createElement("select");
                 dropDown3.onclick = function(){DisplayResponses2(id);}   
                 var option3 = document.createElement("option");
                 var text3 = document.createTextNode("Response changed from");
                 option3.appendChild(text3);
-                dropDown3.appendChild(option3);
+                dropDown3.appendChild(option3);*/
                         
               
         
@@ -257,8 +262,8 @@ function AddQuery()
 
         //Adds the drop downs and delete button to the div element for making the new query 
                 queryNew.appendChild(dropDown1);
-                queryNew.appendChild(dropDown2);
-                queryNew.appendChild(dropDown3);
+                //queryNew.appendChild(dropDown2);
+                //queryNew.appendChild(dropDown3);
                 queryNew.appendChild(button4);
                 
                 element = document.getElementById("query");

@@ -55,12 +55,12 @@ This is the navigation bar of the page-->
 
 
 <!--Radio buttons for selecting the survey type-->        
-<h4 id="label-3">Select the survey type: </h4>            
+<!--<h4 id="label-3">Select the survey type: </h4>            
 <form id="SurveyType">
         <input type="radio" name="Pre/Post" id="Pre" value="pre" onClick="RemoveChangeResponse()" checked> Pre-survey<br>
         <input type="radio" name="Pre/Post" id="Post" value="post" onClick="RemoveChangeResponse()"> Post-survey<br>
         <input type="radio" name="Pre/Post" id="Both" value="Both"> Both
-</form>
+</form>-->
    
    
 <!--Radio buttons for selecting the query type-->
@@ -94,7 +94,7 @@ This is the navigation bar of the page-->
 
 <br>
 
-<!--Grade level option-->
+<!--Grade level option
 <div id="GradeDiv">
 <label id="label-7">Student grade level:</label>
 <select id="SelectGrade">
@@ -113,7 +113,7 @@ This is the navigation bar of the page-->
         <option value="12">12</option>
 </select>
 </div>
-
+-->
 <br>
 
 <!--Parent's highest level of education-->

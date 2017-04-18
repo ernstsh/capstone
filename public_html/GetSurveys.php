@@ -16,7 +16,10 @@
         
         
         $query = "SELECT * FROM Camp WHERE camp_id='$campID'";
-        $result = mysql_query($query);   
+        $result = mysql_query($query);  
+        
+        //For setting a surveyID to both option
+        $BothID = NULL;
         while ($row = mysql_fetch_array($result)) {
                 $PreSurveyID = $row['pre'];
                 $query2 = "SELECT * FROM Survey WHERE survey_id='$PreSurveyID'";
@@ -27,20 +30,24 @@
                 $result2 = mysql_query($query2);
                 $result3 = mysql_query($query3);
                 
-                while($row2 = mysql_fetch_array($result2)){
+                while($row2 = mysql_fetch_array($result2)){                      
                         $value = $row2['survey_id'];
+                        $BothID = $value;
                         echo "<option value='$value'>" .$row2{title}. "</option>";                                 
                 } 
                 
                 while($row3 = mysql_fetch_array($result3)){
                         $value = $row3['survey_id'];
+                        $BothID = $value;
                         echo "<option value='$value'>" .$row3{title}. "</option>";                                 
                 } 
-                
+                echo "<option value='$BothID'>Both</option>";
                 
                 
         }       
-        
+        //Delete this line of code 
+        //echo "<option>Both</option>";                                 
+
         
         
         //Close connection to database 
