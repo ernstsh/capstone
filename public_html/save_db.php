@@ -32,31 +32,22 @@ else {
 
 # ADD PRE/POST TO CAMP
 if ($ar->type == "pre") {
-   $sql = "UPDATE Camp SET pre='?' WHERE Camp.camp_id='?'";
-   echo "Survey_id: ".$survey_id."     Camp_id: ".$camp_id;
-   if ($statement = $conn->prepare($sql)) {
-      $camp_id = $ar->camp;
+   $sql = "UPDATE Camp SET pre='".$survey_id."' WHERE Camp.camp_id='".$ar->camp."'";
+   $result = $conn->query($sql);
 
-      $statement->bind_param('ii', $survey_id, $camp_id);
-      $statement->execute();
-      $statement->close();
-   } else {
-      printf("Error: %s\n", $conn->error);
-   }
 } else if ($ar->type == "post") {
-   $sql = "UPDATE Camp SET post='?' WHERE Camp.camp_id='?'";
-   echo "Survey_id: ".$survey_id."     Camp_id: ".$camp_id;
-   if ($statement = $conn->prepare($sql)) {
-      $camp_id = $ar->camp;
-
-      $statement->bind_param('ii', $survey_id, $camp_id);
-      $statement->execute();
-      $statement->close();
-   } else {
-      printf("Error: %s\n", $conn->error);
-   }
+   $sql = "UPDATE Camp SET post='".$survey_id."' WHERE Camp.camp_id='".$ar->camp."'";
+   $result = $conn->query($sql);
 } else {
    echo "Error in pre/post type in JSON.\n";
+}
+
+if ($ar->type == "pre" || $ar->type == "post") {
+   if ($result) {
+      echo "Successfully updated Camp row.\n";
+   } else {
+      echo "Error: ".$conn->error." <br>";
+   }
 }
 
 $conn->close();
