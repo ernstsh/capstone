@@ -254,7 +254,7 @@ function add_fuqs(questions_array){
 
 function create_survey_json(){
 	var title = document.forms["create_survey"]["surveyTitle"].value;
-	var camp = document.getElementsByTagName("SELECT")[0].value;
+	var camp = document.getElementsByTagName("SELECT")[1].value;
 	//console.log(document.getElementsByTagName("SELECT")[0].value);""))
 	var type = document.forms["create_survey"]["surveyType"].value;
 	var survey_json = {};
