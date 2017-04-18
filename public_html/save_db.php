@@ -6,7 +6,7 @@ $ar = json_decode($obj);
 $conn = new mysqli("oniddb.cws.oregonstate.edu", "nichokyl-db", "ZlpiHLTMmA44Z0tg", "nichokyl-db");
 
 # To avoid possible scoping issues later, init now
-$survey_id = 0;
+//$survey_id = 0;
 
 # ADD SURVEY
 $sql = "INSERT INTO Survey(survey_id, title, arr_questions, survey_type) VALUES (?,?,?,?)";
