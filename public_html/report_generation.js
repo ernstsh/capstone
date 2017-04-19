@@ -237,7 +237,7 @@ function AddQuery()
                                                         dropDown1.appendChild(optionQues);
                                                 }*/
                                                 //Checks to see if the question is a matrix 
-                                                if(QuestionType == "matrix" && SurveyName == "Both"){
+                                                if(QuestionType == "matrix") {
                                                         /*var questionText = json[i].Q_topic;
                                                         var questionID = json[i].Q_id;
                                                         var SubQues = json[i].questions;
@@ -458,6 +458,7 @@ function QueryJSON(){
                                 var Index2 = 0;
                                 var Type = '';
                                 var QuestionID = '';
+                                var NumMatrixSub = 0;
                                 
                                 //For each query 
                                 for(var x = 0; x < queryJSON.queries.length; x++){
@@ -472,8 +473,12 @@ function QueryJSON(){
                                                                 
                                                                 Index = z;
                                                                 Type = StudentResponses[z].type;
+                                                                //if matrix get # of sub questions 
+                                                                if(Type == 'matrix'){
+                                                                        NumMatrixSub = StudentResponses[z].ans.length;
+                                                                }
                                                                 QuestionID = StudentResponses[z].Q_id;
-                                                                alert(QuestionID);
+                                                                //alert(QuestionID);
                                                                 break; 
                                                         }
                                                 }
@@ -534,15 +539,15 @@ function QueryJSON(){
                                                         
                                                         
                                                 }                                               
-                                                else if(Type == 'matrix'){
-                                                        //alert("We got a matrix");
-                                                        //alert(QuestionID);
+                                                else if(Type == 'matrix' && SurveyName == 'Both'){
+                                                        alert("We got a matrix and Both");
+                                                        alert(QuestionID);
                                                         var FoundMatch = false;
                                                         //Gets the ID of the question for the matching matrix question for post                                                       
                                                         for(var x = 0; x < QueryJSON.SurveyResponses2.length; x++){
                                                                 var StudentResponses2 = JSON.parse(QueryJSON.SurveyResponses2[x].StudentResponses);                                                               
                                                                 for(var y2 = 0; y2 < StudentResponses2.length; y2++){
-                                                                        if(StudentResponses2[y2].Q_id == QuestionID){                                                                               
+                                                                        if(StudentResponses2[y2].Q_id == QuestionID){
                                                                                 Index2 = y2; 
                                                                                 FoundMatch = true;
                                                                                 break;
@@ -552,39 +557,108 @@ function QueryJSON(){
                                                         }
                                                         
                                                         if(FoundMatch == true){
-                                                                //alert(QueryJSON.SurveyResponses.length);
-                                                               // alert(QueryJSON.SurveyResponses2.length);
-                                                                for(var x = 0; x < QueryJSON.SurveyResponses.length; x++){
-                                                                        var PreStudID = QueryJSON.SurveyResponses[x].StudID;
-                                                                        var StudentResponses = JSON.parse(QueryJSON.SurveyResponses[x].StudentResponses);                                                                                                              
-                                                                        
-                                                                        for(var y = 0; y < QueryJSON.SurveyResponses2.length; y++){
-                                                                                var PostStudID = QueryJSON.SurveyResponses2[y].StudID;
-                                                                                var StudentResponses2 = JSON.parse(QueryJSON.SurveyResponses2[y].StudentResponses);
-                                                                                if(PreStudID == PostStudID){
-                                                                                        /*alert("found a matching student!!!");
-                                                                                        alert(StudentResponses[Index].ans);
-                                                                                        alert(StudentResponses2[Index2].ans);
-                                                                                        alert("End of matched student");*/
-                                                                                        for(var z = 0; z < StudentResponses[Index].ans.length; z++){
-                                                                                                alert(StudentResponses[Index].ans[z]);
-                                                                                                alert(StudentResponses2[Index2].ans[z]);
+                                                                //alert(QuestionID);
+                                                                //For each sub question 
+                                                                for(var z = 0; z < NumMatrixSub; z++){                                                                        
+                                                                        var CountPositive = 0;
+                                                                        //For each student in pre get student ID and responses 
+                                                                        for(var x = 0; x < QueryJSON.SurveyResponses.length; x++){                                                                                
+                                                                                var PreStudID = QueryJSON.SurveyResponses[x].StudID;
+                                                                                var StudentResponses = JSON.parse(QueryJSON.SurveyResponses[x].StudentResponses);  
+                                                                                //For each student in post get student ID and responses  
+                                                                                for(var y = 0; y < QueryJSON.SurveyResponses2.length; y++){                                                                                        
+                                                                                        var PostStudID = QueryJSON.SurveyResponses2[y].StudID;
+                                                                                        var StudentResponses2 = JSON.parse(QueryJSON.SurveyResponses2[y].StudentResponses);
+                                                                                        //If IDs match check change response for the question 
+                                                                                        if(PreStudID == PostStudID){                                                                                             
+                                                                                                //alert("Found a match");
+                                                                                                //alert(StudentResponses[Index].ans[z]);                                                                                               
+                                                                                                //alert(StudentResponses2[Index2].ans[z]);
+                                                                                                if(PositiveResponse(StudentResponses[Index].ans[z], StudentResponses2[Index2].ans[z]) == true){
+                                                                                                        CountPositive = CountPositive + 1;                                                                                                      
+                                                                                                }
                                                                                         }
-                                                                                        
                                                                                 }
                                                                         }
+                                                                        alert(CountPositive);
                                                                 }
-                                                        }                                                     
-                                                  
-                                                        
+                                                        }                                                         
                                                 }
-
-                                        
+                                                else if(Type == 'matrix' && SurveyName != 'Both'){
+                                                        alert("Multiple choice not both");
+                                                        alert(QuestionID);
+                                                        //For each sub question                                                      
+                                                        for(var b = 0; b < NumMatrixSub; b++){
+                                                                //For each student 
+                                                                var CountPositive = 0;
+                                                                for(var a = 0; a < QueryJSON.SurveyResponses.length; a++){
+                                                                        var StudentResponses = JSON.parse(QueryJSON.SurveyResponses[a].StudentResponses);
+                                                                        if(PositiveResponse2(StudentResponses[Index].ans[b]) == true){
+                                                                                CountPositive = CountPositive + 1;
+                                                                        }
+                                                                }
+                                                                var PositiveResult = MatrixResult(CountPositive, QueryJSON.SurveyResponses.length, queryJSON.ReturnType);
+                                                                alert(PositiveResult);
+                                                        } 
+                                                }
+   
                                 }
                              
                         }        
                 }                
         }
+}
+//Checks if its a positive response
+function PositiveResponse(PreAnswer, PostAnswer){
+        if(PreAnswer == 'A' && PostAnswer == 'A'){
+                return true;
+        }
+        else if(PreAnswer == 'SA' && PostAnswer == 'SA'){
+                return true; 
+        }
+        else if(PreAnswer == 'A' && PostAnswer == 'SA'){
+                return true;
+        }
+        else if(PreAnswer == 'SA' && PostAnswer == 'A'){
+                return true;
+        }
+        else if(PreAnswer == 'D' && PostAnswer == 'A'){
+                return true;               
+        }
+        else if(PreAnswer == 'D' && PostAnswer == 'SA'){
+                return true;
+        }
+        else if(PreAnswer == 'SD' && PostAnswer == 'A'){
+                return true;               
+        }
+        else if(PreAnswer == 'SD' && PostAnswer == 'SA'){
+                return true;
+        }
+}
+
+//Checks if its a positive response for pre or post survey matrix 
+function PositiveResponse2(Answer){
+        if(Answer == 'A'){
+                return true;
+        }
+        else if(Answer == 'SA'){
+                return true;
+        }
+        else if(Answer == 'SD'){
+                return false;
+        }
+        else if(Answer == 'D'){
+                return false;
+        }
+}
+//Returns a percentage or a count for change response for a pre or post matrix
+function MatrixResult(CountPositive, NumStuds, ReturnType){
+        if(ReturnType == 'Count'){
+                return CountPositive;
+        }
+        else{
+                return ((CountPositive / NumStuds) * 100);
+        }  
 }
 
 //Creates table for text query result
