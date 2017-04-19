@@ -463,7 +463,7 @@ function QueryJSON(){
                                 
                                 //For each query 
                                 for(var x = 0; x < queryJSON.queries.length; x++){
-                                        document.getElementById("dummy2").innerHTML = QueryJSON.SurveyResponses.length;
+                                        //document.getElementById("dummy2").innerHTML = QueryJSON.SurveyResponses.length;
                                         //For each student 
                                         for(var y = 0; y < QueryJSON.SurveyResponses.length; y++){                                              
                                                 //Gets the array of the student's responses objs Note: have to do this because it treats this as text 
@@ -535,7 +535,6 @@ function QueryJSON(){
                                                         count2++;
                                                         var queryResultNew = document.createElement("div");
                                                         queryResultNew.setAttribute("id", count2);
-                                                        //table.setAttribute("id", count2);
                                                         
                                                         //This button is for deleting the table 
                                                         var button1 = document.createElement("button");      
@@ -543,20 +542,17 @@ function QueryJSON(){
                                                         var textDelete = document.createTextNode("-");
                                                         button1.appendChild(textDelete);
                                                         
-                                                        //table.appendChild(button1);
-                                                        
+                                                        //Adds the table and delete button to the div 
                                                         queryResultNew.appendChild(table);
                                                         queryResultNew.appendChild(button1);
                                                         
-                                                        
+                                                        //Adds the div query result to the web page 
                                                         element = document.getElementById("QueryResult");
                                                         element.appendChild(queryResultNew);
                                                         
                                                         
                                                 }                                               
                                                 else if(Type == 'matrix' && SurveyName == 'Both'){
-                                                        //alert("We got a matrix and Both");
-                                                        //alert(QuestionID);
                                                         var FoundMatch = false;
                                                         //Gets the ID of the question for the matching matrix question for post                                                       
                                                         for(var x = 0; x < QueryJSON.SurveyResponses2.length; x++){
@@ -572,6 +568,8 @@ function QueryJSON(){
                                                         }
                                                         
                                                         if(FoundMatch == true){
+                                                                var table = document.createElement('table');
+
                                                                 //alert(QuestionID);
                                                                 //For each sub question 
                                                                 for(var z = 0; z < NumMatrixSub; z++){  
@@ -589,7 +587,7 @@ function QueryJSON(){
                                                                                         //If IDs match check change response for the question 
                                                                                         if(PreStudID == PostStudID){
                                                                                                 CountStudsMatched = CountStudsMatched + 1;
-                                                                                                alert("Found a student match");
+                                                                                                //alert("Found a student match");
                                                                                                 //alert(StudentResponses[Index].ans[z]);                                                                                               
                                                                                                 //alert(StudentResponses2[Index2].ans[z]);
                                                                                                 if(PositiveResponse(StudentResponses[Index].ans[z], StudentResponses2[Index2].ans[z]) == true){
@@ -599,19 +597,57 @@ function QueryJSON(){
                                                                                 }
                                                                         }
                                                                         var SurveyQuestions = JSON.parse(QueryJSON.SurveyQuestions); 
-                                                                        alert(SurveyQuestions[MatrixIndexQuestion].questions[z]);
+                                                                        //alert(SurveyQuestions[MatrixIndexQuestion].questions[z]);
                                                                         //alert(CountPositive);
                                                                         //alert(CountStudsMatched);
                                                                         var PositiveResult = MatrixResult(CountPositive, CountStudsMatched, queryJSON.ReturnType);
-                                                                        alert(PositiveResult);
+                                                                        //alert(PositiveResult);
+                                                                        var tr = document.createElement('tr');   
+                                                                        var td1 = document.createElement('td');
+                                                                        var td2 = document.createElement('td');
+                                                                        //Gets the sub question text 
+                                                                        var text1 = document.createTextNode(SurveyQuestions[MatrixIndexQuestion].questions[z]);
+                                                                        //Gets the query result for the matrix sub question 
+                                                                        var text2 = document.createTextNode(PositiveResult);                                                                                                                                            
+                                                                        
+                                                                        //Add question and result to a row then the table 
+                                                                        td1.appendChild(text1);
+                                                                        td2.appendChild(text2);
+                                                                        tr.appendChild(td1);
+                                                                        tr.appendChild(td2);
+                                                                        table.appendChild(tr);
+
                                                                 }
+                                                                //Creates a div for creating a new query result for the table 
+                                                                count2++;
+                                                                var queryResultNew = document.createElement("div");
+                                                                queryResultNew.setAttribute("id", count2);
+                                                                
+                                                                //This button is for deleting the table 
+                                                                var button1 = document.createElement("button");      
+                                                                button1.onclick = function(){removeElement('QueryResult', id);}
+                                                                var textDelete = document.createTextNode("-");
+                                                                button1.appendChild(textDelete);
+                                                                
+                                                                //Adds the table and button to the div  
+                                                                queryResultNew.appendChild(table);
+                                                                queryResultNew.appendChild(button1);
+                                                                
+                                                                //Adds the query result to the web page
+                                                                element = document.getElementById("QueryResult");
+                                                                element.appendChild(queryResultNew);
+                                                                
+                                                                
                                                         }                                                         
                                                 }
                                                 else if(Type == 'matrix' && SurveyName != 'Both'){
+                                                        var table = document.createElement('table');
+
+                                                        
                                                         var SurveyQuestions = JSON.parse(QueryJSON.SurveyQuestions); 
 
-                                                        alert("Multiple choice not both");
-                                                        alert(QuestionID);
+                                                        //alert("Multiple choice not both");
+                                                        //alert(QuestionID);
                                                         //For each sub question                                                      
                                                         for(var b = 0; b < NumMatrixSub; b++){
                                                                 //For each student 
@@ -623,9 +659,40 @@ function QueryJSON(){
                                                                         }
                                                                 }
                                                                 var PositiveResult = MatrixResult(CountPositive, QueryJSON.SurveyResponses.length, queryJSON.ReturnType);
-                                                                alert(PositiveResult);
-                                                                alert(SurveyQuestions[MatrixIndexQuestion].questions[b]);
+                                                                //alert(PositiveResult);
+                                                                //alert(SurveyQuestions[MatrixIndexQuestion].questions[b]);
+                                                                
+                                                                var tr = document.createElement('tr');   
+                                                                var td1 = document.createElement('td');
+                                                                var td2 = document.createElement('td');
+                                                                var text1 = document.createTextNode(SurveyQuestions[MatrixIndexQuestion].questions[b]);
+                                                                var text2 = document.createTextNode(PositiveResult);
+
+                                                                td1.appendChild(text1);
+                                                                td2.appendChild(text2);
+                                                                tr.appendChild(td1);
+                                                                tr.appendChild(td2);
+                                                                table.appendChild(tr);
+                                                                
                                                         } 
+                                                        //Creates a div for creating a new query result for the table 
+                                                        count2++;
+                                                        var queryResultNew = document.createElement("div");
+                                                        queryResultNew.setAttribute("id", count2);
+                                                        //table.setAttribute("id", count2);
+                                                                
+                                                                //This button is for deleting the table 
+                                                        var button1 = document.createElement("button");      
+                                                        button1.onclick = function(){removeElement('QueryResult', id);}
+                                                        var textDelete = document.createTextNode("-");
+                                                        button1.appendChild(textDelete);
+                                                        
+                                                        //document.getElementById("dummy2").appendChild(table);                                                        //queryResultNew.appendChild(table);
+                                                        queryResultNew.appendChild(table);
+                                                        queryResultNew.appendChild(button1);
+                                                        
+                                                        element = document.getElementById("QueryResult");
+                                                        element.appendChild(queryResultNew);
                                                 }
    
                                 }
