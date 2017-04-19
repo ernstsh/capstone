@@ -763,7 +763,10 @@ function MatrixResult(CountPositive, NumStuds, ReturnType){
                 return CountPositive;
         }
         else{
-                return (((CountPositive / NumStuds) * 100) + '%');
+                //return (((CountPositive / NumStuds) * 100) + '%');
+                var result = (CountPositive /NumStuds) * 100;
+                result = Math.round(result * 100) / 100;
+                return (result + '%');
         }  
 }
 
