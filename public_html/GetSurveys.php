@@ -12,7 +12,7 @@
         
         //Gets camp choice 
         $campID = file_get_contents('php://input');
-        //echo "We got: ".$campID."\n";
+        //echo $campID;
         
         
         $query = "SELECT * FROM Camp WHERE camp_id='$campID'";
@@ -37,9 +37,9 @@
                 } 
                 
                 while($row3 = mysql_fetch_array($result3)){
-                        $value = $row3['survey_id'];
-                        $BothID = $value;
-                        echo "<option value='$value'>" .$row3{title}. "</option>";                                 
+                        $value2 = $row3['survey_id'];
+                        //$BothID = $value;
+                        echo "<option value='$value2'>" .$row3{title}. "</option>";                                 
                 } 
                 echo "<option value='$BothID'>Both</option>";
                 
