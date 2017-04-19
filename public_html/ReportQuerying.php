@@ -108,18 +108,18 @@
 
                                 
                 //Query statement for getting all of the student responses for post survey
-                $sql2 = "SELECT * FROM Response WHERE survey_id = '$PostSurveyID' AND camp_id = '$CampID'";
-                $result2 = mysqli_query($dbc, $sql2);       
+                $sql3 = "SELECT * FROM Response WHERE survey_id = '$PostSurveyID' AND camp_id = '$CampID'";
+                $result2 = mysqli_query($dbc, $sql3);       
                 if (mysqli_num_rows($result2) > 0) {
                     while($row = mysqli_fetch_assoc($result2)) {
                         $Student = new Student();
                         $Student->StudentResponses = $row['answers'];                     
                         $StudentID = $row['responder_id'];                      
                         //Get the names of the students 
-                        $sql2 = "SELECT * FROM Responder WHERE responder_id = '$StudentID'";
-                        $result2 = mysqli_query($dbc, $sql2);
-                        if(mysqli_num_rows($result2) > 0) {                            
-                            while($row2 = mysqli_fetch_assoc($result2)){
+                        $sql4 = "SELECT * FROM Responder WHERE responder_id = '$StudentID'";
+                        $result3 = mysqli_query($dbc, $sql4);
+                        if(mysqli_num_rows($result3) > 0) {                            
+                            while($row2 = mysqli_fetch_assoc($result3)){
                                 $Student->FirstName = $row2['first_name'];
                                 $Student->LastName = $row2['last_name']; 
                                 $Student->StudID = $row2['responder_id'];

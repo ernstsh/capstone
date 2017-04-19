@@ -456,6 +456,7 @@ function QueryJSON(){
                                 
                                 var Index = 0;
                                 var Type = '';
+                                var QuestionID = '';
                                 
                                 //For each query 
                                 for(var x = 0; x < queryJSON.queries.length; x++){
@@ -470,6 +471,7 @@ function QueryJSON(){
                                                                 
                                                                 Index = z;
                                                                 Type = StudentResponses[z].type;
+                                                                QuestionID = StudentResponses[z].Q_id;
                                                                 break; 
                                                         }
                                                 }
@@ -531,7 +533,40 @@ function QueryJSON(){
                                                         
                                                 }                                               
                                                 else if(Type == 'matrix'){
-                                                        alert("We got a matrix");
+                                                        //alert("We got a matrix");
+                                                        //alert(QuestionID);
+                                                        var FoundMatch = false;
+                                                        //Gets the ID of the question for the matching matrix question for post                                                       
+                                                        for(var x = 0; x < QueryJSON.SurveyResponses2.length; x++){
+                                                                var StudentResponses2 = JSON.parse(QueryJSON.SurveyResponses[x].StudentResponses);
+                                                                for(var y = 0; y < StudentResponses2.length; y++){
+                                                                        if(StudentResponses2[x].Q_id == QuestionID){
+                                                                                Index2 = y; 
+                                                                                FoundMatch = true;
+                                                                                //alert("found matching post question index");
+                                                                                //alert(StudentResponses2[x].Q_id);
+                                                                                break
+                                                                        }
+                                                                        
+                                                                }
+                                                        }
+                                                        
+                                                        if(FoundMatch == true){
+                                                                alert(QueryJSON.SurveyResponses.length);
+                                                                alert(QueryJSON.SurveyResponses2.length);
+                                                                for(var x = 0; x < QueryJSON.SurveyResponses.length; x++){
+                                                                        var PreStudID = QueryJSON.SurveyResponses[x].StudID;
+                                                                        var StudentResponses = JSON.parse(QueryJSON.SurveyResponses[x].StudentResponses);                                                                                                              
+                                                                        
+                                                                        for(var y = 0; y < QueryJSON.SurveyResponses2.length; y++){
+                                                                                var PostStudID = QueryJSON.SurveyResponses2[y].StudID;
+                                                                                if(PreStudID == PostStudID){
+                                                                                        alert("found a matching student!!!");
+                                                                                }
+                                                                        }
+                                                                }
+                                                        }                                                     
+                                                  
                                                         
                                                 }
 
