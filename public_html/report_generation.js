@@ -569,7 +569,14 @@ function QueryJSON(){
                                                         
                                                         if(FoundMatch == true){
                                                                 var table = document.createElement('table');
-
+                                                                //Adds the main question to the table 
+                                                                var Tr = document.createElement('tr');   
+                                                                var Td = document.createElement('td');
+                                                                var Text = document.createTextNode(SurveyQuestions[MatrixIndexQuestion].Q_topic);
+                                                                Td.appendChild(Text);
+                                                                Tr.appendChild(Td);
+                                                                table.appendChild(Tr);
+                                                                
                                                                 //alert(QuestionID);
                                                                 //For each sub question 
                                                                 for(var z = 0; z < NumMatrixSub; z++){  
@@ -642,7 +649,13 @@ function QueryJSON(){
                                                 }
                                                 else if(Type == 'matrix' && SurveyName != 'Both'){
                                                         var table = document.createElement('table');
-
+                                                        //Adds the primary question to the table 
+                                                        var Tr = document.createElement('tr');   
+                                                        var Td = document.createElement('td');
+                                                        var Text = document.createTextNode(SurveyQuestions[MatrixIndexQuestion].Q_topic);
+                                                        Td.appendChild(Text);
+                                                        Tr.appendChild(Td);
+                                                        table.appendChild(Tr);
                                                         
                                                         var SurveyQuestions = JSON.parse(QueryJSON.SurveyQuestions); 
 
@@ -687,7 +700,7 @@ function QueryJSON(){
                                                         var textDelete = document.createTextNode("-");
                                                         button1.appendChild(textDelete);
                                                         
-                                                        //document.getElementById("dummy2").appendChild(table);                                                        //queryResultNew.appendChild(table);
+                                                        //document.getElementById("dummy2").appendChild(table);
                                                         queryResultNew.appendChild(table);
                                                         queryResultNew.appendChild(button1);
                                                         
@@ -750,7 +763,7 @@ function MatrixResult(CountPositive, NumStuds, ReturnType){
                 return CountPositive;
         }
         else{
-                return ((CountPositive / NumStuds) * 100);
+                return (((CountPositive / NumStuds) * 100) + '%');
         }  
 }
 
