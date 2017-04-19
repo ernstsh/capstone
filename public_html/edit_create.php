@@ -41,7 +41,7 @@
 					<label id="label-6">Add Frequently Used Question</label>
                     <select id="FrequentQuestions" onmousedown="this.value='';" onchange="choose_freq_q(this.value);">
 					</select>
-                    <button onclick="save()" id="SaveButton"><a href="dashboard.php">Save</a></button><!-- this will be a function call-->
+                    <button onclick="save()" id="SaveButton"><!--<a href="dashboard.php">-->Save<!--</a>--></button><!-- this will be a function call-->
 					<button onclick="generate_html()" id="Preview">Preview</button><!-- this should launch a modal window-->
                     <button id="Exit"><a href="dashboard.php">Exit</a></button>
                     <button type="button" id="Print"><a href="javascript:window.print()" id="PrintLink">Print</a></button>

@@ -7,14 +7,20 @@ var count = 0;
 <head>
     	<script src="report_generation.js"></script>
         <link rel="stylesheet" href="ReportPrintStyleSheet.css" type="text/css" media="print" />
-        <link rel="stylesheet" href="ReportStyleSheet.css" type="text/css" />
+		<link rel="stylesheet" href="../public_html/css/style1.css">
+        <!--<link rel="stylesheet" href="ReportStyleSheet.css" type="text/css" />-->
+		
         
         <!--<link rel="stylesheet" href="TopNav.css" type="text/css" />-->
        
 </head>
 
+
 <body onload= "GetCamps()">
 
+
+<body>
+<div id="page" class="bodypage">
 <?php
 session_start();
 //include_once('TopNav.php');
@@ -203,8 +209,11 @@ This is the navigation bar of the page-->
 <p id="dummy6"></p>
 <p id="currentChoice"></p>
 <p id="reportJSON"></p>
+
 <div class="dummy7" id="dummy7">
        
+</div>
+
 </div>
 
 </body>
