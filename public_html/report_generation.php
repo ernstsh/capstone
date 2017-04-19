@@ -13,7 +13,7 @@ var count = 0;
        
 </head>
 
-<body>
+<body onload= "GetCamps()">
 
 <?php
 session_start();
@@ -39,7 +39,7 @@ This is the navigation bar of the page-->
 <h4 id="label-1">Select a camp: </h4>       
 <!--Calls GetCamps() function to fill drop down with the camp names-->
 <div id="SelectCamp">
-<select id="select1" name="select1" onclick="GetCamps()">
+<select id="select1" name="select1" onchange="GetSurveys()">
                 
 </select>       
 </div>
@@ -48,26 +48,16 @@ This is the navigation bar of the page-->
 <!--Drop down for selecting a survey based on camp selection-->
 <h4 id="label-2">Select a survey: </h4>
 <div id="SelectSurvey">     
-<select id="select2" name="select2" onclick="GetSurveys()">
+<select id="select2" name="select2">
              
 </select>    
 </div>
 
-
-<!--Radio buttons for selecting the survey type-->        
-<!--<h4 id="label-3">Select the survey type: </h4>            
-<form id="SurveyType">
-        <input type="radio" name="Pre/Post" id="Pre" value="pre" onClick="RemoveChangeResponse()" checked> Pre-survey<br>
-        <input type="radio" name="Pre/Post" id="Post" value="post" onClick="RemoveChangeResponse()"> Post-survey<br>
-        <input type="radio" name="Pre/Post" id="Both" value="Both"> Both
-</form>-->
-   
-   
 <!--Radio buttons for selecting the query type-->
 <h4 id="label-4">Select the query type: </h4>
 <form id="QueryType">
-        <input type="radio" name="QueryChoice" value="Regular" id="Regular" checked>Regular Query<br>
-        <input type="radio" name="QueryChoice" value="ChangeResponse" id="ChangeResponse">Change in response
+        <input type="radio" name="QueryChoice" value="Regular" id="Regular" checked>Query for multiple choice <br>
+        <input type="radio" name="QueryChoice" value="ChangeResponse" id="ChangeResponse">Query for matrix and text questions 
 </form>
 
 
@@ -113,8 +103,8 @@ This is the navigation bar of the page-->
         <option value="12">12</option>
 </select>
 </div>
--->
-<br>
+
+<br>-->
 
 <!--Parent's highest level of education-->
 <div id="ParentEducationDiv">
@@ -213,6 +203,9 @@ This is the navigation bar of the page-->
 <p id="dummy6"></p>
 <p id="currentChoice"></p>
 <p id="reportJSON"></p>
+<div class="dummy7" id="dummy7">
+       
+</div>
 
 </body>
 
