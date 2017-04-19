@@ -455,6 +455,7 @@ function QueryJSON(){
                                 //document.getElementById("dummy3").innerHTML = QueryJSON.StudentLast[0];
                                 
                                 var Index = 0;
+                                var Index2 = 0;
                                 var Type = '';
                                 var QuestionID = '';
                                 
@@ -472,6 +473,7 @@ function QueryJSON(){
                                                                 Index = z;
                                                                 Type = StudentResponses[z].type;
                                                                 QuestionID = StudentResponses[z].Q_id;
+                                                                alert(QuestionID);
                                                                 break; 
                                                         }
                                                 }
@@ -538,30 +540,37 @@ function QueryJSON(){
                                                         var FoundMatch = false;
                                                         //Gets the ID of the question for the matching matrix question for post                                                       
                                                         for(var x = 0; x < QueryJSON.SurveyResponses2.length; x++){
-                                                                var StudentResponses2 = JSON.parse(QueryJSON.SurveyResponses[x].StudentResponses);
-                                                                for(var y = 0; y < StudentResponses2.length; y++){
-                                                                        if(StudentResponses2[x].Q_id == QuestionID){
-                                                                                Index2 = y; 
+                                                                var StudentResponses2 = JSON.parse(QueryJSON.SurveyResponses2[x].StudentResponses);                                                               
+                                                                for(var y2 = 0; y2 < StudentResponses2.length; y2++){
+                                                                        if(StudentResponses2[y2].Q_id == QuestionID){                                                                               
+                                                                                Index2 = y2; 
                                                                                 FoundMatch = true;
-                                                                                //alert("found matching post question index");
-                                                                                //alert(StudentResponses2[x].Q_id);
-                                                                                break
+                                                                                break;
                                                                         }
                                                                         
                                                                 }
                                                         }
                                                         
                                                         if(FoundMatch == true){
-                                                                alert(QueryJSON.SurveyResponses.length);
-                                                                alert(QueryJSON.SurveyResponses2.length);
+                                                                //alert(QueryJSON.SurveyResponses.length);
+                                                               // alert(QueryJSON.SurveyResponses2.length);
                                                                 for(var x = 0; x < QueryJSON.SurveyResponses.length; x++){
                                                                         var PreStudID = QueryJSON.SurveyResponses[x].StudID;
                                                                         var StudentResponses = JSON.parse(QueryJSON.SurveyResponses[x].StudentResponses);                                                                                                              
                                                                         
                                                                         for(var y = 0; y < QueryJSON.SurveyResponses2.length; y++){
                                                                                 var PostStudID = QueryJSON.SurveyResponses2[y].StudID;
+                                                                                var StudentResponses2 = JSON.parse(QueryJSON.SurveyResponses2[y].StudentResponses);
                                                                                 if(PreStudID == PostStudID){
-                                                                                        alert("found a matching student!!!");
+                                                                                        /*alert("found a matching student!!!");
+                                                                                        alert(StudentResponses[Index].ans);
+                                                                                        alert(StudentResponses2[Index2].ans);
+                                                                                        alert("End of matched student");*/
+                                                                                        for(var z = 0; z < StudentResponses[Index].ans.length; z++){
+                                                                                                alert(StudentResponses[Index].ans[z]);
+                                                                                                alert(StudentResponses2[Index2].ans[z]);
+                                                                                        }
+                                                                                        
                                                                                 }
                                                                         }
                                                                 }
