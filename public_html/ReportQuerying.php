@@ -44,6 +44,8 @@
                 public $SurveyResponses;
                 //Stores post results of studs
                 public $SurveyResponses2;
+                //Stores the survey questions for the survey
+                public $SurveyQuestions;
         }
         
         //JSON object for student responses
@@ -57,6 +59,21 @@
         $QueryResults = new QueryResults();
         $StudentResponses = [];
         $StudentResponses2 = [];
+        
+        //Gets the survey questions
+        $sql4 = "SELECT * FROM Survey WHERE survey_id = '$SurveyID'";
+        $result4 = mysqli_query($dbc, $sql4);       
+        if (mysqli_num_rows($result4) > 0) {
+                while($row4 = mysqli_fetch_assoc($result4)) {
+                        $QueryResults->SurveyQuestions = $row4['arr_questions'];
+                    }
+                } 
+        else {
+               echo "0 results";
+        }
+        
+        
+        
         
         $PreSurveyID;
         $PostSurveyID;
