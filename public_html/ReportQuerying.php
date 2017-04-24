@@ -130,7 +130,7 @@
         elseif($ParentEducation != '--Select--' and $count > 0){
                 $sql .= "AND highest_education = '$ParentEducation'";   
         }
-        echo $sql;
+        //echo $sql;
         //$sql5 = "SELECT * FROM Responder WHERE gender='$Gender' AND race='$Race' AND ethnicity='$Ethnicity' AND lunch_status='$LunchOption' AND highest_education='$ParentEducation'";
         //Gets the student IDs based on demographic info selected 
         $result5 = mysqli_query($dbc, $sql);       
@@ -138,7 +138,7 @@
                 while($row5 = mysqli_fetch_assoc($result5)) {                                     
                         $StudentID = $row5['responder_id'];
                         $StudentName = $row5['first_name'];
-                        echo $StudentName;
+                        //echo $StudentName;
                         $MatchedStudIDs [] = $StudentID;
                 }
         }
