@@ -9,26 +9,18 @@ var SavedReportID;
 
 //Deletes all query children of the parent 
 function DeleteAllQueries(){
-        //document.getElementById("dummy").innerHTML = "Deleting all";
-        
         //Gets the ID of the parent that contains all of the children 
         Element = document.getElementById("query");
         //Loop for deleting all of the query children 
         while (count > 0) {
-                //Removes last child that was recently created 
                 Element.removeChild(Element.lastChild);
-                //Decrements the number of children 
                 count--;
         }
-        //Testing purposes for displaying the number of children that are on the page 
-        //document.getElementById("dummy").innerHTML = count;
 }
-
 
 function AddQuery()
 {
-//Query temp for matrix 
-
+//Query temp for a multiple choice question 
         //Gets the survey name 
         var SurveyDropDown = document.getElementById("select2");         
         var SurveyName = SurveyDropDown.options[SurveyDropDown.selectedIndex].text;
@@ -81,44 +73,11 @@ function AddQuery()
                                         var json = JSON.parse(recArrQues3);
                                         //for iterating through the JSON array of questions 
                                         //document.getElementById("dummy").innerHTML = json.length;
+                                        
                                         for (var i = 0; i < json.length; i++) {
-                                                //Creates each question for the dropdown 
-                                                //alert(json[i].Q_id);
-                                                
-                                                
-                                                var QuestionType = json[i].type;
-                                                //Checks to see if the question is a matrix 
-                                                /*if(QuestionType == "matrix"){
-                                                        var questionText = json[i].Q_topic;
-                                                        var questionID = json[i].Q_id;
-                                                        var SubQues = json[i].questions;
-                                                       
-                                                        //dropDown1.onClick = function(){dispQuestions();}
-                                                        
-                                                        var optionQues = document.createElement("OPTGROUP");
-                                                        optionQues.setAttribute("id", questionID);
-                                                        optionQues.label = questionText;
-                                                        //document.getElementById("dummy").innerHTML = optionQues.id;
-                                                        //document.getElementById("dummy").innerHTML = json[i].questions.length;
-                                                        for(x = 0; x < json[i].questions.length; x++){
-                                                                var SubQuesText = json[i].questions[x];
-                                                                var SubOpt = document.createElement("option");
-                                                                SubOpt.setAttribute("id", questionID);                                                       
-                                                                var textQues = document.createTextNode(SubQuesText);
-                                                                SubOpt.appendChild(textQues);
-                                                                optionQues.appendChild(SubOpt);
-                                                                
-                                                        }
-                                                        
-                                                        //optionQues.setAttribute("id", questionID);
-                                                        
-                                                        //optionQues.value = questionID;
-                                                        
-                                                        var textQues = document.createTextNode(questionText);
-                                                        optionQues.appendChild(textQues);
-                                                        dropDown1.appendChild(optionQues);
-                                                }*/
-                                                //else it is a text or a multiple choice question 
+                                                //Creates each question for the dropdown                                                                                     
+                                                var QuestionType = json[i].type;        
+                                                //Multiple choice question 
                                                 if(QuestionType == 'multic'){
                                                         
                                                         var questionText = json[i].Q_text;
@@ -140,8 +99,7 @@ function AddQuery()
                                                                                                                                                         
                                 }	
                         }	
-                }        
-                         
+                }                                 
         //This is for selecting a response for the question that was chosen 
                 var dropDown2 = document.createElement("select");
                 //dropDown2.onclick = function(){dispResponses(id);}   
@@ -165,35 +123,25 @@ function AddQuery()
                 element = document.getElementById("query");
                 element.appendChild(queryNew);
         }
-//Change in response query        
-        //if(document.getElementById("ChangeResponse").checked && document.getElementById("Both").checked)
+//Query template used for text and matrix questions    
         if(document.getElementById("ChangeResponse").checked)
         {                                            
-                count++;
-                
-                //Output to check if correct 
-                var id = 'ChangeRes' + count; 
-                //document.getElementById("dummy").innerHTML = id;
-                
+                count++;              
+                var id = 'ChangeRes' + count;                 
         //Creates a div for creating a new query 
                 var queryNew = document.createElement("div");
-                queryNew.setAttribute("id", 'ChangeRes' + count);
-           
+                queryNew.setAttribute("id", 'ChangeRes' + count);          
         //This is for selecting a survey question to query 
                 var dropDown1 = document.createElement("select");
-                //dropDown1.onClick = function(){dispQuestions();}
                 var option100 = document.createElement("option");
                 var text100 = document.createTextNode("Select Question");
                 option100.style.fontWeight = "bold";
                 option100.appendChild(text100);
-                dropDown1.appendChild(option100);
-                
+                dropDown1.appendChild(option100);               
         //For getting the questions 
                 //Gets the surveyID
                 var e = document.getElementById("select2");
-                var choice = e.options[e.selectedIndex].value;
-                //document.getElementById("dummy").innerHTML = "testing";
-                
+                var choice = e.options[e.selectedIndex].value;                
                 //For sending the javascript variable containing the surveyID and for receiving a JSON array of questions 
                 var request= new XMLHttpRequest();
                 request.open("POST", "GetQuestionsDropDown.php", true);
@@ -202,9 +150,6 @@ function AddQuery()
                 request.onreadystatechange=function(){
                         if(request.readyState == 4){
                                 if(request.status == 200){
-                                        //alert(request.responseText);
-                                        //document.getElementById("dummy").innerHTML = request.responseText;
-                                     
                                         //Get the response json for the array of questions
                                         var recArrQues = request.responseText;
                                         //converts the javascript value to a JSON string
@@ -214,52 +159,12 @@ function AddQuery()
                                         //parses the JSON string to construct the object of the string 
                                         var json = JSON.parse(recArrQues3);
                                         //for iterating through the JSON array of questions 
-                                        //document.getElementById("dummy").innerHTML = json.length;
                                         //Iterates through each question JSON 
-                                        for (var i = 0; i < json.length; i++) {
-                                                //Creates each question for the dropdown 
-                                                //alert(json[i].Q_id);
-                                                            
+                                        for (var i = 0; i < json.length; i++) {                                                         
                                                 //Gets the question type            
                                                 var QuestionType = json[i].type;
                                                 //Checks to see if the question is a matrix 
-                                                /*if(QuestionType == "matrix"){
-                                                        var questionText = json[i].Q_topic;
-                                                        var questionID = json[i].Q_id;                                                       
-                                                        var optionQues = document.createElement("option");
-                                                        optionQues.setAttribute("id", questionID);
-                                                        
-                                                        optionQues.value = questionID;
-                                                        
-                                                        var textQues = document.createTextNode(questionText);
-                                                       
-                                                        optionQues.appendChild(textQues);
-                                                        dropDown1.appendChild(optionQues);
-                                                }*/
-                                                //Checks to see if the question is a matrix 
                                                 if(QuestionType == "matrix") {
-                                                        /*var questionText = json[i].Q_topic;
-                                                        var questionID = json[i].Q_id;
-                                                        var SubQues = json[i].questions;
-                                                        
-                                                        
-                                                       
-                                                        
-                                                        var optionQues = document.createElement("OPTGROUP");
-                                                        optionQues.setAttribute("id", questionID);
-                                                        optionQues.label = questionText;
-                                                        for(x = 0; x < json[i].questions.length; x++){
-                                                                var SubQuesText = json[i].questions[x];
-                                                                var SubOpt = document.createElement("option");
-                                                                SubOpt.setAttribute("id", questionID);                                                       
-                                                                var textQues = document.createTextNode(SubQuesText);
-                                                                SubOpt.appendChild(textQues);
-                                                                optionQues.appendChild(SubOpt);
-                                                                
-                                                        }
-                                                        var textQues = document.createTextNode(questionText);
-                                                        optionQues.appendChild(textQues);
-                                                        dropDown1.appendChild(optionQues);*/
                                                         var questionText = json[i].Q_topic;
                                                         var questionID = json[i].Q_id;                                                        
                                                         var optionQues = document.createElement("option");
@@ -303,8 +208,6 @@ function AddQuery()
 
         //Adds the drop downs and delete button to the div element for making the new query 
                 queryNew.appendChild(dropDown1);
-                //queryNew.appendChild(dropDown2);
-                //queryNew.appendChild(dropDown3);
                 queryNew.appendChild(button4);
                 
                 element = document.getElementById("query");
@@ -315,28 +218,21 @@ function AddQuery()
 
 //Code for creating the query JSON for returning the query results 
 function QueryJSON(){
-
         //JSON for storing the query information entered by the user 
         var queryJSON = {};
-  
         //Gets the selected camp from 1st drop down
         var CampDrop = document.getElementById("select1");
         var CampID = CampDrop.options[CampDrop.selectedIndex].value; 
         queryJSON.CampID = CampID;
-        
         //Gets the survey name and ID 
         var SurveyDropDown = document.getElementById("select2"); 
         var SurveyName = SurveyDropDown.options[SurveyDropDown.selectedIndex].text;
         queryJSON.SurveyName = SurveyName;
-
-        
-        //Gets Ids for pre and post surveys 
+        //Gets the ID of a pre or post survey or both depending on the user's selection 
         var SurveyID;
         var SurveyID2; 
         if(SurveyName == "Both" && SurveyDropDown.length == 3){
                 for(var i = 0; i < SurveyDropDown.length; i++){
-                        //alert(SurveyDropDown.options[i].text);
-                        //alert(SurveyDropDown.options[i].value);
                         if(i == 0){
                                 queryJSON.SurveyID = SurveyDropDown.options[i].value;                            
                         }
@@ -346,45 +242,27 @@ function QueryJSON(){
                         }
                 }
         }       
-        //Pre or post was only selected
         else{
                 queryJSON.SurveyID = SurveyDropDown.options[SurveyDropDown.selectedIndex].value;
-                //document.getElementById("dummy6").innerHTML = queryJSON.SurveyID;
         }
-
-  
-        
-        //Gets the return type which is count or percentage
+        //Gets the return type which is count or percentage 
         if (document.getElementById('Count').checked) {
                 queryJSON.ReturnType = document.getElementById('Count').value;
         }
         if (document.getElementById('Percent').checked) {
                 queryJSON.ReturnType = document.getElementById('Percent').value;
         }
-        
-        
+               
         var Checked = false;
         if(document.getElementById('ChangeResponse').checked) {
                 Checked = true;
-        }
-                
+        }               
         
-        //Gets the gender that was selected
+        //Gets the demographic information from drop downs 
         queryJSON.Gender = document.getElementById("Gender").value;
-        
-        //Gets the grade level chosen
-        //queryJSON.StudentGradeLvl = document.getElementById("SelectGrade").value;
-        
-        //Gets the parent's highest level of education
         queryJSON.ParentEducation = document.getElementById("SelectEducation").value;
-        
-        //Gets the race that was selected
         queryJSON.Race = document.getElementById("SelectRace").value;
-        
-        //Gets the ethnicity that was selected
         queryJSON.Ethnicity = document.getElementById("SelectEthinicity").value;
-        
-        //Gets the free reduced lunch option that was selected
         queryJSON.LunchOption = document.getElementById("SelectLunchType").value;
         
         //JSON array for storing the query template options that were produced 
@@ -430,10 +308,7 @@ function QueryJSON(){
                 queryJSON.queries[ArrayPos] = queryTempJSON;
                             
         }
-        
-        //outputs the JSON to the webpage for testing purposes
-        //document.getElementById("reportJSON").innerHTML = JSON.stringify(queryJSON);
-        
+                
         var CountStuds = 0;
         
         //Converts the query JSON into a string
@@ -449,11 +324,7 @@ function QueryJSON(){
 				//alert(request.responseText);	
                                 document.getElementById("dummy").innerHTML = request.responseText;
                                 //Gets the Query JSON containing the survey and responses 
-                                var QueryJSON = JSON.parse(request.responseText);
-                                
-                                //document.getElementById("dummy2").innerHTML = QueryJSON.StudentFirst[0];
-                                //document.getElementById("dummy3").innerHTML = QueryJSON.StudentLast[0];
-                                
+                                var QueryJSON = JSON.parse(request.responseText);                                                        
                                 var Index = 0;
                                 var Index2 = 0;
                                 var Type = '';
@@ -463,7 +334,6 @@ function QueryJSON(){
                                 
                                 //For each query 
                                 for(var x = 0; x < queryJSON.queries.length; x++){
-                                        //document.getElementById("dummy2").innerHTML = QueryJSON.SurveyResponses.length;
                                         //For each student 
                                         for(var y = 0; y < QueryJSON.SurveyResponses.length; y++){                                              
                                                 //Gets the array of the student's responses objs Note: have to do this because it treats this as text 
@@ -479,21 +349,14 @@ function QueryJSON(){
                                                                         NumMatrixSub = StudentResponses[z].ans.length;
                                                                 }
                                                                 QuestionID = StudentResponses[z].Q_id;
-                                                                //alert(QuestionID);
                                                                 break; 
                                                         }
                                                 }
                                                 var SurveyQuestions = JSON.parse(QueryJSON.SurveyQuestions);
-                                                //alert(SurveyQuestions);
                                                 //Find the index of the question for the 
                                                 for(var q = 0; q < SurveyQuestions.length; q++){
-                                                        //alert("Finding the index for the main questions");
-                                                        //alert(QueryJSON.SurveyQuestions[q].Q_id);
                                                         if(SurveyQuestions[q].Q_id == QuestionID){
                                                                 MatrixIndexQuestion = q;
-                                                                //alert("Found location desired");
-                                                                //alert(SurveyQuestions[q].Q_id);
-                                                                //alert("end here");
                                                                 break;
                                                         }
                                                 }
@@ -577,7 +440,6 @@ function QueryJSON(){
                                                                 Tr.appendChild(Td);
                                                                 table.appendChild(Tr);
                                                                 
-                                                                //alert(QuestionID);
                                                                 //For each sub question 
                                                                 for(var z = 0; z < NumMatrixSub; z++){  
                                                                         var CountStudsMatched = 0;
@@ -594,9 +456,6 @@ function QueryJSON(){
                                                                                         //If IDs match check change response for the question 
                                                                                         if(PreStudID == PostStudID){
                                                                                                 CountStudsMatched = CountStudsMatched + 1;
-                                                                                                //alert("Found a student match");
-                                                                                                //alert(StudentResponses[Index].ans[z]);                                                                                               
-                                                                                                //alert(StudentResponses2[Index2].ans[z]);
                                                                                                 if(PositiveResponse(StudentResponses[Index].ans[z], StudentResponses2[Index2].ans[z]) == true){
                                                                                                         CountPositive = CountPositive + 1;                                                                                                      
                                                                                                 }
@@ -604,11 +463,7 @@ function QueryJSON(){
                                                                                 }
                                                                         }
                                                                         var SurveyQuestions = JSON.parse(QueryJSON.SurveyQuestions); 
-                                                                        //alert(SurveyQuestions[MatrixIndexQuestion].questions[z]);
-                                                                        //alert(CountPositive);
-                                                                        //alert(CountStudsMatched);
                                                                         var PositiveResult = MatrixResult(CountPositive, CountStudsMatched, queryJSON.ReturnType);
-                                                                        //alert(PositiveResult);
                                                                         var tr = document.createElement('tr');   
                                                                         var td1 = document.createElement('td');
                                                                         var td2 = document.createElement('td');
@@ -656,11 +511,7 @@ function QueryJSON(){
                                                         Td.appendChild(Text);
                                                         Tr.appendChild(Td);
                                                         table.appendChild(Tr);
-                                                        
                                                         var SurveyQuestions = JSON.parse(QueryJSON.SurveyQuestions); 
-
-                                                        //alert("Multiple choice not both");
-                                                        //alert(QuestionID);
                                                         //For each sub question                                                      
                                                         for(var b = 0; b < NumMatrixSub; b++){
                                                                 //For each student 
@@ -672,9 +523,6 @@ function QueryJSON(){
                                                                         }
                                                                 }
                                                                 var PositiveResult = MatrixResult(CountPositive, QueryJSON.SurveyResponses.length, queryJSON.ReturnType);
-                                                                //alert(PositiveResult);
-                                                                //alert(SurveyQuestions[MatrixIndexQuestion].questions[b]);
-                                                                
                                                                 var tr = document.createElement('tr');   
                                                                 var td1 = document.createElement('td');
                                                                 var td2 = document.createElement('td');
@@ -685,8 +533,7 @@ function QueryJSON(){
                                                                 td2.appendChild(text2);
                                                                 tr.appendChild(td1);
                                                                 tr.appendChild(td2);
-                                                                table.appendChild(tr);
-                                                                
+                                                                table.appendChild(tr);                                                                
                                                         } 
                                                         //Creates a div for creating a new query result for the table 
                                                         count2++;
@@ -694,7 +541,7 @@ function QueryJSON(){
                                                         queryResultNew.setAttribute("id", count2);
                                                         //table.setAttribute("id", count2);
                                                                 
-                                                                //This button is for deleting the table 
+                                                        //This button is for deleting the table 
                                                         var button1 = document.createElement("button");      
                                                         button1.onclick = function(){removeElement('QueryResult', id);}
                                                         var textDelete = document.createTextNode("-");
@@ -706,8 +553,7 @@ function QueryJSON(){
                                                         
                                                         element = document.getElementById("QueryResult");
                                                         element.appendChild(queryResultNew);
-                                                }
-   
+                                                }  
                                 }
                              
                         }        
@@ -770,11 +616,6 @@ function MatrixResult(CountPositive, NumStuds, ReturnType){
         }  
 }
 
-//Creates table for text query result
-function TableQueryResult(){
-        
-}
-
 //Deletes table
 function DeleteTable(TableID){
         DynaTable = document.getElementById(TableID);
@@ -783,20 +624,15 @@ function DeleteTable(TableID){
 
 //Creates a queryResult template 
 function AddQueryResult(TotCount, ReturnType, NumStuds, Question){                  
-        count2++;
-                
+        count2++;        
         //Output to check if correct 
-        var id = count2; 
-                 
+        var id = count2;                
         //Creates a div for creating a new query 
         var queryResultNew = document.createElement("div");
-        queryResultNew.setAttribute("id", count2);
-        
+        queryResultNew.setAttribute("id", count2);        
         //Creates an input text box for the label for multic 
         var label = document.createElement("input");
         label.setAttribute("id", 'label' + count2)
-        //input.value = Question;
-
         //To make label input textbox longer and to make the font larger 
         label.style.width="640px";
         label.style.fontSize="12pt";
@@ -806,10 +642,8 @@ function AddQueryResult(TotCount, ReturnType, NumStuds, Question){
         //shifts the label to the left for aligning purposes
         label.style.marginLeft="22px"
         label.value = Question;
-        
         //Creates a break tag
-        var break1 = document.createElement("br");
-        
+        var break1 = document.createElement("br");        
         //Creates a text box for the query result 
         var input = document.createElement("input");
         input.setAttribute("id", 'input' + count2);
@@ -818,10 +652,7 @@ function AddQueryResult(TotCount, ReturnType, NumStuds, Question){
         input.style.fontSize="12pt";
         input.style.fontFamily="Times New Roman";
         //restricts the number of characters for the input result to 95
-        input.setAttribute("maxLength", '95');
-        
-        //Inserts the result into the text box
-        //document.getElementById('input' + count2).innerHTML = TotCount;   
+        input.setAttribute("maxLength", '95');  
         //Return type is a count 
         if(ReturnType == "Count"){
                 input.value = TotCount; 
@@ -846,18 +677,12 @@ function AddQueryResult(TotCount, ReturnType, NumStuds, Question){
         queryResultNew.appendChild(button1);
         queryResultNew.appendChild(break1);
         queryResultNew.appendChild(input);
-        queryResultNew.appendChild(break2);
-        
-        
+        queryResultNew.appendChild(break2);        
         element = document.getElementById("QueryResult");
         element.appendChild(queryResultNew);
-        
-        //document.getElementById("reportJSON").innerHTML = document.getElementById('label' + count2).id;
 }
 
-
-//functions for removing a query template when its delete button is clicked 
-//It also deletes query results when their delete button  is clicked 
+//functions for removing the query templates when their delete button is clicked 
 function removeElement(parentDiv, childDiv){
         //document.getElementById("dummy").innerHTML = "deleting query or a result";
         if(parentDiv!="QueryResult"){
@@ -952,26 +777,19 @@ function Report_JSON(){
 
 //For deleting change in response queries if the user chose Post or Pre for the survey type to query 
 function RemoveChangeResponse(){
-        //Gets all of the child div tags   
         var childDivs = document.getElementById('query').getElementsByTagName('div');
-        //Gets the number of children div tags 
-        var NumDelete = childDivs.length;
-        
+        var NumDelete = childDivs.length;       
         var tot = 0;
         //loop is for deleting only the change in response query templates 
         while(tot != NumDelete){
-                //gets the child div tag 
                 var childDiv = childDivs[tot];
                 var ID = childDiv.id;
-                //if the child is a change in respons child delete it  
                 if(ID.includes("ChangeRes")==true){
                         removeElement("query", ID);    
                 }
-                //else the child is a regular query delete 
                 else{
                         tot++;
                 }
-                //updates the number of children div tags that remain 
                 NumDelete = childDivs.length;   
         }       
 }
@@ -980,7 +798,6 @@ function RemoveChangeResponse(){
 function dispResponses(id){
         //Gets the parent template 
         parentTemplate = document.getElementById(id);
-        //document.getElementById("dummy").innerHTML = "Hello" + parentTemplate.getAttribute("id");
         //Get the drop dop element that displays the questions 
         child = parentTemplate.getElementsByTagName("select")[0];
         //Gets the drop down element that displays the responses
@@ -988,20 +805,13 @@ function dispResponses(id){
         NumChildren = child2.length;
         for(var x = 0; x < (NumChildren - 1); x++){
                 child2.removeChild(child2.lastChild); 
-        }
-        
-        // NumChildResponse = child2.children().length;
-        //document.getElementById("dummy").innerHTML = NumChildResponse;
-                                
+        }                  
         //Gets the question that was selected 
         var choiceQues = child.options[child.selectedIndex].value;
-        document.getElementById("dummy").innerHTML = choiceQues;
-            
+        document.getElementById("dummy").innerHTML = choiceQues;        
         //Gets the surveyID 
         var e = document.getElementById("select2");
-        var choice = e.options[e.selectedIndex].value;
-        //document.getElementById("dummy").innerHTML = choice;
-                
+        var choice = e.options[e.selectedIndex].value;                
         //For sending the javascript variable containing the surveyID and for receiving a JSON array of questions 
         var request= new XMLHttpRequest();
         request.open("POST", "GetQuestionsDropDown.php", true);
@@ -1010,9 +820,6 @@ function dispResponses(id){
         request.onreadystatechange=function(){
                 if(request.readyState == 4){
                         if(request.status == 200){
-                                        //alert(request.responseText);
-                                        //document.getElementById("dummy").innerHTML = request.responseText;
-                                        
                                         //Get the response json for the array of questions
                                         var recArrQues = request.responseText;
                                         //converts the javascript value to a JSON string
@@ -1028,20 +835,8 @@ function dispResponses(id){
                                                 if(choiceQues == json[i].Q_id){
                                                         //Gets the type of the question 
                                                         var QuestionType = json[i].type;
-                                                        //The question type is text 
-                                                        if(QuestionType == "text"){
-                                                                //fill drop down with responses made by students 
-                                                                //alert("text question fill drop down with student responses");
-
-                                                                var TextAnswers = TextEntryResponses(choice ,choice2);
-                                                                //alert(TextAnswers);
-                                                                //document.getElementById("dummy4").innerHTML = TextAnswers;
-
-                                                                
-                                                                
-                                                        }
                                                         //The question is multiple choice 
-                                                        else if(QuestionType == "multic"){
+                                                        if(QuestionType == "multic"){
                                                                 //Fill the drop down with the multiple choice options 
                                                                 for(var j = 0; j < json[i].ans.length; j++){
                                                                         //alert(json[i].answer[j]);
@@ -1051,11 +846,6 @@ function dispResponses(id){
                                                                         optionQues.appendChild(textQues);
                                                                         child2.appendChild(optionQues); 
                                                                 }  
-                                                        }
-                                                        //The question is a matrix 
-                                                        else{
-                                                                //Do nothing for now until we fix the issue
-                                                                //alert("matrix can't do anything for now");
                                                         }
                                                 }                                                                                                                                                                                         
                                         }
@@ -1071,7 +861,6 @@ function GetCamps(){
 	xmlhttp.onreadystatechange=function(){
 		if(xmlhttp.readyState == 4){
 			if(xmlhttp.status == 200){
-				//var doc = document.getElementsByTagName("SELECT")[0];
                                 var doc = document.getElementById("select1");
 				doc.innerHTML = xmlhttp.responseText;
 			}	
@@ -1084,13 +873,8 @@ function GetCamps(){
 
 //Fills the dropdown for selecting a survey based on camp selection
 function GetSurveys(){
-        //Gets the selected camp from 1st drop down
         var  e = document.getElementById("select1");
-        var choice = e.options[e.selectedIndex].value;
-        
-        document.getElementById("dummy").innerHTML = choice;
-        
-        
+        var choice = e.options[e.selectedIndex].value;       
         var request= new XMLHttpRequest();
         request.open("POST", "GetSurveys.php", true);
         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -1098,10 +882,8 @@ function GetSurveys(){
         request.onreadystatechange=function(){
                 if(request.readyState == 4){
                         if(request.status == 200){ 
-                                //alert(request.responseText);
                                 var doc = document.getElementById("select2");
 				doc.innerHTML = request.responseText; 
-                                //doc.appendChild(request.responseText);
                         }
                 }
         }                                                                                             
