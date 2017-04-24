@@ -19,10 +19,11 @@
         //Gets the camp ID
         $CampID = $data->CampID;
         //echo $CampID;
-        
+ 
         //Gets the survey name from JSON
         $SurveyName = $data->SurveyName; 
         //echo $SurveyName;
+        
         $SurveyID;
         $SurveyID2;
         //Check if its both to get both ids 
@@ -74,6 +75,82 @@
         
         
         
+        //Gets demographic information
+        $Gender = $data->Gender;
+        //echo $Gender;
+        $Race = $data->Race;
+        //echo $Race;
+        $Ethnicity = $data->Ethnicity;
+        //echo $Ethnicity;
+        $LunchOption = $data->LunchOption;
+        //echo $LunchOption;
+        $ParentEducation = $data->ParentEducation;
+        //echo $ParentEducation;
+        
+        //For storing student IDs that matched demographic info 
+        $MatchedStudIDs = [];        
+        //Sets up the query statement
+        $sql = "SELECT * FROM Responder ";
+        $count = 0;
+        $sql;
+        if($Gender != '--Select--' and $count == 0){
+                $sql .= "WHERE gender = '$Gender' ";
+                $count++;
+        }
+        
+        if($Race != '--Select--' and $count == 0){
+                $sql .= "WHERE race = '$Race' ";
+                $count++;
+        }
+        elseif($Race != '--Select--' and $count > 0){
+                $sql .= "AND race = '$Race' ";
+        }
+        
+        if($Ethnicity != '--Select--' and $count == 0){
+                $sql .= "WHERE ethnicity = '$Ethnicity' ";
+                $count++;
+        }
+        elseif($Ethnicity != '--Select--' and $count > 0){
+                $sql .= "AND ethnicity = '$Ethnicity' ";
+        }
+        
+        if($LunchOption != '--Select--' and $count == 0){
+                $sql .= "WHERE lunch_status = '$LunchOption' ";
+                $count++;
+        }
+        elseif($LunchOption != '--Select--' and $count > 0){
+                $sql .= "AND lunch_status = '$LunchOption' ";
+        
+        }
+         
+        if($ParentEducation != '--Select--' and $count == 0){
+                $sql .= "WHERE highest_education = '$ParentEducation' ";
+                $count++;
+        }
+        elseif($ParentEducation != '--Select--' and $count > 0){
+                $sql .= "AND highest_education = '$ParentEducation'";   
+        }
+        echo $sql;
+        //$sql5 = "SELECT * FROM Responder WHERE gender='$Gender' AND race='$Race' AND ethnicity='$Ethnicity' AND lunch_status='$LunchOption' AND highest_education='$ParentEducation'";
+        //Gets the student IDs based on demographic info selected 
+        $result5 = mysqli_query($dbc, $sql);       
+        if (mysqli_num_rows($result5) > 0) {
+                while($row5 = mysqli_fetch_assoc($result5)) {                                     
+                        $StudentID = $row5['responder_id'];
+                        $StudentName = $row5['first_name'];
+                        echo $StudentName;
+                        $MatchedStudIDs [] = $StudentID;
+                }
+        }
+        else{
+                echo "Found nothing";
+        }
+        //echo json_encode($MatchedStudIDs);
+       
+       
+        
+        
+        
         
         $PreSurveyID;
         $PostSurveyID;
@@ -102,20 +179,23 @@
                 $result = mysqli_query($dbc, $sql);       
                 if (mysqli_num_rows($result) > 0) {
                     while($row = mysqli_fetch_assoc($result)) {
-                        $Student = new Student();
-                        $Student->StudentResponses = $row['answers'];                     
-                        $StudentID = $row['responder_id'];                      
-                        //Get the names of the students 
-                        $sql2 = "SELECT * FROM Responder WHERE responder_id = '$StudentID'";
-                        $result2 = mysqli_query($dbc, $sql2);
-                        if(mysqli_num_rows($result2) > 0) {                            
-                            while($row2 = mysqli_fetch_assoc($result2)){
-                                $Student->FirstName = $row2['first_name'];
-                                $Student->LastName = $row2['last_name']; 
-                                $Student->StudID = $row2['responder_id'];
-                            }
-                        } 
-                        $StudentResponses [] = $Student;
+                        //ID is found in the list of IDs filtered by demographic infor add student 
+                        if(in_array($row['responder_id'], $MatchedStudIDs ) == True){
+                                $Student = new Student();
+                                $Student->StudentResponses = $row['answers'];                     
+                                $StudentID = $row['responder_id'];                         
+                                //Get the names of the students 
+                                $sql2 = "SELECT * FROM Responder WHERE responder_id = '$StudentID'";
+                                $result2 = mysqli_query($dbc, $sql2);
+                                if(mysqli_num_rows($result2) > 0) {                            
+                                    while($row2 = mysqli_fetch_assoc($result2)){
+                                        $Student->FirstName = $row2['first_name'];
+                                        $Student->LastName = $row2['last_name']; 
+                                        $Student->StudID = $row2['responder_id'];
+                                    }
+                                } 
+                                $StudentResponses [] = $Student;
+                        }
                     }
                 } 
                 else {
@@ -129,20 +209,23 @@
                 $result2 = mysqli_query($dbc, $sql3);       
                 if (mysqli_num_rows($result2) > 0) {
                     while($row = mysqli_fetch_assoc($result2)) {
-                        $Student = new Student();
-                        $Student->StudentResponses = $row['answers'];                     
-                        $StudentID = $row['responder_id'];                      
-                        //Get the names of the students 
-                        $sql4 = "SELECT * FROM Responder WHERE responder_id = '$StudentID'";
-                        $result3 = mysqli_query($dbc, $sql4);
-                        if(mysqli_num_rows($result3) > 0) {                            
-                            while($row2 = mysqli_fetch_assoc($result3)){
-                                $Student->FirstName = $row2['first_name'];
-                                $Student->LastName = $row2['last_name']; 
-                                $Student->StudID = $row2['responder_id'];
-                            }
-                        } 
-                        $StudentResponses2 [] = $Student;
+                        //If student ID is in the list of filtered student IDs based on demographic info add student 
+                        if(in_array($row['responder_id'], $MatchedStudIDs) == True){
+                                $Student = new Student();
+                                $Student->StudentResponses = $row['answers'];                     
+                                $StudentID = $row['responder_id'];                      
+                                //Get the names of the students 
+                                $sql4 = "SELECT * FROM Responder WHERE responder_id = '$StudentID'";
+                                $result3 = mysqli_query($dbc, $sql4);
+                                if(mysqli_num_rows($result3) > 0) {                            
+                                    while($row2 = mysqli_fetch_assoc($result3)){
+                                        $Student->FirstName = $row2['first_name'];
+                                        $Student->LastName = $row2['last_name']; 
+                                        $Student->StudID = $row2['responder_id'];
+                                    }
+                                } 
+                                $StudentResponses2 [] = $Student;
+                        }
                     }
                 } 
                 else {
@@ -161,20 +244,23 @@
                 $result = mysqli_query($dbc, $sql);       
                 if (mysqli_num_rows($result) > 0) {
                     while($row = mysqli_fetch_assoc($result)) {
-                        $Student = new Student();
-                        $Student->StudentResponses = $row['answers'];                     
-                        $StudentID = $row['responder_id'];                      
-                        //Get the names of the students 
-                        $sql2 = "SELECT * FROM Responder WHERE responder_id = '$StudentID'";
-                        $result2 = mysqli_query($dbc, $sql2);
-                        if(mysqli_num_rows($result2) > 0) {                            
-                            while($row2 = mysqli_fetch_assoc($result2)){
-                                $Student->FirstName = $row2['first_name'];
-                                $Student->LastName = $row2['last_name']; 
-                                $Student->StudID = $row2['responder_id'];
-                            }
-                        } 
-                        $StudentResponses [] = $Student;
+                        //If student ID is in the array of student IDs filtered by demographic info add student 
+                        if(in_array($row['responder_id'], $MatchedStudIDs) == True){
+                                $Student = new Student();
+                                $Student->StudentResponses = $row['answers'];                     
+                                $StudentID = $row['responder_id'];                      
+                                //Get the names of the students 
+                                $sql2 = "SELECT * FROM Responder WHERE responder_id = '$StudentID'";
+                                $result2 = mysqli_query($dbc, $sql2);
+                                if(mysqli_num_rows($result2) > 0) {                            
+                                    while($row2 = mysqli_fetch_assoc($result2)){
+                                        $Student->FirstName = $row2['first_name'];
+                                        $Student->LastName = $row2['last_name']; 
+                                        $Student->StudID = $row2['responder_id'];
+                                    }
+                                } 
+                                $StudentResponses [] = $Student;
+                        }
                     }
                 } 
                 else {
