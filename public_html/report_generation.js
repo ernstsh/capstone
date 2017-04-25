@@ -32,7 +32,7 @@ function AddQuery()
                 //For sending the javascript variable containing the surveyID and for receiving a JSON array of questions 
                 var request= new XMLHttpRequest();
                 request.open("POST", "GetQuestionsDropDown.php", true);
-                request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");;
+                request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 request.send(choice);
                 request.onreadystatechange=function(){
                         if(request.readyState == 4){
@@ -234,7 +234,7 @@ function QueryJSON(){
         request.onreadystatechange=function(){
 		if(request.readyState == 4){
 			if(request.status == 200){
-                                document.getElementById("dummy").innerHTML = request.responseText;
+                                //document.getElementById("dummy").innerHTML = request.responseText;
                                 //Gets the Query JSON containing the survey and responses 
                                 var QueryJSON = JSON.parse(request.responseText);                                                        
                                 var Index = 0;
@@ -277,7 +277,6 @@ function QueryJSON(){
                                                         //Checks the student response of the multiple choice question at index 
                                                         for(var a = 0; a < QueryJSON.SurveyResponses.length; a++){
                                                                 StudentResponses = JSON.parse(QueryJSON.SurveyResponses[a].StudentResponses);                                                                                                              
-                                                                document.getElementById("dummy4").innerHTML = queryJSON.queries[x].Drop2;                                                                
                                                                 if(StudentResponses[Index].ans == queryJSON.queries[x].Drop2){
                                                                         CountStuds = CountStuds + 1;                                                                       
                                                                 }                                                               
@@ -308,12 +307,12 @@ function QueryJSON(){
                                                         }
                                                         //Creates a div for creating a new query result for the table 
                                                         count2++;
-                                                        var queryResultNew = document.createElement("DIV");
+                                                        var queryResultNew = document.createElement("div");
                                                         queryResultNew.setAttribute("id", "Text" + count2);
                                                         
                                                         //This button is for deleting the table 
                                                         var button1 = document.createElement("button");      
-                                                        button1.onclick = function(){DeleteTable(queryResultNew.id);}
+                                                        button1.onclick = function(){removeChild(queryResultNew.id);}
                                                         
                                                         var textDelete = document.createTextNode("-");
                                                         button1.appendChild(textDelete);
@@ -402,7 +401,7 @@ function QueryJSON(){
                                                                 
                                                                 //This button is for deleting the table 
                                                                 var button1 = document.createElement("button");      
-                                                                button1.onclick = function(){DeleteTable(queryResultNew.id);}
+                                                                button1.onclick = function(){removeChild(queryResultNew.id);}
                                                                 var textDelete = document.createTextNode("-");
                                                                 button1.appendChild(textDelete);
                                                                 
@@ -457,7 +456,7 @@ function QueryJSON(){
                                                                 
                                                         //This button is for deleting the table 
                                                         var button1 = document.createElement("button");      
-                                                        button1.onclick = function(){DeleteTable(queryResultNew.id);}
+                                                        button1.onclick = function(){removeChild(queryResultNew.id);}
                                                         var textDelete = document.createTextNode("-");
                                                         button1.appendChild(textDelete);
                                                         
@@ -531,11 +530,12 @@ function MatrixResult(CountPositive, NumStuds, ReturnType){
         }  
 }
 
-//Deletes table
-function DeleteTable(TableID){
-        var node = document.getElementById(TableID);
+//Deletes query result 
+function removeChild(childID){
+        var node = document.getElementById(childID);
         var parent = document.getElementById("QueryResult");
-        parent.removeChild(node);   
+        parent.removeChild(node);
+        count2--;
 }
 
 //Creates a queryResult template a multiple choice question 
@@ -572,7 +572,7 @@ function AddQueryResult(TotCount, ReturnType, NumStuds, Question){
         var break2 = document.createElement("br");      
         //Button for deleting the query result
         var button1 = document.createElement("button");      
-        button1.onclick = function(){removeElement('QueryResult', id);}
+        button1.onclick = function(){removeChild(queryResultNew.id);}
         var textDelete = document.createTextNode("-");
         button1.appendChild(textDelete);
         //Adds the drop downs and delete button to the div element for making the new query 
@@ -630,7 +630,7 @@ function DeleteAllQueries(){
         }
 }
 
-function Report_JSON2(){
+function Report_JSON(){
         //Create a json for the report and sets its title and id  
 	var report_json = {};                 
         report_json.ReportID = SavedReportID;        
@@ -639,73 +639,62 @@ function Report_JSON2(){
 	report_json.queryResults = [];      
         Parent = document.getElementById("QueryResult");
         Children = Parent.children; 
-        alert(Parent.children.length);
         var childCount = 0;
+        var TotCount = 0;
         while(childCount < Parent.children.length){
-                var result_json = {};
                 child = Children[childCount];
+                var result_json = {};
                 if(child.id.includes("Matrix")){
                         result_json.type = "Matrix";
                         result_json.rows = [];
-                        var totCount = 0;
-                        alert("Matrix result");
                         var table = child.getElementsByTagName('table')[0];
-                        alert(table.id);
                         //iterate through rows and rows would be accessed using the "row" variable assigned in the for loop
                         for (var i = 0, row; row = table.rows[i]; i++) {
-                                rowVals = []
+                                var rowVals = []
                                 //iterate through columns and columns would be accessed using the "col" variable assigned in the for loop
                                 for (var j = 0, col; col = row.cells[j]; j++) {
-                                        alert(col.textContent);
-                                       
-                                }  
+                                        rowVals[j] = col.textContent;
+                                }
+                                result_json.rows[i] = rowVals;
                         }
+                        report_json.queryResults[TotCount] = result_json;
+                        TotCount++;
                 }
                 else if(child.id.includes("Text")){
-                        alert("Text result");
+                        result_json.type = "Text";
+                        result_json.rows = [];
                         var table = child.getElementsByTagName('table')[0];
                         //iterate through rows and rows would be accessed using the "row" variable assigned in the for loop
                         for (var i = 0, row; row = table.rows[i]; i++) {
+                                var rowVals = [];
                                 //iterate through columns and columns would be accessed using the "col" variable assigned in the for loop
                                 for (var j = 0, col; col = row.cells[j]; j++) {
-                                        alert(col.textContent);
-                                }  
+                                        rowVals[j] = col.textContent;
+                                }
+                                result_json.rows[i] = rowVals;
                         }
+                        report_json.queryResults[TotCount] = result_json;
+                        TotCount++;
                 }
                 else if(child.id.includes("Multi")){
-                        alert("Multi result");
+                        var ID = child.id;
+                        ID = ID.replace(/\D/g,'');
+                        result_json.type = "Multi";
+                        result_json.label = document.getElementById('label' + ID).value;
+                        result_json.result = document.getElementById('input' + ID).value;
+                        report_json.queryResults[TotCount] = result_json;
+                        TotCount++;
                 }
                 childCount = childCount + 1;
         }
-        
-        
+        document.getElementById("dummy").innerHTML = JSON.stringify(report_json);
+        SaveReportJSON(report_json);
 }
 
-function Report_JSON(){
-        //Create a json for the report 
-	var report_json = {};                 
-        //Sets the report ID of the report JSON
-        report_json.ReportID = SavedReportID;        
-        //Sets the title of the report JSON
-        report_json.title = document.getElementById("TitleReport").value; 
-        //Create an array JSON for all the query results 
-	report_json.queryResults = [];      
-        var x = 0;
-        while(x != count2) {
-            x++;
-            //Creates a JSON for a query result 
-            var query_json = {};
-            //Gets the query label and query result 
-            var label = document.getElementById('label' + x).value;
-            var query = document.getElementById('input' + x).value;
-            query_json.label = label;
-            query_json.query = query;
-            report_json.queryResults[x-1] = query_json;
-        }
-        //document.getElementById("reportJSON").innerHTML = JSON.stringify(report_json);
+//Saves the report JSON into the Report table 
+function SaveReportJSON(report_json){
         var str_json = JSON.stringify(report_json);
-        //document.getElementById("reportJSON").innerHTML = str_json;
-        
+        //document.getElementById("reportJSON").innerHTML = str_json;       
         var request= new XMLHttpRequest()
         request.open("POST", "SaveReport.php", true)
         request.setRequestHeader("Content-type", "application/json")
@@ -713,32 +702,10 @@ function Report_JSON(){
         request.onreadystatechange=function(){
 		if(request.readyState == 4){
 			if(request.status == 200){
-				//alert(request.responseText);
-                                //document.getElementById("dummy").innerHTML = request.responseText;
                                 SavedReportID = request.responseText;
 			}	
 		}	
 	}
-        
-}
-
-//For deleting change in response queries if the user chose Post or Pre for the survey type to query 
-function RemoveChangeResponse(){
-        var childDivs = document.getElementById('query').getElementsByTagName('div');
-        var NumDelete = childDivs.length;       
-        var tot = 0;
-        //loop is for deleting only the change in response query templates 
-        while(tot != NumDelete){
-                var childDiv = childDivs[tot];
-                var ID = childDiv.id;
-                if(ID.includes("ChangeRes")==true){
-                        removeElement("query", ID);    
-                }
-                else{
-                        tot++;
-                }
-                NumDelete = childDivs.length;   
-        }       
 }
 
 //Function for displaying the responses for a multiple choice query template 

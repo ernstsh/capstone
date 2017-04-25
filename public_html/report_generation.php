@@ -172,7 +172,7 @@ This is the navigation bar of the page-->
 <!--This is where the queries are appended to-->
 <h4 id="QueryText">Queries will appear here:</h4>
 <div class="query" id="query">
-       
+        
 </div>
 
 <br>
