@@ -7,39 +7,18 @@ var count = 0;
 <head>
     	<script src="report_generation.js"></script>
         <link rel="stylesheet" href="ReportPrintStyleSheet.css" type="text/css" media="print" />
-		<link rel="stylesheet" href="../public_html/css/style1.css">
-        <!--<link rel="stylesheet" href="ReportStyleSheet.css" type="text/css" />-->
-		
-        
-        <!--<link rel="stylesheet" href="TopNav.css" type="text/css" />-->
-       
+        <link rel="stylesheet" href="../public_html/css/style1.css">
 </head>
 
 
 <body onload= "GetCamps()">
-
-
-<body>
 <div id="page" class="bodypage">
+
 <?php
 session_start();
-//include_once('TopNav.php');
 ?>
 
-
-<!--This is the navigation bar of the page
-<div class="topnav" id="myTopnav">
-        <a href="AddAdmin.html" id="AddAdmin">Add Admin</a>
-        <a href="DeleteAdmin.html" id="DeleteAdmin">Delete Admin</a>
-	<a href="addCamp.php" id="AddCamp">Add Camp</a>
-        <a href="edit_create.php" id="SurveyGen">Edit/create a Survey</a>
-        <a href="SelectReportChoice.html" id="ReportGen">Edit/Create a Report</a>
-        <a href="adminLogOut.php" id="LogOut">Log Out</a>
-</div>
-This is the navigation bar of the page-->
-
 <h3 id="PageTitle"> Report Generation </h3>
-
 
 <!--Drop down for selecting a camp-->  
 <h4 id="label-1">Select a camp: </h4>       
@@ -89,28 +68,6 @@ This is the navigation bar of the page-->
 </div>
 
 <br>
-
-<!--Grade level option
-<div id="GradeDiv">
-<label id="label-7">Student grade level:</label>
-<select id="SelectGrade">
-        <option value="select">--Select--</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-</select>
-</div>
-
-<br>-->
 
 <!--Parent's highest level of education-->
 <div id="ParentEducationDiv">
@@ -186,7 +143,7 @@ This is the navigation bar of the page-->
         <button type="button" class="submit" id="submit2" onclick="QueryJSON()"> Submit </button>
         
         <button type="button" class="save" id="save" onClick="Report_JSON()"> Save </button>
-        <button type="button" class="exit" id="exit"><a href="dashboard.php" id="ExitLink"> Exit </a></button>
+        <button type="button" class="exit" id="exit"><a href="SelectReportChoice.html" id="ExitLink"> Exit </a></button>
         <button type="button" id="print"><a href="javascript:window.print()" id="PrintLink"> Print  </a></button> <br>
 </form>
 

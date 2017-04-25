@@ -548,27 +548,21 @@ function AddQueryResult(TotCount, ReturnType, NumStuds, Question){
         //Creates the input textbox for labeling the query result and formats it 
         var label = document.createElement("input");
         label.setAttribute("id", 'label' + count2)
-        label.style.width="640px";
-        label.style.fontSize="12pt";
-        label.style.fontFamily="Times New Roman";
-        label.setAttribute("maxLength", '95');      
-        label.style.marginLeft="22px"
         label.value = Question;
         var break1 = document.createElement("br");
         //Creates the input textbox for the result and formats it 
         var input = document.createElement("input");
-        input.setAttribute("id", 'input' + count2);
-        input.style.width="640px";
-        input.style.fontSize="12pt";
-        input.style.fontFamily="Times New Roman";
-        input.setAttribute("maxLength", '95');         
+        input.setAttribute("id", 'input' + count2);   
         //Checks to see how the result is going to be returned based on the type selected  
         if(ReturnType == "Count"){
                 input.value = TotCount; 
         }
-        else{
+        else if(ReturnType == "Percent"){
                 input.value = TotCount / NumStuds; 
-        }        
+        }
+        else{
+                input.value = TotCount;
+        }
         var break2 = document.createElement("br");      
         //Button for deleting the query result
         var button1 = document.createElement("button");      
@@ -678,6 +672,7 @@ function Report_JSON(){
                 }
                 else if(child.id.includes("Multi")){
                         var ID = child.id;
+                        //Removes the text characters from the ID in order to get the int value 
                         ID = ID.replace(/\D/g,'');
                         result_json.type = "Multi";
                         result_json.label = document.getElementById('label' + ID).value;
@@ -687,7 +682,7 @@ function Report_JSON(){
                 }
                 childCount = childCount + 1;
         }
-        document.getElementById("dummy").innerHTML = JSON.stringify(report_json);
+        //document.getElementById("dummy").innerHTML = JSON.stringify(report_json);
         SaveReportJSON(report_json);
 }
 
@@ -790,6 +785,43 @@ function GetSurveys(){
         }                                                                                             
 }
 
+//Generates a table for the edit report page
+function GenTableQuery(table_json){
+        //alert(table_json.type);
+        var table = document.createElement('table');
+        for(var x = 0; x < table_json.rows.length; x++){
+                //alert("row");
+                var tr = document.createElement('tr');
+                for(var y = 0; y < table_json.rows[x].length; y++){
+                        //alert("column");
+                        var td = document.createElement('td');
+                        var Text = document.createTextNode(table_json.rows[x][y]);
+                        td.appendChild(Text);
+                        tr.appendChild(td);
+                }      
+                table.appendChild(tr);
+        }
+        //Creates a div for creating a new query result for the table 
+        count2++;      
+        var queryResultNew = document.createElement("div");
+        queryResultNew.setAttribute("id", table_json.type + count2);
+        table.setAttribute("id", "table" + count2);
+                                                                         
+        //This button is for deleting the table 
+        var button1 = document.createElement("button");      
+        button1.onclick = function(){removeChild(queryResultNew.id);}
+        var textDelete = document.createTextNode("-");
+        button1.appendChild(textDelete);
+                                                                
+        //Adds the table and button to the div  
+        queryResultNew.appendChild(table);
+        queryResultNew.appendChild(button1);
+                                                                
+        //Adds the query result to the web page
+        element = document.getElementById("QueryResult");
+        element.appendChild(queryResultNew);    
+        
+}
 
 
 

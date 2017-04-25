@@ -5,60 +5,43 @@ var count = 0;
 <html>
 
 <head>
-    	<script src="edit_report.js"></script>
-        <script src="report_generation.js"></script>
-        <link rel="stylesheet" href="ReportStyleSheet.css" type="text/css" />
-        <link rel="stylesheet" href="ReportPrintStyleSheet.css" type="text/css" media="print" />
-        <!--<link rel="stylesheet" href="TopNav.css" type="text/css" />-->
-
+        <script src = "edit_report.js"></script>
+    	<script src = "report_generation.js"></script>
+        <link rel = "stylesheet" href="ReportPrintStyleSheet.css" type="text/css" media="print" />
+        <link rel = "stylesheet" href="../public_html/css/style1.css">
 </head>
 
-<body>
 
+<body onload="GenSavedReport()">
+<div id="page" class="bodypage">
 <?php
-        session_start();
-        //include_once('TopNav.php');
+session_start();
 ?>
-
 <h3 id="PageTitle"> Report Generation </h3>
 
-
-<!--Drop down for selecting a camp-->
-<h4 id="label-1">Select a camp: </h4>
+<!--Drop down for selecting a camp-->  
+<h4 id="label-1">Select a camp: </h4>       
 <!--Calls GetCamps() function to fill drop down with the camp names-->
 <div id="SelectCamp">
-<select id="select1" name="select1" onclick="GetCamps()">
+<select id="select1" name="select1" onchange="GetSurveys()">
                 
-</select>
+</select>       
 </div>
-
   
   
 <!--Drop down for selecting a survey based on camp selection-->
 <h4 id="label-2">Select a survey: </h4>
 <div id="SelectSurvey">     
-<select id="select2" name="select2" onclick="GetSurveys()">
+<select id="select2" name="select2">
              
-</select>
+</select>    
 </div>
-  
-  
-<!--Radio buttons for selecting the survey type-->        
-<h4 id="label-3">Select the survey type: </h4> 
-<form id="SurveyType">       
-        <div>
-        <input type="radio" name="Pre/Post" id="Pre" value="Pre" checked onClick="RemoveChangeResponse()">Pre-survey<br>
-        <input type="radio" name="Pre/Post" id="Post" value="Post" onClick="RemoveChangeResponse()">Post-survey<br>
-        <input type="radio" name="Pre/Post" id="Both" value="Both">Both<br>
-        </div>             
-</form> 
-
 
 <!--Radio buttons for selecting the query type-->
 <h4 id="label-4">Select the query type: </h4>
 <form id="QueryType">
-        <input type="radio" name="QueryChoice" value="Regular" id="Regular" checked> Regular Query <br>
-        <input type="radio" name="QueryChoice" value="ChangeResponse" id="ChangeResponse"> Change in response <br>
+        <input type="radio" name="QueryChoice" value="Regular" id="Regular" checked>Query for multiple choice <br>
+        <input type="radio" name="QueryChoice" value="ChangeResponse" id="ChangeResponse">Query for matrix and text questions 
 </form>
 
 
@@ -66,7 +49,7 @@ var count = 0;
 <h4 id="label-5">Select the result type: </h4>
 <form id="ResultType">
         <input type="radio" name="ResultChoice" value="Count" id="Count" checked> Count <br>
-        <input type="radio" name="ResultChoice" value="Percent" id="Percent"> Percentage <br>
+        <input type="radio" name="ResultChoice" value="Percent" id="Percent"> Percentage 
 </form>
 
 
@@ -77,30 +60,9 @@ var count = 0;
 <div id="GenderDiv">
 <label id="label-6">Gender:</label>
 <select id="Gender">
+        <option>--Select--</option>
         <option value="Male">Male</option>
         <option value="Female">Female</option>
-</select>
-</div>
-
-<br>
-
-<!--Grade level option-->
-<div id="GradeDiv">
-<label id="label-7">Student grade level:</label>
-<select id="SelectGrade">
-        <option value="select">--Select--</option>
-        <option value="1Grade">1</option>
-        <option value="2Grade">2</option>
-        <option value="3Grade">3</option>
-        <option value="4Grade">4</option>
-        <option value="5Grade">5</option>
-        <option value="6Grade">6</option>
-        <option value="7Grade">7</option>
-        <option value="8Grade">8</option>
-        <option value="9Grade">9</option>
-        <option value="10Grade">10</option>
-        <option value="11Grade">11</option>
-        <option value="12Grade">12</option>
 </select>
 </div>
 
@@ -123,7 +85,7 @@ var count = 0;
 
 <br>
 
-<!--Student's race -->
+<!--Student's Race-->
 <div id="RaceDiv">
 <label id="label-9">Student Race:</label>
 <select id="SelectRace">
@@ -141,7 +103,7 @@ var count = 0;
 
 <!--Student's ethnicity-->
 <div id="EthnicityDiv">
-<label id="label-10">Student Ethnicity:</label>
+<label id="label-10">Student Ethnicity</label>
 <select id="SelectEthinicity">
         <option>--Select--</option>
         <option>Hispanic or Latino</option>
@@ -153,7 +115,7 @@ var count = 0;
 
 <!--Free or reduced lunch-->
 <div id="LunchDiv">
-<label id="label-11">Free or Reduced Lunch:</label>
+<label id="label-11">Free or Reduced Lunch</label>
 <select id="SelectLunchType">
         <option>--Select--</option>
         <option>Yes</option>
@@ -163,10 +125,10 @@ var count = 0;
 </select>
 </div>
 
-<h4 id="QueryText">Queries will appear here:</h4>
 <!--This is where the queries are appended to-->
+<h4 id="QueryText">Queries will appear here:</h4>
 <div class="query" id="query">
-      
+        
 </div>
 
 <br>
@@ -174,26 +136,37 @@ var count = 0;
 <!--Buttons for adding a query template, resetting, submitting, saving, exiting, and printing-->
 <form id="Buttons">
         <button type="button" class="addQuery" id="addQuery" onclick="AddQuery()">Add Query</button>
-        <button type="button" class="DeleteAll" id="DeleteAll" onclick="DeleteAllQueries()">Reset</button>
-        <button type="button" class="submit" id="submit2" onclick="AddQueryResult2()"> Submit </button>
-        <button type="button" class="save" id="save" onClick="Report_JSON2()"> Save </button>
-        <button type="button" class="exit" id="exit"><a href="dashboard.php" id="ExitLink"> Exit </a></button>
-        <button type="button" id="print"><a href="javascript:window.print()" id="PrintLink"> Print </a></button> <br>
+        <button type="button" class="DeleteAll" id="DeleteAll" onclick="DeleteAllQueries()">Reset</button>       
+        <button type="button" class="submit" id="submit2" onclick="QueryJSON()"> Submit </button>       
+        <button type="button" class="save" id="save" onClick="Report_JSON()"> Save </button>
+        <button type="button" class="exit" id="exit"><a href="SelectReportChoice.html" id="ExitLink"> Exit </a></button>
+        <button type="button" id="print"><a href="javascript:window.print()" id="PrintLink"> Print  </a></button> <br>
 </form>
 
 
 <!--This is where the query results will go!!!!-->
 <h4 id="QueryResultsText">Query Results</h4>
-<form class="QueryResult" id="QueryResult" method="post" onsubmit="SaveReport.php">
+<form class="QueryResult" id="QueryResult">
         <!--For the adding a title to the form-->
         <input type="text" id="TitleReport" value="" style="width=640px;"/><br>
 </form>
 
-
-<!--The purpose of dummy is to keep track of count to give a unique id-->
+<!--Elements for verifying if the page is functioning properly-->
+ 
 <p id="dummy" value="0"></p>
+<p id="dummy2"></p>
+<p id="dummy3"></p>
+<p id="dummy4"></p>
+<p id="dummy5"></p>
+<p id="dummy6"></p>
 <p id="currentChoice"></p>
 <p id="reportJSON"></p>
+
+<div class="dummy7" id="dummy7">
+       
+</div>
+
+</div>
 
 </body>
 
