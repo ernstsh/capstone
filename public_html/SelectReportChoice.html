@@ -5,7 +5,7 @@
 
 </head>
 
-<body>
+<body onload = "GetReports()">
 <!--Creating a report option-->
 <h4 id="NewReportHeader">Click the button below to create a new report:</h4>
 <div id="CreateNewSection">
@@ -15,7 +15,7 @@
 <!--Editing a report option-->
 <h4 id="EditReportHeader">Select the report that you want to edit:</h4>
 <div id="EditReportSection">
-        <select id="selection" name="selection" onClick="GetReports()">
+        <select id="selection" name="selection">
                 <option value="default">Select a report</option>
         </select>
         <br>
