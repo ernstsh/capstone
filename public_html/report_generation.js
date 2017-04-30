@@ -350,6 +350,10 @@ function QueryJSON(){
                                                                 var Text = document.createTextNode(SurveyQuestions[MatrixIndexQuestion].Q_topic);
                                                                 Td.appendChild(Text);
                                                                 Tr.appendChild(Td);
+                                                                var Td2 = document.createElement('td');
+                                                                var Text2 = document.createTextNode("Total Agree");
+                                                                Td2.appendChild(Text2);
+                                                                Tr.appendChild(Td2);
                                                                 table.appendChild(Tr);
                                                                 
                                                                 //For each sub question 
@@ -422,6 +426,10 @@ function QueryJSON(){
                                                         var Text = document.createTextNode(SurveyQuestions[MatrixIndexQuestion].Q_topic);
                                                         Td.appendChild(Text);
                                                         Tr.appendChild(Td);
+                                                        var Td2 = document.createElement('td');
+                                                        var Text2 = document.createTextNode("Total Agree");
+                                                        Td2.appendChild(Text2);
+                                                        Tr.appendChild(Td2);
                                                         table.appendChild(Tr);
                                                         var SurveyQuestions = JSON.parse(QueryJSON.SurveyQuestions); 
                                                         //For each sub question                                                      
@@ -460,7 +468,6 @@ function QueryJSON(){
                                                         var textDelete = document.createTextNode("-");
                                                         button1.appendChild(textDelete);
                                                         
-                                                        //document.getElementById("dummy2").appendChild(table);
                                                         queryResultNew.appendChild(table);
                                                         queryResultNew.appendChild(button1);
                                                         
@@ -682,14 +689,12 @@ function Report_JSON(){
                 }
                 childCount = childCount + 1;
         }
-        //document.getElementById("dummy").innerHTML = JSON.stringify(report_json);
         SaveReportJSON(report_json);
 }
 
 //Saves the report JSON into the Report table 
 function SaveReportJSON(report_json){
-        var str_json = JSON.stringify(report_json);
-        //document.getElementById("reportJSON").innerHTML = str_json;       
+        var str_json = JSON.stringify(report_json);       
         var request= new XMLHttpRequest()
         request.open("POST", "SaveReport.php", true)
         request.setRequestHeader("Content-type", "application/json")
@@ -822,7 +827,6 @@ function GenTableQuery(table_json){
         element.appendChild(queryResultNew);    
         
 }
-
 
 
 

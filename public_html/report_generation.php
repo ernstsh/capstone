@@ -155,24 +155,6 @@ session_start();
         <input type="text" id="TitleReport" value="" style="width=640px;"/><br>
 </form>
 
-
-<!--Elements for verifying if the page is functioning properly-->
- 
-<p id="dummy" value="0"></p>
-<p id="dummy2"></p>
-<p id="dummy3"></p>
-<p id="dummy4"></p>
-<p id="dummy5"></p>
-<p id="dummy6"></p>
-<p id="currentChoice"></p>
-<p id="reportJSON"></p>
-
-<div class="dummy7" id="dummy7">
-       
-</div>
-
-</div>
-
 </body>
 
 <footer>
