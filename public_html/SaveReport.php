@@ -9,35 +9,25 @@
 	//Create a connection to the database
 	$dbc = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 	
-        $str_json = file_get_contents('php://input');
-      
-        //echo "We got: ".$str_json."\n";
-        
+        $str_json = file_get_contents('php://input');          
         $data = json_decode($str_json); 
 
-        //Gets the ID of the report 
+        //Gets the ID, query results, and title of the report  
         $ReportSavedID = json_encode($data->ReportID);        
-        //Gets the query results array and converts the JSON to a string 
         $queryResults = json_encode($data->queryResults);
-        //Gets the title of the report JSON
         $title = json_encode($data->title);
-        //Inserts the report into the Report table 
+        
+        //SQL statement for saving the report in Report table 
         $sql = "INSERT INTO Report (arr_results, title) VALUES ('$queryResults', '$title')";
-        //Saves the report for the first time in the database 
+        //Checks to see if the report is being saved for the first time which means a new report entry will be made in Report table 
         if($ReportSavedID == "null"){
                 if (mysqli_query($dbc, $sql)) {
-                        //echo "Your new report was saved successfully";                                                
                         $sql2 = "SELECT * FROM Report WHERE arr_results='$queryResults' AND title='$title'";
                         $result = mysqli_query($dbc, $sql2);
-
                         if (mysqli_num_rows($result) > 0) {
-                            //Return the ID of the saved report 
+                            //Returns the ID of the saved report, so next time its an update when it is saved 
                             while($row = mysqli_fetch_assoc($result)) {
-                                //echo "The report id is:".$row['report_id']."\n";
                                 echo $row['report_id'];
-                                //$obj = new stdClass();
-                                //$obj->ReportID = $row['report_id'];
-                                //echo json_encode($obj);
                             }
                         } else {
                             echo "0 results";
@@ -46,12 +36,12 @@
                         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                 }
         }
-        //The report exists in the database for saved the edited report 
+        //The report exists in the database for saved or edited report, so update the report 
         else{
                 //Converts the string report ID value to a php variable 
                 $ReportSavedID = json_decode($ReportSavedID);                 
-                $sql3 = "UPDATE Report SET arr_results = '$queryResults', title = '$title' WHERE report_id = '$ReportSavedID'";         
-                //Checks if the report was saved into the database 
+                $sql3 = "UPDATE Report SET arr_results = '$queryResults', title = '$title' WHERE report_id = '$ReportSavedID'";
+                //Returns ID of updated report, so next time it updates the report when it is saved 
                 if (mysqli_query($dbc, $sql3)) {
                         echo $ReportSavedID;
  
