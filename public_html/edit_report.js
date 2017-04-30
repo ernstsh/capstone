@@ -1,7 +1,3 @@
-
-//Keep track of the report ID that was selected
-var GlobalReportID = 0;
-
 //This section of code generates the report that was selected 
 function GenSavedReport() {
     if (!window.location.hash) {
@@ -19,7 +15,7 @@ function GenSavedReport() {
         ReportSelected = atob(ReportSelected);
         ReportSelected = JSON.parse(ReportSelected);
         var ReportChoice = ReportSelected.ReportID;
-        //Sets the global from report_generation.js to the ID of edited report 
+        //Sets the global variable SavedReportID in report_generation.js to the ID of report that was selected 
         SavedReportID =  ReportChoice;         
         //For sending the javascript variable for getting the JSON of the report that was selected 
         var request= new XMLHttpRequest();
@@ -29,13 +25,11 @@ function GenSavedReport() {
                 request.onreadystatechange=function(){
                         if(request.readyState == 4){
                                 if(request.status == 200){                                                                            
-                                        //alert(request.responseText);     
-                                        //document.getElementById("dummy").innerHTML = request.responseText;
                                         var ReportJSON = JSON.parse(request.responseText);
                                         var queries = JSON.parse(ReportJSON.arr_results);
                                         for(var x = 0; x < queries.length; x++){
+                                                //Note: AddQueryResult and GenTableQuery are functions located in report_generation.js file 
                                                 if(queries[x].type == "Multi"){
-                                                        //alert("Multi");
                                                         AddQueryResult(queries[x].result, "None", 0, queries[x].label);
                                                 }
                                                 else{
@@ -49,7 +43,7 @@ function GenSavedReport() {
                                 }	
                         }                               
                 }
-                //Fills the drop down for selecting a camp 
+                //Fills the drop down for selecting a camp Note:GetCamps is a function located in report_generation.js
                 GetCamps();
     }   
 };

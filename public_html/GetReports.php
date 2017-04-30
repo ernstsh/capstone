@@ -11,26 +11,20 @@
 	
         $str_json = file_get_contents('php://input');
       
-        //echo "We got: ".$str_json."\n";
         
         $sql="SELECT * FROM Report";
         $result=mysqli_query($dbc,$sql);
 
-        //Creates an array for storing each row 
-        $ArrayInfo = array();
-        
-        // Numeric array works
-        while($row=mysqli_fetch_array($result,MYSQLI_NUM)){
-                        /*echo $row[0];
-                        echo $row[1];
-                        echo $row[2];*/
-                        
-                        //Creates an array containing the row informationn and adds it to the array 
+        //Creates an array for storing each report's information 
+        $ArrayInfo = array();       
+        while($row=mysqli_fetch_array($result,MYSQLI_NUM)){                   
+                        //Creates an array containing the report's title, arr_results, and report_id
                         array_push($ArrayInfo, array($row[0], $row[1], $row[2]));
         }
-        //for the string representation of the 2-D array 
+        //Returns a string representation of the 2-D array 
         echo json_encode($ArrayInfo);
-        // Free result set
+        
+        //Free result set
         mysqli_free_result($result);
 
         //closes the database connection  

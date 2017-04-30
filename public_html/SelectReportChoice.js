@@ -31,7 +31,7 @@ function GetReports(){
 
 //Passes the id of the report to the edit_report.php page 
 function SaveData(){
-        //Gets the report selected and get's its id for pass to the edit_report.php page 
+        //Gets the report selected and get's its id for passins it to the edit_report.php page 
         var ReportDropdown = document.getElementById("selection");
         var choice = ReportDropdown.options[ReportDropdown.selectedIndex].id;
         
