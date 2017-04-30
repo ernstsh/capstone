@@ -32,7 +32,7 @@ if(isset($_SESSION['valid_user'])){
         $Password = json_encode($data->passWord);
         $Password = str_ireplace('"', '', $Password);
         
-        //Checks to see if the admin that is logged in is Catherine Law or Carole Rodriguez 
+        //Checks to see if the admin that is logged in is Catherine Law or Carole Rodriguez for adding a new admin 
         if($_SESSION['valid_user'] == 'CaroleR' Or $_SESSION['valid_user'] == 'CatherineL'){
                 $sql = "INSERT INTO Admin (FirstName, LastName, UserName, Password) VALUES ('$FirstName', '$LastName', '$UserName', '$Password')";
                 if (mysqli_query($dbc, $sql)) 

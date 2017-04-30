@@ -26,19 +26,16 @@ if ((isset($_GET['userName'])) && (isset($_GET['password'])) ){
 
 	$result = mysqli_query($dbc, $query);
 	
+        //If the user is able to log in redirect to dashboard and set session variable to their user name
 	if (mysqli_num_rows($result) == 1) {
-           // The log-in is OK so set the user ID and username session vars (and cookies), and redirect to the home page
            $row = mysqli_fetch_array($result);
-           // The log-in is OK so set the user ID and username session vars (and cookies), and redirect to the home page
 	   $_SESSION['valid_user'] = $row['UserName'];
 	   header('Location: dashboard.php');
            exit;
-           /* Redirect browser */
 	   
-	   /* Make sure that code below does not get executed when we redirect. */
         }
+        //User could not login redirect to login to try again 
         else {
-          // The username/password are incorrect so set an error message
 		  header('Location: adminLogin.html');
 		  exit;
         }

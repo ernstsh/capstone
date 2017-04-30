@@ -12,14 +12,13 @@
         
         //Gets camp choice 
         $campID = file_get_contents('php://input');
-        //echo $campID;
-        
-        
+               
         $query = "SELECT * FROM Camp WHERE camp_id='$campID'";
         $result = mysql_query($query);  
         
         //For setting a surveyID to both option
         $BothID = NULL;
+        //Displays the names of the surveys in the drop down menu of the webpage 
         while ($row = mysql_fetch_array($result)) {
                 $PreSurveyID = $row['pre'];
                 $query2 = "SELECT * FROM Survey WHERE survey_id='$PreSurveyID'";
@@ -38,17 +37,10 @@
                 
                 while($row3 = mysql_fetch_array($result3)){
                         $value2 = $row3['survey_id'];
-                        //$BothID = $value;
                         echo "<option value='$value2'>" .$row3{title}. "</option>";                                 
                 } 
-                echo "<option value='$BothID'>Both</option>";
-                
-                
+                echo "<option value='$BothID'>Both</option>";                              
         }       
-        //Delete this line of code 
-        //echo "<option>Both</option>";                                 
-
-        
         
         //Close connection to database 
         mysql_close($mysql_handle);
