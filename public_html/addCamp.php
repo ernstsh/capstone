@@ -2,9 +2,17 @@
 <html>
 	<head>
 	 <link rel="stylesheet" href="../public_html/css/style1.css">
+         <script src="report_generation.js"></script>
+
 	</head>
-	<body>
+	<body onload="GetCamps()">           
 		<h3>Add Camp</h3>
+                  <!--Calls GetCamps() function to fill drop down with the camp names-->
+                <div id="SelectCamp">
+                <select id="select1" name="select1" onchange="GetSurveys()">
+                                
+                </select>       
+                </div>
 		<form method="post" onsubmit="return checkForm2(this);" enctype="multipart/form-data" >
 			<label>Camp Name</label><input type="text" name="campName" id="campName"/><br>
 			<label>Camp Dates</label><br>
@@ -14,7 +22,7 @@
 			<input type="submit" value="submit" name="submit" id="submit"></input>
                         <button type="button" class="exit" id="exit"><a href="dashboard.php" id="ExitLink"> Exit </a></button>
 
-		</form>
+		</form>              
 	</body>
 		
 
