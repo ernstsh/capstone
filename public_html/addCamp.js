@@ -1,8 +1,7 @@
 function Update(){
 	var camp_json = {};   
          //Gets the selected camp from 1st drop down
-        var CampDrop = document.getElementById("select1");
-        var CampID = CampDrop.options[CampDrop.selectedIndex].value; 
+        var CampID = document.getElementByTagName("SELECT")[0].value 
         camp_json.CampID = CampID;
         camp_json.Enrollment = document.getElementsByName("enrollment").value;
         
@@ -16,7 +15,7 @@ function Update(){
         request.onreadystatechange=function(){
 		if(request.readyState == 4){
 			if(request.status == 200){
-//                                alert(request.responseText);
+                                alert(request.responseText);
 			}	
 		}	
 	}
