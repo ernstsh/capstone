@@ -10,7 +10,7 @@ function Update(){
         camp_json.StartDate = document.getElementById("startDate").value;
         camp_json.EndDate = document.getElementById("endDate").value;
         var str_json = JSON.stringify(camp_json);       
-	str_json = "x=" . encodeURIComponent(str_json);
+	str_json = "x=" + encodeURIComponent(str_json);
         var request= new XMLHttpRequest();
         request.open("POST", "UpdateCamp.php", true);
         request.onreadystatechange=function(){
