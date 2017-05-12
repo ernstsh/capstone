@@ -10,15 +10,16 @@ function Update(){
         camp_json.StartDate = document.getElementById("startDate").value;
         camp_json.EndDate = document.getElementById("endDate").value;
         var str_json = JSON.stringify(camp_json);       
+	str = "x=" . encodeURIComponent(str);
         var request= new XMLHttpRequest();
         request.open("POST", "UpdateCamp.php", true);
         request.onreadystatechange=function(){
 		if(request.readyState == 4){
 			if(request.status == 200){
-                                alert(request.responseText);
+//                                alert(request.responseText);
 			}	
 		}	
 	}
-	request.setRequestHeader("Content-type", "application/json");
+	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	request.send(str_json);
 }

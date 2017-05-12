@@ -8,7 +8,7 @@
         
 	$dbc = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 	
-	$str_json = file_get_contents('php://input');  
+	$str_json = $_POST['x']; 
 	echo $str_json;
 	$data = json_decode($str_json); 
 
