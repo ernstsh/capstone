@@ -1,7 +1,7 @@
 function Update(){
 	var camp_json = {};   
          //Gets the selected camp from 1st drop down
-        var CampID = document.getElementByTagName("SELECT")[0].value 
+        var CampID = document.getElementsByTagName("SELECT")[0].value 
         camp_json.CampID = CampID;
         camp_json.Enrollment = document.getElementsByName("enrollment").value;
         
