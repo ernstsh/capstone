@@ -2,15 +2,16 @@
 <html>
 	<head>
 	 <link rel="stylesheet" href="../public_html/css/style1.css">
-         <script src="report_generation.js"></script>
+         <script src="../public_html/report_generation.js"></script>
+         <script src="../public_html/addCamp.js"></script>
 
 	</head>
 	<body onload="GetCamps()">           
 		<h3>Add Camp</h3>
                   <!--Calls GetCamps() function to fill drop down with the camp names-->
                 <div id="SelectCamp">
-                <select id="select1" name="select1" onchange="GetSurveys()">
-                                
+                <select id="select1" name="select1">
+                                        
                 </select>       
                 </div>
 		<form method="post" onsubmit="return checkForm2(this);" enctype="multipart/form-data" >
@@ -21,8 +22,9 @@
 			<label>Enrollment (must be csv) </label><input type="file" name="enrollment" accept=".csv"/><br>
 			<input type="submit" value="submit" name="submit" id="submit"></input>
                         <button type="button" class="exit" id="exit"><a href="dashboard.php" id="ExitLink"> Exit </a></button>
-
-		</form>              
+		</form>          
+                        <button type="button" id="Update" onClick="Update()"> Update </button>
+                
 	</body>
 		
 
