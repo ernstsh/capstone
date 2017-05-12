@@ -10,10 +10,10 @@ function Update(){
         camp_json.StartDate = document.getElementById("startDate").value;
         camp_json.EndDate = document.getElementById("endDate").value;
         var str_json = JSON.stringify(camp_json);       
-        var request= new XMLHttpRequest()
-        request.open("POST", "UpdateCamp.php", true)
-        request.setRequestHeader("Content-type", "application/json")
-        request.send(str_json)
+        var request= new XMLHttpRequest();
+        request.open("POST", "UpdateCamp.php", true);
+        request.setRequestHeader("Content-type", "application/json");
+	request.send(str_json);
         request.onreadystatechange=function(){
 		if(request.readyState == 4){
 			if(request.status == 200){
