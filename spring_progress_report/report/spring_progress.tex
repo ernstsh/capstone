@@ -91,12 +91,12 @@ The things that remain to do are to meet up with our clients to transfer the pro
 This week we met with our client. We implemented the survey taking portion which included: 
 populating camp drop down by date on student log in,
 populating student drop down by selected camp on student log in,
-generate survey for student to take based on provided info,
+generating a survey for students to take based on provided info, and
 store the responses of the taken survey. These required us to create new json objects. 
 The down side to this week is we are slightly late on this as we were hoping to have it to our client on Monday.
  We are still working with Central Services who appear to be ignoring our attempts at communication.
  Next week our client will be able to play with the product and see what they like and don't like.
- This week, on Monday, Kyle helped Shannon with finalizing the survey taking component of our project.
+ This week, on Monday, Kyle helped Shannon with finalizing the survey taking component of the project.
 Kyle also made several changes to the database structure. The Camp table now contains an enrollment array
  of Responder IDs for students enrolled in the camp. This change is also reflected by updating the
  addCamp.php page to do this when uploading enrollment CSV files. The Responder table was updated
@@ -104,7 +104,7 @@ Kyle also made several changes to the database structure. The Camp table now con
  level of education one of their guardians obtained. This demographic information comes from STEM Academy's
  demographic surveys on IdealLogic and is important to how they collect data.
 Next week we will finish development and begin polishing our code. This will likely include,
- on my part, adding some error handling to database interaction code (for example, handling adding 
+ adding some error handling to database interaction code (for example, handling adding 
  duplicates to the database).
 This week Javier fixed a bug that was in the create a new report web page that created a new row in 
 the Report table each time a new report was saved or changes were saved. Javier also made some changes
@@ -114,24 +114,21 @@ the Report table each time a new report was saved or changes were saved. Javier 
  a result for using regular query templates. After getting this done Javier will have to deal with the
  change in response query template and also filtering the query results based on the demographic
  information that was selected. Furthermore, Javier has to fix a bug in his query template drop downs
- and also create nested drop downs for matrix questions. All of this will take time to implement, so Javier
- is hoping that nobody rushes or pressures me to finish all of this because Javier still have to deal with
- three hw assignments for his other classes.
+ and also create nested drop downs for matrix questions. 
 \subsection{Week 2}
-This week Shannon got Central Service to finally give us our website. We have everything
+This week Shannon got Central Service to finally give the website space. We have everything
  allocated so we can start moving things over. We have been struggling to complete development.
  Javier has been having a hard time understanding the querying process so Shannon sat down with
  him to help him refactor his code. This took a long time as he struggled with understanding the
  underlying logic of reusing data collected from the database and using json objects. Meanwhile, Kyle
- was going through removing bugs from our code and managed to break a section of my code. It is unclear
+ was going through removing bugs from the code and managed to break a section. It is unclear
  what he did and we attempted to roll back to a previous commit but it doesn't seem to have worked.
  The drop down menus are still broken. This weekend Shannon will be hauling the project into a complete state,
  Shannon will be fixing whatever issue Kyle caused and Shannon will be finishing Javier's code.
- The only blocker is Kyle deleted data from our database which is critical to testing so Shannon will
- have to add more data to the database. Shannon will be finishing our poster draft over the weekend.
+ The only blocker is Kyle deleted data from the database which is critical to testing so Shannon will
+ have to add more data to the database. Shannon will be finishing the poster draft over the weekend.
  We still haven't contacted our client through this entire debacle and they have not contacted us.
- Things will be tight this next week. Edit: Kyle's issue was a permissions one. Nothing is broken
- which is a relief.
+ Things will be tight this next week. 
  This week Kyle met with the team to work on some polishing while Shannon and Javier worked on finishing
  the report generation. Kyle developed a verification on the randomly generated IDs to make sure that the
  ID being inserted doesn't exist already in the database. If this isn't done, you'd (rarely, but increasingly
