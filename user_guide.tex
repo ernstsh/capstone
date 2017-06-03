@@ -37,16 +37,19 @@
 \section{Introduction}
 The following is a user guide for use of the STEM Academy Data Solution.
 The STEM Academy Data Solution is accessible through the web site. % FILL IN HERE when on CWS
-As a web application, there is no need for installation: the site will be fully accessible from any web browser. % We should TEST which ones, to be specific and safe. Firefox on my desktop doesn't work with the front page buttons, for example
+As a web application, there is no need for installation: the site will be fully accessible from any web browser. 
+% We should TEST which ones, to be specific and safe. Firefox on my desktop doesn't work with the front page buttons, for example
 There are two primary views to the web service: an admin view and a student view.
 Each of these will be described in its own section, with the pages contained in each view further described in their own subsections.
-The admin view is accessible by clicking the "Admin" button on the front page, while the student view is accessible by selecting the "Student" button on the front page.
+The admin view is accessible by clicking the "Admin" button on the front page, while the student view is
+ accessible by selecting the "Student" button on the front page.
 
 \section{Admin View}
 After clicking the button to enter the admin view, the first page seen is a login page.
-Admins registered on the web service will be given a username and password for loging in.
-Entering these and clicking "submit" will bring an admin to the main admin page if their username and password combination is successfully authorized.
-Also on the login page are the "Reset" button, which clears the input fields, and an "Exit" button that returns the user to the front page.
+Admins registered on the web service will be given a username and password for logging in.
+Entering these and clicking "submit" will bring an admin to the main admin page if their username
+ and password combination is successfully authorized. Also on the login page are the "Reset" button,
+ which clears the input fields, and an "Exit" button that returns the user to the front page.
 \subsection{Main Admin Page}
 % TODO
 \subsection{Add Admin}
@@ -56,7 +59,23 @@ Also on the login page are the "Reset" button, which clears the input fields, an
 \subsection{Add Camp}
 % TODO
 \subsection{Edit/create a Survey}
-% TODO
+By clicking the "Edit/Create a Survey" link on the Main Admin Page, user can create a survey or 
+load a preexisting one. To load a preexisting survey, select a survey from the "Load Preexisting Survey"
+ drop down at the top of the page. This will populate all available fields with the information 
+ previously provided for that survey. Any of the data fields may be edited as normal. 
+ To create a survey from scratch, fill out all appropriate fields including Title, Camp (from the provided 
+ drop down) and whether it is a Pre or Post survey. From there select a type of question to add from the 
+ "Add New Question" drop down. The options are Text, Multiple Choice and Matrix. Upon selection, a question will 
+ be presented. Text questions will only provide a single text box to allow for the question text. 
+ Multiple choice will allow for question text and a default of one answer. To add more answers, click "Add Answer."
+ For Matrix, select one of the Likert Scales for agreement and provide a description for the matrix. Questions can 
+ be added by clicking, "Add Question." All questions can be deleted by clicking the "X" button. Questions can be marked 
+ for frequent use by checking the "Frequently Used" box. 
+ A frequently used question can also be added by selecting it from the "Frequently Used Drop Down" 
+ found at the bottom of the page. To preview the survey, click the "Preview" button at the bottom of the page. 
+ A seperate window will pop up with the survey. To save the survey click "Save." This will not redirect you from 
+ the page. To exit the survey click the "Exit" button. To pring the survey, click the "Print" button. This will take 
+ you to a standard print dialog box. 
 \subsection{Edit/create a Report}
 % TODO
 \subsection{Log Out}
@@ -68,11 +87,15 @@ Only camps currently in session are listed.
 After selecting their camp, the second drop down menu will list all of the students enrolled in the camp.
 Students can click "Submit" after selecting their name to load the survey.
 \subsection{Taking Surveys}
-% TODO
+A survey will generated based on date and camp/student selection. Once an appropriate camp and student combination 
+has been submitted, the user will be presented with a pre survey if the date is before the last day of the camp. If 
+the it is the last day of the camp, the user will get a post survey. All questions will be presented with the 
+appropriate entry space. After the survey has been completed the user can click submit and they will be redirected.
 
 \section{Troubleshooting}
 The following information is provided in case STEM Academy encounters a bug in using the STEM Academy Data Solution.
-Unfortunately, software cannot be bug-free, but we hope the information provided in this section will help users recover from and resolve bugs that may impair use of the software.
+Unfortunately, software cannot be bug-free, but we hope the information provided in this section will help users recover
+ from and resolve bugs that may impair use of the software.
 % TODO
 
 \end{document}
