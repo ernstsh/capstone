@@ -93,6 +93,7 @@
         display:none;
 }
 
+
 /*Where the query results are displayed*/
 #QueryResultsText{
         display:none;
@@ -114,7 +115,10 @@ button{
        
 }
 input{
-        border:0;
+        /*border:0;*/
+        width:972px;
+        height:25px;
+        font-size:16pt;
 }
 
 
@@ -129,4 +133,11 @@ input{
         display:none;
 }
 
+}
+.TitleReport{
+        width:972px;
+        font-size: 20pt;
+        text-align:center;
+        height: 30px;
+        border:none;
 }

@@ -7,7 +7,7 @@ var count = 0;
 <head>
     	<script src="report_generation.js"></script>
         <link rel="stylesheet" href="ReportPrintStyleSheet.css" type="text/css" media="print" />
-        <link rel="stylesheet" href="../public_html/css/style1.css">
+        <link rel="stylesheet" href="../public_html/css/style2.css">
 </head>
 
 
@@ -152,7 +152,7 @@ session_start();
 <h4 id="QueryResultsText">Query Results</h4>
 <form class="QueryResult" id="QueryResult">
         <!--For the adding a title to the form-->
-        <input type="text" id="TitleReport" value="" style="width=640px;"/><br>
+        <input type="text" id="TitleReport" value="" class="TitleReport"/><br>
 </form>
 
 </body>

@@ -5,6 +5,7 @@ var count2 = 0;
 //To keep track of the ID of a saved report and to save edits of the current report 
 var SavedReportID; 
 
+
 //Creates a query template based on the selection 
 function AddQuery()
 {
@@ -221,7 +222,8 @@ function QueryJSON(){
                 var ArrayPos = x - 1;
                 queryJSON.queries[ArrayPos] = queryTempJSON;                          
         }
-                
+         
+         
         var CountStuds = 0;
         
         //Converts the query JSON into a string
@@ -265,7 +267,7 @@ function QueryJSON(){
                                                         }
                                                 }
                                                 var SurveyQuestions = JSON.parse(QueryJSON.SurveyQuestions);
-                                                //Find the index of the question for the 
+                                                //Find the index of the question 
                                                 for(var q = 0; q < SurveyQuestions.length; q++){
                                                         if(SurveyQuestions[q].Q_id == QuestionID){
                                                                 MatrixIndexQuestion = q;
@@ -288,6 +290,13 @@ function QueryJSON(){
                                                 }
                                                 else if(Type == 'text'){                                                                                                           
                                                         var table = document.createElement('table');
+                                                        var Tr = document.createElement('tr');   
+                                                        var Td = document.createElement('td');
+                                                        var Text = document.createTextNode(SurveyQuestions[Index].Q_text);
+                                                        Td.appendChild(Text);
+                                                        Tr.appendChild(Td);
+                                                        table.appendChild(Tr);
+
                                                         for(var a = 0; a < QueryJSON.SurveyResponses.length; a++){
                                                             var FullName = QueryJSON.SurveyResponses[a].FirstName + " " + QueryJSON.SurveyResponses[a].LastName;
                                                             
@@ -344,34 +353,58 @@ function QueryJSON(){
                                                         
                                                         if(FoundMatch == true){
                                                                 var table = document.createElement('table');
-                                                                //Adds the main question to the table 
-                                                                var Tr = document.createElement('tr');   
-                                                                var Td = document.createElement('td');
-                                                                var Text = document.createTextNode(SurveyQuestions[MatrixIndexQuestion].Q_topic);
-                                                                Td.appendChild(Text);
-                                                                Tr.appendChild(Td);
-                                                                var Td2 = document.createElement('td');
-                                                                var Text2 = document.createTextNode("Total Agree");
-                                                                Td2.appendChild(Text2);
-                                                                Tr.appendChild(Td2);
+                                                                var Tr = MatrixRow(SurveyQuestions[MatrixIndexQuestion].Q_topic, SurveyQuestions[MatrixIndexQuestion].Q_scale, 'Both');
                                                                 table.appendChild(Tr);
                                                                 
                                                                 //For each sub question 
                                                                 for(var z = 0; z < NumMatrixSub; z++){  
                                                                         var CountStudsMatched = 0;
-
                                                                         var CountPositive = 0;
+                                                                        
+                                                                        //To keep track of the scale options for both pre and post question results 
+                                                                        var Tot1Pre = 0, Tot2Pre = 0, Tot3Pre = 0, Tot4Pre = 0;                                                                                 
+                                                                        var Tot1Post = 0, Tot2Post = 0, Tot3Post = 0, Tot4Post = 0; 
+                                                                        
                                                                         //For each student in pre get student ID and responses 
                                                                         for(var x = 0; x < QueryJSON.SurveyResponses.length; x++){                                                                                
                                                                                 var PreStudID = QueryJSON.SurveyResponses[x].StudID;
                                                                                 var StudentResponses = JSON.parse(QueryJSON.SurveyResponses[x].StudentResponses);  
-                                                                                //For each student in post get student ID and responses  
+                                                                                //For each student in the post get student ID and responses 
                                                                                 for(var y = 0; y < QueryJSON.SurveyResponses2.length; y++){                                                                                        
                                                                                         var PostStudID = QueryJSON.SurveyResponses2[y].StudID;
                                                                                         var StudentResponses2 = JSON.parse(QueryJSON.SurveyResponses2[y].StudentResponses);
                                                                                         //If IDs match check change response for the question 
                                                                                         if(PreStudID == PostStudID){
                                                                                                 CountStudsMatched = CountStudsMatched + 1;
+                                                                                                //For counting the total for each option in the scale for pre survey
+                                                                                                if(StudentResponses[Index].ans[z] == 'SA' || StudentResponses[Index].ans[z] == 'GD'){
+                                                                                                      Tot1Pre = Tot1Pre + 1;  
+                                                                                                }
+                                                                                                else if(StudentResponses[Index].ans[z] == 'A' || StudentResponses[Index].ans[z] == 'M'){
+                                                                                                       Tot2Pre = Tot2Pre + 1; 
+                                                                                                }
+                                                                                                else if(StudentResponses[Index].ans[z] == 'D' || StudentResponses[Index].ans[z] == 'S'){
+                                                                                                        Tot3Pre = Tot3Pre + 1;
+                                                                                                }
+                                                                                                else if(StudentResponses[Index].ans[z] == 'SD' || StudentResponses[Index].ans[z] == 'NA'){
+                                                                                                        Tot4Pre = Tot4Pre + 1;
+                                                                                                }
+                                                                                                
+                                                                                                //For counting the total for each scale option in the post survey 
+                                                                                                if(StudentResponses2[Index2].ans[z] == 'SA' || StudentResponses2[Index2].ans[z] == 'GD'){
+                                                                                                      Tot1Post = Tot1Post + 1;  
+                                                                                                }
+                                                                                                else if(StudentResponses2[Index2].ans[z] == 'A' || StudentResponses2[Index2].ans[z] == 'M'){
+                                                                                                       Tot2Post = Tot2Post + 1; 
+                                                                                                }
+                                                                                                else if(StudentResponses2[Index2].ans[z] == 'D' || StudentResponses2[Index2].ans[z] == 'S'){
+                                                                                                        Tot3Post = Tot3Post + 1;
+                                                                                                }
+                                                                                                else if(StudentResponses2[Index2].ans[z] == 'SD' || StudentResponses2[Index2].ans[z] == 'NA'){
+                                                                                                        Tot4Post = Tot4Post + 1;
+                                                                                                }
+                                                                                                
+                                                                                                //For counting the total positive responses 
                                                                                                 if(PositiveResponse(StudentResponses[Index].ans[z], StudentResponses2[Index2].ans[z]) == true){
                                                                                                         CountPositive = CountPositive + 1;                                                                                                      
                                                                                                 }
@@ -379,21 +412,9 @@ function QueryJSON(){
                                                                                 }
                                                                         }
                                                                         var SurveyQuestions = JSON.parse(QueryJSON.SurveyQuestions); 
-                                                                        var PositiveResult = MatrixResult(CountPositive, CountStudsMatched, queryJSON.ReturnType);
-                                                                        var tr = document.createElement('tr');   
-                                                                        var td1 = document.createElement('td');
-                                                                        var td2 = document.createElement('td');
-                                                                        //Gets the sub question text 
-                                                                        var text1 = document.createTextNode(SurveyQuestions[MatrixIndexQuestion].questions[z]);
-                                                                        //Gets the query result for the matrix sub question 
-                                                                        var text2 = document.createTextNode(PositiveResult);                                                                                                                                            
-                                                                        
-                                                                        //Add question and result to a row then the table 
-                                                                        td1.appendChild(text1);
-                                                                        td2.appendChild(text2);
-                                                                        tr.appendChild(td1);
-                                                                        tr.appendChild(td2);
-                                                                        table.appendChild(tr);
+                                                                        var PositiveResult = MatrixResult(CountPositive, CountStudsMatched, queryJSON.ReturnType);                                                                
+                                                                        var Tr2 = MatrixRow2(SurveyQuestions[MatrixIndexQuestion].questions[z], 'Both', Tot1Pre, Tot2Pre, Tot3Pre, Tot4Pre, Tot1Post, Tot2Post, Tot3Post, Tot4Post, PositiveResult);
+                                                                        table.appendChild(Tr2);  
 
                                                                 }
                                                                 //Creates a div for creating a new query result for the table 
@@ -415,46 +436,45 @@ function QueryJSON(){
                                                                 
                                                                 //Adds the query result to the web page
                                                                 element = document.getElementById("QueryResult");
-                                                                element.appendChild(queryResultNew);                                                                                                                             
-                                                        }                                                         
+                                                                element.appendChild(queryResultNew);                                                                                                                            
+                                                        }                                                        
                                                 }
                                                 else if(Type == 'matrix' && SurveyName != 'Both'){
                                                         var table = document.createElement('table');
-                                                        //Adds the primary question to the table 
-                                                        var Tr = document.createElement('tr');   
-                                                        var Td = document.createElement('td');
-                                                        var Text = document.createTextNode(SurveyQuestions[MatrixIndexQuestion].Q_topic);
-                                                        Td.appendChild(Text);
-                                                        Tr.appendChild(Td);
-                                                        var Td2 = document.createElement('td');
-                                                        var Text2 = document.createTextNode("Total Agree");
-                                                        Td2.appendChild(Text2);
-                                                        Tr.appendChild(Td2);
+                                                        var Tr;
+                                                        Tr = MatrixRow(SurveyQuestions[MatrixIndexQuestion].Q_topic, SurveyQuestions[MatrixIndexQuestion].Q_scale, '!Both');
                                                         table.appendChild(Tr);
                                                         var SurveyQuestions = JSON.parse(QueryJSON.SurveyQuestions); 
                                                         //For each sub question                                                      
                                                         for(var b = 0; b < NumMatrixSub; b++){
-                                                                //For each student 
                                                                 var CountPositive = 0;
+                                                                //Keeps track of the scale options totals
+                                                                var Tot1 = 0, Tot2 = 0, Tot3 = 0, Tot4 = 0;
+                                                                //Keeps track of the scale type used for matrix question
+                                                                var ScaleType;
+                                                                //For each student 
                                                                 for(var a = 0; a < QueryJSON.SurveyResponses.length; a++){
-                                                                        var StudentResponses = JSON.parse(QueryJSON.SurveyResponses[a].StudentResponses);
+                                                                        var StudentResponses = JSON.parse(QueryJSON.SurveyResponses[a].StudentResponses);                                                                      
+                                                                        if(StudentResponses[Index].ans[b] == 'SA' || StudentResponses[Index].ans[b] == 'GD'){
+                                                                                Tot1 = Tot1 + 1;
+                                                                        }
+                                                                        else if(StudentResponses[Index].ans[b] == 'A' || StudentResponses[Index].ans[b] == 'M'){
+                                                                                Tot2 = Tot2 + 1;
+                                                                        }
+                                                                        else if(StudentResponses[Index].ans[b] == 'D' || StudentResponses[Index].ans[b] == 'S'){
+                                                                                Tot3 = Tot3 + 1;
+                                                                        }
+                                                                        else if(StudentResponses[Index].ans[b] == 'SD' || StudentResponses[Index].ans[b] == 'NA'){
+                                                                                Tot4 =  Tot4+ 1;
+                                                                        }                                                                      
                                                                         if(PositiveResponse2(StudentResponses[Index].ans[b]) == true){
                                                                                 CountPositive = CountPositive + 1;
                                                                         }
                                                                 }
-                                                                var PositiveResult = MatrixResult(CountPositive, QueryJSON.SurveyResponses.length, queryJSON.ReturnType);
-                                                                var tr = document.createElement('tr');   
-                                                                var td1 = document.createElement('td');
-                                                                var td2 = document.createElement('td');
-                                                                var text1 = document.createTextNode(SurveyQuestions[MatrixIndexQuestion].questions[b]);
-                                                                var text2 = document.createTextNode(PositiveResult);
-
-                                                                td1.appendChild(text1);
-                                                                td2.appendChild(text2);
-                                                                tr.appendChild(td1);
-                                                                tr.appendChild(td2);
-                                                                table.appendChild(tr);                                                                
-                                                        } 
+                                                                var PositiveResult = MatrixResult(CountPositive, QueryJSON.SurveyResponses.length, queryJSON.ReturnType);                                                     
+                                                                var Tr = MatrixRow2(SurveyQuestions[MatrixIndexQuestion].questions[b], '!Both', Tot1, Tot2, Tot3, Tot4, 0, 0, 0, 0, PositiveResult);
+                                                                table.appendChild(Tr);      
+                                                        }
                                                         //Creates a div for creating a new query result for the table 
                                                         count2++;
                                                         var queryResultNew = document.createElement("div");
@@ -480,36 +500,131 @@ function QueryJSON(){
         }
 }
 
-//Checks if its a positive response for matrix question with the option both 
-function PositiveResponse(PreAnswer, PostAnswer){
-        if(PreAnswer == 'A' && PostAnswer == 'A'){
-                return true;
+//Creates the columns for a matrix question 
+function MatrixRow(PrimaryQues, QuestionScale, MatrixType){
+        var Tr = document.createElement('tr');   
+        for(var x = 0; x < 10; x++){
+                var Td = document.createElement('td');
+                var Text;
+                
+                //Not change in response break don't need columns for post survey 
+                if(x == 6 && MatrixType == '!Both'){
+                        break;
+                }
+                //Sub Question 
+                if(x == 0){
+                        Text = document.createTextNode(PrimaryQues);
+                }
+                //Strongly Agree(SA) and Great Great Deal(GD) cases 
+                else if((x == 1 && QuestionScale == 'agree') || (x == 5 && QuestionScale == 'agree' && MatrixType == 'Both')){
+                        Text = document.createTextNode('SA');
+                }
+                else if((x == 1 && QuestionScale == 'not-deal') || (x == 5 && QuestionScale == 'not-deal' && MatrixType == 'Both')){
+                                Text = document.createTextNode('GD');
+                }
+                //Agree(A) and Moderately(M) cases 
+                else if((x == 2 && QuestionScale == 'agree') || (x == 6 && QuestionScale == 'agree' && MatrixType == 'Both')){
+                                Text = document.createTextNode('A');
+                }
+                else if((x == 2 && QuestionScale == 'not-deal') || (x == 6 && QuestionScale == 'not-deal' && MatrixType == 'Both')){
+                                Text = document.createTextNode('M');
+                }
+                //Disagree(D) and Slightly(S) cases 
+                else if((x == 3 && QuestionScale == 'agree') || (x == 7 && QuestionScale == 'agree' && MatrixType == 'Both')){
+                                Text = document.createTextNode('D');
+                }
+                else if((x == 3 && QuestionScale == 'not-deal') || (x == 7 && QuestionScale == 'not-deal' && MatrixType == 'Both')){
+                                Text = document.createTextNode('S');
+                }
+                //Strongly Disagree (SD) and Not at all(NA) cases
+                else if((x == 4 && QuestionScale == 'agree') || (x == 8 && QuestionScale == 'agree' && MatrixType == 'Both')){
+                                Text = document.createTextNode('SD');
+                }
+                else if((x == 4 && QuestionScale == 'not-deal') || (x == 8 && QuestionScale == 'not-deal' && MatrixType == 'Both')){
+                                Text = document.createTextNode('NA');
+                }
+                else if((x == 5 && MatrixType == '!Both') || (x == 9 && MatrixType == 'Both')){
+                                Text = document.createTextNode('Total Agree');
+                }
+                Td.appendChild(Text);
+                Tr.appendChild(Td);
         }
-        else if(PreAnswer == 'SA' && PostAnswer == 'SA'){
+        return Tr;
+}
+
+//Creates the row results for a matrix question 
+function MatrixRow2(SecondaryQues, MatrixType, tot1, tot2, tot3, tot4, tot5, tot6, tot7, tot8, totPositive){
+        var Tr = document.createElement('tr');
+        for(var x = 0; x < 10; x++){
+                var Td = document.createElement('td');
+                var Text;               
+                //Not change in response don't need results for post survey 
+                if(x == 6 && MatrixType == '!Both'){
+                        break;
+                }
+                if(x == 0){
+                        Text = document.createTextNode(SecondaryQues);
+                }
+                else if(x == 1){
+                        Text = document.createTextNode(tot1);
+                }
+                else if(x == 2){
+                        Text = document.createTextNode(tot2);
+                }
+                else if(x == 3){
+                        Text = document.createTextNode(tot3);
+                }
+                else if(x == 4){
+                        Text = document.createTextNode(tot4);
+                }
+                else if((x == 5 && MatrixType == '!Both') || (x == 9 && MatrixType == 'Both')){
+                        Text = document.createTextNode(totPositive);
+                }
+                else if(x == 5 && MatrixType == 'Both'){
+                        Text = document.createTextNode(tot5);
+                }
+                else if(x == 6 && MatrixType == 'Both'){
+                        Text = document.createTextNode(tot6);
+                }
+                else if(x == 7 && MatrixType == 'Both'){
+                        Text = document.createTextNode(tot7);
+                }
+                else if(x == 8 && MatrixType == 'Both'){
+                        Text = document.createTextNode(tot8);
+                }
+                Td.appendChild(Text);
+                Tr.appendChild(Td);
+        }          
+        return Tr;
+}
+
+//Checks if its a positive response for matrix question with the option both  
+function PositiveResponse(PreAnswer, PostAnswer){
+        //Cases for the first scale type Strongly Agree(SA) - Strongly Disagree(SD)     
+        if((PreAnswer == 'SA' && PostAnswer == 'SA') || (PreAnswer == 'A' && PostAnswer == 'SA') ||
+                (PreAnswer == 'SA' && PostAnswer == 'A') || (PreAnswer == 'D' && PostAnswer == 'A') ||
+                (PreAnswer == 'D' && PostAnswer == 'SA') || (PreAnswer == 'SD' && PostAnswer == 'A') ||
+                (PreAnswer == 'SD' && PostAnswer == 'SA') || (PreAnswer == 'A' && PostAnswer == 'A')){
                 return true; 
         }
-        else if(PreAnswer == 'A' && PostAnswer == 'SA'){
-                return true;
+        //Cases for the second scale type Great Deal(GD) - Not at all(NA)
+        else if((PreAnswer == 'NA' && PostAnswer == 'S') || (PreAnswer == 'NA' && PostAnswer == 'M') || 
+                (PreAnswer == 'NA' && PostAnswer == 'GD') || (PreAnswer == 'S' && PostAnswer == 'M') ||
+                (PreAnswer == 'S' && PostAnswer == 'GD') || (PreAnswer == 'GD' && PostAnswer == 'S') ||
+                (PreAnswer == 'M' && PostAnswer == 'S') || (PreAnswer == 'S' && PostAnswer == 'S') ||
+                (PreAnswer == 'M' && PostAnswer == 'GD') || (PreAnswer == 'GD' && PostAnswer == 'M') ||
+                (PreAnswer == 'M' && PostAnswer == 'M') || (PreAnswer == 'GD' && PostAnswer == 'GD')){
+                        return true;
         }
-        else if(PreAnswer == 'SA' && PostAnswer == 'A'){
-                return true;
+        else{
+                return false;
         }
-        else if(PreAnswer == 'D' && PostAnswer == 'A'){
-                return true;               
-        }
-        else if(PreAnswer == 'D' && PostAnswer == 'SA'){
-                return true;
-        }
-        else if(PreAnswer == 'SD' && PostAnswer == 'A'){
-                return true;               
-        }
-        else if(PreAnswer == 'SD' && PostAnswer == 'SA'){
-                return true;
-        }
+        
 }
 
 //Checks if its a positive response for pre or post survey matrix question 
 function PositiveResponse2(Answer){
+        //Cases for the first scale type Strongly Agree(SA) - Strongly Disagree(SD)
         if(Answer == 'A'){
                 return true;
         }
@@ -520,6 +635,19 @@ function PositiveResponse2(Answer){
                 return false;
         }
         else if(Answer == 'D'){
+                return false;
+        }
+        //Cases for the second scale type Great Deal(GD) - Not at all (NA)
+        else if(Answer == 'GD'){
+                return true;
+        }
+        else if(Answer == 'M'){
+                return true;
+        }
+        else if(Answer == 'S'){
+                return true;
+        }
+        else if(Answer == 'NA'){
                 return false;
         }
 }
