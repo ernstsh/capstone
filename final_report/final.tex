@@ -9,7 +9,10 @@
 \usepackage{float}
 \usepackage{color}
 \usepackage{url}
-
+\usepackage{subfiles}
+\usepackage{blindtext}
+%\usepackage[subpreambles=true]{standalone}
+%\usepackage{import}
 \usepackage{balance}
 \usepackage[TABBOTCAP, tight]{subfigure}
 \usepackage{enumitem}
@@ -17,6 +20,8 @@
 \usepackage{geometry}
 \geometry{margin=.75in}
 \usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{shapes, positioning, calc}
 %\usetikzlibrary{shapes, positioning, calc}
 \usepackage{caption}
 \usepackage{listings}
@@ -33,6 +38,11 @@
 %   pdfsubject = {CS 311 Project 1},
 %   pdfpagemode = UseNone
 % }
+%credit to %http://tex.stackexchange.com/questions/48152/dynamic-signature-date-line
+\newcommand*{\SignatureAndDate}[1]{%
+    \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
+    \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}%
+}%
 
 \parindent = 0.0 in
 \parskip = 0.1 in
@@ -49,6 +59,7 @@
 \section{Introduction}
 \section{Requirements Document}
 \subsection{Original Document}
+%\subfile{sections/design_doc}
 \subsection{Changes to the Document}
 \subsection{Gantt Chart Progression}
 \section{Design Document}
@@ -58,35 +69,9 @@
 \subsection{Original Document}
 \subsection{Changes to the Document}
 \section{Weekly Blogs Over the Year}
-\subsection{Fall}
-\subsubsection{Week 3}
-\subsubsection{Week 4}
-\subsubsection{Week 5}
-\subsubsection{Week 6}
-\subsubsection{Week 7}
-\subsubsection{Week 8}
-\subsubsection{Week 9}
-\subsubsection{Week 10}
-\subsection{Winter}
-\subsubsection{Week 1}
-\subsubsection{Week 2}
-\subsubsection{Week 3}
-\subsubsection{Week 4}
-\subsubsection{Week 5}
-\subsubsection{Week 6}
-\subsubsection{Week 7}
-\subsubsection{Week 8}
-\subsubsection{Week 9}
-\subsubsection{Week 10}
-\subsection{Spring}
-\subsubsection{Week 1}
-\subsubsection{Week 2}
-\subsubsection{Week 3}
-\subsubsection{Week 4}
-\subsubsection{Week 5}
-\subsubsection{Week 6}
-\subsubsection{Week 7}
-\subsubsection{Week 8}
+\subfile{sections/fall_weekly_blogs}
+\subfile{sections/winter_weekly_blogs}
+\subfile{sections/spring_weekly_blogs}
 \section{Poster}
 \section{Documentation}
 \subsection{Overall}
