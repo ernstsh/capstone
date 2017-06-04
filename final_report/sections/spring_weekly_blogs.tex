@@ -3,35 +3,82 @@
 \begin{document}
 \subsection{Spring}
 \subsubsection{Week 1}
-\textbf{Shannon Ernst}
-\textbf{Kyle Nichols}
-\textbf{Javier Franco}
+\textbf{Shannon Ernst} \\ 
+This week we met with our client. We implemented the survey taking portion which included:
+
+populating camp drop down by date on student log in
+populating student drop down by selected camp on student log in
+generate survey for student to take based on provided info
+store the responses of the taken survey These required us to create new json objects. The down side to this week is we are slightly late on this as we were hoping to have it to our client on Monday. We are still working with Central Services who appear to be ignoring our attempts at communication. Next week our client will be able to play with the product and see what they like and don't like.\\ \\
+\textbf{Kyle Nichols}\\
+This week, on Monday, I helped Shannon with finalizing the survey taking component of our project.
+
+I also made several changes to the database structure. The Camp table now contains an enrollment array of Responder IDs for students enrolled in the camp. This change is also reflected by updating the addCamp.php page to do this when uploading enrollment CSV files. The Responder table was updated with new demographic information: ethnicity, race, free or reduced lunch status, and the highest level of education one of their guardians obtained. This demographic information comes from STEM Academy's demographic surveys on IdealLogic and is important to how they collect data.
+
+Next week we will finish development and begin polishing our code. This will likely include, on my part, adding some error handling to database interaction code (for example, handling adding duplicates to the database). \\ \\ 
+\textbf{Javier Franco}\\
+This week I fixed a bug that was in the create a new report web page that created a new row in the Report table each time a new report was saved or changes were saved. I also made some changes to the delete admin web page to prevent the accounts of our clients from being deleted by other admin users including themselves. This week I have also been working on the implementation of the returning a query result, but this is a difficult and tedious task. Right now I am almost done with returning a result for using regular query templates. After getting this done I will have to deal with the change in response query template and also filtering the query results based on the demographic information that was selected. Furthermore, I have to fix a bug in my query template drop downs and also create nested drop downs for matrix questions. All of this will take time to implement, so I am hoping that nobody rushes or pressures me to finish all of this because I still have to deal with three hw assignments for my other classes. \\
 \subsubsection{Week 2}
-\textbf{Shannon Ernst}
-\textbf{Kyle Nichols}
-\textbf{Javier Franco}
+\textbf{Shannon Ernst}\\ 
+This week I got Central Service to finally give us our website. We have everything allocated so we can start moving things over. We have been struggling to complete development. Javier has been having a hard time understanding the querying process so I sat down with him to help him refactor his code. This took a long time as he struggled with understanding the underlying logic of reusing data collected from the database and using json objects. Meanwhile, Kyle was going through removing bugs from our code and managed to break a section of my code. It is unclear what he did and we attempted to roll back to a previous commit but it doesn't seem to have worked. The drop down menus are still broken. This weekend I will be hauling the project into a complete state, I will be fixing whatever issue Kyle caused and I will be finishing Javier's code. The only blocker is Kyle deleted data from our database which is critical to testing so I will have to add more data to the database. I will be finishing our poster draft over the weekend. We still haven't contacted our client through this entire debacle and they have not contacted us. Things will be tight this next week.
+
+Edit: Kyle's issue was a permissions one. Nothing is broken which is a relief.\\ \\
+\textbf{Kyle Nichols}\\
+This week I met with my team to work on some polishing while Shannon and Javier worked on finishing the report generation. I developed a verification on the randomly generated IDs to make sure that the ID being inserted doesn't exist already in the database. If this isn't done, you'd (rarely, but increasingly with the size of the database) get an error from inserting a pre-existing ID.
+
+However, in adding this and some more polishing work, I noticed a bug where in the drop-down menu for frequently-used questions where matrix questions were listed as blank. In trying to fix this bug Thursday night, the drop-down menus for the survey creation page suddenly stopped working, which prevented any functionality of adding questions. Ultimately, the next morning we realized this was a permissions issue (we don't know how this had changed so suddenly). It is currently resolved, but since I reverted all of my changes Thursday night to try and fix this sudden bug, my progress on polishing and the ID verification code was removed.
+
+This weekend and early next week I should be able to add that code back since luckily it was pretty short. I will also next week start preparing the database on Central Web Services since the domain and MySQL database have now been provided.\\ \\
+\textbf{Javier Franco}\\
+This week I worked with Shannon on refactoring my code because it was not readable enough what I was doing which made it difficult for her to understand with what was going on. While refactoring my code we discussed our approaches for doing the querying which were different and she helped clear things up. She also showed me the proper way to make a JSON object into a string how to decode the string form properly in order to get the JSON object's values. This helped with removing unnecessary variables that I was creating. She plans on finishing my code up over the weekend, so that we can send a link to our client as soon as possible to have them test our web application and also to transfer over central services. The reason why my code was not readable is due to not have any previous experience with JSON objects and DOM manipulation because I learned all of this on the fly last term. Another thing that I noticed was that Shannon's experience with creating web application's allows her to come up with quick solutions for DOM manipulation that seem complicated for me to implement, but after she explains solution its easy to implement. \\
 \subsubsection{Week 3}
-\textbf{Shannon Ernst}
-\textbf{Kyle Nichols}
-\textbf{Javier Franco}
+\textbf{Shannon Ernst}\\
+LATE: Last week I was working with Javier to get the report generation working. The issue is that, though he is a hard worker, he gets too caught in the syntax and does not know what problem he is actually solving. His code is also completely unmanageable in style with too many comments and unneeded variables. With my limited time, I could not sit down and help him as much this week so asked him to push the code to me so I could just finish it. He did so but then continued to work on it leaving me with the impression that he was going to finish it. This was not the case and when we discussed after lecture what was left to be done (all of which the code had already been written for in survey generation, it just needed to be adapted for reports) he said he could not accomplish it without more research and sitting down with me. This caused me some frustration as I could not understand why he could not find the appropriate code in my work and adapt it. I then told him to give me what he had done and I would finish it. On attempting to do so I made the decision to give the client what we had right now as all of Javier's code needs to be heavily refactored and I do not want to add code yet. Unfortunately I still have not had time to work on it as I was working an event all weekend. The client is aware of where we stand and I will be pulling late nights this week to make the May 1 code freeze. \\ \\
+\textbf{Kyle Nichols}\\
+This week I did some debugging and polishing of code with my team. On my work, there weren't really any problems encountered, but as a whole, our team is running into unforeseen problems as a whole in finalizing report generation that has delayed us behind where we anticipated being.
+
+Next week I will likely spend some more time polishing and testing the product. \\ \\
+\textbf{Javier Franco}\\
+This week I spent numerous hours working on the report generation page I was able to fix the drop down bug that prevented a user from clicking on a drop down option thanks to Shannon's advice. I was able to implement the querying for returning a result for a matrix, text entry, and multiple choice question. This took a significant amount of time due to changing JSON object that contained the PHP query results and also with verifying that they were the correct results. The pseudo code that Shannon provided me with helped me with setting up the text entry and multiple choice results. After I got the results for these two questions types I then had to figure out how to return the results for a matrix question. The matrix question results took the longest due to the format that I wanted to display which was the primary question along with the sub questions with their corresponding results. In addition, I had to create a function to return a percentage or a count based on the user's selection. Another thing that I had to change was the query drop downs for the matrix and text questions, so that it only displayed the question. In order to send the client the link to test our webpages Shannon took over were I left at and did an excellent jo. I am very thankful that she did this and also for my teams patience. Over the weekend I will check if anything still remains for the report generation page, so that it can be completed before we demo our web app to our TA. \\
 \subsubsection{Week 4}
-\textbf{Shannon Ernst}
-\textbf{Kyle Nichols}
-\textbf{Javier Franco}
+\textbf{Shannon Ernst}\\
+This week has been concerned with administration issues. We met with the TA to get feedback on our project. Javier and I met briefly to confirm progress on the report generation. It seems like everything is wrapping up nicely. The poster was completed and Kyle received a signature for it. I collected the photo release forms and will be turning them into Covell as well as turning in the poster to the printer. Even though code freeze is on Monday, we will be transferring the code to Central Services through out May and essentially using May to make sure our clients are set up for the summer. We are set for Expo.\\ \\
+\textbf{Kyle Nichols}\\
+This week I worked primarily on the editing and revising the poster to get it into a working form for our final submission. I also got the signatures from my client and teammates. \\ \\
+\textbf{Javier Franco}\\
+This week I finished the remaining parts of the report generation page from last week that I still needed to do which included being a able to save a report, edit a report, delete a table query, and print a report. The reason why there was this many things left was due to changes I made to the page for returning query results for text and matrix questions. Shannon was not able to refactor my code to finish the remaining parts due to how poorly I wrote my code which included adding to many unnecessary comments. The style sheet that she added to the report generation helped with making the page look aesthetically pleasing and also with printing the report which reduced the amount of work I had to do. The only things that remain is to test the web pages to see if their are any minor bugs before the code freeze and I also need to check the other code files that I wrote, so that I can remove any unnecessary comments, echo statements, and inner HTML statements that I used for testing. I think our group is in a great position and we are on track with completing our promised product for our clients. \\
 \subsubsection{Week 5}
-\textbf{Shannon Ernst}
-\textbf{Kyle Nichols}
-\textbf{Javier Franco}
+\textbf{Shannon Ernst}\\
+This week not much occurred. The code freeze was met perfectly fine. We got some feedback from our client on a minor bug that did not effect code freeze. We will be working between now and the end of term to move everything over to Central Services. The poster for Expo was submitted on time. Everything is coming together nicely. \\ \\
+\textbf{Kyle Nichols}\\ 
+I met with my team on Wednesday to evaluate where we are at. As far as my work toward Capstone this week, I was only able to work on the WIRED interview.\\ \\
+\textbf{Javier Franco}\\
+This week not a lot happened. We had a meeting to discuss where we are in our project and decided that we are meeting the up coming week to transfer the web pages to central services. I'm hoping that we get more feedback from the clients, so that we make any changes to the webpages to meet their needs and also to fix any bugs that they find. \\
 \subsubsection{Week 6}
-\textbf{Shannon Ernst}
-\textbf{Kyle Nichols}
-\textbf{Javier Franco}
+\textbf{Shannon Ernst}\\
+This week I contacted our client to set up a meeting to transfer the project. I am yet to hear back. I also set up our mid term progress report document and the slides. Next week is expo. We need to create a video demo to run of our product at expo. We are also transferring things to the Central Services web space right now. \\ \\
+\textbf{Kyle Nichols}\\
+This week I worked with generated the new tables for the Central Web Services hosted database to match our current tables. They are still empty.
+
+I also worked with Javier on adding some new functionality for editing camps that our clients need. \\ \\
+\textbf{Javier Franco}\\
+This week our group met up to transfer our code to central services. Shannon set up our PowerPoint and progress report document, so that we can work on it during the weekend. While Shannon worked on doing this me and Kyle worked on fixing the csv issue that our client pointed out. During the weekend we will record our videos and finish writing up our progress report. \\
 \subsubsection{Week 7}
-\textbf{Shannon Ernst}
-\textbf{Kyle Nichols}
-\textbf{Javier Franco}
+\textbf{Shannon Ernst}\\
+This was expo week. We finished the mid term report. We presented our poster at expo and met with the public. We are waiting to hear back from our client on a meeting time to hand over the project. \\ \\
+\textbf{Kyle Nichols}\\
+This week we did not really work on anything more on the project, other than finishing and submitting our midterm progress report.
+
+The week primarily focused on Expo. I made a demo to display on my Surface during the Expo. Expo itself went well. \\ \\
+\textbf{Javier Franco}\\
+This week was expo and everything went well and for demonstrating the functionality of our web app Kyle made a video demo to run in the background. We finished our progress report on time and received an email what times our clients are available to meet up with them. \\
 \subsubsection{Week 8}
-\textbf{Shannon Ernst}
-\textbf{Kyle Nichols}
-\textbf{Javier Franco}
+\textbf{Shannon Ernst}\\
+Expo itself went fairly well. All three members of the group checked in around 8 am and waited for Expo to begin at 11 am. We were stationed outside so we had to come up with some creative ways to keep our poster standing, or at least from falling off the table. Our solution was to make some duct tape rope and tie the poster to the cross beam of the tent. This way when the wind blew the poster would be knocked back but was easily retrievable without having to circle the table completely to bring it back up. My teammates and I took turns for breaks starting around one o' clock since we were all getting tired and sore from standing in one place for so long. As far as interacting with the public we didn't get much foot traffic outside. We had a lot of people walk by our poster, giving us a cursory glance, but for the most part people went to talk to the smart power strip station on our left and the AI brewing station on our right. The people who did come to talk to us about our poster were mostly friends or students that I TA looking for extra credit. We did have a couple industry members stop by and they were able to give us some interesting feedback about how this connected to their jobs. Some were particularly interested in the security component of our project which was not our primary focus for this project so we did not have much to say. Kyle and I did the majority of the talking while Javier chimed in every once and a while. When 3:30 pm came around we tore down quickly and were out of Kelley. Expo felt generally anti-climactic. This is probably because our project isn't generally appealing as it doesn't have many visual components. If I were to do capstone all over again I would take a different tact on this project. I would probably for a smart OCR to collect the data from their paper surveys. This would have been more interesting all around and I probably would have learned more since I have done a lot of web development. \\ \\
+\textbf{Kyle Nichols}\\
+Capstone has gone well this year. We have accomplished our project for our clients and I am confident with the product that we will provide for them. Expo also went well, as we were able to present our project to people with no problems (beside a constantly falling poster).
+
+The rest of the term we will spend documenting our project for our clients and creating our final report. \\ \\
+\textbf{Javier Franco}\\
+This term we were able to complete our project on time even though it took me 3-4 weeks to complete the report generation code. If I had to this all over again I would have made sure that that the parts that I needed were done earlier, so that I would not feel as pressured finishing my parts on time. On the bright side my skills in web development have improved a lot by working on this capstone project and I learned new things from Shannon such as how a JSON can be used to store data more efficiently and how to load up a drop down properly. Expo went well and all of us were ready to go by 11:00 AM. I felt that Shannon and Kyle did most of the talking. Something that did not help our booth location was that being next to two cool projects caused people's attention to be drawn to them. In addition, by being outside our poster kept falling because of the wind. At 3:30 we put away all of our things since expo was over. Our plan for finishing up the term is to finish our progress report. Our main priority is going to finish the documentation, so that we can transfer the project to our client's June 5th then we will finish our individual videos. \\
 \end{document}
