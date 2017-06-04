@@ -1,0 +1,186 @@
+\documentclass[letterpaper,10pt,serif, draftclsnofoot,onecolumn, compsoc, titlepage]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{alltt}
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+\usepackage{pstricks, pst-node}
+
+\usepackage{geometry}
+\geometry{margin=.75in}
+
+\usepackage{hyperref}
+%credit to http://tex.stackexchange.com/questions/48152/dynamic-signature-date-line
+\newcommand*{\SignatureAndDate}[1]{%
+    \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
+    \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}%
+}%
+\title{The STEM Academy Data Solution}
+\author{Requirements Document \\ Kyle Nichols, Shannon Ernst, Javier Franco\\ 4 November 2016\\ CS 461 Fall 2016}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\section{Abstract}
+The STEM Academy Data Solution is a product proposed to the clients, STEM Academy, as a solution to their need for an efficient way of collecting survey data and reporting summary information.
+The software requirements specification is written to lay out what STEM Academy requires of the developers in providing a product to accomplish their needs.
+It explains what the product does and any information necessary to understanding the project and its scope.
+It also discusses the requirements themselves, from the user interface to generate surveys and report summary data to the database storing survey response data.
+Lastly, it clarifies performance requirements to ensure that the product functions within reasonable expectations for the clients.
+
+\newpage
+\section{Introduction}
+\subsection{Purpose}
+This software requirements specification is intended to define the requirements of the project of developing a database 
+of surveys for STEM Academy. Defined requirements will allow for a contract between us, the developers, and STEM Academy, 
+our clients, on what STEM Academy wants us to deliver in their desired software. This document is intended for review and
+reference by both the developers and the clients.
+\subsection{Scope}
+The product outlined in this requirements document will be the STEM Academy Data Solution. The product will need to be able
+to generate and distribute surveys, collect and store data from survey takers, and generate reports of the data.  This product
+is intended to help collect and analyze survey data so that the results may be better used in informing sponsors and the public on
+how the STEM Academy programs are doing. 
+
+The software products that will be produced include a survey generator, a database that stores survey questions and responses from students to those questions, and a report generator that generates results based on queries to the database.  
+The results of the report generator will be presented as raw data or a summary of the data (average, count, sums) and it will not produce any kinds of visualizations which include pie charts, bar graphs, and line graphs.  
+The goal of the software is to help the STEM Academy to obtain more funding for their camps/clubs/programs by helping ease the distribution of surveys and collection of data, so that they can present this information to their sponsors and on their applications for obtaining more funding. This data will also be used in marketing tools. 
+The benefits that the software will have on the STEM Academy are that they will be able to produce reports quickly, which will save them a significant amount of time by not having to tabulate results by hand, and it will prevent survey results from being untabulated.
+ In addition, they will no longer have to verify their data analysis results since the software will generate results that are 100\% accurate.
+ Another benefit that the software will have on the STEM Academy is that student survey responses and survey questions will be stored in a secure database instead of a paper filing system and their personal information will be encrypted to maintain its confidentiality from outside users. 
+
+\subsection{Definitions}
+\noindent Administration - the individuals who would be generating and/or accessing survey data. \\
+Contract - A legally binding document that is agreed upon by the customer and developers.  \\
+Customer - The person, or persons, who will be receiving the final product and provide feedback to the developers, so that they can meet the requirements for their desired product. \\
+Data analyst - A user that uses the product to generate a report based on survey response data. \\
+Database - A collection of information that is organized, so that it can be easy to modify and find information. \\
+Developers - A group of people who will build a software product for a customer. \\
+Matrix question - A multi-part question where each part is a row that has several options for response. All parts have the
+same answer choices.\\
+Multiple choice question - A question where the response is a selection from different options, and one or many selections
+are possible.\\
+Query - A request for information from the database based on user requirements.\\
+Question - A textual area on a survey which has a prompt and an answer.\\
+Question type - Question structure can vary based on the kind of response desired (multiple choice, text entry, matrix). \\
+Survey builder - A user that creates surveys on the database.\\
+Survey taker - A user that provides answers to surveys existing on the database. These responses are stored in
+the database.\\
+Template question - A question that follows a general structure. This can be edited to change some wording that can
+vary between surveys (such as the material taught) while the general structure stays the same.\\
+Text entry question - A question where the response is a box that allows the user to answer with a string of text.\\
+User - A person that will be interacting and using the product.
+
+\subsection{References}
+% Do we have any outside information in this that must be cited? I haven't seen any. -Kyle.
+\subsection{Overview}
+The remaining parts of the software requirements specification document include the overall description of the product followed by the specific requirements of the product.
+ The purpose of the overall description section is to provide a background for the requirements that will be listed in the specific requirements section and also to explain any factors that can influence the product and its requirements. 
+ In the overall description section, it contains the product perspective, products functions, user characteristics, constraints that will limit the development of the product, and any assumptions and dependencies that we have that if changed will require altering our requirements. 
+The specific requirements section contains external user interface requirements, functional requirements, design constraints, software system attributes, and other requirements. 
+The purpose of the specific requirements section is to help us with our design process by satisfying the requirements we listed and to test whether or not we were able to meet our software requirements.  
+\section{Overall Description}
+
+\subsection{Product Perspective}
+The product will be wholly self-contained, as it is intended as a product to specially satisfy the needs of the STEM Academy's survey
+process. The user interface should be designed in such a way that users do not need any knowledge of SQL queries to be able
+to query the database to generate reports. An example would be a list of common actions that they can perform on the database
+and text fields to retrieve information necessary for the SQL query. This web user interface will connect with the database management
+software we use for our product.
+\subsection{Product Functions}
+The basic functionality of the product will be that a user will be able to choose from three different modes which include data analyst, survey builder, and survey taker. 
+A user that wants to enter survey taker mode will not require a login as they will be provided a link to the particular survey they will take and will not have access to any other data, but the other two modes will require the user to enter an username and password in order to enter these modes. 
+
+\subsection{User Characteristics}
+The users of the software follow two basic characteristic sets. The first are survey builders and data analysts that are members of the
+STEM Academy. These users are educated and have experience in creating surveys and understanding data from surveys,
+however they are also non-technical in regards to this kind of product. The other type of user are the survey takers, who are
+generally either grade school students or the parents of the students. The education and the experience in the STEM fields
+can vary in this type of user, from minimal to deep, though most will be minimal. The technical knowledge will also vary, though
+most are likelly to have the required knowledge to navigate a web page.
+\subsection{Constraints}
+The main constraint is the infrastructure which this product will be built upon. It must be hosted in such a fashion that it will
+be accessible to the STEM Academy for continual use upon completion. As the STEM Academy currently does most things on
+paper, it is unclear as to what storage and hosting capabilities are currently available to them. Ideally, Oregon State University
+will have resources for them to use, but if they do not, then inexpensive routes of storage and hosting will have to be found. 
+\subsection{Assumptions and Dependencies}
+For this product, we assume that we will have access to a resource on campus that can store a large amount of information on
+surveys and responses. 
+\section{Specific Requirements}
+
+\subsection{External Interface Requirements}
+
+\subsubsection{User Interface}
+The user interface will be a website. There are two views: administration and survey taker. 
+The Administration view is for those creating surveys and analyzing data. They will input a 
+username and password to gain access. They will then be navigating the site via mouse clicks 
+and keyboard interaction. There will not be support for a touch screen interface. The survey
+taker view is only for surveys. The survey will be distributed through a website link which 
+will allow temporary access to that particular survey for the survey taker to take. The 
+interaction will be via mouse clicks and keyboard. There will not be support for a touch screen
+interface.
+
+\subsection{Functional Requirements}
+
+\subsubsection{Survey Generation}
+%\subsubsection{Overall}
+Surveys should be able to be made from scratch and saved. Previously created surveys should be editable 
+meaning questions should be able to be added/deleted, moved in ordering and the text of the question 
+and answer options should be able to change. These surveys should also be able to be saved as well. 
+Surveys may be deleted once created. A survey should be printable at anytime as well as publishable to a
+web link which can be distributed. All surveys and questions will be saved to a database.
+%\subsubsection{Structure and Formatting}
+The user should be able to add questions to and delete questions from a survey. The questions should be able to
+be reordered. The user should be able to add display logic to any question in the survey. Display logic means the
+question will appear based on the answer of previous questions.
+%\subsusection{Question}
+There are three types of questions: matrix, multiple choice and text entry. Each question is comprised of the 
+question text and the answer options text. The question text has the option of having a changeable subject
+field where the everything about the question stay exactly the same except for the subject. Questions should
+be savable and editable. \\
+
+\subsubsection{Data Collection, Analysis and Report Generation}
+A survey taker should be able to take a survey and the results stored to a database. The data should be queriable
+via a user interface. Valid queries and subqueries include viewing data by: camp/club/program, student, demographic 
+information, and questions. The results of these queries should be savable to a report which will allow titling and captioning 
+of the data. The queries may result in raw data or summary data (averages, sums, counts, etc.) per the users specification 
+in the user interface. These reports should be savable, editable and printable at all times. 
+
+
+\subsection{Performance Requirements}
+The web page should be up at least 99\% of the time. 95\% of the database queries should take less than 2 seconds 
+to generate a report. The sytems should store 100\% of the responses correctly and queries to the database should produce results that are 100\% accurate. 
+A user that is an administrative view should be able to find 95\% of the time the tools they need within 2 minutes in order to consider our user interface user freindly. 
+
+\subsection{Design Constraints}
+The database will be constrained by the storage limits of the database system utilized.
+
+\subsection{Software System Attributes}
+ The system should be available to access 95\% of the time through the web page. For security purposes, 
+students' personal information and users passwords should be encrypted on the data base side. %encrypt user passwords -Javier 
+The software should require ease of maintenance for a non-technical background so the clients have the ability to resolve any problems after the completion of the project.
+
+\subsection{Other Requirements}
+\newpage
+\section{Signatures}
+By signing below, I agree to the ideas and concepts presented in this document and the list of deliverables. \\
+\SignatureAndDate{Client Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 1 Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 2 Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 3 Signature}
+
+
+\end{document}
