@@ -51,13 +51,13 @@ Entering these and clicking "submit" will bring an admin to the main admin page 
  and password combination is successfully authorized. Also on the login page are the "Reset" button,
  which clears the input fields, and an "Exit" button that returns the user to the front page.
 \subsection{Main Admin Page}
-The main page displays a list of options that an admin can choose from which include adding a new admin, deleting an existing admin, adding a new camp, edit/create a survey, edit/create a report, and logging out. If an admin clicks on one of the options they will be redirecte to its correspoding webpage. 
+The main page displays a list of options that an admin can choose from which includes adding a new admin, deleting an existing admin, adding a new camp, edit/create a survey, edit/create a report, and logging out. If an admin clicks on one of the options they will be redirected to its corresponding webpage. 
 \subsection{Add Admin}
 The only admin accounts that are allowed to create new admins are Catherine Law and Carole Rodriguez. To create a new admin enter their first name, last name, user name, and password into the corresponding input fields. Then click the "Submit" button. If Carole or Catherine admin accounts clicked the "Submit" button they will received a pop up message that will say that they have succesfully created a new admin. Any other admin account that clicks the "Submit" button will receive an error message that tells them that they are not allowed to create new admins. To return to the Main Admin Page click the "Exit" button. 
 \subsection{Delete Admin}
 The only admin accounts that are allowed to delete admins are Catherine Law and Carole Rodriguez any other admins that try to delete an admin will have no effect. Both of their accounts cannot be deleted by anybody including themselves. This will prevent deleting all the admin accounts. If all the admin accounts were to be deleted it will render the web application useless since there are no admin accounts that can log in. To delete an admin enter their first name, last name, and user name into the corresponding input fields. Then click the "Submit" button. To return to the Main Admin Page click the "Exit" button. 
 \subsection{Add Camp}
-% TODO
+To add a new camp or update a camp click the the "Add Camp" link. To create a new camp first enter the name of the camp and the date range. Next upload the .csv file containing the enrollment of the camp  by clicking the "Browse..." button. Select the file you want to upload and click the "Open" button and click the "Submit" button. To update a camp select the name of the camp from the drop down menu. Next enter the new name of the camp into the input field and enter the new date range. Click the "Browse..." button to upload a new enrollement for the camp. Select the file you would like to upload and click the "Open" button. To submit your changes click the "Update" button. To exit the Add Camp page click the "Exit" button. 
 \subsection{Edit/create a Survey}
 By clicking the "Edit/Create a Survey" link on the Main Admin Page, user can create a survey or 
 load a preexisting one. To load a preexisting survey, select a survey from the "Load Preexisting Survey"
@@ -77,25 +77,17 @@ load a preexisting one. To load a preexisting survey, select a survey from the "
  the page. To exit the survey click the "Exit" button. To pring the survey, click the "Print" button. This will take 
  you to a standard print dialog box. 
 \subsection{Edit/create a Report}
-The Edit/create a Report option redirects the admin to a new page that gives the admin two options to choose from. The first option is to create a new report by clicking the "Submit" button. The second option is to edit a report by first selecting the name of the report from a drop down menu and then clicking the "Submit" button below the drop down menu. This will redirect you to the edit report page and it will display the results of the saved report that you selected. 
- If an admin decides that they no longer want to edit/create a new report they can click the "Exit" button to return to the Main Admin Page. 
-\subsubsection{Create New Report} 
-To create a new report follow the following steps:
-1. Select the name of the camp from the drop down menu.
-
-2. Select the name of the survey from the drop down menu that you would like to generate a report for. There should be 3 options a pre-survey, post-survey, and "Both". The option "Both" is used solely for finding the the change in reponse for matrix questions from a pre-survey to a post-survey. If an admin did not create a pre-survey and a post-survey the drop down menu will be empty. 
-
+The Edit/create a Report option redirects the admin to a new page that gives the admin two options to choose from. The first option is to create a new report by clicking the "Submit" button. The second option is to edit a report by first selecting the name of a report from a drop down menu and then clicking the "Submit" button below the drop down menu. This will display the name and query results of the report.\\
+1. To add new query results select the name of the camp from the drop down menu.\\
+2. Next select the name of the survey from the drop down menu. If the admin created a pre and post survey for the camp they selected there should be three options shown. If they did not the only option displayed will be "Both", but this options requires a pre and post survey to exist in order to be used. The option "Both" is used solely for finding the the change in reponse for matrix questions from a pre-survey to a post-survey.\\ 
 3. Select the query type that you would like use by clicking on its corresponding radio button. 
-The two types of queries include multiple choice and matrix and text questions. 
-Then click the "Add Query" button which will create the query template based on your selection below the text that says "Queries will appear hear:".  If a query template for a multiple choice question was created first select the multiple choice question that you want a query result for from the 1st drop down menu then select one of the corresponding responses from the 2nd drop down menu. If a query template for a multple choice and matrix question was created select the question you want a query result for from the drop down menu. If you no longer need a query template you can delete it by clicking on its corresponding delete button indicated by "-" symbol. You can also delete all of the query templates currently displayed on the webpage by clicking the "Reset" button. If you want to create additional queries go back to step . 
-
-4. Select the result type that you would like to be returned this includes a count and percentage by clicking on their corresponding radio button. This will return the result type that you selected for a matrix and multiple choice question.
-
-5. Select the demographic information from the drop down menus to filter your returned query result. This includes gender, parent's highest education, student race, student ethnicity, and free or reduced lunch. 
-
-6. Once everything has been setup click the "Submit" button. This will return a query result for each query template. The query result for a multiple choice question will return two input boxes. The first input box contains the multiple choice question that was selected and next to it is a delete button for removing the query result indicated by a "-" symbol.  The result for a matrix or text question will return a table along with a delete button indicated by a "-" symbol. The table for a matrix question return a breakdown of the results for each sub question and the table for a text questions returns the name of each student along with their response. 
-
-7. When an admin has finished generating the query results for their report they can print their results by clicking the "Print" button. They can also save their report by clicking the "Save" button. Furthermore, they can return to the Main Admin Page by clicking the "Print" button. 
+The two types of queries include one for multiple choice and the second is used for matrix and text questions.Then click the "Add Query" button this will create the query template based on your selection below the text that says "Queries will appear hear:". To add another query follow the same process.\\
+4. If a query template for a multiple choice question was created first select the multiple choice question that you want a query result for from the 1st drop down menu. Then select one of the corresponding responses from the 2nd drop down menu. If a query template for a multiple choice and matrix question was created select the question you want a query result for from the drop down menu. If you no longer need a query template you can delete it by clicking on its corresponding delete button indicated by "-" symbol. You can also delete all of the query templates currently displayed on the webpage by clicking the "Reset" button.\\ 
+5. Select the result type that you would like to be returned for a matrix and multiple choice question. This includes a count and percentage by clicking on their corresponding radio button.\\
+6. Select the demographic information from the drop down menus to filter your returned query result. This includes gender, parent's highest education, student race, student ethnicity, and free or reduced lunch.\\ 
+7. Once everything has been setup click the "Submit" button. This will return a query result for each query template and they will be displayed below the text that says "Query Results". The query result for a multiple choice question will return two input boxes. The first input box contains the multiple choice question that was selected and next to it is a delete button for removing the query result indicated by a "-" symbol. The result for a matrix and text question will return a table along with a delete button indicated by a "-" symbol. The table for a matrix question returns a breakdown of the results for each sub question and the table for a text question returns the name of each student along with their response.\\
+8. To add a title to the report enter the name of the report in the first input text box that is shown below the text "Query Results".\\ 
+9. When an admin has finished generating the query results for their report they can print their results by clicking the "Print" button. They can also save their report by clicking the "Save" button. Furthermore, they can return to the Main Admin Page by clicking the "Print" button.\\ 
 \subsection{Log Out}
 When an admin clicks the Log Out option they will be redirected to the login page. 
 \section{Student View}
@@ -115,24 +107,5 @@ The following information is provided in case STEM Academy encounters a bug in u
 Unfortunately, software cannot be bug-free, but we hope the information provided in this section will help users recover
  from and resolve bugs that may impair use of the software.
 % TODO
-\subsubsection{Create New Report} 
-To create a new report follow the following steps:
-1. Select the name of the camp from the drop down menu.
-
-2. Select the name of the survey from the drop down menu that you would like to generate a report for. There should be 3 options a pre-survey, post-survey, and "Both". The option "Both" is used solely for finding the the change in reponse for matrix questions from a pre-survey to a post-survey. If an admin did not create a pre-survey and a post-survey the drop down menu will be empty. 
-
-3. Select the query type that you would like use by clicking on its corresponding radio button. 
-The two types of queries include multiple choice and matrix and text questions. 
-Then click the "Add Query" button which will create the query template based on your selection below the text that says "Queries will appear hear:".  If a query template for a multiple choice question was created first select the multiple choice question that you want a query result for from the 1st drop down menu then select one of the corresponding responses from the 2nd drop down menu. If a query template for a multple choice and matrix question was created select the question you want a query result for from the drop down menu. If you no longer need a query template you can delete it by clicking on its corresponding delete button indicated by "-" symbol. You can also delete all of the query templates currently displayed on the webpage by clicking the "Reset" button. If you want to create additional queries go back to step . 
-
-4. Select the result type that you would like to be returned this includes a count and percentage by clicking on their corresponding radio button. This will return the result type that you selected for a matrix and multiple choice question.
-
-5. Select the demographic information from the drop down menus to filter your returned query result. This includes gender, parent's highest education, student race, student ethnicity, and free or reduced lunch. 
-
-6. Once everything has been setup click the "Submit" button. This will return a query result for each query template. The query result for a multiple choice question will return two input boxes. The first input box contains the multiple choice question that was selected and next to it is a delete button for removing the query result indicated by a "-" symbol.  The result for a matrix or text question will return a table along with a delete button indicated by a "-" symbol. The table for a matrix question return a breakdown of the results for each sub question and the table for a text questions returns the name of each student along with their response. 
-
-7. When an admin has finished generating the query results for their report they can print their results by clicking the "Print" button. They can also save their report by clicking the "Save" button. Furthermore, they can return to the Main Admin Page by clicking the "Print" button. 
-
-
 
 \end{document}
