@@ -1,46 +1,48 @@
-% \documentclass[letterpaper,10pt,serif, draftclsnofoot,onecolumn, compsoc, titlepage]{IEEEtran}
+\documentclass[letterpaper,10pt,serif, draftclsnofoot,onecolumn, compsoc, titlepage]{IEEEtran}
 
-% \usepackage{graphicx}
-% \usepackage{amssymb}
-% \usepackage{amsmath}
-% \usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
 
-% \usepackage{alltt}
-% \usepackage{float}
-% \usepackage{color}
-% \usepackage{url}
+\usepackage{alltt}
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
 
-% \usepackage{balance}
-% \usepackage[TABBOTCAP, tight]{subfigure}
-% \usepackage{enumitem}
-% \usepackage{pstricks, pst-node}
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+%\usepackage{pstricks, pst-node}
 
-% \usepackage{geometry}
-% \geometry{margin=.75in}
+\usepackage{geometry}
+\geometry{margin=.75in}
 
-% \usepackage{hyperref}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
 %credit to http://tex.stackexchange.com/questions/48152/dynamic-signature-date-line
-% \newcommand*{\SignatureAndDate}[1]{%
-    % \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
-    % \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}%
-% }%
-% \title{The STEM Academy Data Solution}
-% \author{Requirements Document \\ Kyle Nichols, Shannon Ernst, Javier Franco\\ 4 November 2016\\ CS 461 Fall 2016}
+\newcommand*{\SignatureAndDate}[1]{%
+    \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
+    \par\noindent\makebox[2.5in][l]{#1}      \hfill\makebox[2.0in][l]{Date}%
+}%
+\title{The STEM Academy Data Solution}
+\author{Requirements Document \\ Kyle Nichols, Shannon Ernst, Javier Franco\\ 17 February 2017\\ CS 462 Winter 2017}
 
 \begin{document}
-% \title{The STEM Academy Data Solution}
-% \author{Requirements Document \\ Kyle Nichols, Shannon Ernst, Javier Franco\\ 4 November 2016\\ CS 461 Fall 2016}
-% \maketitle
-% \newpage
 
-\section{Abstract}
+\maketitle
+
+\begin{abstract}
 The STEM Academy Data Solution is a product proposed to the clients, STEM Academy, as a solution to their need for an efficient way of collecting survey data and reporting summary information.
 The software requirements specification is written to lay out what STEM Academy requires of the developers in providing a product to accomplish their needs.
 It explains what the product does and any information necessary to understanding the project and its scope.
 It also discusses the requirements themselves, from the user interface to generate surveys and report summary data to the database storing survey response data.
 Lastly, it clarifies performance requirements to ensure that the product functions within reasonable expectations for the clients.
-
+\end{abstract}
 \newpage
+\tableofcontents
+\newpage
+
 \section{Introduction}
 \subsection{Purpose}
 This software requirements specification is intended to define the requirements of the project of developing a database 
@@ -172,16 +174,16 @@ students' personal information and users passwords should be encrypted on the da
 The software should require ease of maintenance for a non-technical background so the clients have the ability to resolve any problems after the completion of the project.
 
 \subsection{Other Requirements}
-% \newpage
-% \section{Signatures}
-% By signing below, I agree to the ideas and concepts presented in this document and the list of deliverables. \\
-% \SignatureAndDate{Client Signature}
-% \vspace{.2in}
-% \SignatureAndDate{Team Member 1 Signature}
-% \vspace{.2in}
-% \SignatureAndDate{Team Member 2 Signature}
-% \vspace{.2in}
-% \SignatureAndDate{Team Member 3 Signature}
+\newpage
+\section{Signatures}
+By signing below, I agree to the ideas and concepts presented in this document and the list of deliverables. \\
+\SignatureAndDate{Client Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 1 Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 2 Signature}
+\vspace{.2in}
+\SignatureAndDate{Team Member 3 Signature}
 
 
 \end{document}

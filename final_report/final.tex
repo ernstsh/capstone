@@ -10,6 +10,7 @@
 \usepackage{color}
 \usepackage{url}
 \usepackage{subfiles}
+\usepackage{pdfpages}
 \usepackage{blindtext}
 %\usepackage[subpreambles=true]{standalone}
 %\usepackage{import}
@@ -57,9 +58,32 @@
 \tableofcontents
 \newpage
 \section{Introduction}
+The STEM Academy program in Corvallis, Oregon, seeks to provide education in science, technology, engineering and math to the K-12 community through various programs, campus, and clubs.
+They are self funded, relying on grants, donations and other sources, many of which require results-based data on the success of STEM Academy programs.
+This data is collected from surveys that participants take while they are enrolled in one of STEM Academy's camps and other programs.
+Currently, these surveys are administered on paper and the responses are tabulated by hand by volunteers.
+This has not been an effective way of collecting current data to help secure funding and many of the surveys go untabulated.
+The STEM Academy does have the ability to register participants online through Ideal Logic, but this is this does not help them with tabulating survey data.
+They need a system which will allow them to electronically create surveys, a database to house all of the data from those surveys, and a report generation system so they can view the most current data in a timely and meaningful way.
+
+A website which will allow the STEM Academy to create and distribute surveys, as well as view helpful data results, is the best solution.
+The website should allow them to create questions that can be included across multiple surveys.
+The questions should be able to be templated so that only one part of the question need change according to the topic of the survey.
+Surveys should be able to be distributed via a web link or printed.
+After a survey is taken, the data should be stored in a database according to the type of program.
+This data should be queriable based on custom queries.
+The user should be able to make a query based on the question and collected demographics as well as filter by program.
+This service should be user friendly; the user should not need to know any SQL or other querying language in order to get data from the database.
+After a query, the data should be able to be saved and added to a printable report so that it can actually be used in grant proposals and marketing material.
+This website will be an all in one package for collecting and reporting on data in a timely fashion which is what the STEM Academy truly needs.
+
+This project was worked on by Shannon Ernst, Kyle Nichols and Javier Franco. Ernst focused on survey generation and management. 
+Nichols focused on database management. Franco focused on report generation. Through out the process the clients (STEM Academy) provided 
+feed back on their needs but provided free reign on technical choices and implementation. 
 \section{Requirements Document}
 \subsection{Original Document}
-%\subfile{sections/design_doc}
+%\includepdf[pages={1-7}]{pdfs/requirements_document.pdf}
+%\subfile{sections/requirements_document}
 \subsection{Changes to the Document}
 \subsection{Gantt Chart Progression}
 \section{Design Document}
