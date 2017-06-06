@@ -29,12 +29,12 @@ function GenSavedReport() {
                                         var queries = JSON.parse(ReportJSON.arr_results);
                                         for(var x = 0; x < queries.length; x++){
                                                 //Note: AddQueryResult and GenTableQuery are functions located in report_generation.js file 
-                                                if(queries[x].type == "Multi"){
-                                                        AddQueryResult(queries[x].result, "None", 0, queries[x].label);
-                                                }
-                                                else{
+                                                //if(queries[x].type == "Multi"){
+                                                        //AddQueryResult(queries[x].result, "None", 0, queries[x].label);
+                                                //}
+                                                //else{
                                                         GenTableQuery(queries[x]);
-                                                }
+                                                //}
                                         } 
                                         //Sets the report title and removes the double quotes 
                                         var ReportTitle = ReportJSON.title;

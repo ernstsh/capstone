@@ -61,10 +61,10 @@ function AddQuery()
                 }                  
                 //Second drop down for selecting a response based on the question that was selected  
                 var dropDown2 = document.createElement("select");
-                var option200 = document.createElement("option");
+                /*var option200 = document.createElement("option");
                 var text200 = document.createTextNode("Select Question Response");
                 option200.appendChild(text200);
-                dropDown2.appendChild(option200);                                
+                dropDown2.appendChild(option200);*/                                
                 //Button for deleting the query template 
                 var button4 = document.createElement("button");      
                 button4.onclick = function(){removeElement('query', id);}
@@ -149,7 +149,7 @@ function AddQuery()
 }
 
 //Code for creating the query JSON for returning the query results 
-function QueryJSON(){
+function ReturnResult(){
         //JSON for storing the query information entered by the user 
         var queryJSON = {};
         //Gets the selected camp from 1st drop down
@@ -178,12 +178,12 @@ function QueryJSON(){
                 queryJSON.SurveyID = SurveyDropDown.options[SurveyDropDown.selectedIndex].value;
         }
         //Gets the return type which is count or percentage 
-        if (document.getElementById('Count').checked) {
+        /*if (document.getElementById('Count').checked) {
                 queryJSON.ReturnType = document.getElementById('Count').value;
         }
         if (document.getElementById('Percent').checked) {
                 queryJSON.ReturnType = document.getElementById('Percent').value;
-        }
+        }*/
                
         var Checked = false;
         if(document.getElementById('ChangeResponse').checked) {
@@ -216,8 +216,15 @@ function QueryJSON(){
                 //If its a query template for a multiple choice question get the second drop down value 
                 if(childID.includes(RegularTemp)){
                         var child2 = parentTemplate.getElementsByTagName("select")[1];
-                        var choice2 = child2.options[child2.selectedIndex].value;
-                        queryTempJSON.Drop2 = choice2;
+                        
+                        MultiAnswers = [];
+                        for(var z = 0; z < child2.length; z++){
+                                MultiAnswers[z] = child2.options[z].value;
+                        }
+                        queryTempJSON.Drop2 = MultiAnswers;
+                        
+                        //var choice2 = child2.options[child2.selectedIndex].value;
+                        //queryTempJSON.Drop2 = choice2;                       
                 }                       
                 var ArrayPos = x - 1;
                 queryJSON.queries[ArrayPos] = queryTempJSON;                          
@@ -275,26 +282,70 @@ function QueryJSON(){
                                                         }
                                                 }
                                         }
+                                        
+                                        
+                                        
+                                        
                                                 if(Type == 'multic'){
-                                                        //Checks the student response of the multiple choice question at index 
-                                                        for(var a = 0; a < QueryJSON.SurveyResponses.length; a++){
-                                                                StudentResponses = JSON.parse(QueryJSON.SurveyResponses[a].StudentResponses);                                                                                                              
-                                                                if(StudentResponses[Index].ans == queryJSON.queries[x].Drop2){
-                                                                        CountStuds = CountStuds + 1;                                                                       
-                                                                }                                                               
+                                                        var table = document.createElement('table');
+                                                        var Tr = document.createElement('tr');   
+                                                        var Td = document.createElement('td');
+                                                        var Text = document.createTextNode(queryJSON.queries[x].Drop1);                                                  
+                                                        Td.appendChild(Text);
+                                                        Tr.appendChild(Td);
+                                                        table.appendChild(Tr);
+                                                        
+                                                        var MultiResponses = queryJSON.queries[x].Drop2;
+                                                        //For each multi response 
+                                                        for(var b = 0; b < queryJSON.queries[x].Drop2.length; b++){
+                                                                //Checks the student response of the multiple choice question at index 
+                                                                for(var a = 0; a < QueryJSON.SurveyResponses.length; a++){
+                                                                        StudentResponses = JSON.parse(QueryJSON.SurveyResponses[a].StudentResponses);                                                                                                              
+                                                                        if(StudentResponses[Index].ans == MultiResponses[b]){
+                                                                                CountStuds = CountStuds + 1;                                                                       
+                                                                        }                                                               
+                                                                }
+                                                                var Tr = MultiRow(MultiResponses[b], CountStuds, QueryJSON.SurveyResponses.length);
+                                                                table.appendChild(Tr);
+                                                                //Resets
+                                                                CountStuds = 0;        
                                                         } 
-                                                        var Question = queryJSON.queries[x].Drop1 + " " + queryJSON.queries[x].Drop2;
-                                                        AddQueryResult(CountStuds, queryJSON.ReturnType, QueryJSON.SurveyResponses.length, Question);
-                                                        //Resets
-                                                        CountStuds = 0;
+                                                        //Creates a div for creating a new query result for the table 
+                                                        count2++;
+                                                        var queryResultNew = document.createElement("div");
+                                                        queryResultNew.setAttribute("id", "Multi" + count2);
+                                                        
+                                                        //This button is for deleting the table 
+                                                        var button1 = document.createElement("button");      
+                                                        button1.onclick = function(){removeChild(queryResultNew.id);}
+                                                        
+                                                        var textDelete = document.createTextNode("-");
+                                                        button1.appendChild(textDelete);
+                                                        
+                                                        //Adds the table and delete button to the div 
+                                                        queryResultNew.appendChild(table);
+                                                        queryResultNew.appendChild(button1);
+                                                        
+                                                        //Adds the div query result to the web page 
+                                                        element = document.getElementById("QueryResult");
+                                                        element.appendChild(queryResultNew);        
                                                 }
+                                                
+                                                
+                                                
+                                                
+                                                
                                                 else if(Type == 'text'){                                                                                                           
                                                         var table = document.createElement('table');
                                                         var Tr = document.createElement('tr');   
                                                         var Td = document.createElement('td');
-                                                        var Text = document.createTextNode(SurveyQuestions[Index].Q_text);
+                                                        var Text = document.createTextNode(SurveyQuestions[Index].Q_text);                                                                                                             
                                                         Td.appendChild(Text);
                                                         Tr.appendChild(Td);
+                                                        var Td2 = document.createElement('td');
+                                                        var Text2 = document.createTextNode("Student Response");
+                                                        Td2.appendChild(Text2);
+                                                        Tr.appendChild(Td2);
                                                         table.appendChild(Tr);
 
                                                         for(var a = 0; a < QueryJSON.SurveyResponses.length; a++){
@@ -412,8 +463,8 @@ function QueryJSON(){
                                                                                 }
                                                                         }
                                                                         var SurveyQuestions = JSON.parse(QueryJSON.SurveyQuestions); 
-                                                                        var PositiveResult = MatrixResult(CountPositive, CountStudsMatched, queryJSON.ReturnType);                                                                
-                                                                        var Tr2 = MatrixRow2(SurveyQuestions[MatrixIndexQuestion].questions[z], 'Both', Tot1Pre, Tot2Pre, Tot3Pre, Tot4Pre, Tot1Post, Tot2Post, Tot3Post, Tot4Post, PositiveResult);
+                                                                        //var PositiveResult = MatrixResult(CountPositive, CountStudsMatched, queryJSON.ReturnType);                                                                
+                                                                        var Tr2 = MatrixRow2(SurveyQuestions[MatrixIndexQuestion].questions[z], 'Both', Tot1Pre, Tot2Pre, Tot3Pre, Tot4Pre, Tot1Post, Tot2Post, Tot3Post, Tot4Post, CountPositive, CountStudsMatched);
                                                                         table.appendChild(Tr2);  
 
                                                                 }
@@ -471,8 +522,8 @@ function QueryJSON(){
                                                                                 CountPositive = CountPositive + 1;
                                                                         }
                                                                 }
-                                                                var PositiveResult = MatrixResult(CountPositive, QueryJSON.SurveyResponses.length, queryJSON.ReturnType);                                                     
-                                                                var Tr = MatrixRow2(SurveyQuestions[MatrixIndexQuestion].questions[b], '!Both', Tot1, Tot2, Tot3, Tot4, 0, 0, 0, 0, PositiveResult);
+                                                                //var PositiveResult = MatrixResult(CountPositive, QueryJSON.SurveyResponses.length, queryJSON.ReturnType);                                                     
+                                                                var Tr = MatrixRow2(SurveyQuestions[MatrixIndexQuestion].questions[b], '!Both', Tot1, Tot2, Tot3, Tot4, 0, 0, 0, 0, CountPositive, QueryJSON.SurveyResponses.length);
                                                                 table.appendChild(Tr);      
                                                         }
                                                         //Creates a div for creating a new query result for the table 
@@ -500,6 +551,27 @@ function QueryJSON(){
         }
 }
 
+//Creates a row for a multiple choice question 
+function MultiRow(Response, Answer, TotStuds){
+        var Tr = document.createElement('tr');
+        for(var a = 0 ; a < 2; a++){
+                var Td = document.createElement('td');
+                if(a == 0){
+                        
+                        var Text = document.createTextNode(Response);
+                        Td.appendChild(Text);
+                }
+                else{
+                        StringText = "Count:"+Answer+"/"+TotStuds+" "+"Percent:"+ ((Answer/TotStuds) * 100).toFixed(1)+"%";
+                        var Text = document.createTextNode(StringText);
+                        Td.appendChild(Text);   
+                }
+                Tr.appendChild(Td);
+        }
+        return Tr;   
+}
+
+
 //Creates the columns for a matrix question 
 function MatrixRow(PrimaryQues, QuestionScale, MatrixType){
         var Tr = document.createElement('tr');   
@@ -515,36 +587,92 @@ function MatrixRow(PrimaryQues, QuestionScale, MatrixType){
                 if(x == 0){
                         Text = document.createTextNode(PrimaryQues);
                 }
-                //Strongly Agree(SA) and Great Great Deal(GD) cases 
+                //Strongly Disagree(SD) and not at all(NA) cases 
                 else if((x == 1 && QuestionScale == 'agree') || (x == 5 && QuestionScale == 'agree' && MatrixType == 'Both')){
-                        Text = document.createTextNode('SA');
+                        if(MatrixType == 'Both' && x == 1){
+                                Text = document.createTextNode('SD(Pre)');
+                        }
+                        else if(MatrixType == 'Both' && x == 5){
+                                Text = document.createTextNode('SD(Post)');
+                        }
+                        else{
+                                Text = document.createTextNode('SD');
+                        }
                 }
                 else if((x == 1 && QuestionScale == 'not-deal') || (x == 5 && QuestionScale == 'not-deal' && MatrixType == 'Both')){
-                                Text = document.createTextNode('GD');
-                }
-                //Agree(A) and Moderately(M) cases 
-                else if((x == 2 && QuestionScale == 'agree') || (x == 6 && QuestionScale == 'agree' && MatrixType == 'Both')){
-                                Text = document.createTextNode('A');
-                }
-                else if((x == 2 && QuestionScale == 'not-deal') || (x == 6 && QuestionScale == 'not-deal' && MatrixType == 'Both')){
-                                Text = document.createTextNode('M');
+                        if(MatrixType == 'Both' && x == 1){
+                                Text = document.createTextNode('NA(Pre)');
+                        }
+                        else if(MatrixType == 'Both' && x == 5){
+                                Text = document.createTextNode('NA(Post)');
+                        }
+                        else{                                    
+                                Text = document.createTextNode('NA');
+                        }
                 }
                 //Disagree(D) and Slightly(S) cases 
-                else if((x == 3 && QuestionScale == 'agree') || (x == 7 && QuestionScale == 'agree' && MatrixType == 'Both')){
+                else if((x == 2 && QuestionScale == 'agree') || (x == 6 && QuestionScale == 'agree' && MatrixType == 'Both')){
+                        if(MatrixType == 'Both' && x == 2){
+                                Text = document.createTextNode('D(Pre)');
+                        }
+                        else if(MatrixType == 'Both' && x == 6){
+                                Text = document.createTextNode('D(Post)');
+                        }
+                        else{
                                 Text = document.createTextNode('D');
+                        }
+                }
+                else if((x == 2 && QuestionScale == 'not-deal') || (x == 6 && QuestionScale == 'not-deal' && MatrixType == 'Both')){
+                        if(MatrixType == 'Both' && x == 2){
+                                Text = document.createTextNode('S(Pre)');
+                        }
+                        else if(MatrixType == 'Both' && x == 6){
+                                Text = document.createTextNode('S(Post)');
+                        }
+                        else{        
+                                Text = document.createTextNode('S');
+                        }
+                }
+                //Agree(A) and Moderately(M) cases 
+                else if((x == 3 && QuestionScale == 'agree') || (x == 7 && QuestionScale == 'agree' && MatrixType == 'Both')){
+                        if(MatrixType == 'Both' && x == 3){
+                                Text = document.createTextNode('A(Pre)');
+                        }
+                        else if(MatrixType == 'Both' && x == 7){
+                                Text = document.createTextNode('A(Post)');
+                        }
+                        else{        
+                                Text = document.createTextNode('A');
+                        }
                 }
                 else if((x == 3 && QuestionScale == 'not-deal') || (x == 7 && QuestionScale == 'not-deal' && MatrixType == 'Both')){
-                                Text = document.createTextNode('S');
+                        if(MatrixType == 'Both' && x == 3){
+                                Text = document.createTextNode('M(Pre)');
+                        }
+                        else if(MatrixType == 'Both' && x == 7){
+                                Text = document.createTextNode('M(Post)');
+                        }
+                        else{        
+                                Text = document.createTextNode('M');
+                        }
                 }
-                //Strongly Disagree (SD) and Not at all(NA) cases
+                //Strongly Agree (SA) and Great Deak (GD) cases
                 else if((x == 4 && QuestionScale == 'agree') || (x == 8 && QuestionScale == 'agree' && MatrixType == 'Both')){
-                                Text = document.createTextNode('SD');
+                        if(MatrixType == 'Both' && x == 4){
+                                Text = document.createTextNode('SA(Pre)');
+                        }
+                        else if(MatrixType == 'Both' && x == 8){
+                                Text = document.createTextNode('SA(Post)');
+                        }
+                        else{        
+                                Text = document.createTextNode('SA');
+                        }        
                 }
                 else if((x == 4 && QuestionScale == 'not-deal') || (x == 8 && QuestionScale == 'not-deal' && MatrixType == 'Both')){
-                                Text = document.createTextNode('NA');
+                                Text = document.createTextNode('GD');
                 }
                 else if((x == 5 && MatrixType == '!Both') || (x == 9 && MatrixType == 'Both')){
-                                Text = document.createTextNode('Total Agree');
+                                Text = document.createTextNode('Total Positive Student Answers');
                 }
                 Td.appendChild(Text);
                 Tr.appendChild(Td);
@@ -553,7 +681,7 @@ function MatrixRow(PrimaryQues, QuestionScale, MatrixType){
 }
 
 //Creates the row results for a matrix question 
-function MatrixRow2(SecondaryQues, MatrixType, tot1, tot2, tot3, tot4, tot5, tot6, tot7, tot8, totPositive){
+function MatrixRow2(SecondaryQues, MatrixType, tot1, tot2, tot3, tot4, tot5, tot6, tot7, tot8, totPositive, NumStuds){
         var Tr = document.createElement('tr');
         for(var x = 0; x < 10; x++){
                 var Td = document.createElement('td');
@@ -566,31 +694,40 @@ function MatrixRow2(SecondaryQues, MatrixType, tot1, tot2, tot3, tot4, tot5, tot
                         Text = document.createTextNode(SecondaryQues);
                 }
                 else if(x == 1){
-                        Text = document.createTextNode(tot1);
+                        StringText = "Count:"+tot4+"/"+NumStuds+"  "+"Pecent:" + ((tot4/NumStuds) * 100).toFixed(1)+"%";
+                        Text = document.createTextNode(StringText);
                 }
                 else if(x == 2){
-                        Text = document.createTextNode(tot2);
+                        StringText = "Count:"+tot3+"/"+NumStuds+"  "+"Percent:"+ ((tot3/NumStuds) * 100).toFixed(1)+"%";
+                        Text = document.createTextNode(StringText);
                 }
-                else if(x == 3){
-                        Text = document.createTextNode(tot3);
+                else if(x == 3){ 
+                        StringText = "Count:"+tot2+"/"+NumStuds+"  "+"Percent:"+ ((tot2/NumStuds) * 100).toFixed(1)+"%";
+                        Text = document.createTextNode(StringText);
                 }
                 else if(x == 4){
-                        Text = document.createTextNode(tot4);
+                        StringText = "Count:"+tot1+"/"+NumStuds+"  "+"Percent:"+ ((tot1/NumStuds) * 100).toFixed(1)+"%";
+                        Text = document.createTextNode(StringText);
                 }
                 else if((x == 5 && MatrixType == '!Both') || (x == 9 && MatrixType == 'Both')){
-                        Text = document.createTextNode(totPositive);
+                        StringText = "Count:"+totPositive+"/"+NumStuds+"  "+"Percent:"+ ((totPositive/NumStuds) * 100).toFixed(2)+"%";
+                        Text = document.createTextNode(StringText);
                 }
                 else if(x == 5 && MatrixType == 'Both'){
-                        Text = document.createTextNode(tot5);
+                        StringText = "Count:"+tot8+"/"+NumStuds+"  "+"Percent:"+ ((tot8/NumStuds) * 100).toFixed(1)+"%";
+                        Text = document.createTextNode(StringText);
                 }
                 else if(x == 6 && MatrixType == 'Both'){
-                        Text = document.createTextNode(tot6);
+                        StringText = "Count:"+tot7+"/"+NumStuds+"  "+"Percent:"+ ((tot7/NumStuds) * 100).toFixed(1)+"%";
+                        Text = document.createTextNode(StringText);
                 }
                 else if(x == 7 && MatrixType == 'Both'){
-                        Text = document.createTextNode(tot7);
+                        StringText = "Count:"+tot6+"/"+NumStuds+"  " +"Percent:"+ ((tot6/NumStuds) * 100).toFixed(1)+"%";
+                        Text = document.createTextNode(StringText);
                 }
                 else if(x == 8 && MatrixType == 'Both'){
-                        Text = document.createTextNode(tot8);
+                        StringText = "Count:"+tot5+"/"+NumStuds+"  "+"Percent:"+ ((tot5/NumStuds) * 100).toFixed(1)+"%";
+                        Text = document.createTextNode(StringText);
                 }
                 Td.appendChild(Text);
                 Tr.appendChild(Td);
@@ -653,17 +790,17 @@ function PositiveResponse2(Answer){
 }
 
 //Returns a percentage or a count for change response for a pre or post matrix
-function MatrixResult(CountPositive, NumStuds, ReturnType){
+/*function MatrixResult(CountPositive, NumStuds, ReturnType){
         if(ReturnType == 'Count'){
                 return CountPositive;
         }
         else{
                 //return (((CountPositive / NumStuds) * 100) + '%');
-                var result = (CountPositive /NumStuds) * 100;
-                result = Math.round(result * 100) / 100;
+                var result = ((CountPositive /NumStuds) * 100).toFixed(2);
+                //result = Math.round(result * 100) / 100;
                 return (result + '%');
         }  
-}
+}*/
 
 //Deletes query result 
 function removeChild(childID){
@@ -672,7 +809,7 @@ function removeChild(childID){
         parent.removeChild(node);
         count2--;
 }
-
+/*
 //Creates a queryResult template a multiple choice question 
 function AddQueryResult(TotCount, ReturnType, NumStuds, Question){                  
         count2++;        
@@ -714,7 +851,7 @@ function AddQueryResult(TotCount, ReturnType, NumStuds, Question){
         element = document.getElementById("QueryResult");
         element.appendChild(queryResultNew);
 }
-
+*/
 //functions for removing the query templates when their delete button is clicked 
 function removeElement(parentDiv, childDiv){
         if(parentDiv != "QueryResult"){
@@ -806,14 +943,30 @@ function Report_JSON(){
                         TotCount++;
                 }
                 else if(child.id.includes("Multi")){
-                        var ID = child.id;
+                        /*var ID = child.id;
                         //Removes the text characters from the ID in order to get the int value 
                         ID = ID.replace(/\D/g,'');
                         result_json.type = "Multi";
                         result_json.label = document.getElementById('label' + ID).value;
                         result_json.result = document.getElementById('input' + ID).value;
                         report_json.queryResults[TotCount] = result_json;
+                        TotCount++;*/
+                        
+                        result_json.type = "Multi";
+                        result_json.rows = [];
+                        var table = child.getElementsByTagName('table')[0];
+                        //iterate through rows and rows would be accessed using the "row" variable assigned in the for loop
+                        for (var i = 0, row; row = table.rows[i]; i++) {
+                                var rowVals = [];
+                                //iterate through columns and columns would be accessed using the "col" variable assigned in the for loop
+                                for (var j = 0, col; col = row.cells[j]; j++) {
+                                        rowVals[j] = col.textContent;
+                                }
+                                result_json.rows[i] = rowVals;
+                        }
+                        report_json.queryResults[TotCount] = result_json;
                         TotCount++;
+
                 }
                 childCount = childCount + 1;
         }
@@ -846,7 +999,7 @@ function dispResponses(id){
         child2 = parentTemplate.getElementsByTagName("select")[1];
         NumChildren = child2.length;
         //Deletes the responses currently in the 2nd drop down 
-        for(var x = 0; x < (NumChildren - 1); x++){
+        for(var x = 0; x < (NumChildren); x++){ //got rid off Numchildren-1
                 child2.removeChild(child2.lastChild); 
         }                  
         //Gets the question that was selected 

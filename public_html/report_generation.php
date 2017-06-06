@@ -47,11 +47,11 @@ session_start();
 
 
 <!--Radio buttons for selecting the result type-->
-<h4 id="label-5">Select the result type: </h4>
+<!--<h4 id="label-5">Select the result type: </h4>
 <form id="ResultType">
         <input type="radio" name="ResultChoice" value="Count" id="Count" checked> Count <br>
         <input type="radio" name="ResultChoice" value="Percent" id="Percent"> Percentage 
-</form>
+</form>-->
 
 
 <!--Demographic information starts here-->
@@ -140,7 +140,7 @@ session_start();
         <button type="button" class="DeleteAll" id="DeleteAll" onclick="DeleteAllQueries()">Reset</button>
         
         <!--<button type="button" class="submit" id="submit2" onclick="AddQueryResult()"> Submit </button>-->
-        <button type="button" class="submit" id="submit2" onclick="QueryJSON()"> Submit </button>
+        <button type="button" class="submit" id="submit2" onclick="ReturnResult()"> Submit </button>
         
         <button type="button" class="save" id="save" onClick="Report_JSON()"> Save </button>
         <button type="button" class="exit" id="exit"><a href="SelectReportChoice.html" id="ExitLink"> Exit </a></button>
