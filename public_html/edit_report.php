@@ -46,11 +46,11 @@ session_start();
 
 
 <!--Radio buttons for selecting the result type-->
-<h4 id="label-5">Select the result type: </h4>
+<!--<h4 id="label-5">Select the result type: </h4>
 <form id="ResultType">
         <input type="radio" name="ResultChoice" value="Count" id="Count" checked> Count <br>
         <input type="radio" name="ResultChoice" value="Percent" id="Percent"> Percentage 
-</form>
+</form>-->
 
 
 <!--Demographic information starts here-->
@@ -137,7 +137,7 @@ session_start();
 <form id="Buttons">
         <button type="button" class="addQuery" id="addQuery" onclick="AddQuery()">Add Query</button>
         <button type="button" class="DeleteAll" id="DeleteAll" onclick="DeleteAllQueries()">Reset</button>       
-        <button type="button" class="submit" id="submit2" onclick="QueryJSON()"> Submit </button>       
+        <button type="button" class="submit" id="submit2" onclick="ReturnResult()"> Submit </button>       
         <button type="button" class="save" id="save" onClick="Report_JSON()"> Save </button>
         <button type="button" class="exit" id="exit"><a href="SelectReportChoice.html" id="ExitLink"> Exit </a></button>
         <button type="button" id="print"><a href="javascript:window.print()" id="PrintLink"> Print  </a></button> <br>
@@ -148,7 +148,7 @@ session_start();
 <h4 id="QueryResultsText">Query Results</h4>
 <form class="QueryResult" id="QueryResult">
         <!--For the adding a title to the form-->
-        <input type="text" value="" class="TitleReport"/><br>
+        <input type="text" value="" class="TitleReport" id="TitleReport"/><br>
 </form>
 
 </body>
