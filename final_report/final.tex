@@ -57,13 +57,14 @@
 \newpage
 \tableofcontents
 \newpage
+
 \section{Introduction}
-The STEM Academy program in Corvallis, Oregon, seeks to provide education in science, technology, engineering and math to the K-12 community through various programs, campus, and clubs.
+The STEM Academy program in Corvallis, Oregon, seeks to provide education in science, technology, engineering and math to the K-12 community through various programs, camps, and clubs.
 They are self funded, relying on grants, donations and other sources, many of which require results-based data on the success of STEM Academy programs.
 This data is collected from surveys that participants take while they are enrolled in one of STEM Academy's camps and other programs.
 Currently, these surveys are administered on paper and the responses are tabulated by hand by volunteers.
 This has not been an effective way of collecting current data to help secure funding and many of the surveys go untabulated.
-The STEM Academy does have the ability to register participants online through Ideal Logic, but this is this does not help them with tabulating survey data.
+The STEM Academy does have the ability to register participants online through Ideal Logic, but this does not help them with tabulating survey data.
 They need a system which will allow them to electronically create surveys, a database to house all of the data from those surveys, and a report generation system so they can view the most current data in a timely and meaningful way.
 
 A website which will allow the STEM Academy to create and distribute surveys, as well as view helpful data results, is the best solution.
@@ -77,41 +78,144 @@ This service should be user friendly; the user should not need to know any SQL o
 After a query, the data should be able to be saved and added to a printable report so that it can actually be used in grant proposals and marketing material.
 This website will be an all in one package for collecting and reporting on data in a timely fashion which is what the STEM Academy truly needs.
 
-This project was worked on by Shannon Ernst, Kyle Nichols and Javier Franco. Ernst focused on survey generation and management. 
-Nichols focused on database management. Franco focused on report generation. Through out the process the clients (STEM Academy) provided 
-feed back on their needs but provided free reign on technical choices and implementation. 
+This project was worked on by Shannon Ernst, Kyle Nichols and Javier Franco.
+Ernst focused on survey generation and management. 
+Nichols focused on database management.
+Franco focused on report generation.
+Throughout the process the clients, STEM Academy, provided feedback on their needs but provided free reign on technical choices and implementation. 
+
 \section{Requirements Document}
 \subsection{Original Document}
 %\includepdf[pages={1-7}]{pdfs/requirements_document.pdf}
 %\subfile{sections/requirements_document}
 \subsection{Changes to the Document}
 \subsection{Gantt Chart Progression}
+
 \section{Design Document}
 \subsection{Original Document}
 \subsection{Changes to the Document}
+
 \section{Technology Review Document}
 \subsection{Original Document}
 \subsection{Changes to the Document}
+
 \section{Weekly Blogs Over the Year}
 \subfile{sections/fall_weekly_blogs}
 \subfile{sections/winter_weekly_blogs}
 \subfile{sections/spring_weekly_blogs}
+
 \section{Poster}
+
 \section{Documentation}
+The following sections describe how the STEM Academy Data Solution was implemented.
+The first section will cover the overall structure and usage of the web service before delving more deeply into each component in its own section.
+Currently, STEM Academy Data Solution is developed for the Google Chrome web browser.
+Usage of the website through other browsers is not guaranteed to work correctly.
 \subsection{Overall}
+The STEM Academy Data Solution is a web service hosted by Central Web Services at Oregon State University.
+It can be accessed through \url{datasolutions.stemacademy.oregonstate.edu}.
+Structurally, the web service is split into two views for two different users: an administrative view and a student view.
+Both of these views are entered through two buttons on the front page.
+The administrative view will take administrative users (members of STEM Academy who are running the camps and designing the surveys) to a login page.
+On a succesful login, they are taken to the core dashboard of the web service.
+From there, the administrators can add other administrative accounts, delete administrative accounts, add camps, edit or create surveys, edit or create reports, and log out back to the home page.
+The student view of STEM Academy Data Solution is much smaller.
+Students who click on the button on the front page are taken to another page where they select the camp they are in and their name from a drop-down menu.
+Submitting this form pulls up the survey for a student to take.
+\subsubsection{Login Page}
+The login page is accessible by clicking the "Admin" button from the main page.
+It uses HTML to display a simple form with a text input for the username and a text input for the password an administrator enters.
+Three buttons are displayed below the two text boxes: "Login," Reset," and "Exit."
+The reset button utilizes the input type "reset" in HTML to clear the input  boxes of any text, while the exit button redirects to the front page.
+The login button is a submit button for a GET call to PHP code.
+The PHP code will check to make sure that both a username and password are entered, and if they have, it will connect to the database and SELECT the admin with that username.
+If an admin is found, the SESSION variable in PHP is set to their username and they are sent to the dashboard.
+Otherwise, the user is sent back to the login page.
+\subsubsection{Adding and Deleting Administrators}
+The page for adding an admin displays four text input fields: one for the administrator's first name, one for their last name, one for their desired username, and one for their desired password.
+The password field uses the "password" input type in HTML to hide the password.
+Clicking the "Exit" button will take the user back to the dashboard, while the Submit button will call our \texttt{AddAdmin()} function in JavaScript.
+The \texttt{AddAdmin} function receives the name, username, and password data from the HTML document using DOM manipulation.
+A JSON is then generated by setting \texttt{firstName},\texttt{ lastName}, \texttt{userName}, and \texttt{passWord} fields to the corresponding values from the document.
+The JSON is then converted into a string and passed through a POST operation using an XMLHttpRequest object.
+PHP code receives that POST information and stores each attribute in local variables.
+An INSERT query is then made to the database, adding the first name, last name, username, and password to the corresponding fields in the admin table.
+
+Deleting administrators is a similar process.
+The page for deleting administrators is structured the same way as the page for adding administrators, minus an input for the password.
+The submit button will call a \texttt{DeleteAdmin()} function which will pull the name and username information from the document.
+Following this, the information is POSTed to PHP code, where it is locally stored.
+If the SESSION variable shows that either Catherine Law or Carole Rodriguez (or clients at STEM Academy) are the current users, then a DELETE query is called on the database, deleting the admin with the input information.
+Should the user not be Cathy Law or Carole Rodriguez, they are not allowed to delete the admin and are notified of such.
+\subsubsection{Adding Camps}
+The Add Camp page is where the STEM Academy administrators can create new camps to be added to the system.
+Structurally, the page consists of a form containing a drop down menu listing the camps that have been created by STEM Academy, a text input field for a camp's title, two date input fields for the starting and ending dates of the camp, and a file input field for uploading a CSV file, which STEM Academy uses to list camp enrollment.
+Populating the drop down menu is done through a call to a \texttt{GetCamps()} JavaScript function.
+\texttt{GetCamps} will make a GET request to PHP using an XMLHttpRequest object.
+The GET request will be processed by connecting to the database and running a SELECT query on all Camps.
+A list of HTML \texttt{<option>} tags are then created, with each option having a value of the Camp's camp\_id attribute and the inner-text being the Camp's title attribute.
+All of these tags are then echoed back to \texttt{GetCamps} which inserts each option back into the HTML document's drop down menu.
+
+On selection of a camp from the drop down menu, the JavaScript \texttt{load\_camp()} function is called, passing the camp\_value stored in the option tag.
+\texttt{load\_camp} sends the ID on through a POST request.
+This POST request takes the ID and runs a SELECT query to search for the Camp with the matching ID.
+Once found,  the information on this camp is stored in an array which is based back as a response to \texttt{load\_camp}.
+The text input fields in the HTML code are then filled in to have the values received by the response.
+
+Lastly, at the bottom of the page are three buttons, "Submit," "Update," and "Exit."
+"Exit" will redirect to the dashboard, but "Submit" and "Update" will both store to the database Camp information.
+This is done by POSTing the form information to PHP code where it can be stored locally.
+If the Camp's ID was not provided by the drop down menu, an INSERT query is used to add to the Camp table the title, date, and enrollment information provided by the form.
+Should the ID be provided through the drop down menu, the camp with the corresponding ID will be updated, setting the title, date, and enrollment fields to the new values provided (if they are provided for update).
+For storing enrollment, a CSV file is read, in particular each of the students' names filled in a column of the CSV file.
+Each student's name is read and their first and last name are parsed from the row and split, then that students' information is inserted as a new Responder in the database.
+A list of all of the Responders' IDs is adding to an array, which is convered to a string after the file is done reading.
+This string can then be stored into the database as a representation of a Camp's enrollment.
 \subsection{Survey Generation}
 \subsection{Database}
+The database is organized around the core elements of camps, surveys, and responders.
+These will compromise the three core tables in the database, with other tables existing for administrators, frequently used questions, reports, and responses.
+All tables contain unique IDs (or combinations of IDs from other tables) as their primary key, and each ID is a non-negative integer.
+
+The Camp table contains a \emph{camp\_id}, the \emph{title} of the Camp, and each Camp's \emph{start\_date} and \emph{end\_date}.
+A Camp entry also has a \emph{pre} and a \emph{post} attribute, which are integers that connect to the pre-camp and post-camp survey IDs, respectively.
+Lastly, an \emph{enrollment} attribute stores a string respresentation of the students enrolled in the camp.
+
+The Survey table contains the \emph{survey\_id} as its primary key to identify each individual Survey.
+Each Survey will also contain a \emph{title}, a string representing the questions in the survey called \emph{arr\_questions}, and the type of survey stored as \emph{survey\_type} (i.e. is it a pre- or post-camp survey?).
+
+The Responder table will store information on the individual students taking surveys.
+This includes a unique \emph{responder\_id} for the primary key, a student's \emph{first\_name} and \emph{last\_name}, their \emph{birthdate}, and their \emph{age}.
+Additional demographic information is also stored for each student: their \emph{gender}, \emph{race}, \emph{ethnicity}, their free or reduced \emph{lunch\_status}, and the \emph{highest\_education} level their parent(s) or guardian(s) received.
+
+The Admin table contains information for administrative users to login to the website.
+This information consists of a unqiue \emph{admin\_id}, their \emph{first\_name} and \emph{last\_name), and their \emph{user\_name} and \emph{password}.
+
+The Question table stores frequently used questions.
+It stores a \emph{question\_id} (separate from the \emph{Q\_id} used in JSON representations of surveys and questions), the \emph{type} of the question (i.e. "text" or "matrix"), and the \emph{obj\_string} which stores a question's JSON representation as a string.
+
+The Report able is used for saving reports STEM Academy might reuse.
+Reports are stored with a \emph{report\_id}, a \emph{title}, and the results JSON object stored as a string in \emph{arr\_results}.
+
+Lastly, the Response table stores individuals' responses to surveys.
+This is stored wtih a \emph{camp\_id}, \emph{responder\_id}, and a \emph{survey\_id} to reference the associated camp, survey, and student, their JSON object for their \emph{answers} represented as a string, and the \emph{survey\_type).
+\subsubsection{ER Diagram of Database}
 \subsection{Report Generation}
+
 \section{Reflection}
 \subsection{How to Learn}
-For learning how to use new technology we did not use any books and we did not get outside help from other people that were not involved in our group. We learned new technology by researching the things that we needed on the fly. The majority of the things we needed were found in StackOverflow pages. Another website was useful was w3schools for looking up how to use a CSS style sheet, HTML, and PHP. This website was useful by providing code examples and also by generating the results of the code. below is the order of usefulness of the websites:
+For learning how to use new technology we did not use any books and we did not get outside help from other people that were not involved in our group.
+We learned new technology by researching the things that we needed on the fly.
+The majority of the things we needed were found in StackOverflow pages.
+Another website was useful was w3schools for looking up how to use a CSS style sheet, HTML, and PHP.
+This website was useful by providing code examples and also by generating the results of the code. 
+Below is the order of usefulness of the websites:
 1.StackOverflow
 2.w3schools
 \subsection{What was Learned}
 \subsection{Shannon Ernst: Survey Generation}
 \subsection{Kyle Nichols: Database Management}
 \subsection{Javier Franco: Report Generation}
-The 
 
 %\bibliographystyle{ieeetr}
 %\bibliography{writing1}
