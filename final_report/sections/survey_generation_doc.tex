@@ -27,4 +27,19 @@ drop down menu to be seleceted to add to the survey. These questions are also ed
 within the survey but can never be updated in the database in any way. \\ 
 \subsection{Data Flow}
 \subsection{Code Walk Through}
+\begin{lstlisting}
+function pop_camps(){
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				var doc = document.getElementsByTagName("SELECT")[1];
+				doc.innerHTML = xmlhttp.responseText;
+			}	
+		}	
+	}
+	xmlhttp.open("GET", "pop_camp.php", false);
+	xmlhttp.send();
+}
+\end{lstlisting}
 \end{document}

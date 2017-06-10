@@ -65,7 +65,7 @@ This data is collected from surveys that participants take while they are enroll
 Currently, these surveys are administered on paper and the responses are tabulated by hand by volunteers.
 This has not been an effective way of collecting current data to help secure funding and many of the surveys go untabulated.
 The STEM Academy does have the ability to register participants online through Ideal Logic, but this does not help them with tabulating survey data.
-They need a system which will allow them to electronically create surveys, a database to house all of the data from those surveys, and a report generation system so they can view the most current data in a timely and meaningful way.
+They need a system which will allow them to electronically create surveys, a database to house all of the data from those surveys, and a report generation system so they can view the most current data in a timely and meaningful way.\\
 
 A website which will allow the STEM Academy to create and distribute surveys, as well as view helpful data results, is the best solution.
 The website should allow them to create questions that can be included across multiple surveys.
@@ -76,13 +76,13 @@ This data should be queriable based on custom queries.
 The user should be able to make a query based on the question and collected demographics as well as filter by program.
 This service should be user friendly; the user should not need to know any SQL or other querying language in order to get data from the database.
 After a query, the data should be able to be saved and added to a printable report so that it can actually be used in grant proposals and marketing material.
-This website will be an all in one package for collecting and reporting on data in a timely fashion which is what the STEM Academy truly needs.
+This website will be an all in one package for collecting and reporting on data in a timely fashion which is what the STEM Academy truly needs.\\
 
 This project was worked on by Shannon Ernst, Kyle Nichols and Javier Franco.
 Ernst focused on survey generation and management. 
 Nichols focused on database management.
 Franco focused on report generation.
-Throughout the process the clients, STEM Academy, provided feedback on their needs but provided free reign on technical choices and implementation. 
+Throughout the process the clients, STEM Academy, provided feedback on their needs but provided free reign on technical choices and implementation. \\
 
 \section{Requirements Document}
 \subsection{Original Document}
@@ -172,6 +172,7 @@ Each student's name is read and their first and last name are parsed from the ro
 A list of all of the Responders' IDs is adding to an array, which is convered to a string after the file is done reading.
 This string can then be stored into the database as a representation of a Camp's enrollment.
 \subsection{Survey Generation}
+\subfile{sections/survey_generation_doc}
 \subsection{Database}
 The database is organized around the core elements of camps, surveys, and responders.
 These will compromise the three core tables in the database, with other tables existing for administrators, frequently used questions, reports, and responses.
@@ -219,4 +220,7 @@ Below is the order of usefulness of the websites:
 
 %\bibliographystyle{ieeetr}
 %\bibliography{writing1}
+\begin{appendices}
+\subfile{sections/appendix}
+\end{appendices}
 \end{document}
