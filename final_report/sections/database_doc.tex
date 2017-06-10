@@ -1,2 +1,28 @@
 \documentclass[../final.tex]{subfiles}
 %Make sure to start with subsubsection for sectioning
+The database is organized around the core elements of camps, surveys, and responders.
+These will compromise the three core tables in the database, with other tables existing for administrators, frequently used questions, reports, and responses.
+All tables contain unique IDs (or combinations of IDs from other tables) as their primary key, and each ID is a non-negative integer.
+
+The Camp table contains a \emph{camp\_id}, the \emph{title} of the Camp, and each Camp's \emph{start\_date} and \emph{end\_date}.
+A Camp entry also has a \emph{pre} and a \emph{post} attribute, which are integers that connect to the pre-camp and post-camp survey IDs, respectively.
+Lastly, an \emph{enrollment} attribute stores a string respresentation of the students enrolled in the camp.
+
+The Survey table contains the \emph{survey\_id} as its primary key to identify each individual Survey.
+Each Survey will also contain a \emph{title}, a string representing the questions in the survey called \emph{arr\_questions}, and the type of survey stored as \emph{survey\_type} (i.e. is it a pre- or post-camp survey?).
+
+The Responder table will store information on the individual students taking surveys.
+This includes a unique \emph{responder\_id} for the primary key, a student's \emph{first\_name} and \emph{last\_name}, their \emph{birthdate}, and their \emph{age}.
+Additional demographic information is also stored for each student: their \emph{gender}, \emph{race}, \emph{ethnicity}, their free or reduced \emph{lunch\_status}, and the \emph{highest\_education} level their parent(s) or guardian(s) received.
+
+The Admin table contains information for administrative users to login to the website.
+This information consists of a unqiue \emph{admin\_id}, their \emph{first\_name} and \emph{last\_name}, and their \emph{user\_name} and \emph{password}.
+
+The Question table stores frequently used questions.
+It stores a \emph{question\_id} (separate from the \emph{Q\_id} used in JSON representations of surveys and questions), the \emph{type} of the question (i.e. "text" or "matrix"), and the \emph{obj\_string} which stores a question's JSON representation as a string.
+
+The Report able is used for saving reports STEM Academy might reuse.
+Reports are stored with a \emph{report\_id}, a \emph{title}, and the results JSON object stored as a string in \emph{arr\_results}.
+
+Lastly, the Response table stores individuals' responses to surveys.
+This is stored wtih a \emph{camp\_id}, \emph{responder\_id}, and a \emph{survey\_id} to reference the associated camp, survey, and student, their JSON object for their \emph{answers} represented as a string, and the \emph{survey\_type}.

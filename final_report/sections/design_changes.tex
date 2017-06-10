@@ -1,0 +1,15 @@
+\documentclass[../final.tex]{subfiles}
+The following sections outline changes to the design document from the original version.
+\subsubsection{Database Management Section}
+The design document changed as the database organization changed over the course of the project.
+Firstly, the Question table, which was originally one of the core table and was intended to store all questions, instead went through changes to more appropriately reflect our decision to rework this table as a table of frequently used questions only.
+The text of a Question is no longer stored in its own attribute, and instead a JSON object representing that question (containing information such as the \texttt{Q\_id} and all of the questions text, often including the question and answers or subquestions) is stored in this table.
+Responders are no longer specialized into Students and Parents, and so these tables are gone.
+In addition, Responders now have additional demographic information stored in the table: race, gender, ethnicity, their free or reduced lunch status, and the highest education of their parent(s) or guardian(s).
+Similarly, the Response table specializations no longer exist, and so these tables are gone.
+The Response table has been appropriately updated to now store the information from student responses, now as a JSON object of answers to questions in the survey.
+Due to the changes to the Question table, the \emph{question\_id} attribute is gone and \emph{survey\_id} and \emph{camp\_id} are in its place.
+New tables have also been added: the Admin table, the Report table, and the Camp table were all added for purposes not realized when the original design document was written.
+The Admin table stores information, particularly login information, on administrative users, the Camp table keeps track of camps STEM Academy puts on and associates them with the surveys, and the Report table saves STEM Academy's reports.
+All three of these new tables have been detailed in the new documentation.
+Lastly, tables that existed to create a relationship between tables have been either removed (Contains) or reworked (Response).
