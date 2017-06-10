@@ -26,3 +26,6 @@ Reports are stored with a \emph{report\_id}, a \emph{title}, and the results JSO
 
 Lastly, the Response table stores individuals' responses to surveys.
 This is stored wtih a \emph{camp\_id}, \emph{responder\_id}, and a \emph{survey\_id} to reference the associated camp, survey, and student, their JSON object for their \emph{answers} represented as a string, and the \emph{survey\_type}.
+\subsubsection{Demographic Information}
+Demographic information is updated in the database when students take their surveys.
+Based on specific question IDs (tied to the demographic survey questions), responses to those questions are stored in the appropriate field in the Responder's entry.
