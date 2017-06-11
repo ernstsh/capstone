@@ -2,7 +2,7 @@
 The following sections outline changes to the design document from the original version.
 \subsubsection{Database Management Section}
 The design document changed as the database organization changed over the course of the project.
-Firstly, the Question table, which was originally one of the core table and was intended to store all questions, instead went through changes to more appropriately reflect our decision to rework this table as a table of frequently used questions only.
+Firstly, the Question table, which was originally one of the core tables and was intended to store all questions, instead went through changes to more appropriately reflect our decision to rework this table as a table of frequently used questions only.
 The text of a Question is no longer stored in its own attribute, and instead a JSON object representing that question (containing information such as the \texttt{Q\_id} and all of the questions text, often including the question and answers or subquestions) is stored in this table.
 Responders are no longer specialized into Students and Parents, and so these tables are gone.
 In addition, Responders now have additional demographic information stored in the table: race, gender, ethnicity, their free or reduced lunch status, and the highest education of their parent(s) or guardian(s).
