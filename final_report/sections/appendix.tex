@@ -3,5 +3,91 @@
 \section{Essential Code Listings}
 \subsection{Survey Generation}
 \subsection{Database}
+The following sections show code examples that highlight the database development in the project.
+\subsubsection{Creating Tables}
+Below is a \texttt{CREATE TABLE} MySQL query.
+There are several tables in our database, and they all were created through a \texttt{CREATE TABLE}, though some were edited later.
+This table, Camp, is shown here particularly for highlighting several elements of table creation in our system.
+\begin{lstlisting}
+CREATE TABLE `Camp` (
+  `camp_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `pre` int(11) DEFAULT NULL,
+  `post` int(11) DEFAULT NULL,
+  `enrollment` varchar(4096) DEFAULT NULL,
+  PRIMARY KEY (`camp_id`),
+  KEY `pre` (`pre`),
+  KEY `post` (`post`)
+) 
+\end{lstlisting}
+The ID is generated as an integer that cannot be empty, since IDs are essential to reference each table entry uniquely.
+This unique identification is why camp\_id is created as a \texttt{PRIMARY KEY}.
+Since camps have a variety of information, they are all listed here with their appropriate types (int, varchar, date, etc.).
+Some of these attributes are important to the functionality of the system, which is why they are set as \texttt{NOT NULL}: they cannot be created empty.
+\emph{pre} and \emph{post} are foreign keys since they are linked to survey IDs in the Survey table.
+\subsubsection{Interacting with the Database Through PHP}
+Below is the \emph{save\_db.php} file, which is a great example of the structure of our database interaction.
+The database information has been removed for privacy purposes, as well as some other minor comments and minor code.
+\begin{lstlisting}
+<?php
+error_reporting(-1);
+
+$obj = stripslashes($_POST['x']);
+echo $obj;
+$ar = json_decode($obj);
+$conn = new mysqli("", "", "", "");
+
+# ADD SURVEY
+$sql = "INSERT INTO Survey(survey_id, title, arr_questions, survey_type) VALUES (?,?,?,?)";
+if($statement = $conn->prepare($sql)){
+	do {
+           	$survey_id = rand(1000, 5000);
+           	$result = $conn->query("SELECT * FROM Survey WHERE survey_id='".$survey_id."'");
+           } while (!$result);
+	$title = $ar->title;
+	$type = $ar->type;
+
+	// Generate the array of questions string
+	$arr_questions = json_encode($ar->questions);
+
+	$statement->bind_param('isss', $survey_id, $title, $arr_questions, $type);
+	$statement->execute();
+	$statement->close();
+}
+else {
+	printf("Error: %s\n", $conn->error);
+}
+
+# ADD PRE/POST TO CAMP
+if ($ar->type == "pre") {
+   	$sql = "UPDATE Camp SET pre='".$survey_id."' WHERE Camp.camp_id='".$ar->camp."'";	
+	$result = $conn->query($sql);
+
+} else if ($ar->type == "post") {
+   	$sql = "UPDATE Camp SET post='".$survey_id."' WHERE Camp.camp_id='".$ar->camp."'";
+   	$result = $conn->query($sql);
+} else {
+  	 echo "Error in pre/post type in JSON. Type: ".$ar->type."\n";
+}
+
+if ($ar->type == "pre" || $ar->type == "post") {
+  	 if ($result) {
+      		echo "Successfully updated Camp row.\n";
+  	 } else {
+      		echo "Error: ".$conn->error." <br>";
+  	 }
+}
+
+$conn->close();
+?>
+\end{lstlisting}
+The database is accessed using \emph{mysqli} objects.
+We generate MySQL queries through strings, sometimes preparing them with empty values to be filled in later.
+INSERT, SELECT, and UPDATE queries are all done here and elsewhere, often with information that is passed in through a POST method.
+In this case, the POST is a JSON object represented as a string, which we decode into a usable object to get data through the rest of the code.
+When everything is done, we close the database connection.
+Often, text echoed in the PHP code is sent back to JavaScript to be handled as response text from the XMLHttpRequest that called the POST method.
 \subsection{Report Generation}
 \end{document}
