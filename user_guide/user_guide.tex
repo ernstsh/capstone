@@ -1,0 +1,179 @@
+\documentclass[letterpaper,10pt,serif, draftclsnofoot,onecolumn, compsoc, titlepage]{IEEEtran}
+
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\usepackage{alltt}
+\usepackage{float}
+\usepackage{color}
+\usepackage{url}
+
+\usepackage{balance}
+\usepackage[TABBOTCAP, tight]{subfigure}
+\usepackage{enumitem}
+%\usepackage{pstricks, pst-node}
+
+\usepackage{geometry}
+\geometry{margin=.75in}
+
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{shapes, positioning, calc}
+\colorlet{lightgray}{gray!20}
+\setcounter{page}{87}
+\title{The STEM Academy Data Solution}
+\author{User Guide \\ Shannon Ernst, Kyle Nichols, Javier Franco\\ 2 June 2017}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+The following is a user guide for use of the STEM Academy Data Solution.
+The STEM Academy Data Solution is accessible through the web site datasolutions.stemacademy.oregonstate.edu
+As a web application, there is no need for installation: the site will be fully accessible from Google Chrome.
+There are two primary views to the web service: an admin view and a student view.
+Each of these will be described in its own section, with the pages contained in each view further described in their own subsections.
+The admin view is accessible by clicking the "Admin" button on the front page, while the student view is
+ accessible by selecting the "Student" button on the front page.
+
+\section{Admin View}
+After clicking the button to enter the admin view, the first page seen is a login page.
+Admins registered on the web service will be given a username and password for logging in.
+Entering these and clicking "submit" will bring an admin to the main admin page if their username
+ and password combination is successfully authorized. Also on the login page are the "Reset" button,
+ which clears the input fields, and an "Exit" button that returns the user to the front page.
+\subsection{Main Admin Page}
+The main page displays a list of options that an admin can choose from which includes adding a new admin, deleting an existing admin, adding a new camp, edit/create a survey, edit/create a report, and logging out.
+If an admin clicks on one of the options they will be redirected to its corresponding webpage. 
+\subsection{Add Admin}
+The only admin accounts that are allowed to create new admins are Catherine Law and Carole Rodriguez.
+To create a new admin enter their first name, last name, user name, and password into the corresponding input fields.
+Then click the "Submit" button. If Carole or Catherine admin accounts clicked the "Submit" button they will received a pop up message that will say that they have succesfully created a new admin.
+Any other admin account that clicks the "Submit" button will receive an error message that tells them that they are not allowed to create new admins.
+To return to the Main Admin Page click the "Exit" button. 
+\subsection{Delete Admin}
+The only admin accounts that are allowed to delete admins are Catherine Law and Carole Rodriguez any other admins that try to delete an admin will have no effect.
+Both of their accounts cannot be deleted by anybody including themselves.
+This will prevent deleting all the admin accounts.
+If all the admin accounts were to be deleted it will render the web application useless since there are no admin accounts that can log in.
+To delete an admin enter their first name, last name, and user name into the corresponding input fields.
+Then click the "Submit" button.
+To return to the Main Admin Page click the "Exit" button. 
+\subsection{Add Camp}
+To add a new camp or update a camp click the the "Add Camp" link.
+To create a new camp first enter the name of the camp and the date range.
+Next upload the .csv file containing the enrollment of the camp  by clicking the "Browse..." button.
+Select the file you want to upload and click the "Open" button and click the "Submit" button.
+To update a camp select the name of the camp from the drop down menu.
+Next enter the new name of the camp into the input field and enter the new date range.
+Click the "Browse..." button to upload a new enrollement for the camp. Select the file you would like to upload and click the "Open" button.
+To submit your changes click the "Update" button.
+To exit the Add Camp page click the "Exit" button. 
+
+Important Note:
+After updating a camp roster, be sure to check the list of students for the camp by viewing the drop down menu in the student view (described in section 3).
+If there is a student that appears to be missing, there may have been an issue with loading them into the system.
+Refer to section 4.2 for troubleshooting solutions.
+\subsubsection{Last Minute Changes in Enrollment}
+If there is a last minute change in enrollment before a camp, this is fine.
+Simply re-upload the .CSV file with the changes in enrollment and click the "Update" button.
+This will update the database to reflect the new enrollment.
+\subsection{Edit/create a Survey}
+By clicking the "Edit/Create a Survey" link on the Main Admin Page, user can create a survey or load a preexisting one.
+To load a preexisting survey, select a survey from the "Load Preexisting Survey" drop down at the top of the page.
+This will populate all available fields with the information previously provided for that survey.
+Any of the data fields may be edited as normal. To create a survey from scratch, fill out all appropriate fields including Title, Camp (from the provided drop down) and whether it is a Pre or Post survey.
+From there select a type of question to add from the "Add New Question" drop down. The options are Text, Multiple Choice and Matrix.
+Upon selection, a question will  be presented.
+Text questions will only provide a single text box to allow for the question text.
+Multiple choice will allow for question text and a default of one answer.
+To add more answers, click "Add Answer."
+For Matrix, select one of the Likert Scales for agreement and provide a description for the matrix.
+Questions can be added by clicking, "Add Question."
+All questions can be deleted by clicking the "X" button.
+Questions can be marked for frequent use by checking the "Frequently Used" box.
+A frequently used question can also be added by selecting it from the "Frequently Used Drop Down" found at the bottom of the page.
+To preview the survey, click the "Preview" button at the bottom of the page. 
+A seperate window will pop up with the survey.
+To save the survey click "Save." This will not redirect you from the page.
+To exit the survey click the "Exit" button. To pring the survey, click the "Print" button.
+This will take you to a standard print dialog box. 
+\subsubsection{Demographic Questions}
+The STEM Academy Data Solution allows for storing demographic information on students in camps based on questions asked in a survey.
+Storing demographics is linked to responses to specific questions, so to store information for a student, use the drop down menu of questions on survey creation to load a question into the survey.
+Each of these questions is marked by the demographic information that it saves (i.e. "Gender" or "Race").
+The specific questions are:
+\begin{itemize}
+	\item "Gender"
+	\item "Race: Select one or more"
+	\item "Ethnicity: (You may check more than one, as appropriate)"
+	\item "Free or Reduced Lunch: I am eligible for the Federal Free or Reduced Price Lunch Program?"
+	\item "Guardian Education Level: What is the highest level of education that any of your parents or guardians achieved?"
+\end{itemize}
+If there is a need to modify the question, that is allowed: simply change any wording in the question or its answers and those will be reflected in the survey.
+In addition, adding this newly worded question as a frequently used question will preserve the question's identifier in the database and it can still be used as a demographic question.
+\subsection{Edit/create a Report}
+The Edit/create a Report option redirects the admin to a new page that gives the admin two options to choose from.
+The first option is to create a new report by clicking the "Submit" button.
+The second option is to edit a report by first selecting the name of a report from a drop down menu and then clicking the "Submit" button below the drop down menu.
+This will display the name and query results of the report. \\
+1. To add new query results select the name of the camp from the drop down menu. \\
+2. Next select the name of the survey from the drop down menu.
+If the admin created a pre and post survey for the camp they selected there should be three options shown.
+If they did not the only option displayed will be "Both", but this options requires a pre and post survey to exist in order to be used.
+The option "Both" is used solely for finding the the change in reponse for matrix questions from a pre-survey to a post-survey.\\ 
+3. Select the query type that you would like use by clicking on its corresponding radio button. 
+The two types of queries include one for multiple choice and the second is used for matrix and text questions.
+Then click the "Add Query" button this will create the query template based on your selection below the text that says "Queries will appear hear:".
+To add another query follow the same process.\\
+4. If a query template for a multiple choice question was created first select the multiple choice question that you want a query result for from the 1st drop down menu.
+Then select one of the corresponding responses from the 2nd drop down menu.
+If a query template for a multiple choice and matrix question was created select the question you want a query result for from the drop down menu.
+If you no longer need a query template you can delete it by clicking on its corresponding delete button indicated by "-" symbol.
+You can also delete all of the query templates currently displayed on the webpage by clicking the "Reset" button.\\ 
+5. Select the result type that you would like to be returned for a matrix and multiple choice question.
+This includes a count and percentage by clicking on their corresponding radio button.\\
+6. Select the demographic information from the drop down menus to filter your returned query result.
+This includes gender, parent's highest education, student race, student ethnicity, and free or reduced lunch.\\ 
+7. Once everything has been setup click the "Submit" button.
+This will return a query result for each query template and they will be displayed below the text that says "Query Results".
+The query result for a multiple choice question will return two input boxes.
+The first input box contains the multiple choice question that was selected and next to it is a delete button for removing the query result indicated by a "-" symbol.
+The result for a matrix and text question will return a table along with a delete button indicated by a "-" symbol.
+The table for a matrix question returns a breakdown of the results for each sub question and the table for a text question returns the name of each student along with their response.\\
+8. To add a title to the report enter the name of the report in the first input text box that is shown below the text "Query Results".\\ 
+9. When an admin has finished generating the query results for their report they can print their results by clicking the "Print" button.
+They can also save their report by clicking the "Save" button.
+Furthermore, they can return to the Main Admin Page by clicking the "Print" button.\\ 
+\subsection{Log Out}
+When an admin clicks the Log Out option they will be redirected to the login page. 
+\section{Student View}
+After clicking the button to enter the student view, a student will be brought to a page with two drop down menus.
+The first menu allows them to select their camp.
+Only camps currently in session are listed.
+After selecting their camp, the second drop down menu will list all of the students enrolled in the camp.
+Students can click "Submit" after selecting their name to load the survey.
+\subsection{Taking Surveys}
+A survey will generated based on date and camp/student selection. Once an appropriate camp and student combination 
+has been submitted, the user will be presented with a pre survey if the date is before the last day of the camp. If 
+the it is the last day of the camp, the user will get a post survey. All questions will be presented with the 
+appropriate entry space. After the survey has been completed the user can click submit and they will be redirected.
+
+\section{Troubleshooting}
+The following information is provided in case STEM Academy encounters a bug in using the STEM Academy Data Solution.
+Unfortunately, software cannot be bug-free, but we hope the information provided in this section will help users recover from and resolve bugs that may impair use of the software.
+\subsection{Browser Support}
+The only browser that the system is tested on is Google Chrome, and therefore can only be guaranteed on Google Chrome.
+There is a known issue with Firefox where buttons do not work on the home page.
+\subsection{Missing Students}
+If a student did not get added to a camp and is missing from the list of students described in section 3, return to the page for Adding Camps.
+Re-upload the .CSV file for enrollment and click "Update" to update the camp.
+Make sure to check the list of students under the student view again, and repeat the process if necessary until the list of students is complete.
+\end{document}

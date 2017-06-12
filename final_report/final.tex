@@ -17,7 +17,7 @@
 \usepackage{balance}
 \usepackage[TABBOTCAP, tight]{subfigure}
 \usepackage{enumitem}
-
+\usepackage{array}
 \usepackage{geometry}
 \geometry{margin=.75in}
 \usepackage{hyperref}
@@ -28,20 +28,24 @@
 \usepackage{listings}
 %\usepackage[utf8]{inputenc}
 %pull in the necessary preamble matter for pygments output
+\usepackage{pgfgantt}
 
 \usepackage{graphicx}
 \graphicspath{ {images/} }
-
-%% The following metadata will show up in the PDF properties
-% \hypersetup{
-%   colorlinks = false,
-%   urlcolor = black,
-%   pdfauthor = {\name},
-%   pdfkeywords = {cs311 ``operating systems'' files filesystem I/O},
-%   pdftitle = {CS 311 Project 1: UNIX File I/O},
-%   pdfsubject = {CS 311 Project 1},
-%   pdfpagemode = UseNone
-% }
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm, minimum height=1cm,text centered, draw=black, fill=red!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, text width=3cm, draw=black, fill=orange!30]
+% The following metadata will show up in the PDF properties
+\hypersetup{
+  colorlinks = false,
+  urlcolor = black
+  pdfpagemode = UseNone
+}
 %credit to %http://tex.stackexchange.com/questions/48152/dynamic-signature-date-line
 \newcommand*{\SignatureAndDate}[1]{%
     \par\noindent\makebox[2.5in]{\hrulefill} \hfill\makebox[2.0in]{\hrulefill}%
@@ -50,12 +54,16 @@
 
 \parindent = 0.0 in
 \parskip = 0.1 in
-\title{Final Progress Report}
+\title{STEM Academy Data Solution Final Report}
 \author{Shannon Ernst, Kyle Nichols, Javier Franco\\ Group 48 \\ 13 June 2017 \\ CS 463 Spring 2017}
 \begin{document}
 \maketitle
 \begin{abstract}
-
+This document explores the development of the STEM Academy 
+Data Solution during the 2016-2017 academic school year 
+at Oregon State University. A web application to generate 
+surveys and collect data was created to assist the 
+STEM Academy in their data collection pursuits. 
 \end{abstract}
 \newpage
 \tableofcontents
@@ -89,20 +97,29 @@ Throughout the process the clients, STEM Academy, provided feedback on their nee
 
 \section{Requirements Document}
 \subsection{Original Document}
+See next page. \\
 \includepdf[pages={1-7}]{pdfs/requirements_document.pdf}
 %\subfile{sections/requirements_document}
 \includepdf[pages={1}]{pdfs/CS461Gantt.pdf}
 \subsection{Changes to the Document}
+There were no changes to the requirements document. 
 \subsection{Gantt Chart Progression}
+Our Gantt chart changed significantly over the course of 
+the year. On the whole, things took a lot longer to implement 
+than originally thought and we often had to circle back to 
+fix issues. The updated chart is on the following page. \\
+\includepdf[pages={1}]{pdfs/updated_gantt.pdf}
 
 \section{Design Document}
 \subsection{Original Document}
+See next page. \\
 \includepdf[pages={1-13}]{pdfs/design_doc.pdf}
 \subsection{Changes to the Document}
 \subfile{sections/design_changes}
 
 \section{Technology Review Document}
 \subsection{Original Document}
+See next page. \\
 \includepdf[pages={1-13}]{pdfs/fall_final_tech_review.pdf}
 \subsection{Changes to the Document}
 \subfile{sections/techreview_changes}
@@ -113,6 +130,7 @@ Throughout the process the clients, STEM Academy, provided feedback on their nee
 \subfile{sections/spring_weekly_blogs}
 
 \section{Poster}
+See next page. \\
 \includepdf[pages={1}]{pdfs/Group48Poster_Draft2.pdf}
 \section{Documentation}
 The following sections describe how the STEM Academy Data Solution was implemented.

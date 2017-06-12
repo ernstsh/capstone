@@ -2,6 +2,289 @@
 \begin{document}
 \section{Essential Code Listings}
 \subsection{Survey Generation}
+The functionality for surveys is stored in questionGeneration.js 
+and surveyTaking.js. Examples of the most important functions 
+have been selected to give explanation for their logic. \\
+\subsubsection{questionGeneration.js}
+This function adds a multiple choice question to the 
+survey creation. The admin will be able to fill out 
+the question text and add answers. 
+\begin{lstlisting}
+function add_multi_question(){
+	var node = document.getElementById("sandbox");
+	var question = document.createElement("DIV");
+	question.id = uuid("QMC_"); 
+	question.name = uuid("QMC_");
+	question.className = "question";
+	question.style ="border-bottom: solid; padding-bottom: 10px;";
+	question.innerHTML="<button onclick='add_answer(\""+question.id+"\")'>
+	Add Answer</button><br>Question<input type='text' name='qtext'
+	placeholder='Enter Question Here'>
+	</input><input class='fuq' type='checkbox'>Frequent Question</input><br>
+	<input type='text' name='atext' placeholder='Enter answer here'></input>
+	<button class='delete' onclick='remove_question(\""+question.id+"\")'>X</button>";
+	node.appendChild(question); 	
+}
+\end{lstlisting}
+Loading the survey is done dynamically for editing a survey.
+On selection from the drop down menu this function is 
+called with the selected value. It then fills in all 
+relevant fields for that survey. \\
+\begin{lstlisting}
+function load_survey(value){
+	str = "x=" + encodeURIComponent(value);
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "load_survey.php", true);
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				//alert(xmlhttp.responseText);
+				var res = JSON.parse(xmlhttp.responseText);
+				console.log(JSON.stringify(res));
+				var el = document.getElementById("sandbox");
+				while(el.firstChild){
+					el.removeChild(el.firstChild);
+				}
+				document.forms["create_survey"]["surveyTitle"].value = res.title;
+				document.forms["create_survey"]["surveyType"].value = res.type;
+				var questions = JSON.parse(res.questions);
+				console.log(questions.length);
+				for(var i=0; i<questions.length; i++){
+					if(questions[i].type === "text"){
+						freq_text_question(questions[i]);	
+					}
+					else if(questions[i].type === "multic"){
+						freq_multi_question(questions[i]);	
+					}
+					else if(questions[i].type === "matrix"){
+						freq_matrix_question(questions[i]);	
+					}
+				}
+			}
+		}	
+	}
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(str);	
+}
+
+\end{lstlisting}
+This creates the survey json which will store the 
+survey and be used in reloading it. \\
+\begin{lstlisting}
+function create_survey_json(){
+	var title = document.forms["create_survey"]["surveyTitle"].value;
+	var camp = document.getElementsByTagName("SELECT")[1].value;
+	//console.log(document.getElementsByTagName("SELECT")[0].value);""))
+	var type = document.forms["create_survey"]["surveyType"].value;
+	var survey_json = {};
+	var fuqs = [];
+	survey_json.title = title;
+	survey_json.camp = camp;
+	survey_json.type = type;
+	var doc = document.getElementById("sandbox");
+	var qs = doc.getElementsByClassName("question");
+	survey_json.questions = [];
+	for(var i = 0; i<qs.length; i++){
+		var question = {};
+		question.Q_id = qs[i].name;
+		//question.Q_id = "101"""
+		if(question.Q_id.substring(0,2) === "QT"){
+			question.type = "text";
+			question.Q_text = qs[i].getElementsByTagName("INPUT")[0].value;
+			if(qs[i].getElementsByTagName("INPUT")[1].checked == true){
+				fuqs.push(question);
+			}
+		}
+		else if(question.Q_id.substring(0,3) === "QMC"){
+			question.type = "multic";
+			var input_elements = qs[i].getElementsByTagName("INPUT");
+			question.Q_text = input_elements[0].value;
+			question.ans = [];
+			for(var j=2; j<input_elements.length; j++){
+				question.ans[j-2] = input_elements[j].value;
+			}
+			if(input_elements[1].checked == true){
+				fuqs.push(question);
+			}
+		}
+		else if(question.Q_id.substring(0,2) === "QM"){
+			question.type = "matrix";
+			var input_elements = qs[i].getElementsByTagName("INPUT");
+			question.Q_topic = input_elements[0].value;
+			question.Q_scale = qs[i].getElementsByTagName("SELECT")[0].value;
+			question.questions = [];
+			for(var j=2; j<input_elements.length; j++){
+				question.questions[j-2] = input_elements[j].value;
+			}
+			if(input_elements[1].checked == true){
+				fuqs.push(question);
+			}
+		}
+		survey_json.questions[i] = question;
+	}
+	var res = {"survey": survey_json, "fuqs": fuqs};
+	return res;
+}
+
+\end{lstlisting}
+This generates the HTML for previewing the survey. \\
+\begin{lstlisting}
+function generate_html(){
+	var data = create_survey_json().survey;
+	console.log(data);
+	var external = window.open("", "external", "width=500, height=600");
+	external.document.write("<head><link rel='stylesheet' 
+	href='../public_html/css/style1.css'></head><div id='test'><form>
+	</form></div>");
+	var doc = external.document.getElementById("test");
+	var form = doc.getElementsByTagName("FORM")[0];
+	form.innerHTML = "<h3>"+data.title+"</h3>";
+	doc.appendChild(form);
+	for(var i=0; i<data.questions.length; i++){
+		if(data.questions[i].type === "text"){
+			generate_text_question(data.questions[i], doc);
+		}
+		else if(data.questions[i].type === "multic"){
+			generate_multi_question(data.questions[i], doc);
+		}
+		else if(data.questions[i].type === "matrix"){
+			generate_matrix_question(data.questions[i], doc);
+		}
+	}
+	add_submit(doc);
+
+}
+
+\end{lstlisting}
+Save posts the json object to PHP and the database. \\
+\begin{lstlisting}
+function save() {
+	var res = create_survey_json();
+	console.log(res.fuqs);
+	add_fuqs(res.fuqs);
+	var json = res.survey;
+	var str = JSON.stringify(json);
+	console.log(str);
+	str = "x=" + encodeURIComponent(str);
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "save_db.php", true);
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+			   //alert(xmlhttp.responseText);)
+			}	
+		}	
+	}
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(str);
+}
+
+\end{lstlisting}
+\subsubsection{surveyTaking.js}
+Similar to load survey this function gets the surveys.
+\begin{lstlisting}
+function get_survey(){
+	var camp = document.getElementsByTagName("SELECT")[0].value;
+	var student = document.getElementsByTagName("SELECT")[1].value;
+	str = "x=" + encodeURIComponent(camp);
+	console.log(str);
+	var json;
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("POST", "get_active_survey.php", false);
+	xmlhttp.onreadystatechange=function(){
+		if(xmlhttp.readyState == 4){
+			if(xmlhttp.status == 200){
+				//location.href = "active_survey.php";
+				console.log(xmlhttp.responseText);
+				data = JSON.parse(xmlhttp.responseText);
+				data.camp_id = camp;
+				data.responder_id = student;
+				console.log(data);
+				generate_html(data);
+			}
+		}	
+	}
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send(str);
+	
+}
+
+\end{lstlisting}
+This functions collects all the responses by scraping the 
+webpage and assembling a json object. 
+\begin{lstlisting}
+function collect_response(id_json){
+	id_json.ans = [];
+	var doc = document.getElementById("test");
+	var qs = doc.getElementsByClassName("question");
+	for(var i = 0; i<qs.length; i++){
+		var answer = {};
+		console.log(i);
+		if(qs[i].id.substring(0,2) === "QT"){
+			answer.type = "text";
+			answer.Q_id = qs[i].id;
+			//id_json.ans.push(qs[i].getElementsByTagName("INPUT")[0].value);
+			answer.ans = qs[i].getElementsByTagName("INPUT")[0].value;
+		}
+		else if(qs[i].id.substring(0,3) === "QMC"){
+			answer.type = "multic";
+			answer.Q_id = qs[i].id;
+			var els = qs[i].getElementsByTagName("INPUT");
+			for(var k=0; k<els.length; k++){
+				if(els[k].checked){
+					//id_json.ans.push(els[k].value);
+					answer.ans = els[k].value;
+				}
+			}
+		}
+		else if(qs[i].id.substring(0,2) === "QM"){
+			answer.type = "matrix";
+			answer.Q_id = qs[i].id;
+			answer.ans = [];
+			var els = qs[i].getElementsByTagName("tr");
+			for(var k=0; k<els.length; k++){
+				var inputs = els[k].getElementsByTagName("INPUT");
+				for(var j=0; j<inputs.length; j++){
+					if(inputs[j].checked){
+						//id_json.ans.push(inputs[j].value);
+						answer.ans.push(inputs[j].value);
+					}
+				}
+			}
+		}
+		id_json.ans.push(answer);
+	}
+	console.log(id_json);
+	send_response(id_json);
+	
+}
+
+\end{lstlisting}
+\begin{lstlisting}
+function generate_html(data){
+	doc.innerHTML = "<h3>"+data.title+"</h3>";
+	data.questions = JSON.parse(data.questions);
+	for(var i=0; i<data.questions.length; i++){
+		if(data.questions[i].type === "text"){
+			generate_text_question(data.questions[i], doc);
+		}
+		else if(data.questions[i].type === "multic"){
+			generate_multi_question(data.questions[i], doc);
+		}
+		else if(data.questions[i].type === "matrix"){
+			generate_matrix_question(data.questions[i], doc);
+		}
+	}
+	var id_json = {};
+	id_json.camp = data.camp_id;
+	id_json.survey = data.survey_id;
+	id_json.responder = data.responder_id;
+	id_json.type = data.type;
+	add_submit(doc, id_json);
+
+}
+
+\end{lstlisting}
 \subsection{Database}
 The following sections show code examples that highlight the database development in the project.
 \subsubsection{Creating Tables}
@@ -90,4 +373,65 @@ In this case, the POST is a JSON object represented as a string, which we decode
 When everything is done, we close the database connection.
 Often, text echoed in the PHP code is sent back to JavaScript to be handled as response text from the XMLHttpRequest that called the POST method.
 \subsection{Report Generation}
+\begin{lstlisting}[caption={report\_json }]
+{
+	"ReportID": the id of the report,
+	"title": the title of the report,
+	"queryResults": [] array of result\_json objects
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption={result\_json}]
+{
+	"type": the type of query result which includes matrix, multic, and text,
+	"rows":[] the values of the rows that makeup the table result
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption={queryJSON}]
+{
+	"CampID": the id of the selected camp,
+	"SurveyName": the name of the selected survey,
+	"SelectedStudID": the id of the selected student,
+	"SurveyID": the id of the pre or post survey,
+	"SurveyID2": the id 2nd pre or post survey for change in response,
+	"Gender": the gender that was selected,
+	"ParentEducation": the education level that was selected,
+	"Race": the race of the students that was selected,
+	"Ethinicty": the ethnicity that was selected,
+	"LunchOption": free or reduced lunch option that was selected,
+	"queries":[] array of queryTempJSON objects
+}
+\end{lstlisting}
+
+	
+\begin{lstlisting}[caption={queryTempJSON}]
+{
+	"Drop1": the text value of the drop down menu
+	"ID": the id value of the drop down question 
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={JSON Object Returned by ReportQuerying.php}]
+{
+	"SurveyResponses":[] array of Student JSON objects that contain student responses for a pre or post survey,
+	"SurveyResponses2":[] array of Student JSON objects that contain student responses for a post survey if the survy name "Both" was selected,
+	"SurveyQuestions":[] array of the survey questions,
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Student JSON Object Used in ReportQuerying.php}]
+{
+	"FirstName": first name of the student,
+	"LastName": last name of the student,
+	"StudentID": ID assigned to the student,
+	"StudentResponses": [] array of the student's responses
+}
+
+\end{lstlisting}
+\section{User Guide}
+See next page. \\
+\includepdf[pages={1-6}]{pdfs/user_guide.pdf}
 \end{document}

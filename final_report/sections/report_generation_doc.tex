@@ -8,14 +8,14 @@
 	}
 %Make sure to start with subsubsection for sectioning
 
-	\subsection{Overview}
+	%\subsection{Overview}
 	An administrator has two options when they click on the "Edit/Create a Report" link which includes editing a report and creating a new report. When generating a report a user first selects a camp from a drop down menu. Next they select the name of the survey that they would like to generate query results for. In order to get any query results the camp must have student responses stored in the database for the surveys. Based on the survey that is selected this causes the "Select Student" drop down menu to be populated with the names of the students that took the survey. This drop down allows an administrator to select a student name and get all of their survey results by clicking the "Submit" button.\\ 
 	If the administrator wants to get all of the results of the survey questions they have the option to click a radio by clicking the "Yes". When the administrator clicks the "Submit" button it displays all of the question results of the survey. If the option is left on the "No" radio button and no student was selected this indicates that the administrator wants to generate query results for a certain question for the survey.\\ The two query types that an administrator can choose for querying certain types of questions include multiple choice and matrix and text questions. When a query type is selected and the "Add Query" button is clicked it generates a query template based on your query type selection. Furthermore, the query template contains a delete button for removing it which is indicated by a "-" symbol and an administrator can delete all of the query templates currently displayed in the webpage by clicking on the "Reset" button.\\
 	 The query result for a matrix, multiple choice, and text questions return a table that gives breakdown of the result. The table result for a text question returns the responses of the students. The table result for a multiple choice question returns a count and percentage result for each of the responses. The table result for a matrix question returns a count and a percentage result for each sub question based on the scale that was used.\\
 	  An administrator can get the change in response results for a matrix question by selecting the option both from the survey drop down and creating a query template for a matrix and text question. Then the administrator chooses the matrix question that they want a change in response result. When the administrator clicks the "Submit" button this returns a table that contains the positive responses along with a breakdown of the pre and post survey results for each of the sub questions.\\
 	  An administrator can refine the query results that are returned by selecting demographic information from drop downs menus. Something to note here is that code for populating student demographic information based on their responses has not been implemented, but the PHP code is already setup for getting the student responses based on demographic information.\\
 	   The options for demographic information includes gender, parent's highest education, student race, student ethnicity, and free or reduced lunch. When an administrator has finished generating their report they will have the option to print their report by clicking on the "Print" button which displays the print options and they will also be able to save their report by clicking the "Save" button.
-	\subsection{Code Walk Through}
+	%\subsection{Code Walk Through}
 	\subsubsection{Deleting All of the Query Templates}
 	When the "Reset" button is clicked it uses an onClick event to call DeleteAllQueries() function in the report\_generation.js file. This function removes all of the query templates currently displayed in the webpage by getting the parent div element called "query" that contains all of the child query templates. It then uses a while loop to delete all of the child query div templates from the parent and decrements the count variable that is used in assigning a unique identifier to each query template.
 	\subsubsection{Deleting a Query Template}
@@ -48,67 +48,5 @@
 	
 	\subsubsection{Getting the Survey and Student(s) Responses}
 	The code that handles returning the student responses and survey information based on the demographic information, student name, survey option, and camp that the user selected is ReportQuerying.php. A JSON object is used to return the survey and student responses, as shown in Listings 5. The survey questions are obtained using a mysql statement to get the arr\_results attribute from the Survey table where it matches the survey ID that was received. Next a mysql statement is constructed using the demographic information that was received and it is used to get the IDs of the students that match the criteria from the Responder table and stores them into an array. If the Survey name is "Both" and student ID for getting a certain student is "Default" the Student's information and responses for both the pre and post survey are obtained only if their id is in the array of filtered ids. The student information and responses are stored in a JSON object, as shown in Listings 6 and is added to the corresponding SurveyResponses array. The same process is used for getting the student responses and information for a pre or post survey only. If the ID of a certain student was received then only their survey results are obtained. To return the JSON object that contains the survey questions and the student survey responses an echo statement is used to send it to JavaScript. 
-	
-	
-\begin{lstlisting}[caption={report\_json }]
-{
-	"ReportID": the id of the report,
-	"title": the title of the report,
-	"queryResults": [] array of result\_json objects
-}
-\end{lstlisting}
-
-
-\begin{lstlisting}[caption={result\_json}]
-{
-	"type": the type of query result which includes matrix, multic, and text,
-	"rows":[] the values of the rows that makeup the table result
-}
-\end{lstlisting}
-
-
-\begin{lstlisting}[caption={queryJSON}]
-{
-	"CampID": the id of the selected camp,
-	"SurveyName": the name of the selected survey,
-	"SelectedStudID": the id of the selected student,
-	"SurveyID": the id of the pre or post survey,
-	"SurveyID2": the id 2nd pre or post survey for change in response,
-	"Gender": the gender that was selected,
-	"ParentEducation": the education level that was selected,
-	"Race": the race of the students that was selected,
-	"Ethinicty": the ethnicity that was selected,
-	"LunchOption": free or reduced lunch option that was selected,
-	"queries":[] array of queryTempJSON objects
-}
-\end{lstlisting}
-
-	
-\begin{lstlisting}[caption={queryTempJSON}]
-{
-	"Drop1": the text value of the drop down menu
-	"ID": the id value of the drop down question 
-}
-\end{lstlisting}
-
-\begin{lstlisting}[caption={JSON Object Returned by ReportQuerying.php}]
-{
-	"SurveyResponses":[] array of Student JSON objects that contain student responses for a pre or post survey,
-	"SurveyResponses2":[] array of Student JSON objects that contain student responses for a post survey if the survy name "Both" was selected,
-	"SurveyQuestions":[] array of the survey questions,
-}
-\end{lstlisting}
-
-\begin{lstlisting}[caption={Student JSON Object Used in ReportQuerying.php}]
-{
-	"FirstName": first name of the student,
-	"LastName": last name of the student,
-	"StudentID": ID assigned to the student,
-	"StudentResponses": [] array of the student's responses
-}
-
-\end{lstlisting}
-
-
 	
 \end{document}

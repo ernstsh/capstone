@@ -1,7 +1,7 @@
 \documentclass[../final.tex]{subfiles}
 
 \begin{document}
-\subsection{Overview}
+\subsubsection{Overview}
 Survey generation is the first step in using the website. Without a created 
 survey there is no way to collect data and analyze it. On a clean implementation 
 of the database, there will not be any surveys to preload. To create a survey the 
@@ -25,21 +25,45 @@ information is updated. The admin also has the ability to mark questions as freq
 used. If a question is marked frequently used it will appear in a frequently used 
 drop down menu to be seleceted to add to the survey. These questions are also editable 
 within the survey but can never be updated in the database in any way. \\ 
-\subsection{Data Flow}
-\subsection{Code Walk Through}
-\begin{lstlisting}
-function pop_camps(){
-	xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange=function(){
-		if(xmlhttp.readyState == 4){
-			if(xmlhttp.status == 200){
-				var doc = document.getElementsByTagName("SELECT")[1];
-				doc.innerHTML = xmlhttp.responseText;
-			}	
-		}	
-	}
-	xmlhttp.open("GET", "pop_camp.php", false);
-	xmlhttp.send();
-}
-\end{lstlisting}
+\subsubsection{Data Flow}
+The following image illustrates the flow of data for creating a survey.
+There are two entry points to for ultimately saving a survey: editing 
+a survey and creating from scratch. The layers for programming languages 
+is HTML, javascript and PHP/mySQL. \\
+\begin{tikzpicture}[node distance=2cm]
+
+\node (start) [startstop] {Start};
+\node (pro1) [process, below of=start] {Admin requests to edit a survey by selecting from the drop down};
+\node (pro2) [process, below of=pro1] {Database returns survey JSON};
+\node (pro3) [process, below of=pro2] {Admin provides information for creating survey};
+\node (pro4) [process, below of=pro3] {JSON object created by scraping web page};
+\node (pro5) [process, below of=pro4] {Add survey to database};
+\node (stop) [startstop, below of=pro5] {Stop};
+\draw [arrow] (start) -- (pro1);
+\draw [arrow] (pro1) -- node[anchor=east] {POST} (pro2);
+\draw [arrow] (pro2) -- node[anchor=east] {Populates webpage with survey information} (pro3);
+\draw [arrow] (pro3) -- node[anchor=east] {Submit} (pro4);
+\draw [arrow] (pro4) -- node[anchor=east] {POST} (pro5);
+\draw [arrow] (pro5) -- (stop);
+
+\end{tikzpicture}
+\\
+The following image illustrates the flow of data during survey taking. \\
+\begin{tikzpicture}[node distance=2cm]
+
+\node (start) [startstop] {Start};
+\node (pro1) [process, below of=start] {Student selects a camp};
+\node (pro2) [process, below of=pro1] {Student selects name};
+\node (pro3) [process, below of=pro2] {Student takes survey};
+\node (pro4) [process, below of=pro3] {JSON object created by scraping web page};
+\node (pro5) [process, below of=pro4] {Add response to database};
+\node (stop) [startstop, below of=pro5] {Stop};
+\draw [arrow] (start) -- (pro1);
+\draw [arrow] (pro1) -- node[anchor=east] {POST for students in camp} (pro2);
+\draw [arrow] (pro2) -- node[anchor=east] {POST to generate survey} (pro3);
+\draw [arrow] (pro3) -- node[anchor=east] {Submit} (pro4);
+\draw [arrow] (pro4) -- node[anchor=east] {POST} (pro5);
+\draw [arrow] (pro5) -- (stop);
+
+\end{tikzpicture}
 \end{document}
